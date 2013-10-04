@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Femore", "Femore.csproj", "{B5AAD62B-F212-49DB-BB36-54F186819105}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Femore.Imaging.Core", "Imaging\Femore.Imaging.Core.csproj", "{06F728CA-EB01-4B33-92E5-8F4CC5F73841}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Femore.Imaging.Core", "Imaging\Core\Femore.Imaging.Core.csproj", "{06F728CA-EB01-4B33-92E5-8F4CC5F73841}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
