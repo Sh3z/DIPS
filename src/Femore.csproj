@@ -134,12 +134,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Imaging\Femore.Imaging.csproj">
-      <Project>{06f728ca-eb01-4b33-92e5-8f4cc5f73841}</Project>
-      <Name>Femore.Imaging</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

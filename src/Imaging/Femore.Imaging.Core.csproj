@@ -7,8 +7,8 @@
     <ProjectGuid>{06F728CA-EB01-4B33-92E5-8F4CC5F73841}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Femore.Imaging</RootNamespace>
-    <AssemblyName>Femore.Imaging</AssemblyName>
+    <RootNamespace>Femore.Imaging.Core</RootNamespace>
+    <AssemblyName>Femore.Imaging.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
