@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,23 @@ namespace FemoreGUI
         public MainWindow()
         {
             InitializeComponent();
+
+            // Initialize the view-model and require the user to pick an image.
+            PrototypeViewModel vm = new PrototypeViewModel();
+            DataContext = vm;
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = @"Bitmaps|*.bmp|Jpegs|*.jpeg";
+            bool? result = dialog.ShowDialog();
+            if( result.HasValue && result.Value )
+            {
+                Bitmap theBmp = new Bitmap( dialog.FileName );
+                vm.ImageToProcess = theBmp;
+            }
+            else
+            {
+                Close();
+            }
         }
     }
 }

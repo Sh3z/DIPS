@@ -134,6 +134,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FemoreGUI\FemoreGUI.csproj">
+      <Project>{401ec969-3cbc-403d-9b36-932e8f8e2d71}</Project>
+      <Name>FemoreGUI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
