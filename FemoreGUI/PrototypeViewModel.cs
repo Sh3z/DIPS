@@ -18,6 +18,7 @@ namespace FemoreGUI
         {
             _processCmd = new ProcessImageCommand();
             _processCmd.ImageProcessed += image_processed;
+            ImageDetailCommand = new OpenImageWindowCommand();
         }
 
 
@@ -39,6 +40,15 @@ namespace FemoreGUI
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private ProcessImageCommand _processCmd;
+
+        /// <summary>
+        /// Gets the command to execute when double-clicking an image.
+        /// </summary>
+        public ICommand ImageDetailCommand
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Gets or sets the image to be processed.

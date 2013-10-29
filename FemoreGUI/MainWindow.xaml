@@ -4,7 +4,17 @@
         xmlns:my="FemoreGUI"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
-        
+        <Style x:Key="ButtonImage" TargetType="Button">
+            <Setter Property="Command" Value="{Binding Path=ImageDetailCommand}" />   
+            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Image Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=Content}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -23,7 +33,8 @@
           Margin="10,46,0,0"
           Height="128" 
           Width="128" Grid.Column="1">
-            <Image Name="imgUnProcessed" Source="{Binding Path=ToProcessSource}" />
+            <Button Style="{StaticResource ButtonImage}"
+                    Content="{Binding Path=ToProcessSource}" />
         </Border>
 
         <Border Name="brdProcessed" 
@@ -34,7 +45,8 @@
           Margin="241,49,0,0"
           Height="128" 
           Width="128" Grid.Column="1">
-            <Image Name="imgProcessed" Source="{Binding Path=ProcessedSource}" />
+            <Button Style="{StaticResource ButtonImage}"
+                    Content="{Binding Path=ProcessedSource}" />
         </Border>
 
         <Label x:Name="lblToProcess" Content="----&gt;" HorizontalAlignment="Left" Margin="173,101,0,0" VerticalAlignment="Top" Grid.Column="1"/>

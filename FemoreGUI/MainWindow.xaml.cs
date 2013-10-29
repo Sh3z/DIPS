@@ -31,7 +31,7 @@ namespace FemoreGUI
             DataContext = vm;
 
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = @"Bitmaps|*.bmp|Jpegs|*.jpeg";
+            dialog.Filter = @"Bitmaps|*.bmp|Jpgs|*.jpg";
             bool? result = dialog.ShowDialog();
             if( result.HasValue && result.Value )
             {
