@@ -3,15 +3,14 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Windows.Data;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace FemoreGUI
+namespace Femore.ViewModel.Converters
 {
     /// <summary>
     /// Represents the converter used to transform a <see cref="Bitmap"/> into an <see cref="ImageSource"/>.
     /// </summary>
-    public class BmpToBmpSourceConverter : IValueConverter
+    public class BitmapToImageSourceConverter : IValueConverter
     {
         /// <summary>
         /// Converts a <see cref="Bitmap"/> into an <see cref="ImageSource"/> for use in Bindings.

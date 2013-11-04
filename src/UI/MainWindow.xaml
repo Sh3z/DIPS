@@ -1,12 +1,9 @@
-﻿<Window x:Class="FemoreGUI.MainWindow"
+﻿<Window x:Class="Femore.UI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:my="FemoreGUI"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
         <Style x:Key="ButtonImage" TargetType="Button">
-            <Setter Property="Command" Value="{Binding Path=ImageDetailCommand}" />   
-            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">

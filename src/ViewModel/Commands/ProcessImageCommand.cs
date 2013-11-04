@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Input;
 
-namespace FemoreGUI
+namespace Femore.ViewModel.Commands
 {
     /// <summary>
     /// Defines the command used to execute the processing algorithm against a single image.

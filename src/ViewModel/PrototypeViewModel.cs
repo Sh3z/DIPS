@@ -1,15 +1,17 @@
-﻿using System.ComponentModel;
+﻿using Femore.ViewModel.Commands;
+using Femore.ViewModel.Converters;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace FemoreGUI
+namespace Femore.ViewModel
 {
     /// <summary>
     /// Represents the presentation logic used in the prototype application.
     /// </summary>
-    public class PrototypeViewModel : INotifyPropertyChanged
+    public class PrototypeViewModel : IFemoreViewModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PrototypeViewModel"/> class.
@@ -18,7 +20,6 @@ namespace FemoreGUI
         {
             _processCmd = new ProcessImageCommand();
             _processCmd.ImageProcessed += image_processed;
-            ImageDetailCommand = new OpenImageWindowCommand();
         }
 
 
@@ -75,7 +76,7 @@ namespace FemoreGUI
         {
             get
             {
-                BmpToBmpSourceConverter converter = new BmpToBmpSourceConverter();
+                BitmapToImageSourceConverter converter = new BitmapToImageSourceConverter();
                 return converter.Convert( ImageToProcess, typeof( ImageSource ), null, null ) as ImageSource;
             }
         }
@@ -88,7 +89,7 @@ namespace FemoreGUI
         {
             get
             {
-                BmpToBmpSourceConverter converter = new BmpToBmpSourceConverter();
+                BitmapToImageSourceConverter converter = new BitmapToImageSourceConverter();
                 return converter.Convert( _processed, typeof( ImageSource ), null, null ) as ImageSource;
             }
         }

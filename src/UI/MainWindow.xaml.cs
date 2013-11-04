@@ -1,33 +1,27 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
+﻿using Femore.ViewModel;
+using Microsoft.Win32;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace FemoreGUI
+namespace Femore.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        /// <summary>
+        /// Initializes a new <see cref="MainWindow"/> using the provided <see cref="IFemoreViewModel"/>
+        /// as its presentation logic.
+        /// </summary>
+        /// <param name="vm">The presentation layer-level view-model.</param>
+        public MainWindow( IFemoreViewModel vm )
         {
             InitializeComponent();
 
-            // Initialize the view-model and require the user to pick an image.
-            PrototypeViewModel vm = new PrototypeViewModel();
+            // Set the Data Context as the view-model.
             DataContext = vm;
 
             OpenFileDialog dialog = new OpenFileDialog();
@@ -43,5 +37,12 @@ namespace FemoreGUI
                 Close();
             }
         }
+
+
+        /// <summary>
+        /// Contains the reference to the view-model.
+        /// </summary>
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private IFemoreViewModel _viewModel;
     }
 }
