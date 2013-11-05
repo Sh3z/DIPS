@@ -49,11 +49,14 @@
         <Label x:Name="lblToProcess" Content="----&gt;" HorizontalAlignment="Left" Margin="173,101,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <TreeView HorizontalAlignment="Left" Height="299" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Grid.RowSpan="2"/>
         <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="166,154,0,0" VerticalAlignment="Top" Width="51" Grid.Column="1" Command="{Binding Path=ProcessImageCommand}"/>
+        <Label Content="Gamma:" Margin="10,182,243,54" Grid.Column="1"/>
 
 
         <Border BorderThickness="1" BorderBrush="AliceBlue" Grid.Column="1" Grid.RowSpan="2">
-        <TextBlock Name="txtPicInfo" HorizontalAlignment="Left" Margin="0.075,237,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="62" Width="371"/>
+            <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="152,212,0,0" Text="{Binding Path=GaussianRadius}" />
         </Border>
         <Label x:Name="lblTitle" Content="PROTOTYPE" HorizontalAlignment="Center" Margin="150,10,146,0" VerticalAlignment="Top" RenderTransformOrigin="0.638,-0.124" Background="#FFEA9A9A" Width="79" FontWeight="Bold" Grid.Column="1"/>
+        <Label Content="Smoothing Radius:" Margin="10,210,243,26" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="153,186,0,0" Text="{Binding Path=Gamma}" />
     </Grid>
 </Window>

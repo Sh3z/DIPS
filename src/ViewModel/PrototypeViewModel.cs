@@ -1,4 +1,6 @@
-﻿using Femore.ViewModel.Commands;
+﻿using Femore.Imaging.Client;
+using Femore.Imaging.Core.Processes;
+using Femore.ViewModel.Commands;
 using Femore.ViewModel.Converters;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -18,7 +20,12 @@ namespace Femore.ViewModel
         /// </summary>
         public PrototypeViewModel()
         {
-            _processCmd = new ProcessImageCommand();
+            _testAlg = new Algorithm();
+            _smooth = new GaussianSmooth();
+            _correct = new GammaCorrection();
+            _testAlg.Add( _smooth );
+            _testAlg.Add( _correct );
+            _processCmd = new ProcessImageCommand( _testAlg );
             _processCmd.ImageProcessed += image_processed;
         }
 
@@ -113,6 +120,32 @@ namespace Femore.ViewModel
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private Bitmap _processed;
 
+        public int GaussianRadius
+        {
+            get
+            {
+                return _smooth.SmoothingRadius;
+            }
+            set
+            {
+                _smooth.SmoothingRadius = value;
+                property_changed( "GaussianRadius" );
+            }
+        }
+
+        public double Gamma
+        {
+            get
+            {
+                return _correct.Gamma;
+            }
+            set
+            {
+                _correct.Gamma = value;
+                property_changed( "Gamma" );
+            }
+        }
+
 
 
         /// <summary>
@@ -136,5 +169,12 @@ namespace Femore.ViewModel
         {
             ProcessedImage = e.Processed;
         }
+
+
+        private Algorithm _testAlg;
+
+        private GaussianSmooth _smooth;
+
+        private GammaCorrection _correct;
     }
 }

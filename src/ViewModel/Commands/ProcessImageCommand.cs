@@ -1,4 +1,5 @@
-﻿using Femore.Imaging.Core;
+﻿using Femore.Imaging.Client;
+using Femore.Imaging.Core;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,6 +12,12 @@ namespace Femore.ViewModel.Commands
     /// </summary>
     public class ProcessImageCommand : ICommand
     {
+        public ProcessImageCommand( Algorithm processingAlgorithm )
+        {
+            _algorithm = processingAlgorithm;
+        }
+
+
         /// <summary>
         /// Gets or sets the <see cref="Bitmap"/> which will be processed when this commad is
         /// executed.
@@ -64,12 +71,15 @@ namespace Femore.ViewModel.Commands
             // For this prototype, we will simply create a processor and execute it.
             // In the final release, factories and other doohickies will be used to further
             // seperate the processes.
-            var result = PrototypeProcessor.Process( Image );
+            var result = PrototypeProcessor.Process( Image, _algorithm );
             if( ImageProcessed != null )
             {
                 ImageProcessedArgs args = new ImageProcessedArgs( Image, result );
                 ImageProcessed( this, args );
             }
         }
+
+
+        private Algorithm _algorithm;
     }
 }
