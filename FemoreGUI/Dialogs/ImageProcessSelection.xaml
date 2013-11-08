@@ -1,0 +1,19 @@
+﻿<Window x:Class="FemoreGUI.Dialogs.ImageProcessSelection"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Process Images (Step 2 of 3)" Height="300" Width="320">
+    <Grid>
+        <RadioButton Content="Process 1" HorizontalAlignment="Left" Margin="29,58,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.478,0.867"/>
+        <ComboBox HorizontalAlignment="Left" Margin="126,100,0,0" VerticalAlignment="Top" Width="120"/>
+        <RadioButton Content="Process 2" HorizontalAlignment="Left" Margin="126,58,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="126,137,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Process" HorizontalAlignment="Left" Margin="126,226,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="Please select techniques to use for image processing" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="Process 3" HorizontalAlignment="Left" Margin="215,58,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="126,177,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="72,100,0,0" VerticalAlignment="Top"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="72,134,0,0" VerticalAlignment="Top"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="72,174,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,13 @@
+﻿<Window x:Class="FemoreGUI.Dialogs.ProcessConfirmation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Image Process (Step 3 of 3)" Height="300" Width="300">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="20,22,0,0" TextWrapping="Wrap" Text="The images will take xx time to process - would you like to switch your computer off when the process has finished?  You will save xx amount of energy if you do so." VerticalAlignment="Top"/>
+        <CheckBox Content="Auto power off?" HorizontalAlignment="Left" Margin="91,109,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="56" Margin="34,142,0,0" TextWrapping="Wrap" Text="So....would you like to process xx images?  Your images will be added to the queue when being processed." VerticalAlignment="Top" Width="233" BorderThickness="0"/>
+        <Button Content="Process" HorizontalAlignment="Left" Margin="192,218,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="34,218,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>
