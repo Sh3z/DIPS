@@ -1,0 +1,18 @@
+﻿<Window x:Name="winSaveNewDsStep3" x:Class="Femore.UI.Dialogs.SaveNewDs.SaveNewDsStep3"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SaveNewDsStep3" Height="353" Width="496">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="113*"/>
+            <RowDefinition Height="156*"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="lblTechList" Content="Click to confirm that you want to forward with processing the following files:" HorizontalAlignment="Left" Margin="37,10,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="lstTech" HorizontalAlignment="Left" Height="108" Margin="161,46,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="180"/>
+        <TextBlock x:Name="lblTurnOffComp" HorizontalAlignment="Left" Margin="37,38,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="413"><Run Language="en-gb" Text="Processing these files will take xx hours and xx minutes.  Please tick the box below to switch your computer off when processing is complete."/></TextBlock>
+        <CheckBox x:Name="chkTurnOffComputer" Content="Turn off computer after processing complete?" HorizontalAlignment="Left" Margin="112,101,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Button x:Name="btnBackStep2" Content="Back" HorizontalAlignment="Left" Margin="85,150,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="331,150,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

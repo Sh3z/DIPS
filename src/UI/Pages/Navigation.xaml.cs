@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Femore.UI;
+using Femore.UI.Dialogs;
 using Femore.ViewModel;
 
 namespace Femore.UI.Pages
@@ -33,6 +33,12 @@ namespace Femore.UI.Pages
             ViewExistingDataset viewWindow = new ViewExistingDataset(vm);
             viewWindow.WindowNav = this;
             viewWindow.Show();
+        }
+
+        private void btnLoadDataset_Click(object sender, RoutedEventArgs e)
+        {
+            SaveNewDsStep1 saveDS = new SaveNewDsStep1();
+            saveDS.Show();
         }
     }
 }

@@ -66,6 +66,15 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\SaveNewDs\SaveNewDsStep1.xaml.cs">
+      <DependentUpon>SaveNewDsStep1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SaveNewDs\SaveNewDsStep2.xaml.cs">
+      <DependentUpon>SaveNewDsStep2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SaveNewDs\SaveNewDsStep3.xaml.cs">
+      <DependentUpon>SaveNewDsStep3.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewExistingDataset.xaml.cs">
       <DependentUpon>ViewExistingDataset.xaml</DependentUpon>
     </Compile>
@@ -96,6 +105,18 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Dialogs\SaveNewDs\SaveNewDsStep1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SaveNewDs\SaveNewDsStep2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SaveNewDs\SaveNewDsStep3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewExistingDataset.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

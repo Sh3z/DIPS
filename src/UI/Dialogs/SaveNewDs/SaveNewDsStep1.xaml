@@ -1,0 +1,15 @@
+﻿<Window x:Name="winSaveNewDsStep1" x:Class="Femore.UI.Dialogs.SaveNewDsStep1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Select Images For New Dataset (Step 1 of 3)" Height="274" Width="395">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="277*"/>
+            <ColumnDefinition Width="110*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Left" Margin="19,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="344" Grid.ColumnSpan="2"><Run Language="en-gb" Text="Please select the images you would like to select for processing.  These will be created as a Dataset."/></TextBlock>
+        <ListBox x:Name="lstFiles" HorizontalAlignment="Left" Height="135" Margin="19,98,0,0" VerticalAlignment="Top" Width="155" ScrollViewer.CanContentScroll="True"/>
+        <Label Content="Files Selected" HorizontalAlignment="Left" Margin="53,72,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462"/>
+        <Button x:Name="btnSelectFiles" Content="Select Images" HorizontalAlignment="Left" Margin="241,140,0,0" VerticalAlignment="Top" Width="86" Height="54" Click="btnSelectFiles_Click" Grid.ColumnSpan="2"/>
+    </Grid>
+</Window>
