@@ -4,20 +4,37 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
+using Femore.UI.Pages;
 
 namespace Femore.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    /// 
+    public partial class ViewExistingDataset : Window
     {
+        //declarion of properties
+        private Navigation windowNav;
+        //getters and setters
+        public Navigation WindowNav
+        {
+            get
+            {
+                return windowNav;
+            }
+            set
+            {
+                windowNav = value;
+            }
+        }
+        
         /// <summary>
-        /// Initializes a new <see cref="MainWindow"/> using the provided <see cref="IFemoreViewModel"/>
+        /// Initializes a new <see cref="ViewExistingDataset"/> using the provided <see cref="IFemoreViewModel"/>
         /// as its presentation logic.
         /// </summary>
         /// <param name="vm">The presentation layer-level view-model.</param>
-        public MainWindow( IFemoreViewModel vm )
+        public ViewExistingDataset(IFemoreViewModel vm)
         {
             InitializeComponent();
 

@@ -1,4 +1,4 @@
-﻿using Femore.UI;
+﻿using Femore.UI.Pages;
 using Femore.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -24,9 +24,8 @@ namespace Femore
             base.OnStartup( e );
 
             // Create the window and provide it with the presentation layer.
-            PrototypeViewModel vm = new PrototypeViewModel();
-            MainWindow window = new MainWindow( vm );
-            window.ShowDialog();
+            Navigation navWindow = new Navigation();
+            navWindow.ShowDialog();
         }
     }
 }
