@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
-namespace Femore.ViewModel.Converters
+namespace DIPS.ViewModel.Converters
 {
     /// <summary>
     /// Represents the converter used to transform a <see cref="Bitmap"/> into an <see cref="ImageSource"/>.

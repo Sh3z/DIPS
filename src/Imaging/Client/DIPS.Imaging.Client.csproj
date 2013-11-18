@@ -7,8 +7,8 @@
     <ProjectGuid>{0F082ECF-CD3A-413B-BF90-755338507EDA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Femore.Imaging.Client</RootNamespace>
-    <AssemblyName>Femore.Imaging.Client</AssemblyName>
+    <RootNamespace>DIPS.Imaging.Client</RootNamespace>
+    <AssemblyName>DIPS.Imaging.Client</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

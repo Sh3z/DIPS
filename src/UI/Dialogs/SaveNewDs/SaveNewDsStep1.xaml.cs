@@ -11,9 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Femore.UI.Dialogs.SaveNewDs;
+using DIPS.UI.Dialogs.SaveNewDs;
 
-namespace Femore.UI.Dialogs
+namespace DIPS.UI.Dialogs
 {
     /// <summary>
     /// Interaction logic for SaveNewDsStep1.xaml

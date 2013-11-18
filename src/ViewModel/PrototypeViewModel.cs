@@ -1,14 +1,14 @@
-﻿using Femore.Imaging.Client;
-using Femore.Imaging.Core.Processes;
-using Femore.ViewModel.Commands;
-using Femore.ViewModel.Converters;
+﻿using DIPS.Imaging.Client;
+using DIPS.Imaging.Core.Processes;
+using DIPS.ViewModel.Commands;
+using DIPS.ViewModel.Converters;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Femore.ViewModel
+namespace DIPS.ViewModel
 {
     /// <summary>
     /// Represents the presentation logic used in the prototype application.

@@ -1,12 +1,12 @@
-﻿using Femore.ViewModel;
+﻿using DIPS.UI.Pages;
+using DIPS.ViewModel;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using Femore.UI.Pages;
 
-namespace Femore.UI
+namespace DIPS.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Femore.ViewModel
+namespace DIPS.ViewModel
 {
     /// <summary>
     /// Provides event information as an image is processed.

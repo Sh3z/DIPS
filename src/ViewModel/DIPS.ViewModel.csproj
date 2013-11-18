@@ -7,8 +7,8 @@
     <ProjectGuid>{AA521185-AA1A-4461-810C-B0BF60063136}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Femore.ViewModel</RootNamespace>
-    <AssemblyName>Femore.ViewModel</AssemblyName>
+    <RootNamespace>DIPS.ViewModel</RootNamespace>
+    <AssemblyName>DIPS.ViewModel</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -71,13 +71,13 @@
     <Compile Include="PrototypeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Imaging\Client\Femore.Imaging.Client.csproj">
+    <ProjectReference Include="..\Imaging\Client\DIPS.Imaging.Client.csproj">
       <Project>{0f082ecf-cd3a-413b-bf90-755338507eda}</Project>
-      <Name>Femore.Imaging.Client</Name>
+      <Name>DIPS.Imaging.Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Imaging\Core\Femore.Imaging.Core.csproj">
+    <ProjectReference Include="..\Imaging\Core\DIPS.Imaging.Core.csproj">
       <Project>{06f728ca-eb01-4b33-92e5-8f4cc5f73841}</Project>
-      <Name>Femore.Imaging.Core</Name>
+      <Name>DIPS.Imaging.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
