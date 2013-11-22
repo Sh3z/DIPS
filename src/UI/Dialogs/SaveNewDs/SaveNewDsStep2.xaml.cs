@@ -10,19 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FemoreGUI
+namespace DIPS.UI.Dialogs.SaveNewDs
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SaveNewDsStep2.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SaveNewDsStep2 : Window
     {
-        public MainWindow()
+        public SaveNewDsStep2()
         {
             InitializeComponent();
+        }
+
+        private void btnSelection_Click(object sender, RoutedEventArgs e)
+        {
+            SaveNewDsStep3 saveStep3 = new SaveNewDsStep3();
+            saveStep3.Show();
         }
     }
 }
