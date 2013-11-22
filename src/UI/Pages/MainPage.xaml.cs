@@ -10,18 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DIPS.UI.Dialogs;
 using DIPS.ViewModel;
+using DIPS.UI.Pages;
 
 namespace DIPS.UI.Pages
 {
     /// <summary>
-    /// Interaction logic for Navigation.xaml
+    /// Interaction logic for MainPage.xaml
     /// </summary>
-    public partial class Navigation : Window
+    public partial class MainPage : Page
     {
-        public Navigation()
+        public MainPage()
         {
             InitializeComponent();
         }
@@ -30,9 +32,10 @@ namespace DIPS.UI.Pages
         {
             // Create the window and provide it with the presentation layer.
             PrototypeViewModel vm = new PrototypeViewModel();
-            ViewExistingDataset viewWindow = new ViewExistingDataset(vm);
+            ViewExistingDataSet viewWindow = new ViewExistingDataSet(vm);
             viewWindow.WindowNav = this;
-            viewWindow.Show();
+
+            this.NavigationService.Navigate(viewWindow);
         }
 
         private void btnLoadDataset_Click(object sender, RoutedEventArgs e)

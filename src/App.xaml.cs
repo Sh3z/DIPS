@@ -1,4 +1,4 @@
-﻿using DIPS.UI.Pages;
+﻿using DIPS.UI;
 using DIPS.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace DIPS
             base.OnStartup( e );
 
             // Create the window and provide it with the presentation layer.
-            Navigation navWindow = new Navigation();
+            MainNavi navWindow = new MainNavi();
             navWindow.ShowDialog();
         }
     }

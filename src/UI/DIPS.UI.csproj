@@ -75,11 +75,14 @@
     <Compile Include="Dialogs\SaveNewDs\SaveNewDsStep3.xaml.cs">
       <DependentUpon>SaveNewDsStep3.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewExistingDataset.xaml.cs">
-      <DependentUpon>ViewExistingDataset.xaml</DependentUpon>
+    <Compile Include="MainNavi.xaml.cs">
+      <DependentUpon>MainNavi.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Navigation.xaml.cs">
-      <DependentUpon>Navigation.xaml</DependentUpon>
+    <Compile Include="Pages\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ViewExistingDataSet.xaml.cs">
+      <DependentUpon>ViewExistingDataSet.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -117,11 +120,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewExistingDataset.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="MainNavi.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Navigation.xaml">
+    <Page Include="Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ViewExistingDataSet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,18 +6,22 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DIPS.UI
+namespace DIPS.UI.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ViewExistingDataSet.xaml
     /// </summary>
-    /// 
-    public partial class ViewExistingDataset : Window
-    {
-        //declarion of properties
-        private Navigation windowNav;
+    public partial class ViewExistingDataSet : Page
+    {       
+        /// <summary>
+        /// Initializes a new <see cref="ViewExistingDataset"/> using the provided <see cref="IFemoreViewModel"/>
+        /// as its presentation logic.
+        /// </summary>
+        /// <param name="vm">The presentation layer-level view-model.</param>
+       //declarion of properties
+        private MainPage windowNav;
         //getters and setters
-        public Navigation WindowNav
+        public MainPage WindowNav
         {
             get
             {
@@ -34,7 +38,7 @@ namespace DIPS.UI
         /// as its presentation logic.
         /// </summary>
         /// <param name="vm">The presentation layer-level view-model.</param>
-        public ViewExistingDataset(IFemoreViewModel vm)
+        public ViewExistingDataSet(IFemoreViewModel vm)
         {
             InitializeComponent();
 
@@ -51,7 +55,7 @@ namespace DIPS.UI
             }
             else
             {
-                Close();
+                MessageBox.Show("File not present");
             }
         }
 
