@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,9 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DIPS.UI.Dialogs;
 using DIPS.ViewModel;
 using DIPS.UI.Pages;
+using DIPS.UI.Pages.LoadNewDataset;
 
 namespace DIPS.UI.Pages
 {
@@ -40,8 +39,8 @@ namespace DIPS.UI.Pages
 
         private void btnLoadDataset_Click(object sender, RoutedEventArgs e)
         {
-            SaveNewDsStep1 saveDS = new SaveNewDsStep1();
-            saveDS.Show();
+            LoadNewDSStep1 loadDS1 = new LoadNewDSStep1();
+            this.NavigationService.Navigate(loadDS1);
         }
     }
 }

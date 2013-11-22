@@ -66,17 +66,17 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dialogs\SaveNewDs\SaveNewDsStep1.xaml.cs">
-      <DependentUpon>SaveNewDsStep1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\SaveNewDs\SaveNewDsStep2.xaml.cs">
-      <DependentUpon>SaveNewDsStep2.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\SaveNewDs\SaveNewDsStep3.xaml.cs">
-      <DependentUpon>SaveNewDsStep3.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainNavi.xaml.cs">
       <DependentUpon>MainNavi.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LoadNewDataset\LoadNewDSStep1.xaml.cs">
+      <DependentUpon>LoadNewDSStep1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LoadNewDataset\LoadNewDSStep2.xaml.cs">
+      <DependentUpon>LoadNewDSStep2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LoadNewDataset\LoadNewDSStep3.xaml.cs">
+      <DependentUpon>LoadNewDSStep3.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -108,19 +108,19 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Dialogs\SaveNewDs\SaveNewDsStep1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\SaveNewDs\SaveNewDsStep2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\SaveNewDs\SaveNewDsStep3.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainNavi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LoadNewDataset\LoadNewDSStep1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LoadNewDataset\LoadNewDSStep2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LoadNewDataset\LoadNewDSStep3.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -139,6 +139,7 @@
       <Name>DIPS.ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

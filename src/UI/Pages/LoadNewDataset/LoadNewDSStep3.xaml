@@ -1,0 +1,17 @@
+﻿<Page x:Class="DIPS.UI.Pages.LoadNewDataset.LoadNewDSStep3"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d"
+	Title="LoadNewDSStep3" Width="540.299" Height="326.866">
+
+    <Grid>
+        <Label x:Name="lblTechList" Content="Click to confirm that you want to forward with processing the following files:" HorizontalAlignment="Left" Margin="65,10,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="lstTech" HorizontalAlignment="Left" Height="108" Margin="189,55,0,0" VerticalAlignment="Top" Width="180"/>
+        <TextBlock x:Name="lblTurnOffComp" HorizontalAlignment="Left" Margin="65,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="413"><Run Language="en-gb" Text="Processing these files will take xx hours and xx minutes.  Please tick the box below to switch your computer off when processing is complete."/></TextBlock>
+        <CheckBox x:Name="chkTurnOffComputer" Content="Turn off computer after processing complete?" HorizontalAlignment="Left" Margin="140,246,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="240,295,0,0" VerticalAlignment="Top" Width="75" Click="btnProcess_Click"/>
+
+    </Grid>
+</Page>
