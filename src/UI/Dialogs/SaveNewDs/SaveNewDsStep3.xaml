@@ -1,4 +1,4 @@
-﻿<Window x:Name="winSaveNewDsStep3" x:Class="Femore.UI.Dialogs.SaveNewDs.SaveNewDsStep3"
+﻿<Window x:Name="winSaveNewDsStep3" x:Class="DIPS.UI.Dialogs.SaveNewDs.SaveNewDsStep3"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SaveNewDsStep3" Height="353" Width="496">

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Femore.Imaging.Client
+namespace DIPS.Imaging.Client
 {
     /// <summary>
     /// Represents a process which is executed against a <see cref="Bitmap"/> to produce a different image.

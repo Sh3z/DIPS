@@ -1,6 +1,6 @@
-﻿using Emgu.CV;
+﻿using DIPS.Imaging.Client;
+using Emgu.CV;
 using Emgu.CV.Structure;
-using Femore.Imaging.Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Femore.Imaging.Core.Processes
+namespace DIPS.Imaging.Core.Processes
 {
     [Serializable]
     public class GammaCorrection : IImageProcess

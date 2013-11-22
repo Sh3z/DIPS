@@ -1,11 +1,11 @@
-﻿using Femore.Imaging.Client;
-using Femore.Imaging.Core;
+﻿using DIPS.Imaging.Client;
+using DIPS.Imaging.Core;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Input;
 
-namespace Femore.ViewModel.Commands
+namespace DIPS.ViewModel.Commands
 {
     /// <summary>
     /// Defines the command used to execute the processing algorithm against a single image.

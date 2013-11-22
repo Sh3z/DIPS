@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Femore.Imaging.Client
+namespace DIPS.Imaging.Client
 {
     [Serializable]
     public sealed class Algorithm : ICollection<IImageProcess>, IEquatable<Algorithm>

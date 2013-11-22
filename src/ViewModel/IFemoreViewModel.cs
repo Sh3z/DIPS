@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Femore.ViewModel
+namespace DIPS.ViewModel
 {
     /// <summary>
     /// Represents the main presentation layer within the application.

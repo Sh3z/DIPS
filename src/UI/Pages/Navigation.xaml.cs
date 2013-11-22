@@ -11,10 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Femore.UI.Dialogs;
-using Femore.ViewModel;
+using DIPS.UI.Dialogs;
+using DIPS.ViewModel;
 
-namespace Femore.UI.Pages
+namespace DIPS.UI.Pages
 {
     /// <summary>
     /// Interaction logic for Navigation.xaml

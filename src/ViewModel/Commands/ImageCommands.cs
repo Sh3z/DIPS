@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace Femore.ViewModel.Commands
+namespace DIPS.ViewModel.Commands
 {
     /// <summary>
     /// Contains a set of <see cref="RoutedUICommand"/>s for use within the UI.

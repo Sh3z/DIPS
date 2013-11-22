@@ -1,10 +1,10 @@
-﻿using Emgu.CV;
+﻿using DIPS.Imaging.Client;
+using Emgu.CV;
 using Emgu.CV.Structure;
-using Femore.Imaging.Client;
 using System;
 using System.Drawing;
 
-namespace Femore.Imaging.Core
+namespace DIPS.Imaging.Core
 {
     /// <summary>
     /// Provides the mechanism to process an image in the prototype application.
