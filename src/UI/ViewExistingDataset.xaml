@@ -47,7 +47,7 @@
         </Border>
 
         <Label x:Name="lblToProcess" Content="----&gt;" HorizontalAlignment="Left" Margin="173,101,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <TreeView HorizontalAlignment="Left" Height="299" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Grid.RowSpan="2"/>
+        <TreeView x:Name="treeView" SelectedItemChanged="OnTreeViewSelectedItemChanged" HorizontalAlignment="Left" Height="299" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Grid.RowSpan="2"/>
         <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="166,154,0,0" VerticalAlignment="Top" Width="51" Grid.Column="1" Command="{Binding Path=ProcessImageCommand}"/>
         <Label Content="Gamma:" Margin="10,182,243,54" Grid.Column="1"/>
 
