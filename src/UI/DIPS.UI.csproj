@@ -53,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -134,6 +135,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Database\DIPS.Database.csproj">
+      <Project>{a200fc0f-f24e-4f28-b34e-88b1ebd4773c}</Project>
+      <Name>DIPS.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ViewModel\DIPS.ViewModel.csproj">
       <Project>{aa521185-aa1a-4461-810c-b0bf60063136}</Project>
       <Name>DIPS.ViewModel</Name>
