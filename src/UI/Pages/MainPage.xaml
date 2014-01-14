@@ -9,9 +9,9 @@
 
     <Grid>
         <Button x:Name="btnViewExistingDS" Content="EDS" HorizontalAlignment="Left" Margin="101,126,0,0" VerticalAlignment="Top" Width="36" Height="37" Click="btnViewExistingDS_Click" ToolTip="View Existing Dataset"/>
-        <Button x:Name="btnCreateAlgorithm" Content="IAC" HorizontalAlignment="Left" Margin="101,183,0,0" VerticalAlignment="Top" Width="36" Height="37" ToolTip="Create New Algorithm"/>
-        <Button x:Name="btnLoadDataset" Content="LDW" HorizontalAlignment="Left" Margin="159,126,0,0" VerticalAlignment="Top" Width="36" Height="37" ToolTip="Load Dataset" Click="btnLoadDataset_Click"/>
-        <Button x:Name="btnAbout" Content="About" HorizontalAlignment="Left" Margin="159,183,0,0" VerticalAlignment="Top" Width="36" Height="37" ToolTip="About"/>
+        <Button x:Name="btnCreateAlgorithm" Content="AC" HorizontalAlignment="Left" Margin="101,183,0,0" VerticalAlignment="Top" Width="36" Height="37" ToolTip="Create New Algorithm"/>
+        <Button x:Name="btnLoadDataset" Content="W" HorizontalAlignment="Left" Margin="159,126,0,0" VerticalAlignment="Top" Width="45" Height="37" ToolTip="Load Dataset" Click="btnLoadDataset_Click"/>
+        <Button x:Name="btnAbout" Content="About" HorizontalAlignment="Left" Margin="159,183,0,0" VerticalAlignment="Top" Width="45" Height="37" ToolTip="About"/>
         <TextBlock x:Name="txtTitle" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" FontFamily="SimHei" FontSize="14"><Run Text="Dynamic Image Processing Software"/><Run Language="en-gb" Text=" v0.1"/><LineBreak/><LineBreak/><Run Text="by Gary Chadwick, Thomas Sherwood, Chuo Yeh Poo "/></TextBlock>
         <GroupBox Header="Please select an option to begin.." HorizontalAlignment="Left" Margin="44,100,0,0" VerticalAlignment="Top" Height="143" Width="206" RenderTransformOrigin="0.505,0.535">
             <GroupBox.RenderTransform>
