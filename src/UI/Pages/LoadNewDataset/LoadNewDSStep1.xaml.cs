@@ -24,6 +24,15 @@ namespace DIPS.UI.Pages.LoadNewDataset
     /// </summary>
     public partial class LoadNewDSStep1 : Page
     {
+        private List<FileInfo> _listOfFiles;
+
+        public List<FileInfo> ListofFiles
+        {
+            get { return _listOfFiles; }
+            set { _listOfFiles = value; }
+        }
+        
+
         public LoadNewDSStep1()
         {
             InitializeComponent();
@@ -33,10 +42,6 @@ namespace DIPS.UI.Pages.LoadNewDataset
         {
             //open dialog for user to select files
             selectFilesForDataset();
-
-            
-            LoadNewDSStep2 loadDS2 = new LoadNewDSStep2();
-            this.NavigationService.Navigate(loadDS2);
         }
 
         private void selectFilesForDataset()
@@ -56,12 +61,25 @@ namespace DIPS.UI.Pages.LoadNewDataset
                 
             if (isOkay == true)
             {
-                foreach (String file in strFiles)
+                ListofFiles = new List<FileInfo>();
+
+                foreach (string file in dialogOpen.FileNames)
                 {
-                    //lstFiles.
+                    lstFiles.Items.Add(file);
+
+                    FileInfo uploadFile = new FileInfo(file);
+                    ListofFiles.Add(uploadFile);
                 }
             }
 
+        }
+
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            LoadNewDSStep2 loadDS2 = new LoadNewDSStep2();
+            loadDS2.ListofFiles = ListofFiles;
+
+            this.NavigationService.Navigate(loadDS2);
         }
     }
 }

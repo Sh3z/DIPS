@@ -11,7 +11,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="77,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="344"><Run Language="en-gb" Text="Please select the images you would like to select for processing.  These will be created as a Dataset."/></TextBlock>
         <ListBox x:Name="lstFiles" HorizontalAlignment="Left" Height="135" Margin="77,126,0,0" VerticalAlignment="Top" Width="155" ScrollViewer.CanContentScroll="True"/>
         <Label Content="Files Selected" HorizontalAlignment="Left" Margin="111,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462"/>
-        <Button x:Name="btnSelectFiles" Content="Select Images" HorizontalAlignment="Left" Margin="299,168,0,0" VerticalAlignment="Top" Width="86" Height="54" Click="btnSelectFiles_Click"/>
+        <Button x:Name="btnSelectFiles" Content="Select Images" HorizontalAlignment="Left" Margin="299,126,0,0" VerticalAlignment="Top" Width="86" Height="54" Click="btnSelectFiles_Click"/>
+        <Button x:Name="btnConfirm" Content="Confirm Choice" HorizontalAlignment="Left" Margin="299,239,0,0" VerticalAlignment="Top" Width="86" Click="btnConfirm_Click"/>
 
     </Grid>
 </Page>
