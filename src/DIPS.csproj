@@ -136,6 +136,16 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\Extended.Wpf.Toolkit.2.0.0.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\Extended.Wpf.Toolkit.2.0.0.nuspec">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\tools\install.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages\repositories.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -157,6 +167,30 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net35\WPFToolkit.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net35\Xceed.Wpf.Toolkit.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\de\Xceed.Wpf.AvalonDock.resources.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\es\Xceed.Wpf.AvalonDock.resources.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\fr\Xceed.Wpf.AvalonDock.resources.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\hu\Xceed.Wpf.AvalonDock.resources.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\it\Xceed.Wpf.AvalonDock.resources.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\pt-BR\Xceed.Wpf.AvalonDock.resources.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\ro\Xceed.Wpf.AvalonDock.resources.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\ru\Xceed.Wpf.AvalonDock.resources.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\sv\Xceed.Wpf.AvalonDock.resources.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.AvalonDock.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.DataGrid.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.Toolkit.dll" />
+    <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
