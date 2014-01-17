@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="Dicom, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0605845bb95bde07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Visual Studio 2012\Projects\Test\Test\bin\Debug\Dicom.dll</HintPath>
+      <HintPath>External Library\Dicom.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,6 +54,11 @@
     <Compile Include="staticVariables.cs" />
     <Compile Include="storedProcedure.cs" />
     <Compile Include="verifyDicom.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="External Library\Dicom.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
