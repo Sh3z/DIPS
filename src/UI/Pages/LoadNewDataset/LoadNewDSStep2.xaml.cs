@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using DIPS.UI.Pages.LoadNewDataset;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using DIPS.UI.Objects;
 
 namespace DIPS.UI.Pages.LoadNewDataset
 {
@@ -32,15 +33,106 @@ namespace DIPS.UI.Pages.LoadNewDataset
             set { _listOfFiles = value; }
         }
 
+        private List<Technique> _listofTechniques;
+
+        public List<Technique> ListofTechniques
+        {
+            get { return _listofTechniques; }
+            set { _listofTechniques = value; }
+        }
+
+        private List<Technique> _selectedTechniques;
+
+        public List<Technique> selectedTechniques
+        {
+            get { return _selectedTechniques; }
+            set { _selectedTechniques = value; }
+        }
+        
+        
+
         public LoadNewDSStep2()
         {
             InitializeComponent();
+            
+
         }
 
         private void btnSelection_Click(object sender, RoutedEventArgs e)
         {
             LoadNewDSStep3 loadDS3 = new LoadNewDSStep3();
             this.NavigationService.Navigate(loadDS3);
+        }
+
+        public void LoadLists()
+        {
+            lstSelectedFiles.ItemsSource = ListofFiles;
+            lstAvailableTech.ItemsSource = ListofTechniques;
+            lstSelectedTechniques.ItemsSource = selectedTechniques;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            selectedTechniques = new List<Technique>();
+            ListofTechniques = new List<Technique>();
+            
+            LoadTechniqueObjects();
+            LoadLists();
+        }
+
+        private void LoadTechniqueObjects()
+        {
+            Technique tech1 = new Technique();
+            Technique tech2 = new Technique();
+            Technique tech3 = new Technique();
+            Technique tech4 = new Technique();
+
+            tech1.ID = 1;
+            tech2.ID = 2;
+            tech3.ID = 3;
+            tech4.ID = 4;
+
+            tech1.Name = "Blurring";
+            tech2.Name = "Shading";
+            tech3.Name = "Fuzzy";
+            tech4.Name = "Whitening";
+
+            ListofTechniques.Add(tech1);
+            ListofTechniques.Add(tech2);
+            ListofTechniques.Add(tech3);
+            ListofTechniques.Add(tech4);
+        }
+
+        private void btnSelectTech_Click(object sender, RoutedEventArgs e)
+        {
+            passToSelectedTech();
+        }
+
+        private void passToSelectedTech()
+        {
+            if (lstAvailableTech.Items.Count > 0)
+            {
+                Technique tempTech = new Technique();
+                tempTech = (Technique)lstAvailableTech.SelectedItem;
+
+                selectedTechniques.Add(tempTech);
+            }
+        }
+
+        private void passToInactiveTech()
+        {
+            if (lstSelectedTechniques.Items.Count > 0)
+            {
+                Technique tempTech = new Technique();
+                tempTech = (Technique)lstSelectedTechniques.SelectedItem;
+
+                ListofTechniques.Add(tempTech);
+            }
+        }
+
+        private void btnDeselectTech_Click(object sender, RoutedEventArgs e)
+        {
+            passToInactiveTech();
         }
     }
 }
