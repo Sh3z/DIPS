@@ -56,6 +56,9 @@
     <Compile Include="verifyDicom.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="External Library\Database.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External Library\Dicom.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
