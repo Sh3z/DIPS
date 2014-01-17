@@ -89,11 +89,6 @@
     <Compile Include="MainNavi.xaml.cs">
       <DependentUpon>MainNavi.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Objects\ImageProperties.cs" />
-    <Compile Include="Objects\PatientImage.cs" />
-    <Compile Include="Objects\ImageDataset.cs" />
-    <Compile Include="Objects\Patient.cs" />
-    <Compile Include="Objects\Technique.cs" />
     <Compile Include="Pages\LoadNewDataset\LoadNewDSStep1.xaml.cs">
       <DependentUpon>LoadNewDSStep1.xaml</DependentUpon>
     </Compile>

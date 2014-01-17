@@ -47,6 +47,11 @@
   <ItemGroup>
     <Compile Include="checkExist.cs" />
     <Compile Include="main.cs" />
+    <Compile Include="Objects\ImageDataset.cs" />
+    <Compile Include="Objects\ImageProperties.cs" />
+    <Compile Include="Objects\Patient.cs" />
+    <Compile Include="Objects\PatientImage.cs" />
+    <Compile Include="Objects\Technique.cs" />
     <Compile Include="printTables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="readDicom.cs" />
