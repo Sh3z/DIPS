@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.UI.Objects
+namespace DIPS.Database.Objects
 {
     public class Patient
     {

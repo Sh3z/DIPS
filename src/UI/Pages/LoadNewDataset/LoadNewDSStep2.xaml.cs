@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 using DIPS.UI.Pages.LoadNewDataset;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
-using DIPS.UI.Objects;
+using DIPS.Database.Objects;
 
 namespace DIPS.UI.Pages.LoadNewDataset
 {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
-namespace DIPS.UI.Objects
+namespace DIPS.Database.Objects
 {
     public class ImageDataset
     {

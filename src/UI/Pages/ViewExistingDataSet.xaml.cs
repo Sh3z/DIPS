@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using Xceed.Wpf.Toolkit;
-using DIPS.UI.Objects;
+using DIPS.Database.Objects;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using Xceed.Wpf.Toolkit.PropertyGrid;
