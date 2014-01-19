@@ -15,12 +15,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <23/11/2013>
--- Description:	<Retrieve id, image number to produce treeview>
+-- Create date: <01/19/2014>
+-- Description:	<Update series number for specific patient>
 -- =============================================
-CREATE PROCEDURE spr_TreeView_v001
-	-- Add the parameters for the stored procedure here
-
+CREATE PROCEDURE spr_UpdateSeriesNo_v001
+	@series int,
+	@databaseID int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -28,10 +28,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.patientID, i.fileID
-	from patient p join imageProperties iv on p.id = iv.id 
-	join images i on iv.imageID = i.imageID 
-	group by p.patientID,i.fileID
-	order by 1, 2;
+	update patient set seriesAvailable = @series where id=@databaseID;
 END
 GO

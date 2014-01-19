@@ -15,12 +15,16 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <23/11/2013>
--- Description:	<Retrieve id, image number to produce treeview>
+-- Create date: <03/11/2013>
+-- Description:	<Retrieve ID of matched patient>
 -- =============================================
-CREATE PROCEDURE spr_TreeView_v001
+CREATE PROCEDURE spr_CheckPatientExist_v001
 	-- Add the parameters for the stored procedure here
-
+	@birthdate varchar(10),
+	@age varchar(10),
+	@sex char(1),
+	@fname varchar(30),
+	@lname varchar(30)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -28,10 +32,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.patientID, i.fileID
-	from patient p join imageProperties iv on p.id = iv.id 
-	join images i on iv.imageID = i.imageID 
-	group by p.patientID,i.fileID
-	order by 1, 2;
+	select p.id, i.bodyPart, i.studyDescription, i.seriesDescription
+	from patient p inner join name n on p.id = n.id join imageProperties i on p.id = i.id 
+	where ((p.birthdate = @birthdate and p.age = @age) and p.sex = @sex) and (n.firstName = @fname and n.lastName = @lname)
 END
 GO

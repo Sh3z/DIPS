@@ -15,12 +15,18 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <23/11/2013>
--- Description:	<Retrieve id, image number to produce treeview>
+-- Create date: <01/11/2013>
+-- Description:	<Insert Image Information>
 -- =============================================
-CREATE PROCEDURE spr_TreeView_v001
+CREATE PROCEDURE spr_InsertImageProperties_v001
 	-- Add the parameters for the stored procedure here
-
+	@imgID varchar(15),
+	@id int,
+	@imgDateTime datetime,
+	@bodyPart varchar(20),
+	@studyDesc varchar(50),
+	@seriesDesc varchar(50),
+	@sliceThick varchar(20)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -28,10 +34,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.patientID, i.fileID
-	from patient p join imageProperties iv on p.id = iv.id 
-	join images i on iv.imageID = i.imageID 
-	group by p.patientID,i.fileID
-	order by 1, 2;
+	INSERT INTO imageProperties (imageID,id,imageDateTime,bodyPart,studyDescription,seriesDescription,sliceThickness) 
+	VALUES (@imgID,@id,@imgDateTime,@bodyPart,@studyDesc,@seriesDesc,@sliceThick)
 END
 GO

@@ -46,6 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="checkExist.cs" />
+    <Compile Include="ImageRepository.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="main.cs" />
     <Compile Include="Objects\ImageDataset.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -15,7 +15,7 @@ namespace DIPS.Database
             SqlConnection con = new SqlConnection(staticVariables.sql);
             con.Open();
 
-            SqlCommand cmd = new SqlCommand("spr_SelectPatient_v001", con);
+            SqlCommand cmd = new SqlCommand("spr_CheckPatientExist_v001", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = staticVariables.pBday;
             cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = staticVariables.age;
@@ -24,32 +24,31 @@ namespace DIPS.Database
             cmd.Parameters.Add("@lname", SqlDbType.VarChar).Value = staticVariables.lastName;
             SqlDataReader dataReader = cmd.ExecuteReader();
 
-            String a, b, c;
-            while(dataReader.Read())
+            while (dataReader.Read())
             {
-                a = dataReader.GetString(1);
-                b = dataReader.GetString(2);
-                c = dataReader.GetString(3);
-                Boolean aa = staticVariables.bodyPart.Equals(a);
-                Boolean bb = staticVariables.studyDesc.Equals(b);
-                Boolean cc = staticVariables.seriesDesc.Equals(c);
+                staticVariables.patientExist = true;
+                Boolean bodyMatch = staticVariables.bodyPart.Equals(dataReader.GetString(1));
+                Boolean studyMatch = staticVariables.studyDesc.Equals(dataReader.GetString(2));
+                Boolean seriesMatch = staticVariables.seriesDesc.Equals(dataReader.GetString(3));
 
-                if (aa == true && (bb == true && cc == true))
+                if (bodyMatch == true && (studyMatch == true && seriesMatch == true))
                 {
-                    staticVariables.patientExist = true;
+                    staticVariables.sameSeries = true;
                     staticVariables.databaseID = dataReader.GetInt32(0);
-                    dataReader.Close();
                     break;
                 }
             }
+            dataReader.Close();
+
             if (staticVariables.patientExist == false)
             {
-                dataReader.Close();
+                SqlCommand cmd2 = new SqlCommand("spr_RetrieveID_v001", con);
+                cmd2.CommandType = CommandType.StoredProcedure;
                 while (true)
                 {
                     staticVariables.pID = generateID();
-                    String sql = "select id from patient where patientID='" + staticVariables.pID + "'";
-                    SqlCommand cmd2 = new SqlCommand(sql, con);
+                    cmd2.Parameters.Clear();
+                    cmd2.Parameters.Add("@pID", SqlDbType.VarChar).Value = staticVariables.pID;
                     SqlDataReader reader = cmd2.ExecuteReader();
                     if (reader.Read() == false)
                     {
@@ -60,6 +59,27 @@ namespace DIPS.Database
                     continue;
                 }
             }
+            else if (staticVariables.sameSeries == false)
+            {
+                SqlCommand cmd2 = new SqlCommand("spr_RetrieveSeriesAvailable_v001", con);
+                cmd2.CommandType = CommandType.StoredProcedure;
+                cmd2.Parameters.Add("@databaseID", SqlDbType.Int).Value = staticVariables.databaseID;
+                SqlDataReader reader = cmd2.ExecuteReader();
+                while (reader.Read())
+                {
+                    staticVariables.imageSeries = reader.GetInt32(0);
+                    staticVariables.imageSeries++;
+                    break;
+                }
+                reader.Close();
+
+                SqlCommand cmd3 = new SqlCommand("spr_UpdateSeriesNo_v001", con);
+                cmd3.CommandType = CommandType.StoredProcedure;
+                cmd3.Parameters.Add("@series", SqlDbType.Int).Value = staticVariables.imageSeries;
+                cmd3.Parameters.Add("@databaseID", SqlDbType.Int).Value = staticVariables.databaseID;
+                cmd3.ExecuteNonQuery();
+            }
+         
             con.Close();
         }
 
@@ -74,8 +94,8 @@ namespace DIPS.Database
                 alphabet += alpha;
             }
             String patientID = "";
-           if(staticVariables.pBday.Equals("NULL")) patientID = alphabet + rand.Next(50000000,99999999);
-           else patientID = alphabet + staticVariables.pBday;
+            if (staticVariables.pBday.Equals("NULL")) patientID = alphabet + rand.Next(50000000, 99999999);
+            else patientID = alphabet + staticVariables.pBday;
 
             return patientID;
         }

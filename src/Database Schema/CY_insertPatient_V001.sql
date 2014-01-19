@@ -23,7 +23,8 @@ CREATE PROCEDURE spr_InsertPatient_v001
 	@id varchar(30),
 	@birthday varchar(10),
 	@age varchar(10),
-	@sex char
+	@sex char,
+	@series int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -31,7 +32,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO patient (patientID,birthdate,age,sex) OUTPUT INSERTED.id VALUES (@id,@birthday,@age,@sex)
+	INSERT INTO patient (patientID,birthdate,age,sex,seriesAvailable) OUTPUT INSERTED.id VALUES (@id,@birthday,@age,@sex,@series)
 
 END
 GO

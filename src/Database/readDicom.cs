@@ -32,7 +32,7 @@ namespace DIPS.Database
 
                 FileStream fs = new FileStream(staticVariables.readFile, FileMode.Open);
                 DicomFileFormat dff = new DicomFileFormat();
-                
+
                 try
                 {
                     dff.Load(fs, DicomReadOptions.Default);
@@ -55,8 +55,9 @@ namespace DIPS.Database
                     nullCheck();
                     check.retriveDatabase();
                     spr.insert();
- 
-                } catch (Exception e)
+
+                }
+                catch (Exception e)
                 {
                     fs.Close();
                     Console.WriteLine("unable to read");

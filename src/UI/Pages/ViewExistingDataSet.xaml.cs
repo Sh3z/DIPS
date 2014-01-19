@@ -10,6 +10,11 @@ using DIPS.Database.Objects;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using Xceed.Wpf.Toolkit.PropertyGrid;
+using Database;
+using DIPS.Database;
+using System.Windows.Forms;
+using System.IO;
+using System;
 
 namespace DIPS.UI.Pages
 {
@@ -68,7 +73,8 @@ namespace DIPS.UI.Pages
 
             // Set the Data Context as the view-model.
             DataContext = vm;
-
+            loadDicom();
+            /*
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = @"Bitmaps|*.bmp|Jpgs|*.jpg";
             bool? result = dialog.ShowDialog();
@@ -81,9 +87,29 @@ namespace DIPS.UI.Pages
             {
                 System.Windows.MessageBox.Show("File not present");
             }
-
+            */
             addObjectsTotreeView();
             setupProperties();
+        }
+
+        public void loadDicom()
+        {
+            readDicom dicom = new readDicom();
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            DialogResult result = fbd.ShowDialog();
+            try
+            {
+                string[] files = Directory.GetFiles(fbd.SelectedPath, "*", SearchOption.AllDirectories);
+                System.Windows.Forms.MessageBox.Show(files.Length + " Files to Process");
+
+                foreach (String s in files)
+                {
+                    staticVariables.readFile = s;
+                    dicom.read();
+                }
+                System.Windows.Forms.MessageBox.Show("Complete");
+            }
+            catch (Exception e) { }
         }
 
 
@@ -123,7 +149,7 @@ namespace DIPS.UI.Pages
         }
 
         private void setupTreeviewObjects()
-        {
+        {/*
             PatientImage img1 = new PatientImage();
             PatientImage img2 = new PatientImage();
             PatientImage img3 = new PatientImage();
@@ -169,11 +195,12 @@ namespace DIPS.UI.Pages
             allDatasetsActive.Add(imgDS1);
             allDatasetsActive.Add(imgDS2);
             allDatasetsActive.Add(imgDS3);
-            allDatasetsActive.Add(imgDS4);
+            allDatasetsActive.Add(imgDS4);*/
 
+            ImageRepository imgRepo = new ImageRepository();
             //initialise all datasets var
-            allDatasets = new List<ImageDataset>();
-            allDatasets = allDatasetsActive;
+            //allDatasets = new List<ImageDataset>();
+            allDatasets = imgRepo.generateTreeView();
         }
     }
 
