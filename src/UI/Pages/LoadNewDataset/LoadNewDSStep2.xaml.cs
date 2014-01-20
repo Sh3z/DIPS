@@ -33,28 +33,30 @@ namespace DIPS.UI.Pages.LoadNewDataset
             set { _listOfFiles = value; }
         }
 
-        private List<Technique> _listofTechniques;
-
-        public List<Technique> ListofTechniques
+        public ObservableCollection<Technique> ListofTechniques
         {
-            get { return _listofTechniques; }
-            set { _listofTechniques = value; }
+            get { return (ObservableCollection<Technique>)GetValue(listOfTechniquesProperty); }
+            set { SetValue(listOfTechniquesProperty, value); }
         }
 
-        private List<Technique> _selectedTechniques;
+        public static readonly DependencyProperty listOfTechniquesProperty =
+           DependencyProperty.Register("ListofTechniques",
+           typeof(ObservableCollection<Technique>), typeof(Page), new UIPropertyMetadata(null));
 
-        public List<Technique> selectedTechniques
+        public ObservableCollection<Technique> selectedTechniques
         {
-            get { return _selectedTechniques; }
-            set { _selectedTechniques = value; }
+            get { return (ObservableCollection<Technique>)GetValue(selectedTechniquesProperty); }
+            set { SetValue(selectedTechniquesProperty, value); }
         }
-        
-        
+
+        public static readonly DependencyProperty selectedTechniquesProperty = 
+            DependencyProperty.Register("selectedTechniques",
+            typeof(ObservableCollection<Technique>), typeof(Page), new UIPropertyMetadata(null));
+
 
         public LoadNewDSStep2()
         {
             InitializeComponent();
-            
 
         }
 
@@ -73,8 +75,8 @@ namespace DIPS.UI.Pages.LoadNewDataset
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            selectedTechniques = new List<Technique>();
-            ListofTechniques = new List<Technique>();
+            this.selectedTechniques = new ObservableCollection<Technique>();
+            ListofTechniques = new ObservableCollection<Technique>();
             
             LoadTechniqueObjects();
             LoadLists();
@@ -113,10 +115,13 @@ namespace DIPS.UI.Pages.LoadNewDataset
             if (lstAvailableTech.Items.Count > 0)
             {
                 Technique tempTech = new Technique();
+                
                 tempTech = (Technique)lstAvailableTech.SelectedItem;
 
+                ListofTechniques.Remove((Technique)lstAvailableTech.SelectedItem);
                 selectedTechniques.Add(tempTech);
             }
+
         }
 
         private void passToInactiveTech()
@@ -124,9 +129,11 @@ namespace DIPS.UI.Pages.LoadNewDataset
             if (lstSelectedTechniques.Items.Count > 0)
             {
                 Technique tempTech = new Technique();
+                
                 tempTech = (Technique)lstSelectedTechniques.SelectedItem;
 
                 ListofTechniques.Add(tempTech);
+                selectedTechniques.Remove((Technique)lstSelectedTechniques.SelectedItem);
             }
         }
 

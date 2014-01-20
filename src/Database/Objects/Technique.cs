@@ -24,5 +24,11 @@ namespace DIPS.Database.Objects
             set { _Name = value; }
         }
         
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        
     }
 }
