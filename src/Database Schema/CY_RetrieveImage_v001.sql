@@ -20,7 +20,7 @@ GO
 -- =============================================
 CREATE PROCEDURE spr_RetrieveImage_v001
 	-- Add the parameters for the stored procedure here
-	@fID varchar(20)
+	@fID int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from

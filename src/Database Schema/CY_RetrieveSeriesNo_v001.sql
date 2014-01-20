@@ -18,7 +18,7 @@ GO
 -- Create date: <01/19/2014>
 -- Description:	<Retrieve series available for specific patient>
 -- =============================================
-CREATE PROCEDURE spr_RetrieveSeriesAvailable_v001
+ALTER PROCEDURE spr_RetrieveSeriesAvailable_v001
 	@databaseID int
 AS
 BEGIN
@@ -27,6 +27,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select seriesAvailable from patient where id=@databaseID;
+	select tableID from imageProperties where patientID=@databaseID;
 END
 GO

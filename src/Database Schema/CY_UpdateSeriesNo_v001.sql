@@ -28,6 +28,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	update patient set seriesAvailable = @series where id=@databaseID;
+	update patient set seriesAvailable = @series where tableID=@databaseID;
 END
 GO

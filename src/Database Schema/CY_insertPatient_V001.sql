@@ -32,7 +32,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO patient (patientID,birthdate,age,sex,seriesAvailable) OUTPUT INSERTED.id VALUES (@id,@birthday,@age,@sex,@series)
+	INSERT INTO patient (patientID,birthdate,age,sex,seriesAvailable) OUTPUT INSERTED.tableID VALUES (@id,@birthday,@age,@sex,@series)
 
 END
 GO

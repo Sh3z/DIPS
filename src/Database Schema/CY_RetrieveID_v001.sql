@@ -28,6 +28,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select id from patient where patientID=@pID;
+	select tableID from patient where patientID=@pID;
 END
 GO

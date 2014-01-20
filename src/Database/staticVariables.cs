@@ -10,6 +10,7 @@ namespace DIPS.Database
     public static class staticVariables
     {
         public static int databaseID = 0;
+        public static int imgPropTableID = 0;
         public static Boolean patientExist = false;
         public static Boolean sameSeries = false;
         public static String sql = "Data Source=.\\Yeh;Initial Catalog=medicalImaging;Integrated Security=True";

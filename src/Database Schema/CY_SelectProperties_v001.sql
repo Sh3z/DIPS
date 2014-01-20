@@ -20,7 +20,7 @@ GO
 -- =============================================
 CREATE PROCEDURE spr_SelectProperties_v001
 	-- Add the parameters for the stored procedure here
-	@fileID varchar(20)
+	@fileID int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -29,7 +29,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	select p.birthdate, p.age, p.sex, iv.imageDateTime, iv.bodyPart, iv.studyDescription, iv.seriesDescription, iv.sliceThickness 
-	from patient p inner join imageProperties iv on p.id = iv.id join images i on iv.imageID = i.imageID
+	from patient p inner join imageProperties iv on p.tableID = iv.patientID join images i on iv.tableID = i.classID
 	where i.fileID = @fileID;
 END
 GO

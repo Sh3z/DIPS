@@ -48,7 +48,7 @@ namespace Database
                     }
 
                     img.patientID = currentID;
-                    img.imgID = data.GetString(1);
+                    img.imgID = data.GetInt32(1);
                     imageCollectionDS.Add(img);
                     prevID = currentID;
                 }

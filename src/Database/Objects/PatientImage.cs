@@ -8,9 +8,9 @@ namespace DIPS.Database.Objects
 {
     public class PatientImage
     {
-        private String _imgID;
+        private int _imgID;
 
-        public String imgID
+        public int imgID
         {
             get { return _imgID; }
             set { _imgID = value; }
@@ -38,6 +38,11 @@ namespace DIPS.Database.Objects
         {
             get { return _patientID; }
             set { _patientID = value; }
+        }
+
+        public override string ToString()
+        {
+            return imgID.ToString();
         }
     }
 }

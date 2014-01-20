@@ -21,8 +21,7 @@ GO
 -- =============================================
 CREATE PROCEDURE spr_InsertImages_v001
 	-- Add the parameters for the stored procedure here
-	@fID varchar(20),
-	@imgID varchar(15),
+	@imgID int,
 	@imgBlob varbinary(Max),
 	@process bit
 AS
@@ -32,6 +31,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO images (fileID,imageID, imageBlob,processed) VALUES (@fID,@imgID,@imgBlob, @process)
+	INSERT INTO images (classID, imageBlob,processed) VALUES (@imgID,@imgBlob, @process)
 END
 GO

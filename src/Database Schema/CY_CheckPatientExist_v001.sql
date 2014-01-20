@@ -32,8 +32,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.id, i.bodyPart, i.studyDescription, i.seriesDescription
-	from patient p inner join name n on p.id = n.id join imageProperties i on p.id = i.id 
+	select p.tableID, i.bodyPart, i.studyDescription, i.seriesDescription
+	from patient p inner join name n on p.tableID = n.patientID join imageProperties i on p.tableID = i.patientID 
 	where ((p.birthdate = @birthdate and p.age = @age) and p.sex = @sex) and (n.firstName = @fname and n.lastName = @lname)
 END
 GO

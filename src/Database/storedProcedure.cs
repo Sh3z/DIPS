@@ -36,7 +36,7 @@ namespace DIPS.Database
 
             con.Close();
 
-            staticVariables.imageSeries = 1;
+            staticVariables.imgPropTableID = 0;
             staticVariables.patientExist = false;
             staticVariables.sameSeries = false;
         }
@@ -85,18 +85,18 @@ namespace DIPS.Database
         {
             try
             {
-                String imageID = "IMG" + staticVariables.databaseID + "(" + staticVariables.imageSeries + ")";
+                //String imageID = "IMG" + staticVariables.databaseID + "(" + staticVariables.imageSeries + ")";
 
                 SqlCommand cmd = new SqlCommand("spr_InsertImageProperties_v001", con);
                 cmd.CommandType = CommandType.StoredProcedure; 
-                cmd.Parameters.Add("@imgID", SqlDbType.VarChar).Value = imageID;
+
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = staticVariables.databaseID;
                 cmd.Parameters.Add("@imgDateTime", SqlDbType.DateTime).Value = staticVariables.imgDateTime;
                 cmd.Parameters.Add("@bodyPart", SqlDbType.VarChar).Value = staticVariables.bodyPart;
                 cmd.Parameters.Add("@studyDesc", SqlDbType.VarChar).Value = staticVariables.studyDesc;
                 cmd.Parameters.Add("@seriesDesc", SqlDbType.VarChar).Value = staticVariables.seriesDesc;
                 cmd.Parameters.Add("@sliceThick", SqlDbType.VarChar).Value = staticVariables.sliceThickness;
-                cmd.ExecuteNonQuery();
+                staticVariables.imgPropTableID = (Int32)cmd.ExecuteScalar();
                 Console.WriteLine("Images Success");
             }
             catch (Exception e)
@@ -113,12 +113,12 @@ namespace DIPS.Database
                 SqlCommand cmd = new SqlCommand("spr_InsertImages_v001", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                String imgID = "IMG" + staticVariables.databaseID + "(" + staticVariables.imageSeries + ")";
+                //String imgID = "IMG" + staticVariables.databaseID + "(" + staticVariables.imageSeries + ")";
                 saveImage image = new saveImage();
                 byte[] blob = image.blob();
 
-                cmd.Parameters.Add("@fID", SqlDbType.VarChar).Value = imgID + "_" + staticVariables.imgNumber;
-                cmd.Parameters.Add("@imgID", SqlDbType.VarChar).Value = imgID;
+                //cmd.Parameters.Add("@fID", SqlDbType.VarChar).Value = imgID + "_" + staticVariables.imgNumber;
+                cmd.Parameters.Add("@imgID", SqlDbType.VarChar).Value = staticVariables.imgPropTableID;
                 cmd.Parameters.Add("@imgBlob", SqlDbType.VarBinary, blob.Length).Value = blob;
                 cmd.Parameters.Add("@process", SqlDbType.Bit).Value = 0;
                 cmd.ExecuteNonQuery();
@@ -146,7 +146,7 @@ namespace DIPS.Database
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                staticVariables.imageSeries = reader.GetInt32(0);
+                staticVariables.imgPropTableID = reader.GetInt32(0);
                 break;
             }
             reader.Close();
