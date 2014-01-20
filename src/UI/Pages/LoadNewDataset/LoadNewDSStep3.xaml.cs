@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DIPS.UI.Pages;
+using System.Diagnostics;
+using System.Runtime.InteropServices; 
 
 namespace DIPS.UI.Pages.LoadNewDataset
 {
@@ -30,8 +32,15 @@ namespace DIPS.UI.Pages.LoadNewDataset
         {
             MessageBox.Show("Images now being processed");
 
-            MainPage main = new MainPage();
-            this.NavigationService.Navigate(main);
+            if (chkTurnOffComputer.IsChecked == true)
+            {
+                Process.Start("shutdown", "/s /t 0");
+            }
+            else
+            {
+                MainPage main = new MainPage();
+                this.NavigationService.Navigate(main);
+            }
         }
     }
 }
