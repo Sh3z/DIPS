@@ -32,12 +32,17 @@ namespace DIPS.Database.Objects
             set { _datasetID = value; }
         }
 
-        private int _patientID;
+        private String _patientID;
 
-        public int patientID
+        public String patientID
         {
             get { return _patientID; }
             set { _patientID = value; }
+        }
+
+        public override string ToString()
+        {
+            return imgID.ToString();
         }
     }
 }

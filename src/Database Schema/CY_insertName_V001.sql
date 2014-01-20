@@ -30,6 +30,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO name (id,firstName,lastName) VALUES (@id,@fname,@lname)
+	INSERT INTO name (patientID,firstName,lastName) VALUES (@id,@fname,@lname)
 END
 GO

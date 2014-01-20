@@ -14,16 +14,13 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <01/11/2013>
--- Description:	<Insert Image File>
+-- Create date: <29/11/2013>
+-- Description:	<Retrieve all properties of the patient>
 -- =============================================
-CREATE PROCEDURE spr_InsertImages_v001
+CREATE PROCEDURE spr_SelectProperties_v001
 	-- Add the parameters for the stored procedure here
-	@imgID int,
-	@imgBlob varbinary(Max),
-	@process bit
+	@fileID int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -31,6 +28,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO images (classID, imageBlob,processed) VALUES (@imgID,@imgBlob, @process)
+	select p.birthdate, p.age, p.sex, iv.imageDateTime, iv.bodyPart, iv.studyDescription, iv.seriesDescription, iv.sliceThickness 
+	from patient p inner join imageProperties iv on p.tableID = iv.patientID join images i on iv.tableID = i.classID
+	where i.fileID = @fileID;
 END
 GO

@@ -14,16 +14,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <01/11/2013>
--- Description:	<Insert Image File>
+-- Create date: <01/19/2014>
+-- Description:	<Retrieve series available for specific patient>
 -- =============================================
-CREATE PROCEDURE spr_InsertImages_v001
-	-- Add the parameters for the stored procedure here
-	@imgID int,
-	@imgBlob varbinary(Max),
-	@process bit
+ALTER PROCEDURE spr_RetrieveSeriesAvailable_v001
+	@databaseID int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -31,6 +27,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO images (classID, imageBlob,processed) VALUES (@imgID,@imgBlob, @process)
+	select tableID from imageProperties where patientID=@databaseID;
 END
 GO

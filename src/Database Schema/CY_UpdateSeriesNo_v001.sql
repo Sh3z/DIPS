@@ -15,18 +15,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <01/11/2013>
--- Description:	<Insert Image Information>
+-- Create date: <01/19/2014>
+-- Description:	<Update series number for specific patient>
 -- =============================================
-CREATE PROCEDURE spr_InsertImageVariables_v001
-	-- Add the parameters for the stored procedure here
-	@imgID varchar(15),
-	@id int,
-	@imgDateTime datetime,
-	@bodyPart varchar(20),
-	@studyDesc varchar(50),
-	@seriesDesc varchar(50),
-	@sliceThick varchar(20)
+CREATE PROCEDURE spr_UpdateSeriesNo_v001
+	@series int,
+	@databaseID int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -34,7 +28,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO imageVariables (imageID,id,imageDateTime,bodyPart,studyDescription,seriesDescription,sliceThickness) 
-	VALUES (@imgID,@id,@imgDateTime,@bodyPart,@studyDesc,@seriesDesc,@sliceThick)
+	update patient set seriesAvailable = @series where tableID=@databaseID;
 END
 GO

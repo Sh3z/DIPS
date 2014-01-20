@@ -25,10 +25,10 @@ namespace DIPS.Database
             }
             watch.Stop();
             Console.WriteLine("");
-            Console.WriteLine(allFiles.Count+" Files in "+(watch.ElapsedMilliseconds/1000)+" seconds");
-            
-           printTables print = new printTables();
-           print.print();
+            Console.WriteLine(allFiles.Count + " Files in " + (watch.ElapsedMilliseconds / 1000) + " seconds");
+
+            printTables print = new printTables();
+            print.print();
         }
     }
 }

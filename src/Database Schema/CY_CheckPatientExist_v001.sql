@@ -14,16 +14,17 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <01/11/2013>
--- Description:	<Insert Image File>
+-- Create date: <03/11/2013>
+-- Description:	<Retrieve ID of matched patient>
 -- =============================================
-CREATE PROCEDURE spr_InsertImages_v001
+CREATE PROCEDURE spr_CheckPatientExist_v001
 	-- Add the parameters for the stored procedure here
-	@imgID int,
-	@imgBlob varbinary(Max),
-	@process bit
+	@birthdate varchar(10),
+	@age varchar(10),
+	@sex char(1),
+	@fname varchar(30),
+	@lname varchar(30)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -31,6 +32,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO images (classID, imageBlob,processed) VALUES (@imgID,@imgBlob, @process)
+	select p.tableID, i.bodyPart, i.studyDescription, i.seriesDescription
+	from patient p inner join name n on p.tableID = n.patientID join imageProperties i on p.tableID = i.patientID 
+	where ((p.birthdate = @birthdate and p.age = @age) and p.sex = @sex) and (n.firstName = @fname and n.lastName = @lname)
 END
 GO

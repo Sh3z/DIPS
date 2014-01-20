@@ -14,16 +14,18 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- =============================================
 -- Author:		<Chuo Yeh Poo>
 -- Create date: <01/11/2013>
--- Description:	<Insert Image File>
+-- Description:	<Insert Image Information>
 -- =============================================
-CREATE PROCEDURE spr_InsertImages_v001
+CREATE PROCEDURE spr_InsertImageProperties_v001
 	-- Add the parameters for the stored procedure here
-	@imgID int,
-	@imgBlob varbinary(Max),
-	@process bit
+	@id int,
+	@imgDateTime datetime,
+	@bodyPart varchar(20),
+	@studyDesc varchar(50),
+	@seriesDesc varchar(50),
+	@sliceThick varchar(20)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -31,6 +33,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO images (classID, imageBlob,processed) VALUES (@imgID,@imgBlob, @process)
+	INSERT INTO imageProperties (patientID,imageDateTime,bodyPart,studyDescription,seriesDescription,sliceThickness)
+	OUTPUT INSERTED.tableID 
+	VALUES (@id,@imgDateTime,@bodyPart,@studyDesc,@seriesDesc,@sliceThick)
 END
 GO

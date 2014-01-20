@@ -29,8 +29,8 @@ BEGIN
 
     -- Insert statements for procedure here
 	select p.patientID, i.fileID
-	from patient p join imageVariables iv on p.id = iv.id 
-	join images i on iv.imageID = i.imageID 
+	from patient p join imageProperties iv on p.tableID = iv.patientID 
+	join images i on iv.tableID = i.classID 
 	group by p.patientID,i.fileID
 	order by 1, 2;
 END
