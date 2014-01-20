@@ -15,6 +15,11 @@ using DIPS.Database;
 using System.Windows.Forms;
 using System.IO;
 using System;
+using System.Data.SqlClient;
+using System.Data;
+using System.ComponentModel;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace DIPS.UI.Pages
 {
@@ -201,6 +206,33 @@ namespace DIPS.UI.Pages
             //initialise all datasets var
             //allDatasets = new List<ImageDataset>();
             allDatasets = imgRepo.generateTreeView();
+        }
+
+        private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            try
+            {
+                var Text = e.NewValue.ToString();
+                setImage(Text);
+                //retrieveProperties(Text);
+            }
+            catch (Exception e2) { }
+        }
+
+        public void setImage(String fileID)
+        {
+            SqlConnection con = new SqlConnection(staticVariables.sql);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("spr_RetrieveImage_v001", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@fID", SqlDbType.VarChar).Value = fileID;
+            byte[] image = (byte[])cmd.ExecuteScalar();
+
+            TypeConverter tc = TypeDescriptor.GetConverter(typeof(BitmapImage));
+            BitmapImage theBmp = (BitmapImage)tc.ConvertFrom(image);
+            ImageSource source = theBmp;
+            unProcessedImg.Source = source;
+            con.Close();
         }
     }
 
