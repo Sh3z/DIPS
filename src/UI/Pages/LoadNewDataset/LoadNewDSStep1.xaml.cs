@@ -41,7 +41,18 @@ namespace DIPS.UI.Pages.LoadNewDataset
         private void btnSelectFiles_Click(object sender, RoutedEventArgs e)
         {
             //open dialog for user to select files
-            selectFilesForDataset();
+                selectFilesForDataset();
+        }
+
+        private Boolean validateFields()
+        {
+            if (!lstFiles.HasItems)
+            {
+                MessageBox.Show("No files have been selected for processing.", "No files selected.", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+
+            return true;
         }
 
         private void selectFilesForDataset()
@@ -76,10 +87,13 @@ namespace DIPS.UI.Pages.LoadNewDataset
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            LoadNewDSStep2 loadDS2 = new LoadNewDSStep2();
-            loadDS2.ListofFiles = ListofFiles;
+            if (validateFields())
+            {
+                LoadNewDSStep2 loadDS2 = new LoadNewDSStep2();
+                loadDS2.ListofFiles = ListofFiles;
 
-            this.NavigationService.Navigate(loadDS2);
+                this.NavigationService.Navigate(loadDS2);
+            }
         }
     }
 }

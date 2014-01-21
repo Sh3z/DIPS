@@ -63,6 +63,7 @@ namespace DIPS.UI.Pages.LoadNewDataset
         private void btnSelection_Click(object sender, RoutedEventArgs e)
         {
             LoadNewDSStep3 loadDS3 = new LoadNewDSStep3();
+            loadDS3.ListofFiles = this.ListofFiles;
             this.NavigationService.Navigate(loadDS3);
         }
 

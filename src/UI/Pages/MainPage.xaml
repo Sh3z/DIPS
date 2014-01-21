@@ -4,16 +4,50 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-	Title="MainPage">
+      d:DesignHeight="300"
+	Title="MainPage" Width="605">
 
     <Grid>
-        <Button x:Name="btnViewExistingDS" Content="EDS" HorizontalAlignment="Left" Margin="101,126,0,0" VerticalAlignment="Top" Width="36" Height="37" Click="btnViewExistingDS_Click" ToolTip="View Existing Dataset"/>
-        <Button x:Name="btnCreateAlgorithm" Content="AC" HorizontalAlignment="Left" Margin="101,183,0,0" VerticalAlignment="Top" Width="36" Height="37" ToolTip="Create New Algorithm"/>
-        <Button x:Name="btnLoadDataset" Content="W" HorizontalAlignment="Left" Margin="159,126,0,0" VerticalAlignment="Top" Width="45" Height="37" ToolTip="Load Dataset" Click="btnLoadDataset_Click"/>
-        <Button x:Name="btnAbout" Content="About" HorizontalAlignment="Left" Margin="159,183,0,0" VerticalAlignment="Top" Width="45" Height="37" ToolTip="About"/>
-        <TextBlock x:Name="txtTitle" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" FontFamily="SimHei" FontSize="14"><Run Text="Dynamic Image Processing Software"/><Run Language="en-gb" Text=" v0.1"/><LineBreak/><LineBreak/><Run Text="by Gary Chadwick, Thomas Sherwood, Chuo Yeh Poo "/></TextBlock>
-        <GroupBox Header="Please select an option to begin.." HorizontalAlignment="Left" Margin="44,100,0,0" VerticalAlignment="Top" Height="143" Width="206" RenderTransformOrigin="0.505,0.535">
+        <Button x:Name="btnViewExistingDS" HorizontalAlignment="Left" Margin="171,147,0,0" VerticalAlignment="Top" Width="26" Height="27" Click="btnViewExistingDS_Click" ToolTip="View Existing Datasets" MouseEnter="btnViewExistingDS_MouseEnter" MouseLeave="btnViewExistingDS_MouseLeave" AllowDrop="True">
+            <Button.Background>
+                <ImageBrush ImageSource="../Images/find.png"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="btnCreateAlgorithm" HorizontalAlignment="Left" Margin="332,147,0,0" VerticalAlignment="Top" Width="26" Height="27" ToolTip="Create New Algorithm" RenderTransformOrigin="4.167,1.765" MouseEnter="btnCreateAlgorithm_MouseEnter" MouseLeave="btnCreateAlgorithm_MouseLeave">
+            <Button.Background>
+                <ImageBrush ImageSource="../Images/color_wheel.png"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="btnLoadDataset" HorizontalAlignment="Left" Margin="253,147,0,0" VerticalAlignment="Top" Width="26" Height="27" ToolTip="Load New Dataset" Click="btnLoadDataset_Click" RenderTransformOrigin="1,0.833" MouseEnter="btnLoadDataset_MouseEnter" MouseLeave="btnLoadDataset_MouseLeave">
+            <Button.Background>
+                <ImageBrush ImageSource="../Images/cog_go.png"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="btnAbout" HorizontalAlignment="Left" Margin="409,147,0,0" VerticalAlignment="Top" Width="28" Height="27" ToolTip="About" MouseEnter="btnAbout_MouseEnter" MouseLeave="btnAbout_MouseLeave">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="../Images/flag_blue.png"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="../Images/flag_blue.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Background>
+                <ImageBrush ImageSource="../Images/flag_blue.png"/>
+            </Button.Background>
+        </Button>
+        <TextBlock x:Name="txtTitle" HorizontalAlignment="Left" Margin="165,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" FontFamily="SimHei" FontSize="14"><Run Text="Dynamic Image Processing Software"/><Run Language="en-gb" Text=" v0.1"/><LineBreak/><LineBreak/><Run Text="by Gary Chadwick, Thomas Sherwood, Chuo Yeh Poo "/></TextBlock>
+        <GroupBox Header="Please select an option to begin.." HorizontalAlignment="Left" Margin="164,123,0,0" VerticalAlignment="Top" Height="72" Width="284" RenderTransformOrigin="0.505,0.535">
             <GroupBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -23,6 +57,7 @@
                 </TransformGroup>
             </GroupBox.RenderTransform>
         </GroupBox>
+        <TextBox x:Name="txtExplanation" Text="Explanation of functionality will appear here."  HorizontalAlignment="Left" Height="70" Margin="165,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
 
     </Grid>
 </Page>

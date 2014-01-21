@@ -42,5 +42,50 @@ namespace DIPS.UI.Pages
             LoadNewDSStep1 loadDS1 = new LoadNewDSStep1();
             this.NavigationService.Navigate(loadDS1);
         }
+
+        private void clearField()
+        {
+            txtExplanation.Text = string.Empty;
+        }
+
+        private void btnAbout_MouseEnter(object sender, MouseEventArgs e)
+        {
+            txtExplanation.Text = "This screen will explain who has made this application and what it does.";
+        }
+
+        private void btnAbout_MouseLeave(object sender, MouseEventArgs e)
+        {
+            clearField();
+        }
+
+        private void btnLoadDataset_MouseEnter(object sender, MouseEventArgs e)
+        {
+            txtExplanation.Text = "This screen processes selected images using techniques created in the algorithm builder.";
+        }
+
+        private void btnCreateAlgorithm_MouseEnter(object sender, MouseEventArgs e)
+        {
+            txtExplanation.Text = "Ths screen allows you to create your own algorithm for processing images.";
+        }
+
+        private void btnCreateAlgorithm_MouseLeave(object sender, MouseEventArgs e)
+        {
+            clearField();
+        }
+
+        private void btnLoadDataset_MouseLeave(object sender, MouseEventArgs e)
+        {
+            clearField();
+        }
+
+        private void btnViewExistingDS_MouseEnter(object sender, MouseEventArgs e)
+        {
+           txtExplanation.Text = "This screen allows you to view datasets that have already been processed";
+        }
+
+        private void btnViewExistingDS_MouseLeave(object sender, MouseEventArgs e)
+        {
+            clearField();
+        }
     }
 }

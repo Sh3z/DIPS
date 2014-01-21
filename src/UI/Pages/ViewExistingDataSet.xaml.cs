@@ -78,7 +78,7 @@ namespace DIPS.UI.Pages
 
             // Set the Data Context as the view-model.
             DataContext = vm;
-            loadDicom();
+           
             /*
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = @"Bitmaps|*.bmp|Jpgs|*.jpg";
@@ -233,6 +233,23 @@ namespace DIPS.UI.Pages
             ImageSource source = theBmp;
             unProcessedImg.Source = source;
             con.Close();
+        }
+
+        private void treeDatasets_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            try
+            {
+                TreeViewItem tviSender = sender as TreeViewItem;
+
+                if (tviSender.IsSelected)
+                {
+                    PatientImage image = sender as PatientImage; 
+                    setImage(image.imgID.ToString());
+                }
+
+                //retrieveProperties(Text);
+            }
+            catch (Exception e2) { }
         }
     }
 

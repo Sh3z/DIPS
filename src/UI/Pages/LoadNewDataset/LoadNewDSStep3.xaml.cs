@@ -14,7 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DIPS.UI.Pages;
 using System.Diagnostics;
-using System.Runtime.InteropServices; 
+using System.Runtime.InteropServices;
+using DIPS.Database.Objects;
+using System.IO;
 
 namespace DIPS.UI.Pages.LoadNewDataset
 {
@@ -23,6 +25,13 @@ namespace DIPS.UI.Pages.LoadNewDataset
     /// </summary>
     public partial class LoadNewDSStep3 : Page
     {
+        private List<FileInfo> _listOfFiles;
+        public List<FileInfo> ListofFiles
+        {
+            get { return _listOfFiles; }
+            set { _listOfFiles = value; }
+        }
+
         public LoadNewDSStep3()
         {
             InitializeComponent();
@@ -30,17 +39,29 @@ namespace DIPS.UI.Pages.LoadNewDataset
 
         private void btnProcess_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Images now being processed");
-
             if (chkTurnOffComputer.IsChecked == true)
             {
-                Process.Start("shutdown", "/s /t 0");
+                MessageBoxResult result = MessageBox.Show("You have chosen to turn off the computer after processing - are you sure?", "Shut down computer after processing?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    MessageBox.Show("Images processed.","Processing Complete",MessageBoxButton.OK,MessageBoxImage.Information);
+                    Process.Start("shutdown", "/s /t 0");
+                }
             }
             else
             {
+                MessageBox.Show("Images processed","Processing complete.",MessageBoxButton.OK,MessageBoxImage.Information);
+
                 MainPage main = new MainPage();
                 this.NavigationService.Navigate(main);
             }
+            
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstLoadedFiles.ItemsSource = ListofFiles;
         }
     }
 }
