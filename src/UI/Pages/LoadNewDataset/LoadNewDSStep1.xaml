@@ -14,7 +14,8 @@
         <Label Content="Files Selected" HorizontalAlignment="Left" Margin="99,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462"/>
         <Button x:Name="btnSelectFiles" Content="Select Images" HorizontalAlignment="Left" Margin="331,132,0,0" VerticalAlignment="Top" Width="101" Height="54" Click="btnSelectFiles_Click"/>
         <Button x:Name="btnConfirm" Content="Confirm Choice" HorizontalAlignment="Left" Margin="331,245,0,0" VerticalAlignment="Top" Width="101" Click="btnConfirm_Click"/>
-        <Controls:infoBell x:Name="infoImages" HorizontalAlignment="Left" Margin="437,144,0,0" VerticalAlignment="Top" Height="42" Width="44" setText="This button will do things."/>
+        <Controls:infoBell x:Name="infoImages" HorizontalAlignment="Left" Margin="437,140,0,0" VerticalAlignment="Top" Height="42" Width="44" setText="Clicking this will open a dialog to select files to be included in the image processing."/>
+        <Controls:infoBell HorizontalAlignment="Left" Margin="437,235,0,0" VerticalAlignment="Top" Height="42" Width="44" setText="Click this will confirm that you have selected files for processing and move to the next stage in the process."/>
 
     </Grid>
 </Page>
