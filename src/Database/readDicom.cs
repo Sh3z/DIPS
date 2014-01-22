@@ -22,7 +22,7 @@ namespace DIPS.Database
         {
             Console.WriteLine(staticVariables.readFile);
             verifyDicom verify = new verifyDicom();
-
+            
             Boolean validDicom = verify.verify();
             if (validDicom == true)
             {
@@ -95,6 +95,7 @@ namespace DIPS.Database
             if (staticVariables.sex == null) staticVariables.sex = "N";
             if (staticVariables.pBday == "") staticVariables.pBday = "NULL";
             if (staticVariables.age == null) staticVariables.age = "NULL";
+            if (staticVariables.imgNumber == "") staticVariables.imgNumber = "NULL";
             if (staticVariables.bodyPart == null) staticVariables.bodyPart = "NULL";
             if (staticVariables.studyDesc == "") staticVariables.studyDesc = "NULL";
             if (staticVariables.seriesDesc == null) staticVariables.seriesDesc = "NULL";

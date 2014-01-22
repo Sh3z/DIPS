@@ -34,7 +34,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	INSERT INTO imageProperties (patientID,imageDateTime,bodyPart,studyDescription,seriesDescription,sliceThickness)
-	OUTPUT INSERTED.tableID 
+	OUTPUT INSERTED.seriesID 
 	VALUES (@id,@imgDateTime,@bodyPart,@studyDesc,@seriesDesc,@sliceThick)
 END
 GO

@@ -12,7 +12,7 @@ firstName varchar(30),
 lastName varchar(30)
 );
 create table imageProperties(
-tableID int identity PRIMARY KEY,
+seriesID int identity PRIMARY KEY,
 patientID int FOREIGN KEY REFERENCES patient(tableID),
 imageDateTime datetime NOT NULL,
 bodyPart varchar(20),
@@ -22,7 +22,8 @@ sliceThickness varchar(20)
 );
 create table images(
 fileID int identity PRIMARY KEY,
-classID int NOT NULL FOREIGN KEY REFERENCES imageProperties(tableID),
+seriesID int NOT NULL FOREIGN KEY REFERENCES imageProperties(seriesID),
+imageNumber varchar(5),
 imageBlob varbinary(MAX),
 processed bit NOT NULL,
 );

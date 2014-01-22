@@ -38,7 +38,7 @@ namespace Database
                  while (data.Read())
                 {
                     img = new PatientImage();
-                    currentID = data.GetString(0);
+                    currentID = data.GetString(data.GetOrdinal("Patient ID"));
 
                     if (!currentID.Equals(prevID))
                     {
@@ -48,7 +48,7 @@ namespace Database
                     }
 
                     img.patientID = currentID;
-                    img.imgID = data.GetInt32(1);
+                    img.imgID = data.GetInt32(data.GetOrdinal("File ID"));
                     imageCollectionDS.Add(img);
                     prevID = currentID;
                 }
@@ -58,6 +58,34 @@ namespace Database
             catch (Exception e) { }
 
             return allDatasetsActive;
+        }
+
+        public List<String> retrieveImageProperties(String fileID)
+        {
+            List<String> properties = new List<String>();
+            SqlConnection con = new SqlConnection(staticVariables.sql);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("spr_SelectProperties_v001", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@fileID", SqlDbType.VarChar).Value = fileID;
+            SqlDataReader dataReader = cmd.ExecuteReader();
+            while (dataReader.Read())
+            {
+                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Birthdate")));
+                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Age")));
+                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Sex")));
+                properties.Add(dataReader.GetDateTime(dataReader.GetOrdinal("Image Date Time")).ToString());
+                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Body Part")));
+                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Study Description")));
+                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Series Description")));
+                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Slice Thickness")));
+
+                //foreach(String s in properties) System.Diagnostics.Debug.WriteLine("hehe " + s);
+                break;
+            }
+            dataReader.Close();
+            con.Close();
+            return properties;
         }
     }
 }
