@@ -25,5 +25,14 @@ namespace DIPS.Processor.Plugin
             get;
             set;
         }
+
+        /// <summary>
+        /// Resolves the <see cref="Property"/> contained within this <see cref="IPropertySet"/>
+        /// for the given name.
+        /// </summary>
+        /// <param name="name">The name of the property to locate.</param>
+        /// <returns>An instance of <see cref="Property"/> which shares the name given by the
+        /// input. If no properties consist of this name, this returns null.</returns>
+        Property PropertyForName( string name );
     }
 }

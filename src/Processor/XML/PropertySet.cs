@@ -33,7 +33,7 @@ namespace DIPS.Processor.XML
         {
             get
             {
-                var property = _propertyWithName( name );
+                var property = PropertyForName( name );
                 if( property != null )
                 {
                     return property.Value;
@@ -45,7 +45,7 @@ namespace DIPS.Processor.XML
             }
             set
             {
-                var property = _propertyWithName( name );
+                var property = PropertyForName( name );
                 if( property != null )
                 {
                     property.Value = value;
@@ -60,13 +60,8 @@ namespace DIPS.Processor.XML
             }
         }
 
-        /// <summary>
-        /// Gets the first property with the specified name.
-        /// </summary>
-        /// <param name="name">The name of the property to retrieve. Case sensitive.</param>
-        /// <returns>The first property with the specified name, or null if the property
-        /// cannot be found.</returns>
-        private Property _propertyWithName( string name )
+        
+        public Property PropertyForName( string name )
         {
             return _set.Where( x => x.Name == name ).FirstOrDefault();
         }
