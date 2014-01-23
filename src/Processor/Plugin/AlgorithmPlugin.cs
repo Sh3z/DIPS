@@ -36,6 +36,8 @@ namespace DIPS.Processor.Plugin
         /// Executes the algorithm using the provided input.
         /// </summary>
         /// <param name="args">The set of input arguments when executing this plugin.</param>
+        /// <exception cref="AlgorithmException">an internal exception has occured. This
+        /// is accessed through the inner exception property.</exception>
         public abstract void Run( RunArgs args );
 
         /// <summary>
