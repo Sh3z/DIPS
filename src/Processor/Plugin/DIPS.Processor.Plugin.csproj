@@ -46,6 +46,7 @@
     <Compile Include="PluginException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs" />
+    <Compile Include="PropertyTypeException.cs" />
     <Compile Include="RunArgs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
