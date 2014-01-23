@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<processor>
+  <supported-processes>
+    <process name="process-name">
+      <attributes>
+        <attribute name="attribute-name" type="System.String" default="null" is-required="yes" />
+      </attributes>
+    </process>
+  </supported-processes>
+</processor>
