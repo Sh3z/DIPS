@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace DIPS.Processor.Client
 {
@@ -35,11 +36,35 @@ namespace DIPS.Processor.Client
             Images = images;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobRequest"/> class with the
+        /// <see cref="XDocument"/> describing the processing to execute.
+        /// </summary>
+        /// <param name="job">The <see cref="XDocument"/> specifying how to run the job.</param>
+        public JobRequest( XDocument job )
+        {
+            if( job == null )
+            {
+                throw new ArgumentNullException( "job" );
+            }
+
+            JobXML = job;
+        }
+
 
         /// <summary>
         /// Gets the <see cref="Algorithm"/> to use when processing each input image.
         /// </summary>
         public Algorithm Algorithm
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="XDocument"/> to use by the job system.
+        /// </summary>
+        public XDocument JobXML
         {
             get;
             private set;
