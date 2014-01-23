@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Processor", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Processor.Plugin", "Plugin\DIPS.Processor.Plugin.csproj", "{5BC8FE69-C985-4B78-86F2-441A82FB435F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Processor.Plugin", "..\..\Tests\Processor\Plugin\DIPS.Tests.Processor.Plugin.csproj", "{4D5DE30D-9AD2-432E-ABC6-59F771FAF747}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{5BC8FE69-C985-4B78-86F2-441A82FB435F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BC8FE69-C985-4B78-86F2-441A82FB435F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BC8FE69-C985-4B78-86F2-441A82FB435F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D5DE30D-9AD2-432E-ABC6-59F771FAF747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D5DE30D-9AD2-432E-ABC6-59F771FAF747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D5DE30D-9AD2-432E-ABC6-59F771FAF747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D5DE30D-9AD2-432E-ABC6-59F771FAF747}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,5 +52,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{69B01263-3CA6-4A7E-9C0C-AB741208D728} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
 		{2D737D84-968C-4DB2-9A8F-7449F1082CDB} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
+		{4D5DE30D-9AD2-432E-ABC6-59F771FAF747} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
 	EndGlobalSection
 EndGlobal
