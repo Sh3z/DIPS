@@ -8,7 +8,7 @@
 	Title="MainPage" Width="605">
 
     <Grid>
-        <Button x:Name="btnViewExistingDS" HorizontalAlignment="Left" Margin="171,147,0,0" VerticalAlignment="Top" Width="26" Height="27" Click="btnViewExistingDS_Click" ToolTip="View Existing Datasets" MouseEnter="btnViewExistingDS_MouseEnter" MouseLeave="btnViewExistingDS_MouseLeave" AllowDrop="True">
+        <Button x:Name="btnViewExistingDS" HorizontalAlignment="Left" Margin="171,147,0,0" VerticalAlignment="Top" Width="28" Height="27" Click="btnViewExistingDS_Click" ToolTip="View Existing Datasets" MouseEnter="btnViewExistingDS_MouseEnter" MouseLeave="btnViewExistingDS_MouseLeave" AllowDrop="True">
             <Button.Background>
                 <ImageBrush ImageSource="../Images/find.png"/>
             </Button.Background>
@@ -18,9 +18,9 @@
                 <ImageBrush ImageSource="../Images/color_wheel.png"/>
             </Button.Background>
         </Button>
-        <Button x:Name="btnLoadDataset" HorizontalAlignment="Left" Margin="253,147,0,0" VerticalAlignment="Top" Width="26" Height="27" ToolTip="Load New Dataset" Click="btnLoadDataset_Click" RenderTransformOrigin="1,0.833" MouseEnter="btnLoadDataset_MouseEnter" MouseLeave="btnLoadDataset_MouseLeave">
+        <Button x:Name="btnLoadDataset" HorizontalAlignment="Left" Margin="253,147,0,0" VerticalAlignment="Top" Width="27" Height="27" ToolTip="Load New Dataset" Click="btnLoadDataset_Click" RenderTransformOrigin="1,0.833" MouseEnter="btnLoadDataset_MouseEnter" MouseLeave="btnLoadDataset_MouseLeave">
             <Button.Background>
-                <ImageBrush ImageSource="../Images/cog_go.png"/>
+                <ImageBrush ImageSource="../Images/cog.png"/>
             </Button.Background>
         </Button>
         <Button x:Name="btnAbout" HorizontalAlignment="Left" Margin="409,147,0,0" VerticalAlignment="Top" Width="28" Height="27" ToolTip="About" MouseEnter="btnAbout_MouseEnter" MouseLeave="btnAbout_MouseLeave">
