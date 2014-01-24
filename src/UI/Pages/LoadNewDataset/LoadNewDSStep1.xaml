@@ -4,18 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:Controls="clr-namespace:DIPS.UI.Controls" x:Class="DIPS.UI.Pages.LoadNewDataset.LoadNewDSStep1" 
-      mc:Ignorable="d" 
-      d:DesignHeight="300"
-	Title="LoadNewDSStep1" Width="491.045">
+      mc:Ignorable="d"
+	Title="LoadNewDSStep1" Width="532.045" Height="331">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="79,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="344"><Run Language="en-gb" Text="Please select the images you would like to select for processing.  These will be created as a Dataset."/></TextBlock>
-        <ListBox x:Name="lstFiles" HorizontalAlignment="Left" Height="135" Margin="10,126,0,0" VerticalAlignment="Top" Width="263" ScrollViewer.CanContentScroll="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="109,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="344"><Run Language="en-gb" Text="Please select the images you would like to select for processing.  These will be created as a Dataset."/></TextBlock>
+        <ListBox x:Name="lstFiles" HorizontalAlignment="Left" Height="177" Margin="10,126,0,0" VerticalAlignment="Top" Width="263" ScrollViewer.CanContentScroll="True"/>
         <Label Content="Files Selected" HorizontalAlignment="Left" Margin="99,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462"/>
-        <Button x:Name="btnSelectFiles" Content="Select Images" HorizontalAlignment="Left" Margin="331,132,0,0" VerticalAlignment="Top" Width="101" Height="54" Click="btnSelectFiles_Click"/>
-        <Button x:Name="btnConfirm" Content="Confirm Choice" HorizontalAlignment="Left" Margin="331,245,0,0" VerticalAlignment="Top" Width="101" Click="btnConfirm_Click"/>
-        <Controls:infoBell x:Name="infoImages" HorizontalAlignment="Left" Margin="437,140,0,0" VerticalAlignment="Top" Height="42" Width="44" setText="Clicking this will open a dialog to select files to be included in the image processing."/>
-        <Controls:infoBell HorizontalAlignment="Left" Margin="437,235,0,0" VerticalAlignment="Top" Height="42" Width="44" setText="Click this will confirm that you have selected files for processing and move to the next stage in the process."/>
+        <Button x:Name="btnSelectFiles" Content="Select Images" HorizontalAlignment="Left" Margin="312,131,0,0" VerticalAlignment="Top" Width="101" Height="54" Click="btnSelectFiles_Click"/>
+        <Button x:Name="btnConfirm" Content="Confirm Choice" HorizontalAlignment="Left" Margin="312,275,0,0" VerticalAlignment="Top" Width="101" Click="btnConfirm_Click"/>
+        <Controls:infoBell x:Name="infoImages" HorizontalAlignment="Left" Margin="418,139,0,0" VerticalAlignment="Top" Height="33" Width="35" setText="Clicking this will open a dialog to select files to be included in the image processing."/>
+        <Controls:infoBell HorizontalAlignment="Left" Margin="418,271,0,0" VerticalAlignment="Top" Height="32" Width="35" setText="Click this will confirm that you have selected files for processing and move to the next stage in the process."/>
 
     </Grid>
 </Page>

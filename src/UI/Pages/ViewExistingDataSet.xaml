@@ -30,7 +30,7 @@
     		BorderBrush="#FF000000"
     		VerticalAlignment="Top"
     		HorizontalAlignment="Left"
-    		Margin="302,97,0,0"
+    		Margin="318,22,0,0"
     		Height="128" 
     		Width="128">
 
@@ -39,24 +39,25 @@
 
 
         </Border>
-        <xctk:PropertyGrid x:Name="_propertyGrid" Margin="694,28,60,0"
+        <xctk:PropertyGrid x:Name="_propertyGrid" Margin="766,-41,10,69"
                                      AutoGenerateProperties="True" IsManipulationEnabled="True"/>
         <Border x:Name="brdProcessed" 
     		BorderThickness="2"
     		BorderBrush="#FF000000"
     		VerticalAlignment="Top"
     		HorizontalAlignment="Left"
-    		Margin="566,97,0,0"
+    		Margin="582,22,0,0"
     		Height="128" 
     		Width="128">
             <Button Style="{StaticResource ButtonImage}"
     			Content="{Binding ProcessedSource}" Margin="-114,180,114,-180" />
         </Border>
 
-        <Label x:Name="lblToProcess" Content="----&gt;" HorizontalAlignment="Left" Margin="488,155,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
+        <Label x:Name="lblToProcess" Content="----&gt;" HorizontalAlignment="Left" Margin="504,80,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
         <TreeView x:Name="treeDatasets" HorizontalAlignment="Left" Height="416" Margin="27,22,0,0" VerticalAlignment="Top" Width="196" MouseDoubleClick="treeDatasets_MouseDoubleClick"/>
-        <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="448,314,0,0" VerticalAlignment="Top" Width="143" Command="{Binding ProcessImageCommand}" Height="60"/>
-        <Image Name="unProcessedImg" HorizontalAlignment="Left" Height="128" Margin="302,97,0,0" VerticalAlignment="Top" Width="128"/>
+        <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="439,358,0,0" VerticalAlignment="Top" Width="143" Command="{Binding ProcessImageCommand}" Height="60"/>
+        <Image Name="unProcessedImg" HorizontalAlignment="Left" Height="128" Margin="318,22,0,0" VerticalAlignment="Top" Width="128"/>
+        <TextBox x:Name="txtImageDesc" HorizontalAlignment="Left" Height="142" Margin="280,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" IsEnabled="False"/>
 
     </Grid>
 </Page>
