@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using Xceed.Wpf.Toolkit.PropertyGrid;
 using Database;
 using DIPS.Database;
-using System.Windows.Forms;
 using System.IO;
 using System;
 using System.Data.SqlClient;
@@ -78,7 +77,7 @@ namespace DIPS.UI.Pages
 
             // Set the Data Context as the view-model.
             DataContext = vm;
-            loadDicom();
+            //loadDicom();
             /*
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = @"Bitmaps|*.bmp|Jpgs|*.jpg";
@@ -97,26 +96,25 @@ namespace DIPS.UI.Pages
             setupProperties();
         }
 
-        public void loadDicom()
-        {
-            readDicom dicom = new readDicom();
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            DialogResult result = fbd.ShowDialog();
-            try
-            {
-                string[] files = Directory.GetFiles(fbd.SelectedPath, "*", SearchOption.AllDirectories);
-                System.Windows.Forms.MessageBox.Show(files.Length + " Files to Process");
-                var watch = Stopwatch.StartNew();
-                foreach (String s in files)
-                {
-                    staticVariables.readFile = s;
-                    dicom.read();
-                }
-                watch.Stop();
-                System.Windows.Forms.MessageBox.Show("Complete " + files.Length + " in " + (watch.ElapsedMilliseconds / 1000) + " seconds");
-            }
-            catch (Exception e) { }
-        }
+        //public void loadDicom()
+        //{
+        //    readDicom dicom = new readDicom();
+        //    //FolderBrowserDialog fbd = new FolderBrowserDialog();
+        //    //DialogResult result = fbd.ShowDialog();
+        //    //try
+        //    //{
+        //    //    string[] files = Directory.GetFiles(fbd.SelectedPath, "*", SearchOption.AllDirectories);
+        //    //    System.Windows.Forms.MessageBox.Show(files.Length + " Files to Process");
+
+        //    //    foreach (String s in files)
+        //    //    {
+        //    //        staticVariables.readFile = s;
+        //    //        dicom.read();
+        //    //    }
+        //        System.Windows.Forms.MessageBox.Show("Complete");
+        //    }
+        //    catch (Exception e) { }
+        //}
 
 
         /// <summary>
@@ -229,29 +227,42 @@ namespace DIPS.UI.Pages
             cmd.Parameters.Add("@fID", SqlDbType.VarChar).Value = fileID;
             byte[] image = (byte[])cmd.ExecuteScalar();
 
-            TypeConverter tc = TypeDescriptor.GetConverter(typeof(BitmapImage));
-            BitmapImage theBmp = (BitmapImage)tc.ConvertFrom(image);
-            ImageSource source = theBmp;
-            unProcessedImg.Source = source;
+            BitmapImage theBmp = ToImage(image);
+                        
+            unProcessedImg.Source = theBmp;
             con.Close();
+        }
+
+        public BitmapImage ToImage(byte[] array)
+        {
+            using (var ms = new System.IO.MemoryStream(array))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad; // here
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
         }
 
         private void treeDatasets_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             try
             {
-                TreeViewItem tviSender = sender as TreeViewItem;
-
-                if (tviSender.IsSelected)
+                if (sender != null)
                 {
-                    PatientImage image = sender as PatientImage; 
-                    setImage(image.imgID.ToString());
+                    System.Windows.Controls.TextBlock selectedItem = e.OriginalSource as System.Windows.Controls.TextBlock;
+                    String imgName = selectedItem.Text;
+
+                    setImage(imgName);
                 }
 
                 //retrieveProperties(Text);
             }
             catch (Exception e2) { }
         }
+
     }
 
       
