@@ -78,7 +78,7 @@ namespace DIPS.UI.Pages
 
             // Set the Data Context as the view-model.
             DataContext = vm;
-           
+            loadDicom();
             /*
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = @"Bitmaps|*.bmp|Jpgs|*.jpg";
@@ -106,13 +106,14 @@ namespace DIPS.UI.Pages
             {
                 string[] files = Directory.GetFiles(fbd.SelectedPath, "*", SearchOption.AllDirectories);
                 System.Windows.Forms.MessageBox.Show(files.Length + " Files to Process");
-
+                var watch = Stopwatch.StartNew();
                 foreach (String s in files)
                 {
                     staticVariables.readFile = s;
                     dicom.read();
                 }
-                System.Windows.Forms.MessageBox.Show("Complete");
+                watch.Stop();
+                System.Windows.Forms.MessageBox.Show("Complete " + files.Length + " in " + (watch.ElapsedMilliseconds / 1000) + " seconds");
             }
             catch (Exception e) { }
         }

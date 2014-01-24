@@ -16,9 +16,9 @@ GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
 -- Create date: <01/19/2014>
--- Description:	<Retrieve series available for specific patient>
+-- Description:	<Update series number for specific patient>
 -- =============================================
-CREATE PROCEDURE spr_RetrieveSeriesAvailable_v001
+CREATE PROCEDURE spr_UpdateSeriesAvailable_v001
 	@databaseID int
 AS
 BEGIN
@@ -27,6 +27,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select seriesID from imageProperties where patientID=@databaseID;
+	update patient set seriesAvailable = seriesAvailable + 1 where tableID=@databaseID;
 END
 GO

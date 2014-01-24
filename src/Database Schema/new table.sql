@@ -8,13 +8,14 @@ seriesAvailable int NOT NULL
 );
 create table name(
 patientID int FOREIGN KEY REFERENCES patient(tableID),
-firstName varchar(30),
-lastName varchar(30)
+patientName varchar(50)
 );
 create table imageProperties(
 seriesID int identity PRIMARY KEY,
 patientID int FOREIGN KEY REFERENCES patient(tableID),
-imageDateTime datetime NOT NULL,
+modality varchar(15),
+imageAcquisitionDate datetime NOT NULL,
+importToDatabaseDate datetime Default(getdate()),
 bodyPart varchar(20),
 studyDescription varchar(50),
 seriesDescription varchar(50),

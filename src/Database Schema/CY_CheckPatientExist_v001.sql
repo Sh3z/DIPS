@@ -23,8 +23,7 @@ CREATE PROCEDURE spr_CheckPatientExist_v001
 	@birthdate varchar(10),
 	@age varchar(10),
 	@sex char(1),
-	@fname varchar(30),
-	@lname varchar(30)
+	@pName varchar(50)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -32,9 +31,9 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.tableID as 'Patient ID', ip.bodyPart as 'Body Parts', ip.studyDescription as 'Study Description',
-	 ip.seriesDescription as 'Series Description', ip.seriesID as 'Series ID'
+	select p.tableID as 'Patient ID', ip.modality as 'Modality', ip.bodyPart as 'Body Parts',
+	ip.studyDescription as 'Study Description', ip.seriesDescription as 'Series Description', ip.seriesID as 'Series ID'
 	from patient p inner join name n on p.tableID = n.patientID join imageProperties ip on p.tableID = ip.patientID 
-	where ((p.birthdate = @birthdate and p.age = @age) and p.sex = @sex) and (n.firstName = @fname and n.lastName = @lname)
+	where (p.birthdate = @birthdate and p.age = @age) and (p.sex = @sex and n.patientName = @pName)
 END
 GO

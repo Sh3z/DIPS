@@ -69,8 +69,7 @@ namespace DIPS.Database
                 SqlCommand cmd = new SqlCommand("spr_InsertName_v001", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = staticVariables.databaseID;
-                cmd.Parameters.Add("@fname", SqlDbType.VarChar).Value = staticVariables.firstName;
-                cmd.Parameters.Add("@lname", SqlDbType.VarChar).Value = staticVariables.lastName;
+                cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = staticVariables.patientName;
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("Name Success");
             }
@@ -89,6 +88,7 @@ namespace DIPS.Database
                 cmd.CommandType = CommandType.StoredProcedure; 
 
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = staticVariables.databaseID;
+                cmd.Parameters.Add("@modality", SqlDbType.VarChar).Value = staticVariables.modality;
                 cmd.Parameters.Add("@imgDateTime", SqlDbType.DateTime).Value = staticVariables.imgDateTime;
                 cmd.Parameters.Add("@bodyPart", SqlDbType.VarChar).Value = staticVariables.bodyPart;
                 cmd.Parameters.Add("@studyDesc", SqlDbType.VarChar).Value = staticVariables.studyDesc;

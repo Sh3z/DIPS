@@ -20,18 +20,18 @@ namespace DIPS.Database
             cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = staticVariables.pBday;
             cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = staticVariables.age;
             cmd.Parameters.Add("@sex", SqlDbType.Char).Value = staticVariables.sex;
-            cmd.Parameters.Add("@fname", SqlDbType.VarChar).Value = staticVariables.firstName;
-            cmd.Parameters.Add("@lname", SqlDbType.VarChar).Value = staticVariables.lastName;
+            cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = staticVariables.patientName;
             SqlDataReader dataReader = cmd.ExecuteReader();
 
             while (dataReader.Read())
             {
                 staticVariables.patientExist = true;
+                Boolean modelMatch = staticVariables.modality.Equals(dataReader.GetString(dataReader.GetOrdinal("Modality")));
                 Boolean bodyMatch = staticVariables.bodyPart.Equals(dataReader.GetString(dataReader.GetOrdinal("Body Parts")));
                 Boolean studyMatch = staticVariables.studyDesc.Equals(dataReader.GetString(dataReader.GetOrdinal("Study Description")));
                 Boolean seriesMatch = staticVariables.seriesDesc.Equals(dataReader.GetString(dataReader.GetOrdinal("Series Description")));
 
-                if (bodyMatch == true && (studyMatch == true && seriesMatch == true))
+                if ((modelMatch==true && bodyMatch == true) && (studyMatch == true && seriesMatch == true))
                 {
                     staticVariables.sameSeries = true;
                     staticVariables.databaseID = dataReader.GetInt32(dataReader.GetOrdinal("Patient ID"));
@@ -62,15 +62,8 @@ namespace DIPS.Database
             }
             else if (staticVariables.sameSeries == false)
             {
-                SqlCommand cmd2 = new SqlCommand("spr_RetrieveSeriesAvailable_v001", con);
-                cmd2.CommandType = CommandType.StoredProcedure;
-                cmd2.Parameters.Add("@databaseID", SqlDbType.Int).Value = staticVariables.databaseID;
-                int seriesAvailable = (Int32)cmd2.ExecuteScalar();
-                seriesAvailable++;
-
-                SqlCommand cmd3 = new SqlCommand("spr_UpdateSeriesNo_v001", con);
+                SqlCommand cmd3 = new SqlCommand("spr_UpdateSeriesAvailable_v001", con);
                 cmd3.CommandType = CommandType.StoredProcedure;
-                cmd3.Parameters.Add("@series", SqlDbType.Int).Value = seriesAvailable;
                 cmd3.Parameters.Add("@databaseID", SqlDbType.Int).Value = staticVariables.databaseID;
                 cmd3.ExecuteNonQuery();
             }
