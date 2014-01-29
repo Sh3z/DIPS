@@ -12,7 +12,7 @@ namespace DIPS.Processor.Plugin
     /// This class cannot be inherited.
     /// </summary>
     [DebuggerDisplay("Name = {Name} | Type = {Type}")]
-    public sealed class Property
+    public sealed class Property : ICloneable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Property"/> class.
@@ -105,6 +105,17 @@ namespace DIPS.Processor.Plugin
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private object _value;
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>A new object that is a copy of this instance.</returns>
+        public object Clone()
+        {
+            Property clone = new Property( Name, Type, IsRequired );
+            clone.Value = Value;
+            return clone;
+        }
 
 
         /// <summary>
