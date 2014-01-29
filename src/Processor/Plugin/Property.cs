@@ -107,6 +107,26 @@ namespace DIPS.Processor.Plugin
         private object _value;
 
         /// <summary>
+        /// Determines whether this <see cref="Property"/> is represented by the
+        /// provided <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">The <see cref="Type"/> to determine is contained by
+        /// this <see cref="Property"/>.</param>
+        /// <returns><c>true</c> if this <see cref="Property"/> is represented by the
+        /// provided <see cref="Type"/>; <c>false</c> otherwise.</returns>
+        public bool IsOfType( Type type )
+        {
+            if( type == null )
+            {
+                return false;
+            }
+            else
+            {
+                return _isValidType( type );
+            }
+        }
+
+        /// <summary>
         /// Creates a new object that is a copy of the current instance.
         /// </summary>
         /// <returns>A new object that is a copy of this instance.</returns>

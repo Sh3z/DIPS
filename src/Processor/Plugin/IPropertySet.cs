@@ -27,6 +27,17 @@ namespace DIPS.Processor.Plugin
         }
 
         /// <summary>
+        /// Determines whether this <see cref="IPropertySet"/> contains a
+        /// <see cref="Property"/> with the provided name.
+        /// </summary>
+        /// <param name="propertyName">The case-sentive name of the property
+        /// to check exists within this <see cref="IPropertySet"/></param>
+        /// <returns><c>true</c> if this <see cref="IPropertySet"/> contains a
+        /// <see cref="Property"/> with the name provided; <c>false</c>
+        /// otherwise.</returns>
+        bool Contains( string propertyName );
+
+        /// <summary>
         /// Resolves the <see cref="Property"/> contained within this <see cref="IPropertySet"/>
         /// for the given name.
         /// </summary>

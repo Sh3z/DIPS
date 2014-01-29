@@ -15,13 +15,13 @@ namespace DIPS.Processor.Plugin.Base
 
         public override void Run( RunArgs args )
         {
-            Property gammaProperty = args.Properties.PropertyForName( "Gamma" );
-            if( gammaProperty == null )
+            if( args.Properties.Contains( "Gamma" ) == false )
             {
                 throw new AlgorithmException( "No Gamma property provided (required)" );
             }
 
-            if( gammaProperty.Type != _gammaProperty.Type )
+            Property gammaProperty = args.Properties.PropertyForName( "Gamma" );
+            if( gammaProperty.IsOfType( _gammaProperty.Type ) == false )
             {
                 throw new PropertyTypeException( _gammaProperty, gammaProperty.Type );
             }

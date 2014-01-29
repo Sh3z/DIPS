@@ -107,6 +107,31 @@ namespace DIPS.Tests.Processor.Plugin
             Assert.AreEqual( list, p.Value );
         }
 
+        /// <summary>
+        /// Tests asserting if a Property is represented by a null type
+        /// </summary>
+        [TestMethod]
+        public void TestIsOfType_NullType()
+        {
+            Property p = new Property( "Test", typeof( int ) );
+            Assert.IsFalse( p.IsOfType( null ) );
+        }
+
+        /// <summary>
+        /// Tests asserting if a Property is represented by specific types.
+        /// </summary>
+        [TestMethod]
+        public void TestIsOfType_ValidArg()
+        {
+            Property p = new Property( "Test", typeof( int ) );
+            Assert.IsTrue( p.IsOfType( typeof( int ) ) );
+            Assert.IsFalse( p.IsOfType( typeof( string ) ) );
+
+            p = new Property( "Test", typeof( Base ) );
+            Assert.IsTrue( p.IsOfType( typeof( Base ) ) );
+            Assert.IsTrue( p.IsOfType( typeof( SubBase ) ) );
+        }
+
 
         class Base
         {

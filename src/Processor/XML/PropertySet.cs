@@ -60,7 +60,27 @@ namespace DIPS.Processor.XML
             }
         }
 
-        
+        /// <summary>
+        /// Determines whether this <see cref="IPropertySet"/> contains a
+        /// <see cref="Property"/> with the provided name.
+        /// </summary>
+        /// <param name="propertyName">The case-sentive name of the property
+        /// to check exists within this <see cref="IPropertySet"/></param>
+        /// <returns><c>true</c> if this <see cref="IPropertySet"/> contains a
+        /// <see cref="Property"/> with the name provided; <c>false</c>
+        /// otherwise.</returns>
+        public bool Contains( string propertyName )
+        {
+            return _set.Any( x => x.Name == propertyName );
+        }
+
+        /// <summary>
+        /// Resolves the <see cref="Property"/> contained within this <see cref="IPropertySet"/>
+        /// for the given name.
+        /// </summary>
+        /// <param name="name">The name of the property to locate.</param>
+        /// <returns>An instance of <see cref="Property"/> which shares the name given by the
+        /// input. If no properties consist of this name, this returns null.</returns>
         public Property PropertyForName( string name )
         {
             return _set.Where( x => x.Name == name ).FirstOrDefault();
