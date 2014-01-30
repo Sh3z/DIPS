@@ -32,16 +32,51 @@ namespace DIPS.Processor.Plugin
             {
                 throw new ArgumentNullException( "plugin" );
             }
+            else
+            {
+                return _createDefinition( plugin.GetType() );
+            }
+        }
 
-            Type processType = plugin.GetType();
-            var attributes = processType.GetCustomAttributes();
-            PluginIdentifierAttribute identifier =
-                attributes.FirstOrDefault( x => x.GetType() == typeof( PluginIdentifierAttribute ) ) as PluginIdentifierAttribute;
+
+        /// <summary>
+        /// Creates the AlgorithmDefinition from the incoming type
+        /// </summary>
+        /// <param name="processType">The type to construct the definition for</param>
+        /// <returns>An AlgorithmDefinition representing the incoming type</returns>
+        private static AlgorithmDefinition _createDefinition( Type processType )
+        {
+            PluginIdentifierAttribute identifier = _getIdentifierAttribute( processType );
             if( identifier == null )
             {
                 throw new ArgumentException( "Supplied AlgorithmPlugin is not annotated correctly." );
             }
 
+            IEnumerable<Property> properties = _gatherAlgorithmProperties( processType );
+            return new AlgorithmDefinition( identifier.PluginName, properties );
+        }
+
+        /// <summary>
+        /// Gets the identifier attribute from the incoming type
+        /// </summary>
+        /// <param name="processType">The type to locate the attribute from</param>
+        /// <returns>The PluginIdentifierAttribute foudn in the type, or null if one can't
+        /// be found</returns>
+        private static PluginIdentifierAttribute _getIdentifierAttribute( Type processType )
+        {
+            var attributes = processType.GetCustomAttributes();
+            return attributes.FirstOrDefault( x => x.GetType() == typeof( PluginIdentifierAttribute ) ) as PluginIdentifierAttribute;
+        }
+
+
+        /// <summary>
+        /// Constructs a set of Property objects representing the annotated properties
+        /// in the type
+        /// </summary>
+        /// <param name="processType">The type to gather the properties from</param>
+        /// <returns>A set of Property objects representing the annotated properties</returns>
+        private static IEnumerable<Property> _gatherAlgorithmProperties( Type processType )
+        {
             List<Property> properties = new List<Property>();
             foreach( PropertyInfo property in processType.GetProperties() )
             {
@@ -54,7 +89,7 @@ namespace DIPS.Processor.Plugin
                 }
             }
 
-            return new AlgorithmDefinition( identifier.PluginName, properties );
+            return properties;
         }
     }
 }
