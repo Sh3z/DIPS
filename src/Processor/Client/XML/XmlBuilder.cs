@@ -26,5 +26,11 @@ namespace DIPS.Processor.XML
                 throw new XmlBuilderException( "Error appending process. See inner exception.", e );
             }
         }
+
+
+        private void _appendDefinition( AlgorithmDefinition definition )
+        {
+
+        }
     }
 }
