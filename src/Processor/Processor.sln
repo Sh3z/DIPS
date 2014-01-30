@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Processor.Registry", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Processor.Registry", "..\..\Tests\Processor\Registry\DIPS.Tests.Processor.Registry.csproj", "{E21A404C-7875-4099-84D6-E4C7662C49E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Processor.XML", "..\..\Tests\Processor\XML\DIPS.Tests.Processor.XML.csproj", "{269C58EE-287E-44AA-88DE-E6B3FEE248BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{E21A404C-7875-4099-84D6-E4C7662C49E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E21A404C-7875-4099-84D6-E4C7662C49E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E21A404C-7875-4099-84D6-E4C7662C49E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{269C58EE-287E-44AA-88DE-E6B3FEE248BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{269C58EE-287E-44AA-88DE-E6B3FEE248BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{269C58EE-287E-44AA-88DE-E6B3FEE248BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{269C58EE-287E-44AA-88DE-E6B3FEE248BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +86,6 @@ Global
 		{2D737D84-968C-4DB2-9A8F-7449F1082CDB} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
 		{4D5DE30D-9AD2-432E-ABC6-59F771FAF747} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
 		{E21A404C-7875-4099-84D6-E4C7662C49E5} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
+		{269C58EE-287E-44AA-88DE-E6B3FEE248BE} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
 	EndGlobalSection
 EndGlobal
