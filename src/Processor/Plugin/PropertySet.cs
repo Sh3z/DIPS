@@ -1,16 +1,15 @@
-﻿using DIPS.Processor.Plugin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.XML
+namespace DIPS.Processor.Plugin
 {
     /// <summary>
     /// Represents a set of <see cref="Property"/> objects parsed from XML.
     /// </summary>
-    public class PropertySet : IPropertySet
+    public class PropertySet : ISet<Property>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertySet"/> class.

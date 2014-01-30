@@ -64,17 +64,6 @@ namespace DIPS.Tests.Processor.Plugin
             Assert.AreEqual( "Test", p.Name );
             Assert.AreEqual( typeof( int ), p.Type );
             Assert.IsNull( p.Value );
-            Assert.IsFalse( p.IsRequired );
-        }
-
-        /// <summary>
-        /// Tests attempting to create a valid property that is required.
-        /// </summary>
-        [TestMethod]
-        public void TestConstructor_Valid_Required()
-        {
-            Property p = new Property( "Test", typeof( int ), true );
-            Assert.IsTrue( p.IsRequired );
         }
 
         /// <summary>

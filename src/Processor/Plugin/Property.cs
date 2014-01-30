@@ -36,19 +36,6 @@ namespace DIPS.Processor.Plugin
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Property"/> class.
-        /// </summary>
-        /// <param name="name">The name of the property.</param>
-        /// <param name="type">The type of the property.</param>
-        /// <param name="isRequired">An indication as to whether this property is
-        /// optional or required.</param>
-        public Property( string name, Type type, bool isRequired )
-            : this( name, type )
-        {
-            IsRequired = isRequired;
-        }
-
-        /// <summary>
         /// Gets the name of the property used by the plugin component.
         /// </summary>
         public string Name
@@ -61,16 +48,6 @@ namespace DIPS.Processor.Plugin
         /// Gets the type of the property used by the plugin component.
         /// </summary>
         public Type Type
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this <see cref="Property"/> is required
-        /// and cannot be missed out.
-        /// </summary>
-        public bool IsRequired
         {
             get;
             private set;
@@ -132,7 +109,7 @@ namespace DIPS.Processor.Plugin
         /// <returns>A new object that is a copy of this instance.</returns>
         public object Clone()
         {
-            Property clone = new Property( Name, Type, IsRequired );
+            Property clone = new Property( Name, Type );
             clone.Value = Value;
             return clone;
         }

@@ -40,16 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlgorithmDefinition.cs" />
     <Compile Include="AlgorithmException.cs" />
     <Compile Include="AlgorithmPlugin.cs" />
-    <Compile Include="IPropertySet.cs" />
     <Compile Include="PluginIdentifierAttribute.cs" />
     <Compile Include="PluginException.cs" />
     <Compile Include="PluginVariableAttribute.cs" />
+    <Compile Include="PluginReflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs" />
+    <Compile Include="PropertySet.cs" />
     <Compile Include="PropertyTypeException.cs" />
-    <Compile Include="RunArgs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

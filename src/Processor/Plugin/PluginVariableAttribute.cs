@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.Client
+namespace DIPS.Processor.Plugin
 {
     /// <summary>
     /// Exposes variables of a plugin exposed using the <see cref="PluginIdentifierAttribute"/>

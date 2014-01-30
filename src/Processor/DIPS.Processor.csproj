@@ -49,7 +49,6 @@
     <Compile Include="ProcessingJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\JobQueue.cs" />
-    <Compile Include="XML\PropertySet.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Client\DIPS.Processor.Client.csproj">

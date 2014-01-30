@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.Client
+namespace DIPS.Processor.Plugin
 {
     /// <summary>
     /// Represents a plugin against the DIPS processing system. This class cannot
@@ -28,6 +28,8 @@ namespace DIPS.Processor.Client
             {
                 throw new ArgumentException( "pluginName" );
             }
+
+            PluginName = pluginName;
         }
 
 
