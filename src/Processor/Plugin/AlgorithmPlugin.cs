@@ -33,19 +33,10 @@ namespace DIPS.Processor.Plugin
         }
 
         /// <summary>
-        /// Executes the algorithm using the provided input.
+        /// Executes the algorithm represented by this <see cref="AlgorithmPlugin"/>.
         /// </summary>
-        /// <param name="args">The set of input arguments when executing this plugin.</param>
         /// <exception cref="AlgorithmException">an internal exception has occured. This
         /// is accessed through the inner exception property.</exception>
-        public abstract void Run( RunArgs args );
-
-        /// <summary>
-        /// Manufactures a collection of <see cref="Property"/> objects representing the
-        /// parameters that can be modified within this <see cref="AlgorithmPlugin"/>.
-        /// </summary>
-        /// <returns>A collection of <see cref="Property"/> objects representing the parameters
-        /// that can be modified.</returns>
-        public abstract ICollection<Property> CreatePropertyDefinitions();
+        public abstract void Run();
     }
 }
