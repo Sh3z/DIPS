@@ -19,7 +19,9 @@ namespace DIPS.Processor.Plugin
         /// </summary>
         /// <param name="identifier">The unique name of the identifier of the
         /// variable.</param>
-        public PluginVariableAttribute( string identifier )
+        /// <param name="defaultValue">The default value associated with the
+        /// property.</param>
+        public PluginVariableAttribute( string identifier, object defaultValue )
         {
             if( string.IsNullOrEmpty( identifier ) )
             {
@@ -27,6 +29,7 @@ namespace DIPS.Processor.Plugin
             }
 
             VariableIdentifier = identifier;
+            DefaultValue = defaultValue;
         }
 
 
@@ -34,6 +37,15 @@ namespace DIPS.Processor.Plugin
         /// Gets the unique name of the variables identifier.
         /// </summary>
         public string VariableIdentifier
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the default value associated with the variable.
+        /// </summary>
+        public object DefaultValue
         {
             get;
             private set;

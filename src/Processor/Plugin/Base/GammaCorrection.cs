@@ -10,7 +10,7 @@ namespace DIPS.Processor.Plugin.Base
     [PluginIdentifier( "gamma" )]
     public class GammaCorrection : AlgorithmPlugin
     {
-        [PluginVariable( "gamma" )]
+        [PluginVariable( "gamma", 3d )]
         public double Gamma
         {
             get;

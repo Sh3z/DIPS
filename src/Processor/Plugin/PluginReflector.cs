@@ -116,6 +116,7 @@ namespace DIPS.Processor.Plugin
                 {
                     PluginVariableAttribute attr = varAttrs.First();
                     Property p = new Property( attr.VariableIdentifier, property.PropertyType );
+                    p.Value = attr.DefaultValue;
                     properties.Add( p );
                 }
             }

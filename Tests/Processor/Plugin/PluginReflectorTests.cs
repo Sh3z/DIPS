@@ -100,6 +100,7 @@ namespace DIPS.Tests.Processor.Plugin
             Property p = d.Properties.First();
             Assert.AreEqual( "Value", p.Name );
             Assert.AreEqual( typeof( double ), p.Type );
+            Assert.AreEqual( 3d, p.Value );
         }
 
 
@@ -123,7 +124,7 @@ namespace DIPS.Tests.Processor.Plugin
         [PluginIdentifier( "Plugin" )]
         class AnnotatedPluginWithProperty : AlgorithmPlugin
         {
-            [PluginVariable( "Value" )]
+            [PluginVariable( "Value", 3d )]
             public double Value
             {
                 get;

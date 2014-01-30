@@ -67,12 +67,7 @@ namespace DIPS.Processor.Plugin
             }
             set
             {
-                if( value == null )
-                {
-                    return;
-                }
-
-                if( _isValidType( value.GetType() ) == false )
+                if( _isValidType( value ) == false )
                 {
                     throw new ArgumentException( "Invalid Value type." );
                 }
@@ -99,7 +94,7 @@ namespace DIPS.Processor.Plugin
             }
             else
             {
-                return _isValidType( type );
+                return _isTypeMatch( type );
             }
         }
 
@@ -150,21 +145,38 @@ namespace DIPS.Processor.Plugin
         /// <summary>
         /// Checks if the incoming type is compatible with that of this property's.
         /// </summary>
-        /// <param name="t">The incoming type.</param>
+        /// <param name="t">The incoming object.</param>
         /// <returns>true if the incoming type is acceptable.</returns>
-        private bool _isValidType( Type t )
+        private bool _isValidType( object t )
         {
-            if( t == Type )
+            if( t == null && Type.IsValueType )
+            {
+                return false;
+            }
+
+            if( t == null )
+            {
+                // Can set null for reference types - continue otherwise.
+                return true;
+            }
+
+            Type theType = t.GetType();
+            return _isTypeMatch( theType );
+        }
+
+        private bool _isTypeMatch( Type theType )
+        {
+            if( theType == Type )
             {
                 return true;
             }
 
-            if( t.IsSubclassOf( Type ) )
+            if( theType.IsSubclassOf( Type ) )
             {
                 return true;
             }
 
-            if( Type.IsInterface && t.GetInterfaces().Contains( Type ) )
+            if( Type.IsInterface && theType.GetInterfaces().Contains( Type ) )
             {
                 return true;
             }
