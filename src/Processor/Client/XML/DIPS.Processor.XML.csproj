@@ -7,8 +7,8 @@
     <ProjectGuid>{E9C0CE2F-6645-41AB-AE80-2D8D63DA1A61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DIPS.Processor.Client.XML</RootNamespace>
-    <AssemblyName>DIPS.Processor.Client.XML</AssemblyName>
+    <RootNamespace>DIPS.Processor.XML</RootNamespace>
+    <AssemblyName>DIPS.Processor.XML</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

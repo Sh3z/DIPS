@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Processor.Plugin.Base"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Supporting Projects", "Supporting Projects", "{6720BC6B-87B9-47F3-A671-6A8AB82250D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Processor.Client.XML", "Client\XML\DIPS.Processor.Client.XML.csproj", "{E9C0CE2F-6645-41AB-AE80-2D8D63DA1A61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Processor.XML", "Client\XML\DIPS.Processor.XML.csproj", "{E9C0CE2F-6645-41AB-AE80-2D8D63DA1A61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
