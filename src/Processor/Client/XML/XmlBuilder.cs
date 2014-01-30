@@ -16,12 +16,15 @@ namespace DIPS.Processor.XML
     {
         public void Append( AlgorithmPlugin process )
         {
-            if( process == null )
+            try
             {
-                throw new ArgumentNullException( "process" );
-            }
+                AlgorithmDefinition definition = PluginReflector.CreateDefinition( process );
 
-            
+            }
+            catch( Exception e )
+            {
+                throw new XmlBuilderException( "Error appending process. See inner exception.", e );
+            }
         }
     }
 }
