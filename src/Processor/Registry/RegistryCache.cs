@@ -115,18 +115,28 @@ namespace DIPS.Processor.Registry
             }
             else
             {
-                Type pluginType = ResolveType( definition );
-                if( pluginType == null )
-                {
-                    return null;
-                }
-                else
-                {
-                    return Activator.CreateInstance( pluginType ) as AlgorithmPlugin;
-                }
+                return _generatePluginFromDefinition( definition );
             }
         }
 
+
+        /// <summary>
+        /// Creates and returns the AlgorithmPlugin from the given definition
+        /// </summary>
+        /// <param name="definition">The definition of the plugin to create</param>
+        /// <returns>The AlgorithmPlugin instance, or null if it is not defined</returns>
+        private AlgorithmPlugin _generatePluginFromDefinition( AlgorithmDefinition definition )
+        {
+            Type pluginType = ResolveType( definition );
+            if( pluginType == null )
+            {
+                return null;
+            }
+            else
+            {
+                return Activator.CreateInstance( pluginType ) as AlgorithmPlugin;
+            }
+        }
 
         /// <summary>
         /// Initializes the plugins from the registry key
