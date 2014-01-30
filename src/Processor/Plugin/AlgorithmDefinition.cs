@@ -10,7 +10,7 @@ namespace DIPS.Processor.Plugin
     /// Represents the definition of an <see cref="AlgorithmPlugin"/> through
     /// metadata.
     /// </summary>
-    public class AlgorithmDefinition
+    public class AlgorithmDefinition : IEquatable<AlgorithmDefinition>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AlgorithmDefinition"/>
@@ -57,6 +57,33 @@ namespace DIPS.Processor.Plugin
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Determines whether this <see cref="AlgorithmDefinition"/> is equivilant to
+        /// the provided <see cref="AlgorithmDefinition"/>.
+        /// </summary>
+        /// <param name="other">The <see cref="AlgorithmDefinition"/> to compare against.</param>
+        /// <returns><c>true</c> if this <see cref="AlgorithmDefinition"/> is
+        /// the same as the provided <see cref="AlgorithmDefinition"/>.</returns>
+        public bool Equals( AlgorithmDefinition other )
+        {
+            if( other == null )
+            {
+                return false;
+            }
+
+            if( ReferenceEquals( this, other ) )
+            {
+                return true;
+            }
+
+            if( other.AlgorithmName == AlgorithmName )
+            {
+                return true;
+            }
+
+            return other.Properties.Equals( Properties );
         }
     }
 }

@@ -79,6 +79,54 @@ namespace DIPS.Processor.Registry
             return _pluginCache.Keys;
         }
 
+        /// <summary>
+        /// Resolves the true <see cref="Type"/> of the algorithm represented
+        /// by the provided <see cref="AlgorithmDefinition"/> instance.
+        /// </summary>
+        /// <param name="definition">The cached <see cref="AlgorithmDefinition"/>
+        /// object.</param>
+        /// <returns>The real <see cref="Type"/> of the plugin represented by the
+        /// <see cref="AlgorithmDefinition"/>, or null if one cannot be found.</returns>
+        public Type ResolveType( AlgorithmDefinition definition )
+        {
+            Type output = null;
+
+            if( definition != null )
+            {
+                _pluginCache.TryGetValue( definition, out output );
+            }
+            
+            return output;
+        }
+
+        /// <summary>
+        /// Resolves the <see cref="AlgorithmPlugin"/> represented by the
+        /// <see cref="AlgorithmDefinition"/>.
+        /// </summary>
+        /// <param name="definition">The <see cref="AlgorithmDefinition"/> to
+        /// resolve the plugin for.</param>
+        /// <returns>The <see cref="AlgorithmPlugin"/> instance represented by
+        /// the <see cref="AlgorithmDefinition"/>, or null if no plugin is defined.</returns>
+        public AlgorithmPlugin ResolvePlugin( AlgorithmDefinition definition )
+        {
+            if( definition == null )
+            {
+                return null;
+            }
+            else
+            {
+                Type pluginType = ResolveType( definition );
+                if( pluginType == null )
+                {
+                    return null;
+                }
+                else
+                {
+                    return Activator.CreateInstance( pluginType ) as AlgorithmPlugin;
+                }
+            }
+        }
+
 
         /// <summary>
         /// Initializes the plugins from the registry key

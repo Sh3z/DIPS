@@ -39,5 +39,56 @@ namespace DIPS.Tests.Processor.Registry
             AlgorithmDefinition d = loadedPlugins.FirstOrDefault( x => x.AlgorithmName.ToLower() == "gamma" );
             Assert.IsNotNull( d );
         }
+
+        /// <summary>
+        /// Attempts to resolve the type for an algorithm that is not defined.
+        /// </summary>
+        [TestMethod]
+        public void TestResolveType_NullDefinition()
+        {
+            Type type = RegistryCache.Cache.ResolveType( null );
+
+            Assert.IsNull( type );
+        }
+
+        /// <summary>
+        /// Attempts to resolve the type for an algorithm that is cached.
+        /// </summary>
+        [TestMethod]
+        public void TestResolveType_ValidDefinition()
+        {
+            AlgorithmDefinition d = RegistryCache.Cache.GetLoadedPlugins().FirstOrDefault( x => x.AlgorithmName.ToLower() == "gamma" );
+            Type type = RegistryCache.Cache.ResolveType( d );
+
+            Assert.IsNotNull( type );
+
+            AlgorithmDefinition d2 = PluginReflector.CreateDefinition( type );
+            Assert.IsTrue( d.Equals( d2 ) );
+        }
+
+        /// <summary>
+        /// Tests resolving the AlgorithmPlugin object from null.
+        /// </summary>
+        [TestMethod]
+        public void TestResolvePlugin_NullDefinition()
+        {
+            AlgorithmPlugin p = RegistryCache.Cache.ResolvePlugin( null );
+            Assert.IsNull( p );
+        }
+
+        /// <summary>
+        /// Tests resolving a valid AlgorithmPlugin.
+        /// </summary>
+        [TestMethod]
+        public void TestResolvePlugin_ValidDefinition()
+        {
+            AlgorithmDefinition d = RegistryCache.Cache.GetLoadedPlugins().FirstOrDefault( x => x.AlgorithmName.ToLower() == "gamma" );
+            AlgorithmPlugin p = RegistryCache.Cache.ResolvePlugin( d );
+
+            Assert.IsNotNull( p );
+
+            AlgorithmDefinition d2 = PluginReflector.CreateDefinition( p );
+            Assert.IsTrue( d.Equals( d2 ) );
+        }
     }
 }
