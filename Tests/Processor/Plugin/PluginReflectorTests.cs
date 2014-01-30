@@ -22,16 +22,6 @@ namespace DIPS.Tests.Processor.Plugin
         }
 
         /// <summary>
-        /// Tests attempting to reflect null.
-        /// </summary>
-        [TestMethod]
-        [ExpectedException( typeof( ArgumentNullException ) )]
-        public void TestCreateDefinition_NullPlugin()
-        {
-            PluginReflector.CreateDefinition( null );
-        }
-
-        /// <summary>
         /// Tests attempting to reflect a plugin that has not been annotated.
         /// </summary>
         [TestMethod]
@@ -62,6 +52,47 @@ namespace DIPS.Tests.Processor.Plugin
         public void TestCreateDefinition_AnnotatedOneProperty()
         {
             AlgorithmDefinition d = PluginReflector.CreateDefinition( new AnnotatedPluginWithProperty() );
+
+            Assert.AreEqual( "Plugin", d.AlgorithmName );
+            Assert.AreEqual( 1, d.Properties.Count );
+
+            Property p = d.Properties.First();
+            Assert.AreEqual( "Value", p.Name );
+            Assert.AreEqual( typeof( double ), p.Type );
+        }
+
+        /// <summary>
+        /// Tests attempting to create an AlgorithmDefinition from an unknown
+        /// superclass
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ArgumentException ) )]
+        public void TestCreateDefinition_UnknownSuperclass()
+        {
+            PluginReflector.CreateDefinition( typeof( string ) );
+        }
+
+        /// <summary>
+        /// Tests attempting to create an AlgorithmDefinition by type, from
+        /// a known super class, with no internal parameters
+        /// </summary>
+        [TestMethod]
+        public void TestCreateDefinition_KnownSuperclass_NoParameters()
+        {
+            AlgorithmDefinition d = PluginReflector.CreateDefinition( typeof( AnnotatedPlugin ) );
+
+            Assert.AreEqual( "Plugin", d.AlgorithmName );
+            Assert.AreEqual( 0, d.Properties.Count );
+        }
+
+        /// <summary>
+        /// Tests attempting to create an AlgorithmDefinition by type, from
+        /// a known super class, with one internal parameter
+        /// </summary>
+        [TestMethod]
+        public void TestCreateDefinition_KnownSuperclass_OneParameter()
+        {
+            AlgorithmDefinition d = PluginReflector.CreateDefinition( typeof( AnnotatedPluginWithProperty ) );
 
             Assert.AreEqual( "Plugin", d.AlgorithmName );
             Assert.AreEqual( 1, d.Properties.Count );
