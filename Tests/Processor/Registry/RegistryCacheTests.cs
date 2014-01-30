@@ -32,7 +32,6 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestLoadCache()
         {
-            RegistryCache.Cache.Initialize();
             var loadedPlugins = RegistryCache.Cache.GetLoadedPlugins();
 
             Assert.IsTrue( loadedPlugins.Count() > 0 );
