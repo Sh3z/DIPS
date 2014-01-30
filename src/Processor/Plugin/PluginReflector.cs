@@ -38,6 +38,31 @@ namespace DIPS.Processor.Plugin
             }
         }
 
+        /// <summary>
+        /// Constructs an <see cref="AlgorithmDefinition"/> from the provided
+        /// <see cref="Type"/>.
+        /// </summary>
+        /// <param name="pluginType">The <see cref="Type"/> to construct an
+        /// <see cref="AlgorithmDefinition"/> for.</param>
+        /// <returns>An <see cref="AlgorithmDefinition"/> representing the
+        /// structure of the <see cref="Type"/> provided.</returns>
+        /// <exception cref="ArgumentNullException">pluginType is null.</exception>
+        /// <exception cref="ArgumentException">pluginType is not a subclass of
+        /// <see cref="AlgorithmPlugin"/>; the supplied <see cref="Type"/>
+        /// is not annotated with the <see cref="PluginIdentifierAttribute"/>
+        /// attribute.</exception>
+        public static AlgorithmDefinition CreateDefinition( Type pluginType )
+        {
+            if( pluginType == null )
+            {
+                throw new ArgumentNullException( "pluginType" );
+            }
+            else
+            {
+                return _createDefinition( pluginType );
+            }
+        }
+
 
         /// <summary>
         /// Creates the AlgorithmDefinition from the incoming type
@@ -46,6 +71,12 @@ namespace DIPS.Processor.Plugin
         /// <returns>An AlgorithmDefinition representing the incoming type</returns>
         private static AlgorithmDefinition _createDefinition( Type processType )
         {
+            if( processType.IsSubclassOf( typeof( AlgorithmPlugin ) ) == false )
+            {
+                throw new ArgumentException(
+                    string.Format( "Type {0} is not a subclass of {1}", processType, typeof( AlgorithmPlugin ) ) );
+            }
+
             PluginIdentifierAttribute identifier = _getIdentifierAttribute( processType );
             if( identifier == null )
             {

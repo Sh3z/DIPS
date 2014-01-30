@@ -12,7 +12,7 @@ namespace DIPS.Processor.Plugin
     /// This class cannot be inherited.
     /// </summary>
     [DebuggerDisplay("Name = {Name} | Type = {Type}")]
-    public sealed class Property : ICloneable
+    public sealed class Property : ICloneable, IEquatable<Property>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Property"/> class.
@@ -112,6 +112,38 @@ namespace DIPS.Processor.Plugin
             Property clone = new Property( Name, Type );
             clone.Value = Value;
             return clone;
+        }
+
+        /// <summary>
+        /// Determines whether this <see cref="Property"/> is identical to the
+        /// <see cref="Property"/> instance provided.
+        /// </summary>
+        /// <param name="other">The <see cref="Property"/> to compare against.</param>
+        /// <returns><c>true</c> if this <see cref="Property"/> is identical to that
+        /// of the parameter; <c>false</c> otherwise.</returns>
+        public bool Equals( Property other )
+        {
+            if( other == null )
+            {
+                return false;
+            }
+
+            if( ReferenceEquals( this, other ) )
+            {
+                return true;
+            }
+
+            if( Name != other.Name )
+            {
+                return false;
+            }
+
+            if( Type != other.Type )
+            {
+                return false;
+            }
+
+            return true;
         }
 
 
