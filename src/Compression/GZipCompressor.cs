@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.XML
+namespace DIPS.Compression
 {
     /// <summary>
     /// Provides GZip compression against incoming byte arrays.

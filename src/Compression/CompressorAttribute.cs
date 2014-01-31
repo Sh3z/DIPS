@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.XML
+namespace DIPS.Compression
 {
     /// <summary>
     /// Exposes <see cref="ICompressor"/> classes to the factory. This class

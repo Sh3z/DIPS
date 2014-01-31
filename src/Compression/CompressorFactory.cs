@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.XML
+namespace DIPS.Compression
 {
     /// <summary>
     /// Provides manufacturing of <see cref="ICompressor"/>s given by their
