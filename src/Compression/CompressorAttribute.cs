@@ -10,6 +10,7 @@ namespace DIPS.Compression
     /// Exposes <see cref="ICompressor"/> classes to the factory. This class
     /// cannot be inherited.
     /// </summary>
+    [AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]
     public sealed class CompressorAttribute : Attribute
     {
         /// <summary>
