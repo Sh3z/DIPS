@@ -26,6 +26,8 @@ namespace DIPS.Compression
             {
                 throw new ArgumentException( "identifier" );
             }
+
+            Identifier = identifier;
         }
 
         /// <summary>

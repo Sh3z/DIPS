@@ -19,7 +19,8 @@ namespace DIPS.Compression
         /// </summary>
         static CompressorFactory()
         {
-            _compressors = new Dictionary<string, Type>();
+            _stringComparer = new CaseInsensitiveComparator();
+            _compressors = new Dictionary<string, Type>( _stringComparer );
             foreach( Type type in Assembly.GetExecutingAssembly().GetTypes() )
             {
                 _analyzeType( type );
@@ -43,15 +44,15 @@ namespace DIPS.Compression
                 throw new ArgumentException( "identifier" );
             }
 
-            Type compressorType = null;
-            _compressors.TryGetValue( identifier, out compressorType );
-            if( compressorType == null )
+            string matchingKey = _compressors.Keys.FirstOrDefault( x => _stringComparer.Equals( x, identifier ) );
+            if( matchingKey == null )
             {
                 return null;
             }
             else
             {
-                return Activator.CreateInstance( compressorType ) as ICompressor;
+                Type type = _compressors[matchingKey];
+                return Activator.CreateInstance( type ) as ICompressor;
             }
         }
 
@@ -88,5 +89,10 @@ namespace DIPS.Compression
         /// Retains the name -> type pairings of compressors.
         /// </summary>
         private static IDictionary<string, Type> _compressors;
+
+        /// <summary>
+        /// Contains a string comparer object for the factory to use.
+        /// </summary>
+        private static IEqualityComparer<string> _stringComparer;
     }
 }

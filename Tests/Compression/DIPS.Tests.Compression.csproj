@@ -50,7 +50,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CompressorFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CaseInsensitiveComparatorTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Compression\DIPS.Compression.csproj">
+      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
+      <Name>DIPS.Compression</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

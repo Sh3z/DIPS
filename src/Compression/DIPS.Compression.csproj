@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CaseInsensitiveComparator.cs" />
     <Compile Include="CompressorAttribute.cs" />
     <Compile Include="CompressorFactory.cs" />
     <Compile Include="GZipCompressor.cs" />
