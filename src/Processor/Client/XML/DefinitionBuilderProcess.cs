@@ -24,6 +24,8 @@ namespace DIPS.Processor.XML
     ///         </properties>
     ///     </algorithm>
     /// </example>
+    /// This <see cref="IBuilderProcess"/> should not be used to construct documents
+    /// with inputs.
     /// </remarks>
     public class DefinitionBuilderProcess : IBuilderProcess
     {
