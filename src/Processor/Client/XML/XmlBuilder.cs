@@ -29,7 +29,7 @@ namespace DIPS.Processor.XML
 
             _process = process;
             _algorithms = new List<AlgorithmDefinition>();
-            _inputs = new List<Bitmap>();
+            _inputs = new List<Image>();
         }
 
 
@@ -130,7 +130,7 @@ namespace DIPS.Processor.XML
         /// <summary>
         /// Contains the set of image inputs.
         /// </summary>
-        private ICollection<Bitmap> _inputs;
+        private ICollection<Image> _inputs;
 
         /// <summary>
         /// Contains the actual building process to use against each algorithm.

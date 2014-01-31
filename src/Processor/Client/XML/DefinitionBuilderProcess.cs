@@ -57,15 +57,15 @@ namespace DIPS.Processor.XML
         }
 
         /// <summary>
-        /// Constructs Xml using the <see cref="Bitmap"/>.
+        /// Constructs Xml using the <see cref="Image"/>.
         /// </summary>
-        /// <param name="input">The <see cref="Bitmap"/> to be used as input
+        /// <param name="input">The <see cref="Image"/> to be used as input
         /// in a job.</param>
         /// <returns>An <see cref="XElement"/> representing the
-        /// <see cref="Bitmap"/>.</returns>
+        /// <see cref="Image"/>.</returns>
         /// <see cref="IBuilderProcess"/> does not support building
         /// inputs.</exception>
-        public XElement BuildInput( Bitmap input )
+        public XElement BuildInput( Image input )
         {
             throw new InvalidOperationException( "DefinitionBuilderProcess does not support images." );
         }

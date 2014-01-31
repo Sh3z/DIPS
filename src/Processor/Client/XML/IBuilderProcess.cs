@@ -24,15 +24,15 @@ namespace DIPS.Processor.XML
         XElement Build( AlgorithmDefinition definition );
 
         /// <summary>
-        /// Constructs Xml using the <see cref="Bitmap"/>.
+        /// Constructs Xml using the <see cref="Image"/>.
         /// </summary>
-        /// <param name="input">The <see cref="Bitmap"/> to be used as input
+        /// <param name="input">The <see cref="Image"/> to be used as input
         /// in a job.</param>
         /// <returns>An <see cref="XElement"/> representing the
-        /// <see cref="Bitmap"/>.</returns>
+        /// <see cref="Image"/>.</returns>
         /// <exception cref="InvalidOperationException">this
         /// <see cref="IBuilderProcess"/> does not support building
         /// inputs.</exception>
-        XElement BuildInput( Bitmap input );
+        XElement BuildInput( Image input );
     }
 }
