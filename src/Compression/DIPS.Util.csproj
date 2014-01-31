@@ -7,8 +7,8 @@
     <ProjectGuid>{64782F97-2F28-479F-90FD-FFE55C884EEA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DIPS.Compression</RootNamespace>
-    <AssemblyName>DIPS.Compression</AssemblyName>
+    <RootNamespace>DIPS.Util</RootNamespace>
+    <AssemblyName>DIPS.Util</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,10 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaseInsensitiveComparator.cs" />
-    <Compile Include="CompressorAttribute.cs" />
-    <Compile Include="CompressorFactory.cs" />
-    <Compile Include="GZipCompressor.cs" />
-    <Compile Include="ICompressor.cs" />
+    <Compile Include="Compression\CompressorAttribute.cs" />
+    <Compile Include="Compression\CompressorFactory.cs" />
+    <Compile Include="Compression\GZipCompressor.cs" />
+    <Compile Include="Compression\ICompressor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

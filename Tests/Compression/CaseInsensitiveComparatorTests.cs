@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.Compression;
 
-namespace DIPS.Tests.Compression
+namespace DIPS.Tests.Util
 {
     /// <summary>
     /// Summary description for CompressorFactoryTests

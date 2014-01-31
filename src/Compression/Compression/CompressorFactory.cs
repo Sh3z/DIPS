@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DIPS.Compression;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Compression
+namespace DIPS.Util.Compression
 {
     /// <summary>
     /// Provides manufacturing of <see cref="ICompressor"/>s given by their

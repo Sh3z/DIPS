@@ -27,9 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Processor.Regist
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Processor.XML", "..\..\Tests\Processor\XML\DIPS.Tests.Processor.XML.csproj", "{269C58EE-287E-44AA-88DE-E6B3FEE248BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Compression", "..\Compression\DIPS.Compression.csproj", "{64782F97-2F28-479F-90FD-FFE55C884EEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Util", "..\Compression\DIPS.Util.csproj", "{64782F97-2F28-479F-90FD-FFE55C884EEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Compression", "..\..\Tests\Compression\DIPS.Tests.Compression.csproj", "{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Util", "..\..\Tests\Compression\DIPS.Tests.Util.csproj", "{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

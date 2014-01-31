@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Compression
+namespace DIPS.Util.Compression
 {
     /// <summary>
     /// Represents a raw-byte compressor used for compressing and decompressing

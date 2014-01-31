@@ -3,8 +3,9 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.Compression;
+using DIPS.Util.Compression;
 
-namespace DIPS.Tests.Compression
+namespace DIPS.Tests.Util
 {
     /// <summary>
     /// Summary description for CompressorFactoryTests

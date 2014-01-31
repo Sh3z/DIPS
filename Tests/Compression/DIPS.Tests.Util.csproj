@@ -6,8 +6,8 @@
     <ProjectGuid>{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DIPS.Tests.Compression</RootNamespace>
-    <AssemblyName>DIPS.Tests.Compression</AssemblyName>
+    <RootNamespace>DIPS.Tests.Util</RootNamespace>
+    <AssemblyName>DIPS.Tests.Util</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -55,9 +55,9 @@
     <Compile Include="CaseInsensitiveComparatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Compression\DIPS.Compression.csproj">
+    <ProjectReference Include="..\..\src\Compression\DIPS.Util.csproj">
       <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
-      <Name>DIPS.Compression</Name>
+      <Name>DIPS.Util</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
