@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Compression
+namespace DIPS.Util
 {
     /// <summary>
     /// Provides case-insensitive comparison against strings.
