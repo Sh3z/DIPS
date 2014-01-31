@@ -61,9 +61,11 @@ namespace DIPS.Processor.XML
         /// in a job.</param>
         /// <returns>An <see cref="XElement"/> representing the
         /// <see cref="Bitmap"/>.</returns>
+        /// <see cref="IBuilderProcess"/> does not support building
+        /// inputs.</exception>
         public XElement BuildInput( Bitmap input )
         {
-            return new XElement( "input" ); // Todo
+            throw new InvalidOperationException( "DefinitionBuilderProcess does not support images." );
         }
 
 

@@ -30,6 +30,9 @@ namespace DIPS.Processor.XML
         /// in a job.</param>
         /// <returns>An <see cref="XElement"/> representing the
         /// <see cref="Bitmap"/>.</returns>
+        /// <exception cref="InvalidOperationException">this
+        /// <see cref="IBuilderProcess"/> does not support building
+        /// inputs.</exception>
         XElement BuildInput( Bitmap input );
     }
 }

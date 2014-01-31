@@ -53,7 +53,29 @@ namespace DIPS.Processor.XML
             _algorithms.Add( definition );
         }
 
+        /// <summary>
+        /// Executes the build procedure and constructs the Xml using
+        /// the information provided to this <see cref="XmlBuilder"/>.
+        /// </summary>
         public void Build()
+        {
+            try
+            {
+                _performBuild();
+            }
+            catch( Exception e )
+            {
+                Xml = new XDocument();
+                string err = "An Exception occured while building the document.";
+                throw new XmlBuilderException( err, e );
+            }
+        }
+
+
+        /// <summary>
+        /// Builds the Xml.
+        /// </summary>
+        private void _performBuild()
         {
             Xml = new XDocument();
             Xml.Add( new XDeclaration( "1.0", "UTF-8", "yes" ) );
@@ -68,7 +90,6 @@ namespace DIPS.Processor.XML
                 _buildInputs();
             }
         }
-
 
         /// <summary>
         /// Builds all the inputs into the current Xml.
