@@ -66,7 +66,8 @@ namespace DIPS.Processor.XML
             {
                 XAttribute name = new XAttribute( "name", property.Name );
                 XAttribute type = new XAttribute( "type", property.Type.AssemblyQualifiedName );
-                XElement prop = new XElement( "property", name, type );
+                XAttribute defaultVal = new XAttribute( "default-value", property.Value );
+                XElement prop = new XElement( "property", name, type, defaultVal );
                 props.Add( prop );
             }
 
