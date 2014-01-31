@@ -11,7 +11,7 @@ namespace DIPS.Processor.XML
     /// <summary>
     /// Provides GZip compression against incoming byte arrays.
     /// </summary>
-    [Compressor( "gzip" )]
+    [Compressor( "GZip" )]
     public class GZipCompressor : ICompressor
     {
         /// <summary>
