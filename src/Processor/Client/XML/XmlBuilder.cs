@@ -20,8 +20,14 @@ namespace DIPS.Processor.XML
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlBuilder"/> class.
         /// </summary>
-        public XmlBuilder()
+        public XmlBuilder( IBuilderProcess process )
         {
+            if( process == null )
+            {
+                throw new ArgumentNullException( "process" );
+            }
+
+            _process = process;
             _algorithms = new List<AlgorithmDefinition>();
             _inputs = new List<Bitmap>();
         }
@@ -47,29 +53,54 @@ namespace DIPS.Processor.XML
             _algorithms.Add( definition );
         }
 
-        public void BuildJob()
-        {
-            Xml = new XDocument();
-            Xml.Add( new XDeclaration( "1.0", "UTF-8", "yes" ) );
-            
-        }
-
-        public void BuildProcess()
+        public void Build()
         {
             Xml = new XDocument();
             Xml.Add( new XDeclaration( "1.0", "UTF-8", "yes" ) );
 
-            XElement algorithm = new XElement( "algorithm-chain" );
-            foreach( AlgorithmDefinition definition in _algorithms )
+            if( _algorithms.Any() )
             {
-                XAttribute name = new XAttribute( "name", definition.AlgorithmName );
+                _buildAlgorithms();
+            }
 
-                XElement alg = new XElement( "algorithm" );
+            if( _inputs.Any() )
+            {
+                _buildInputs();
             }
         }
 
 
+        /// <summary>
+        /// Builds all the inputs into the current Xml.
+        /// </summary>
+        private void _buildInputs()
+        {
+            ICollection<XElement> inputs = new List<XElement>();
+            foreach( var input in _inputs )
+            {
+                XElement xml = _process.BuildInput( input );
+                inputs.Add( xml );
+            }
 
+            Xml.Add( new XElement( "inputs" ) );
+        }
+
+        /// <summary>
+        /// Builds all the algorithms into the current Xml.
+        /// </summary>
+        private void _buildAlgorithms()
+        {
+            ICollection<XElement> algorithms = new List<XElement>();
+            foreach( var def in _algorithms )
+            {
+                XElement xml = _process.Build( def );
+                algorithms.Add( xml );
+            }
+
+            Xml.Add( new XElement( "algorithms", algorithms ) );
+        }
+
+        
         /// <summary>
         /// Contains the set of algorithm definitions in use;
         /// </summary>
@@ -79,5 +110,10 @@ namespace DIPS.Processor.XML
         /// Contains the set of image inputs.
         /// </summary>
         private ICollection<Bitmap> _inputs;
+
+        /// <summary>
+        /// Contains the actual building process to use against each algorithm.
+        /// </summary>
+        private IBuilderProcess _process;
     }
 }
