@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace DIPS.Processor.Plugin
 {
@@ -135,19 +136,27 @@ namespace DIPS.Processor.Plugin
         /// <returns>A Property definition</returns>
         private static Property _createProperty( PropertyInfo property, PluginVariableAttribute attr )
         {
-            Property p = null;
-            if( attr.CompressorType != null )
+            _guardBadAttribute( attr );
+
+            Property p = new Property( attr.VariableIdentifier, property.PropertyType );
+
+            if( attr.PublicType != null )
             {
-                _guardBadAttribute( attr );
-                ICompressor compressor = Activator.CreateInstance( attr.CompressorType ) as ICompressor;
-                p = new Property( attr.VariableIdentifier, property.PropertyType, compressor );
-            }
-            else
-            {
-                p = p = new Property( attr.VariableIdentifier, property.PropertyType );
+                p.Type = attr.PublicType;
             }
 
             p.Value = attr.DefaultValue;
+
+            if( attr.CompressorType != null )
+            {
+                p.Compressor = Activator.CreateInstance( attr.CompressorType ) as ICompressor;
+            }
+
+            if( attr.PublicTypeConverter != null )
+            {
+                p.Converter = Activator.CreateInstance( attr.PublicTypeConverter ) as IValueConverter;
+            }
+
             return p;
         }
 
@@ -157,16 +166,32 @@ namespace DIPS.Processor.Plugin
         /// <param name="attr">The attribute to scrutinize.</param>
         private static void _guardBadAttribute( PluginVariableAttribute attr )
         {
-            CompressorAttribute cattr = attr.CompressorType.GetCustomAttribute(
-                typeof( CompressorAttribute ) ) as CompressorAttribute;
-            if( cattr == null )
+            if( attr.CompressorType != null )
             {
-                throw new ArgumentException( "Compressor type provided not annotated." );
+                CompressorAttribute cattr = attr.CompressorType.GetCustomAttribute(
+                    typeof( CompressorAttribute ) ) as CompressorAttribute;
+                if( cattr == null )
+                {
+                    throw new ArgumentException( "Compressor type provided not annotated." );
+                }
+
+                if( attr.CompressorType.GetInterfaces().Contains( typeof( ICompressor ) ) == false )
+                {
+                    throw new ArgumentException( "Compressor type does not implement ICompressor." );
+                }
             }
 
-            if( attr.CompressorType.GetInterfaces().Contains( typeof( ICompressor ) ) == false )
+            if( attr.PublicType != null )
             {
-                throw new ArgumentException( "Compressor type does not implement ICompressor." );
+                if( attr.PublicTypeConverter == null )
+                {
+                    throw new ArgumentException( "Faux type converter not provided." );
+                }
+
+                if( attr.PublicTypeConverter.GetInterfaces().Contains( typeof( IValueConverter ) ) == false )
+                {
+                    throw new ArgumentException( "PublicTypeConverter does not implement IValueConverter." );
+                }
             }
         }
     }

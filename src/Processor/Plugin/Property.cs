@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace DIPS.Processor.Plugin
 {
@@ -37,20 +38,6 @@ namespace DIPS.Processor.Plugin
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Property"/> class.
-        /// </summary>
-        /// <param name="name">The name of the property.</param>
-        /// <param name="type">The type of the property.</param>
-        /// <param name="compressor">An <see cref="ICompressor"/> instance
-        /// capable of compressing the type of value represented by this
-        /// <see cref="Property"/>.</param>
-        public Property( string name, Type type, ICompressor compressor )
-            : this( name, type )
-        {
-            Compressor = compressor;
-        }
-
-        /// <summary>
         /// Gets the name of the property used by the plugin component.
         /// </summary>
         public string Name
@@ -65,7 +52,7 @@ namespace DIPS.Processor.Plugin
         public Type Type
         {
             get;
-            private set;
+            internal set;
         }
 
         /// <summary>
@@ -100,7 +87,17 @@ namespace DIPS.Processor.Plugin
         public ICompressor Compressor
         {
             get;
-            private set;
+            internal set;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IValueConverter"/> to use to format the value
+        /// appropriatley.
+        /// </summary>
+        public IValueConverter Converter
+        {
+            get;
+            internal set;
         }
 
         /// <summary>
