@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.Processor.Plugin;
+using DIPS.Util.Compression;
 
 namespace DIPS.Tests.Processor.Plugin
 {
@@ -103,6 +104,24 @@ namespace DIPS.Tests.Processor.Plugin
             Assert.AreEqual( 3d, p.Value );
         }
 
+        /// <summary>
+        /// Tests creating an algorithm definition where a property specifies a converter
+        /// </summary>
+        [TestMethod]
+        public void TestCreateDefinition_PropertyWithValidConverter()
+        {
+            AlgorithmDefinition d = PluginReflector.CreateDefinition( typeof( AnnotatedPluginWithPropertyAndConverter ) );
+
+            Assert.AreEqual( "Plugin", d.AlgorithmName );
+            Assert.AreEqual( 1, d.Properties.Count );
+
+            Property p = d.Properties.First();
+            Assert.AreEqual( "Value", p.Name );
+            Assert.AreEqual( typeof( string ), p.Type );
+            Assert.AreEqual( null, p.Value );
+            Assert.AreEqual( typeof( GZipCompressor ), p.Compressor.GetType() );
+        }
+
 
         class NonAnnotatedPlugin : AlgorithmPlugin
         {
@@ -126,6 +145,22 @@ namespace DIPS.Tests.Processor.Plugin
         {
             [PluginVariable( "Value", 3d )]
             public double Value
+            {
+                get;
+                set;
+            }
+
+            public override void Run()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        [PluginIdentifier( "Plugin" )]
+        class AnnotatedPluginWithPropertyAndConverter : AlgorithmPlugin
+        {
+            [PluginVariable( "Value", null, CompressorType = typeof( GZipCompressor ) )]
+            public string Value
             {
                 get;
                 set;

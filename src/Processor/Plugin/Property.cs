@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DIPS.Util.Compression;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -33,6 +34,20 @@ namespace DIPS.Processor.Plugin
 
             Name = name;
             Type = type;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Property"/> class.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="type">The type of the property.</param>
+        /// <param name="compressor">An <see cref="ICompressor"/> instance
+        /// capable of compressing the type of value represented by this
+        /// <see cref="Property"/>.</param>
+        public Property( string name, Type type, ICompressor compressor )
+            : this( name, type )
+        {
+            Compressor = compressor;
         }
 
         /// <summary>
@@ -77,6 +92,16 @@ namespace DIPS.Processor.Plugin
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private object _value;
+
+        /// <summary>
+        /// Gets the <see cref="ICompressor"/> used to compress the value
+        /// of this <see cref="Property"/>.
+        /// </summary>
+        public ICompressor Compressor
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Determines whether this <see cref="Property"/> is represented by the
