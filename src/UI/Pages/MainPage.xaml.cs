@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Resources;
 using DIPS.ViewModel;
 using DIPS.UI.Pages;
 using DIPS.UI.Pages.LoadNewDataset;
@@ -60,7 +61,7 @@ namespace DIPS.UI.Pages
 
         private void btnLoadDataset_MouseEnter(object sender, MouseEventArgs e)
         {
-            txtExplanation.Text = "This screen processes selected images using techniques created in the algorithm builder.";
+           txtExplanation.Text = "This screen processes selected images using techniques created in the algorithm builder.";
         }
 
         private void btnCreateAlgorithm_MouseEnter(object sender, MouseEventArgs e)
@@ -86,6 +87,12 @@ namespace DIPS.UI.Pages
         private void btnViewExistingDS_MouseLeave(object sender, MouseEventArgs e)
         {
             clearField();
+        }
+
+        private void btnCreateAlgorithm_Click(object sender, RoutedEventArgs e)
+        {
+            CreateAlgorithm createAlgorithmScreen = new CreateAlgorithm();
+            this.NavigationService.Navigate(createAlgorithmScreen);
         }
     }
 }
