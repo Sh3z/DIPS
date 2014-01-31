@@ -40,8 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompressorAttribute.cs" />
     <Compile Include="DefinitionBuilderProcess.cs" />
+    <Compile Include="GZipCompressor.cs" />
     <Compile Include="IBuilderProcess.cs" />
+    <Compile Include="ICompressor.cs" />
     <Compile Include="InputCompressor.cs" />
     <Compile Include="JobBuilderProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
