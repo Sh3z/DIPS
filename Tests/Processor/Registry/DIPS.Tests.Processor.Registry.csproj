@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4D5DE30D-9AD2-432E-ABC6-59F771FAF747}</ProjectGuid>
+    <ProjectGuid>{E21A404C-7875-4099-84D6-E4C7662C49E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DIPS.Tests.Processor.Plugin</RootNamespace>
-    <AssemblyName>DIPS.Tests.Processor.Plugin</AssemblyName>
+    <RootNamespace>DIPS.Tests.Processor.Registry</RootNamespace>
+    <AssemblyName>DIPS.Tests.Processor.Registry</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,7 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -52,18 +51,16 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyTests.cs" />
-    <Compile Include="AlgorithmDefinitionTests.cs" />
-    <Compile Include="PluginReflectorTests.cs" />
+    <Compile Include="RegistryCacheTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Compression\DIPS.Util.csproj">
-      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
-      <Name>DIPS.Util</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\src\Processor\Plugin\DIPS.Processor.Plugin.csproj">
       <Project>{5bc8fe69-c985-4b78-86f2-441a82fb435f}</Project>
       <Name>DIPS.Processor.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Processor\Registry\DIPS.Processor.Registry.csproj">
+      <Project>{3fb76655-e579-4832-a014-4b68893cf1e1}</Project>
+      <Name>DIPS.Processor.Registry</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

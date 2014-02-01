@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -40,13 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlgorithmDefinition.cs" />
     <Compile Include="AlgorithmException.cs" />
     <Compile Include="AlgorithmPlugin.cs" />
-    <Compile Include="IPropertySet.cs" />
+    <Compile Include="PluginIdentifierAttribute.cs" />
     <Compile Include="PluginException.cs" />
+    <Compile Include="PluginVariableAttribute.cs" />
+    <Compile Include="PluginReflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs" />
-    <Compile Include="RunArgs.cs" />
+    <Compile Include="PropertySet.cs" />
+    <Compile Include="PropertyTypeException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Compression\DIPS.Util.csproj">
+      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
+      <Name>DIPS.Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using DIPS.Util.Compression;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace DIPS.Processor.Plugin
 {
@@ -12,7 +14,7 @@ namespace DIPS.Processor.Plugin
     /// This class cannot be inherited.
     /// </summary>
     [DebuggerDisplay("Name = {Name} | Type = {Type}")]
-    public sealed class Property
+    public sealed class Property : ICloneable, IEquatable<Property>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Property"/> class.
@@ -50,7 +52,7 @@ namespace DIPS.Processor.Plugin
         public Type Type
         {
             get;
-            private set;
+            internal set;
         }
 
         /// <summary>
@@ -67,12 +69,7 @@ namespace DIPS.Processor.Plugin
             }
             set
             {
-                if( value == null )
-                {
-                    return;
-                }
-
-                if( _isValidType( value.GetType() ) == false )
+                if( _isValidType( value ) == false )
                 {
                     throw new ArgumentException( "Invalid Value type." );
                 }
@@ -83,25 +80,125 @@ namespace DIPS.Processor.Plugin
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private object _value;
 
+        /// <summary>
+        /// Gets the <see cref="ICompressor"/> used to compress the value
+        /// of this <see cref="Property"/>.
+        /// </summary>
+        public ICompressor Compressor
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IValueConverter"/> to use to format the value
+        /// appropriatley.
+        /// </summary>
+        public IValueConverter Converter
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
+        /// Determines whether this <see cref="Property"/> is represented by the
+        /// provided <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">The <see cref="Type"/> to determine is contained by
+        /// this <see cref="Property"/>.</param>
+        /// <returns><c>true</c> if this <see cref="Property"/> is represented by the
+        /// provided <see cref="Type"/>; <c>false</c> otherwise.</returns>
+        public bool IsOfType( Type type )
+        {
+            if( type == null )
+            {
+                return false;
+            }
+            else
+            {
+                return _isTypeMatch( type );
+            }
+        }
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>A new object that is a copy of this instance.</returns>
+        public object Clone()
+        {
+            Property clone = new Property( Name, Type );
+            clone.Value = Value;
+            return clone;
+        }
+
+        /// <summary>
+        /// Determines whether this <see cref="Property"/> is identical to the
+        /// <see cref="Property"/> instance provided.
+        /// </summary>
+        /// <param name="other">The <see cref="Property"/> to compare against.</param>
+        /// <returns><c>true</c> if this <see cref="Property"/> is identical to that
+        /// of the parameter; <c>false</c> otherwise.</returns>
+        public bool Equals( Property other )
+        {
+            if( other == null )
+            {
+                return false;
+            }
+
+            if( ReferenceEquals( this, other ) )
+            {
+                return true;
+            }
+
+            if( Name != other.Name )
+            {
+                return false;
+            }
+
+            if( Type != other.Type )
+            {
+                return false;
+            }
+
+            return true;
+        }
+
 
         /// <summary>
         /// Checks if the incoming type is compatible with that of this property's.
         /// </summary>
-        /// <param name="t">The incoming type.</param>
+        /// <param name="t">The incoming object.</param>
         /// <returns>true if the incoming type is acceptable.</returns>
-        private bool _isValidType( Type t )
+        private bool _isValidType( object t )
         {
-            if( t == Type )
+            if( t == null && Type.IsValueType )
+            {
+                return false;
+            }
+
+            if( t == null )
+            {
+                // Can set null for reference types - continue otherwise.
+                return true;
+            }
+
+            Type theType = t.GetType();
+            return _isTypeMatch( theType );
+        }
+
+        private bool _isTypeMatch( Type theType )
+        {
+            if( theType == Type )
             {
                 return true;
             }
 
-            if( t.IsSubclassOf( Type ) )
+            if( theType.IsSubclassOf( Type ) )
             {
                 return true;
             }
 
-            if( Type.IsInterface && t.GetInterfaces().Contains( Type ) )
+            if( Type.IsInterface && theType.GetInterfaces().Contains( Type ) )
             {
                 return true;
             }
