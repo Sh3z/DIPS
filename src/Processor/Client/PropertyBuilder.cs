@@ -68,17 +68,28 @@ namespace DIPS.Processor.Client
                 property.Type = PropertyType;
             }
 
-            if( DefaultValue == null && property.Type.IsValueType )
+            property.Value = _resolveDefaultValue( property.Type );
+            property.Compressor = Compressor;
+            return property;
+        }
+
+
+        /// <summary>
+        /// Resolves an appropriate default value for the property.
+        /// </summary>
+        /// <param name="propertyType">The Type of the new Property.</param>
+        /// <returns>The default value provided, or a default value for
+        /// non-nullable types when null is provided</returns>
+        private object _resolveDefaultValue( Type propertyType )
+        {
+            if( DefaultValue == null && propertyType.IsValueType )
             {
-                property.Value = Activator.CreateInstance( property.Type );
+                return Activator.CreateInstance( propertyType );
             }
             else
             {
-                property.Value = DefaultValue;
+                return DefaultValue;
             }
-
-            property.Compressor = Compressor;
-            return property;
         }
     }
 }
