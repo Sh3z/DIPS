@@ -53,17 +53,30 @@ namespace DIPS.Processor.Client
         public Property Build()
         {
             Property property = new Property( Name, PropertyType );
-            if( PublicType != null && Converter == null )
+            if( PublicType != null )
             {
-                throw new InvalidOperationException( "Public type specified with no converter." );
-            }
-            else
-            {
+                if( Converter == null )
+                {
+                    throw new InvalidOperationException( "Public type specified with no converter." );
+                }
+
                 property.Type = PublicType;
                 property.Converter = Converter;
             }
+            else
+            {
+                property.Type = PropertyType;
+            }
 
-            property.Value = DefaultValue;
+            if( DefaultValue == null && property.Type.IsValueType )
+            {
+                property.Value = Activator.CreateInstance( property.Type );
+            }
+            else
+            {
+                property.Value = DefaultValue;
+            }
+
             property.Compressor = Compressor;
             return property;
         }
