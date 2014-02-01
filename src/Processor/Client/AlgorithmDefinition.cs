@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.Plugin
+namespace DIPS.Processor.Client
 {
     /// <summary>
     /// Represents the definition of an <see cref="AlgorithmPlugin"/> through

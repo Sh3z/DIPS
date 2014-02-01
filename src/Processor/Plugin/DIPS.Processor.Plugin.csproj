@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgorithmDefinition.cs" />
     <Compile Include="AlgorithmException.cs" />
     <Compile Include="AlgorithmPlugin.cs" />
     <Compile Include="PluginIdentifierAttribute.cs" />
@@ -49,14 +48,15 @@
     <Compile Include="PluginVariableAttribute.cs" />
     <Compile Include="PluginReflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Property.cs" />
-    <Compile Include="PropertySet.cs" />
-    <Compile Include="PropertyTypeException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Compression\DIPS.Util.csproj">
       <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
       <Name>DIPS.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Client\DIPS.Processor.Client.csproj">
+      <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
+      <Name>DIPS.Processor.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

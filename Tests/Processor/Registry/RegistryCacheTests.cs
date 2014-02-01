@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.Processor.Registry;
 using DIPS.Processor.Plugin;
+using DIPS.Processor.Client;
 
 namespace DIPS.Tests.Processor.Registry
 {

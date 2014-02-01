@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.Plugin
+namespace DIPS.Processor.Client
 {
     /// <summary>
     /// Represents an error pertaining to the type of property receieved by an algorithm.
     /// </summary>
-    public class PropertyTypeException : AlgorithmException
+    public class PropertyTypeException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyTypeException"/> class.
