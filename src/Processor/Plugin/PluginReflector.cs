@@ -1,4 +1,5 @@
-﻿using DIPS.Util.Compression;
+﻿using DIPS.Processor.Client;
+using DIPS.Util.Compression;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -138,26 +139,23 @@ namespace DIPS.Processor.Plugin
         {
             _guardBadAttribute( attr );
 
-            Property p = new Property( attr.VariableIdentifier, property.PropertyType );
-
-            if( attr.PublicType != null )
-            {
-                p.Type = attr.PublicType;
-            }
-
-            p.Value = attr.DefaultValue;
+            PropertyBuilder b = new PropertyBuilder();
+            b.Name = attr.VariableIdentifier;
+            b.PropertyType = property.PropertyType;
+            b.PublicType = attr.PublicType;
+            b.DefaultValue = attr.DefaultValue;
 
             if( attr.CompressorType != null )
             {
-                p.Compressor = Activator.CreateInstance( attr.CompressorType ) as ICompressor;
+                b.Compressor = Activator.CreateInstance( attr.CompressorType ) as ICompressor;
             }
 
             if( attr.PublicTypeConverter != null )
             {
-                p.Converter = Activator.CreateInstance( attr.PublicTypeConverter ) as IValueConverter;
+                b.Converter = Activator.CreateInstance( attr.PublicTypeConverter ) as IValueConverter;
             }
 
-            return p;
+            return b.Build();
         }
 
         /// <summary>

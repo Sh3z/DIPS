@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.Processor.Plugin;
 using DIPS.Util.Compression;
 using System.Windows.Data;
+using DIPS.Processor.Client;
 
 namespace DIPS.Tests.Processor.Plugin
 {

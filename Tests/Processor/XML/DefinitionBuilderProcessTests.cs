@@ -1,4 +1,5 @@
-﻿using DIPS.Processor.Plugin;
+﻿using DIPS.Processor.Client;
+using DIPS.Processor.Plugin;
 using DIPS.Processor.XML;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

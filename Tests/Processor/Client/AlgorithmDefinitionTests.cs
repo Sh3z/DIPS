@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DIPS.Processor.Plugin;
+using DIPS.Processor.Client;
 using System.Collections.Generic;
 
-namespace DIPS.Tests.Processor.Plugin
+namespace DIPS.Tests.Processor.Client
 {
     /// <summary>
     /// Summary description for AlgorithmDefinitionTests

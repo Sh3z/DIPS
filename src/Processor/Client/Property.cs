@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace DIPS.Processor.Plugin
+namespace DIPS.Processor.Client
 {
     /// <summary>
     /// Represents the declaration of a single property used by a plugin component.
@@ -36,6 +36,7 @@ namespace DIPS.Processor.Plugin
             Name = name;
             Type = type;
         }
+
 
         /// <summary>
         /// Gets the name of the property used by the plugin component.

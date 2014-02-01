@@ -24,7 +24,7 @@ namespace DIPS.Processor
                 throw new ArgumentNullException( "algorithm" );
             }
 
-            Ticket - ticket;
+            Ticket = ticket;
             Algorithm = algorithm;
             Inputs = new List<ProcessInput>();
         }

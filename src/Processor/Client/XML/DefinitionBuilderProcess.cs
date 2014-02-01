@@ -1,4 +1,4 @@
-﻿using DIPS.Processor.Plugin;
+﻿using DIPS.Processor.Client;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
