@@ -46,6 +46,8 @@
     <Compile Include="IJobTicket.cs" />
     <Compile Include="Imaging\IImageProcess.cs" />
     <Compile Include="Imaging\ImageProcessingStep.cs" />
+    <Compile Include="IProcessingService.cs" />
+    <Compile Include="ISynchronousProcessor.cs" />
     <Compile Include="JobRequest.cs" />
     <Compile Include="JobResult.cs" />
     <Compile Include="JobState.cs" />
