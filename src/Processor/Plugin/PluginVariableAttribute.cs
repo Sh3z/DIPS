@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DIPS.Util.Compression;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +51,39 @@ namespace DIPS.Processor.Plugin
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Type"/> of the object used to compress
+        /// the value of the variable.
+        /// </summary>
+        public Type CompressorType
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the faux type exposes to clients. This overrides the default
+        /// type of the property.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set, you must provide a valid converter.
+        /// </remarks>
+        public Type PublicType
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the type of the <see cref="IValueConverter"/> used to
+        /// convert between the PublicType and true type of the variable.
+        /// </summary>
+        public Type PublicTypeConverter
+        {
+            get;
+            set;
         }
     }
 }

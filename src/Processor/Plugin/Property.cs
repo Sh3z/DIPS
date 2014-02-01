@@ -1,9 +1,11 @@
-﻿using System;
+﻿using DIPS.Util.Compression;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace DIPS.Processor.Plugin
 {
@@ -50,7 +52,7 @@ namespace DIPS.Processor.Plugin
         public Type Type
         {
             get;
-            private set;
+            internal set;
         }
 
         /// <summary>
@@ -77,6 +79,26 @@ namespace DIPS.Processor.Plugin
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private object _value;
+
+        /// <summary>
+        /// Gets the <see cref="ICompressor"/> used to compress the value
+        /// of this <see cref="Property"/>.
+        /// </summary>
+        public ICompressor Compressor
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IValueConverter"/> to use to format the value
+        /// appropriatley.
+        /// </summary>
+        public IValueConverter Converter
+        {
+            get;
+            internal set;
+        }
 
         /// <summary>
         /// Determines whether this <see cref="Property"/> is represented by the

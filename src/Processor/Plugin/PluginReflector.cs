@@ -1,9 +1,11 @@
-﻿using System;
+﻿using DIPS.Util.Compression;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace DIPS.Processor.Plugin
 {
@@ -115,13 +117,82 @@ namespace DIPS.Processor.Plugin
                 if( varAttrs.Any() )
                 {
                     PluginVariableAttribute attr = varAttrs.First();
-                    Property p = new Property( attr.VariableIdentifier, property.PropertyType );
-                    p.Value = attr.DefaultValue;
+                    Property p = _createProperty( property, attr );
                     properties.Add( p );
                 }
             }
 
             return properties;
+        }
+
+        /// <summary>
+        /// Constructs the Property definition using the CLR information and
+        /// the metadata provided in the attribute
+        /// </summary>
+        /// <param name="property">The reflected information about the property
+        /// within the class</param>
+        /// <param name="attr">The additional information provided by the
+        /// plugin</param>
+        /// <returns>A Property definition</returns>
+        private static Property _createProperty( PropertyInfo property, PluginVariableAttribute attr )
+        {
+            _guardBadAttribute( attr );
+
+            Property p = new Property( attr.VariableIdentifier, property.PropertyType );
+
+            if( attr.PublicType != null )
+            {
+                p.Type = attr.PublicType;
+            }
+
+            p.Value = attr.DefaultValue;
+
+            if( attr.CompressorType != null )
+            {
+                p.Compressor = Activator.CreateInstance( attr.CompressorType ) as ICompressor;
+            }
+
+            if( attr.PublicTypeConverter != null )
+            {
+                p.Converter = Activator.CreateInstance( attr.PublicTypeConverter ) as IValueConverter;
+            }
+
+            return p;
+        }
+
+        /// <summary>
+        /// Scrutinizes the variable attribute and ensures it has been annotated correctly.
+        /// </summary>
+        /// <param name="attr">The attribute to scrutinize.</param>
+        private static void _guardBadAttribute( PluginVariableAttribute attr )
+        {
+            if( attr.CompressorType != null )
+            {
+                CompressorAttribute cattr = attr.CompressorType.GetCustomAttribute(
+                    typeof( CompressorAttribute ) ) as CompressorAttribute;
+                if( cattr == null )
+                {
+                    throw new ArgumentException( "Compressor type provided not annotated." );
+                }
+
+                if( attr.CompressorType.GetInterfaces().Contains( typeof( ICompressor ) ) == false )
+                {
+                    throw new ArgumentException( "Compressor type does not implement ICompressor." );
+                }
+            }
+
+            if( attr.PublicType != null )
+            {
+                if( attr.PublicTypeConverter == null )
+                {
+                    throw new ArgumentException( "Faux type converter not provided." );
+                }
+
+                if( attr.PublicTypeConverter.GetInterfaces().Contains( typeof( IValueConverter ) ) == false )
+                {
+                    throw new ArgumentException( "PublicTypeConverter does not implement IValueConverter." );
+                }
+            }
         }
     }
 }
