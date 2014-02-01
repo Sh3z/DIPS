@@ -50,7 +50,11 @@
     <Compile Include="Imaging\ImageProcessingStep.cs" />
     <Compile Include="IProcessingService.cs" />
     <Compile Include="ISynchronousProcessor.cs" />
+    <Compile Include="JobDeployment\IJobDefinition.cs" />
+    <Compile Include="JobDeployment\JobInput.cs" />
     <Compile Include="JobRequest.cs" />
+    <Compile Include="JobDeployment\ObjectJobDefinition.cs" />
+    <Compile Include="JobDeployment\XmlJobDefinition.cs" />
     <Compile Include="JobResult.cs" />
     <Compile Include="JobState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
