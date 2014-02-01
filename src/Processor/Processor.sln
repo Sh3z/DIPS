@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Util", "..\..\Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Processor.Plugin.Matlab", "Plugin\Matlab\DIPS.Processor.Plugin.Matlab.csproj", "{B2A5EEBF-504B-4D66-BA8D-D3A76F07FAC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Processor.Plugin.Matlab", "..\..\Tests\Processor\Plugin\Matlab\DIPS.Tests.Processor.Plugin.Matlab.csproj", "{2B7635BA-CCB5-4E1F-96D2-683A1AE27013}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{B2A5EEBF-504B-4D66-BA8D-D3A76F07FAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2A5EEBF-504B-4D66-BA8D-D3A76F07FAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2A5EEBF-504B-4D66-BA8D-D3A76F07FAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B7635BA-CCB5-4E1F-96D2-683A1AE27013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B7635BA-CCB5-4E1F-96D2-683A1AE27013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B7635BA-CCB5-4E1F-96D2-683A1AE27013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B7635BA-CCB5-4E1F-96D2-683A1AE27013}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +112,7 @@ Global
 		{E21A404C-7875-4099-84D6-E4C7662C49E5} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
 		{269C58EE-287E-44AA-88DE-E6B3FEE248BE} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
 		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
+		{2B7635BA-CCB5-4E1F-96D2-683A1AE27013} = {97CC0AA8-75C2-4068-8B78-F1D14CF45223}
 		{64782F97-2F28-479F-90FD-FFE55C884EEA} = {6720BC6B-87B9-47F3-A671-6A8AB82250D4}
 	EndGlobalSection
 EndGlobal
