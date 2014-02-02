@@ -48,6 +48,7 @@
     <Compile Include="JobTicket.cs" />
     <Compile Include="ProcessingJob.cs" />
     <Compile Include="ProcessingService.cs" />
+    <Compile Include="ProcessInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\JobQueue.cs" />
     <Compile Include="SynchronousProcessor.cs" />
@@ -69,9 +70,6 @@
       <Project>{3fb76655-e579-4832-a014-4b68893cf1e1}</Project>
       <Name>DIPS.Processor.Registry</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="XML\ProcessorStateTemplate.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

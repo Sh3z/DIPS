@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.Processor.Registry;
 using DIPS.Processor.Plugin;
+using DIPS.Processor.Client;
 
 namespace DIPS.Tests.Processor.Registry
 {
@@ -89,6 +90,28 @@ namespace DIPS.Tests.Processor.Registry
 
             AlgorithmDefinition d2 = PluginReflector.CreateDefinition( p );
             Assert.IsTrue( d.Equals( d2 ) );
+        }
+
+        /// <summary>
+        /// Tests determining whether the registry cache has cached an algorithm
+        /// that does not exist.
+        /// </summary>
+        [TestMethod]
+        public void TestHasCachedAlgorithm_UnknownName()
+        {
+            bool cached = RegistryCache.Cache.HasCachedAlgorithm( "unknown" );
+            Assert.IsFalse( cached );
+        }
+
+        /// <summary>
+        /// Tests determining whether the registry cache has cached an algorithm
+        /// that exists.
+        /// </summary>
+        [TestMethod]
+        public void TestHasCachedAlgorithm_KnownName()
+        {
+            bool cached = RegistryCache.Cache.HasCachedAlgorithm( "gamma" );
+            Assert.IsTrue( cached );
         }
     }
 }

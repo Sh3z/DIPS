@@ -1,0 +1,211 @@
+﻿using DIPS.Processor.Registry;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace DIPS.Processor.XML.Decompilation
+{
+    /// <summary>
+    /// Represents the visitor used to ensure the Xml provided by the traverser
+    /// is in a valid format before executing the behaviour of another
+    /// <see cref="IJobXmlVisitor"/>.
+    /// </summary>
+    public class JobValidationVisitor : XmlVisitorDecorator
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobValidationVisitor"/>
+        /// class.
+        /// </summary>
+        /// <param name="visitor">The <see cref="IJobXmlVisitor"/> to call if
+        /// the Xml is in a valid state.</param>
+        public JobValidationVisitor( IJobXmlVisitor visitor )
+            : base( visitor )
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobValidationVisitor"/>
+        /// class, with a custom algorithm-validation function.
+        /// </summary>
+        /// <param name="visitor">The <see cref="IJobXmlVisitor"/> to call if
+        /// the Xml is in a valid state.</param>
+        /// <param name="algorithmValidator">A function used to validate whether
+        /// algorithm Xml is valid.</param>
+        public JobValidationVisitor( IJobXmlVisitor visitor, Func<XNode, bool> algorithmValidator )
+            : base( visitor )
+        {
+            _algorithmFunc = algorithmValidator;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobValidationVisitor"/>
+        /// class, with custom algorithm-validation and input-validation functions.
+        /// </summary>
+        /// <param name="visitor">The <see cref="IJobXmlVisitor"/> to call if
+        /// the Xml is in a valid state.</param>
+        /// <param name="algorithmValidator">A function used to validate whether
+        /// algorithm Xml is valid.</param>
+        /// <param name="inputValidator">A function used to validate whether input
+        /// Xml is valid.</param>
+        public JobValidationVisitor( IJobXmlVisitor visitor, Func<XNode, bool> algorithmValidator, Func<XNode, bool> inputValidator )
+            : this( visitor, algorithmValidator )
+        {
+            _inputFunc = inputValidator;
+        }
+
+
+        /// <summary>
+        /// Performs the visiting logic against an <see cref="XNode"/> representing
+        /// an <see cref="AlgorithmDefinition"/>.
+        /// </summary>
+        /// <param name="xml">The <see cref="XNode"/> containing the algorithm
+        /// information.</param>
+        public override void VisitAlgorithm( XNode xml )
+        {
+            if( _validateAlgorithm( xml ) )
+            {
+                DecoratedVisitor.VisitAlgorithm( xml );
+            }
+        }
+
+        /// <summary>
+        /// Performs the visiting logic against an <see cref="XNode"/> representing
+        /// an input to the job.
+        /// </summary>
+        /// <param name="xml">The <see cref="XNode"/> representing an input to a
+        /// job.</param>
+        public override void VisitInput( XNode xml )
+        {
+            if( _validateInput( xml ) )
+            {
+                DecoratedVisitor.VisitInput( xml );
+            }
+        }
+
+
+        /// <summary>
+        /// Performs the validation of the input Xml.
+        /// </summary>
+        /// <param name="xml">The Xml to validate.</param>
+        /// <returns>true if the Xml is valid.</returns>
+        private bool _validateInput( XNode xml )
+        {
+            if( _inputFunc != null )
+            {
+                return _inputFunc( xml );
+            }
+
+            return true; // todo
+        }
+
+
+        /// <summary>
+        /// Performs the validation of the algorithm Xml.
+        /// </summary>
+        /// <param name="xml">The Xml to validate.</param>
+        /// <returns>true if the Xml is valid.</returns>
+        private bool _validateAlgorithm( XNode xml )
+        {
+            if( _algorithmFunc != null )
+            {
+                return _algorithmFunc( xml );
+            }
+
+            if( xml.NodeType != System.Xml.XmlNodeType.Element )
+            {
+                return false;
+            }
+
+            XElement element = (XElement)xml;
+            if( element.Attribute( "name" ) == null )
+            {
+                return false;
+            }
+
+            string algorithmName = element.Attribute( "name" ).Value;
+            if( RegistryCache.Cache.HasCachedAlgorithm( algorithmName ) == false )
+            {
+                return false;
+            }
+
+            // Validate properties if there are any.
+            var properties = element.Descendants( "property" );
+            if( properties.Any() && _validateProperties( properties ) == false )
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        /// <summary>
+        /// Validates the properties of an algorithm element.
+        /// </summary>
+        /// <param name="properties">The properties of the algorithm.</param>
+        /// <returns>true if the properties are valid.</returns>
+        private bool _validateProperties( IEnumerable<XNode> properties )
+        {
+            foreach( XNode property in properties )
+            {
+                if( property.NodeType != System.Xml.XmlNodeType.Element )
+                {
+                    return false;
+                }
+                else
+                {
+                    if( _validateProperty( (XElement)property ) == false )
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Validates a single property of an algorithm
+        /// </summary>
+        /// <param name="property">The property element</param>
+        /// <returns>true if the property is valid.</returns>
+        private bool _validateProperty( XElement property )
+        {
+            if( property.Attribute( "type" ) == null )
+            {
+                return false;
+            }
+
+            string typeName = property.Attribute( "type" ).Value;
+            try
+            {
+                Type type = Type.GetType( typeName );
+            }
+            catch
+            {
+                return false;
+            }
+
+            if( property.Attribute( "value" ) == null )
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        /// <summary>
+        /// Contains the custom function used to validate algorithms.
+        /// </summary>
+        private Func<XNode, bool> _algorithmFunc;
+
+        /// <summary>
+        /// Contains the custom function used to validate inputs.
+        /// </summary>
+        private Func<XNode, bool> _inputFunc;
+    }
+}

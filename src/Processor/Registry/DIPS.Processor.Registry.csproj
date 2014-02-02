@@ -43,6 +43,10 @@
     <Compile Include="RegistryCache.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\DIPS.Processor.Client.csproj">
+      <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
+      <Name>DIPS.Processor.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Plugin\DIPS.Processor.Plugin.csproj">
       <Project>{5bc8fe69-c985-4b78-86f2-441a82fb435f}</Project>
       <Name>DIPS.Processor.Plugin</Name>

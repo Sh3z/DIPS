@@ -5,6 +5,7 @@ using System.Linq;
 using System.Xml.Linq;
 using DIPS.Processor.Plugin;
 using System.Diagnostics;
+using DIPS.Processor.Client;
 
 namespace DIPS.Tests.Processor.XML
 {

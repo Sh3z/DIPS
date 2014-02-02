@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -41,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.cs" />
+    <Compile Include="AlgorithmDefinition.cs" />
     <Compile Include="IAlgorithmStep.cs" />
     <Compile Include="IImageSource.cs" />
     <Compile Include="IJobTicket.cs" />
@@ -48,10 +50,24 @@
     <Compile Include="Imaging\ImageProcessingStep.cs" />
     <Compile Include="IProcessingService.cs" />
     <Compile Include="ISynchronousProcessor.cs" />
+    <Compile Include="JobDeployment\IJobDefinition.cs" />
+    <Compile Include="JobDeployment\JobInput.cs" />
     <Compile Include="JobRequest.cs" />
+    <Compile Include="JobDeployment\ObjectJobDefinition.cs" />
+    <Compile Include="JobDeployment\XmlJobDefinition.cs" />
     <Compile Include="JobResult.cs" />
     <Compile Include="JobState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Property.cs" />
+    <Compile Include="PropertyBuilder.cs" />
+    <Compile Include="PropertySet.cs" />
+    <Compile Include="PropertyTypeException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Compression\DIPS.Util.csproj">
+      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
+      <Name>DIPS.Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

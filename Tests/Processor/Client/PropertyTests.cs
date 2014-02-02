@@ -1,4 +1,4 @@
-﻿using DIPS.Processor.Plugin;
+﻿using DIPS.Processor.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Tests.Processor.Plugin
+namespace DIPS.Tests.Processor.Client
 {
     /// <summary>
     /// Summary description for PropertyTests
