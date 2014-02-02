@@ -29,8 +29,28 @@ namespace DIPS.Processor.XML.Compilation
             }
 
             _process = process;
-            _algorithms = new List<AlgorithmDefinition>();
-            _inputs = new List<JobInput>();
+            Algorithms = new List<AlgorithmDefinition>();
+            Inputs = new List<JobInput>();
+        }
+
+        /// <summary>
+        /// Gets a modifyable collection of <see cref="AlgorithmDefinition"/>s this
+        /// <see cref="XmlBuilder"/> will use in the build procedure.
+        /// </summary>
+        public ICollection<AlgorithmDefinition> Algorithms
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets a modifyable collection of <see cref="JobInput"/>s this
+        /// <see cref="XmlBuilder"/> will use in the build procedure.
+        /// </summary>
+        public ICollection<JobInput> Inputs
+        {
+            get;
+            private set;
         }
 
 
@@ -44,15 +64,6 @@ namespace DIPS.Processor.XML.Compilation
             private set;
         }
 
-
-        /// <summary>
-        /// Appends an <see cref="AlgorithmDefinition"/> to this builder.
-        /// </summary>
-        /// <param name="definition"></param>
-        public void AppendAlgorithm( AlgorithmDefinition definition )
-        {
-            _algorithms.Add( definition );
-        }
 
         /// <summary>
         /// Executes the build procedure and constructs the Xml using
@@ -81,12 +92,12 @@ namespace DIPS.Processor.XML.Compilation
             Xml = new XDocument();
             Xml.Add( new XDeclaration( "1.0", "UTF-8", "yes" ) );
 
-            if( _algorithms.Any() )
+            if( Algorithms.Any() )
             {
                 _buildAlgorithms();
             }
 
-            if( _inputs.Any() )
+            if( Inputs.Any() )
             {
                 _buildInputs();
             }
@@ -98,7 +109,7 @@ namespace DIPS.Processor.XML.Compilation
         private void _buildInputs()
         {
             ICollection<XElement> inputs = new List<XElement>();
-            foreach( var input in _inputs )
+            foreach( var input in Inputs )
             {
                 XElement xml = _process.BuildInput( input );
                 inputs.Add( xml );
@@ -113,7 +124,7 @@ namespace DIPS.Processor.XML.Compilation
         private void _buildAlgorithms()
         {
             ICollection<XElement> algorithms = new List<XElement>();
-            foreach( var def in _algorithms )
+            foreach( var def in Algorithms )
             {
                 XElement xml = _process.Build( def );
                 algorithms.Add( xml );
@@ -122,16 +133,6 @@ namespace DIPS.Processor.XML.Compilation
             Xml.Add( new XElement( "algorithms", algorithms ) );
         }
 
-        
-        /// <summary>
-        /// Contains the set of algorithm definitions in use;
-        /// </summary>
-        private ICollection<AlgorithmDefinition> _algorithms;
-
-        /// <summary>
-        /// Contains the set of image inputs.
-        /// </summary>
-        private ICollection<JobInput> _inputs;
 
         /// <summary>
         /// Contains the actual building process to use against each algorithm.

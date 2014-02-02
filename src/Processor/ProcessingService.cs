@@ -100,7 +100,7 @@ namespace DIPS.Processor
             XmlBuilder builder = new XmlBuilder( new DefinitionBuilderProcess() );
             foreach( var algorithm in RegistryCache.Cache.GetLoadedPlugins() )
             {
-                builder.AppendAlgorithm( algorithm );
+                builder.Algorithms.Add( algorithm );
             }
 
             builder.Build();
