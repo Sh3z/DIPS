@@ -56,6 +56,32 @@ namespace DIPS.Util.Compression
             }
         }
 
+        /// <summary>
+        /// Resolves the identifier for a compressor registered within this
+        /// <see cref="CompressorFactory"/>.
+        /// </summary>
+        /// <param name="compressor">The <see cref="ICompressor"/> to
+        /// resolve the identifier for.</param>
+        /// <returns>The identifier of the particular compressor.</returns>
+        public static string ResolveIdentifier( ICompressor compressor )
+        {
+            if( compressor == null )
+            {
+                return string.Empty;
+            }
+
+            Type type = compressor.GetType();
+            foreach( string key in _compressors.Keys )
+            {
+                if( _compressors[key] == type )
+                {
+                    return key;
+                }
+            }
+
+            return string.Empty;
+        }
+
 
         /// <summary>
         /// Determines whether the inbound type is a compatible compressor.

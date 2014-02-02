@@ -62,5 +62,50 @@ namespace DIPS.Tests.Util
             Assert.IsNotNull( compressor );
             Assert.AreEqual( typeof( GZipCompressor ), compressor.GetType() );
         }
+
+        /// <summary>
+        /// Tests resolving the identifier of a null compressor.
+        /// </summary>
+        [TestMethod]
+        public void TestResolveIdentifier_NullCompressor()
+        {
+            string id = CompressorFactory.ResolveIdentifier( null );
+            Assert.AreEqual( string.Empty, id );
+        }
+        
+        /// <summary>
+        /// Tests resolving the identifier of an unknown compressor.
+        /// </summary>
+        [TestMethod]
+        public void TestResolveIdentifier_UnknownCompressor()
+        {
+            string id = CompressorFactory.ResolveIdentifier( new Compressor() );
+            Assert.AreEqual( string.Empty, id );
+        }
+
+        /// <summary>
+        /// Tests resolving the identifer of a known compressor.
+        /// </summary>
+        [TestMethod]
+        public void TestResolveIdentifier_ValidCompressor()
+        {
+            ICompressor compressor = new GZipCompressor();
+            string id = CompressorFactory.ResolveIdentifier( compressor );
+            Assert.AreEqual( "gzip", id.ToLower() );
+        }
+
+
+        class Compressor : ICompressor
+        {
+            public byte[] Compress( byte[] toCompress )
+            {
+                throw new NotImplementedException();
+            }
+
+            public byte[] Decompress( byte[] toDecompress )
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
