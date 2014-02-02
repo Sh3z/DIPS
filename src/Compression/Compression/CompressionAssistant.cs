@@ -9,13 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.XML.Compilation
+namespace DIPS.Util.Compression
 {
     /// <summary>
     /// Provides helper methods to compress/decompress <see cref="Image"/>
     /// objects serialized in Xml.
     /// </summary>
-    public static class InputCompressor
+    public static class CompressionAssistant
     {
         /// <summary>
         /// Converts an <see cref="Image"/> into an array of it's
