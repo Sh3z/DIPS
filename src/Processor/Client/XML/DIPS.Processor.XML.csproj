@@ -40,6 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Decompilation\AlgorithmDecompilerVisitor.cs" />
+    <Compile Include="Decompilation\IJobXmlVisitor.cs" />
+    <Compile Include="Decompilation\JobValidationVisitor.cs" />
+    <Compile Include="Decompilation\JobXmlTraverser.cs" />
+    <Compile Include="Decompilation\XmlVisitorDecorator.cs" />
     <Compile Include="DefinitionBuilderProcess.cs" />
     <Compile Include="IBuilderProcess.cs" />
     <Compile Include="InputCompressor.cs" />
@@ -47,17 +52,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlBuilder.cs" />
     <Compile Include="XmlBuilderException.cs" />
+    <Compile Include="XmlDecompiler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Plugin\DIPS.Processor.Plugin.csproj">
       <Project>{5bc8fe69-c985-4b78-86f2-441a82fb435f}</Project>
       <Name>DIPS.Processor.Plugin</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Registry\DIPS.Processor.Registry.csproj">
+      <Project>{3fb76655-e579-4832-a014-4b68893cf1e1}</Project>
+      <Name>DIPS.Processor.Registry</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DIPS.Processor.Client.csproj">
       <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
       <Name>DIPS.Processor.Client</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
