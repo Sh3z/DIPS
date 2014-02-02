@@ -8,6 +8,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Diagnostics;
 using DIPS.Processor.XML.Compilation;
+using DIPS.Util.Compression;
 
 namespace DIPS.Tests.Processor.XML
 {
@@ -81,9 +82,20 @@ namespace DIPS.Tests.Processor.XML
         [TestMethod]
         public void TestCompress_NullBitmap()
         {
-            byte[] bytes = InputCompressor.Compress( null );
+            byte[] bytes = InputCompressor.Compress( null, new GZipCompressor() );
             Assert.IsNotNull( bytes );
             Assert.AreEqual( 0, bytes.Length );
+        }
+
+        /// <summary>
+        /// Tests attempting to compress an image with no compressor.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ArgumentNullException ) )]
+        public void TestCompress_NullCompressor()
+        {
+            Image test = _createTestImage();
+            byte[] bytes = InputCompressor.Compress( test, null );
         }
 
         /// <summary>
@@ -93,7 +105,7 @@ namespace DIPS.Tests.Processor.XML
         public void TestCompress_ValidBitmap()
         {
             Image test = _createTestImage();
-            byte[] bytes = InputCompressor.Compress( test );
+            byte[] bytes = InputCompressor.Compress( test, new GZipCompressor() );
 
             // Assert is smaller by comparing the number of bytes in the compressed
             // result is less than that of the original image
@@ -111,7 +123,18 @@ namespace DIPS.Tests.Processor.XML
         [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestDecompress_NullBytes()
         {
-            Image decompressed = InputCompressor.Decompress( null );
+            Image decompressed = InputCompressor.Decompress( null, new GZipCompressor() );
+        }
+
+        /// <summary>
+        /// Tests attempting to decompress bytes without a compressor.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ArgumentNullException ) )]
+        public void TestDecompress_NullCompressor()
+        {
+            byte[] bytes = new byte[0];
+            Image decompressed = InputCompressor.Decompress( bytes, null );
         }
 
         /// <summary>
@@ -123,7 +146,7 @@ namespace DIPS.Tests.Processor.XML
         {
             // Use the bytes of another file.
             byte[] notImageBytes = File.ReadAllBytes( "NotAnImage.txt" );
-            Image thisWillFail = InputCompressor.Decompress( notImageBytes );
+            Image thisWillFail = InputCompressor.Decompress( notImageBytes, new GZipCompressor() );
         }
 
         /// <summary>
@@ -134,9 +157,10 @@ namespace DIPS.Tests.Processor.XML
         {
             // Grab an image, compress it, decompress and assert the bytes are the same.
             Image img = _createTestImage();
+            ICompressor compressor = new GZipCompressor();
             byte[] imgBytes = InputCompressor.ImageToBytes( img );
-            byte[] compressed = InputCompressor.Compress( img );
-            Image decompressed = InputCompressor.Decompress( compressed );
+            byte[] compressed = InputCompressor.Compress( img, compressor );
+            Image decompressed = InputCompressor.Decompress( compressed, compressor );
             byte[] decompressedBytes = InputCompressor.ImageToBytes( decompressed );
 
             Assert.AreEqual( imgBytes.Length, decompressedBytes.Length );

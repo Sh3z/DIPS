@@ -57,6 +57,10 @@
     <Compile Include="Compilation\XmlBuilderException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Compression\DIPS.Util.csproj">
+      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
+      <Name>DIPS.Util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Plugin\DIPS.Processor.Plugin.csproj">
       <Project>{5bc8fe69-c985-4b78-86f2-441a82fb435f}</Project>
       <Name>DIPS.Processor.Plugin</Name>

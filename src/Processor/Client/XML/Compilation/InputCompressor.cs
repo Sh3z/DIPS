@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DIPS.Util.Compression;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -48,23 +49,21 @@ namespace DIPS.Processor.XML.Compilation
         /// </summary>
         /// <param name="input">The <see cref="Image"/> to convert into
         /// <see cref="byte"/>s and compress.</param>
+        /// <param name="compressor">The <see cref="ICompressor"/> to use in the
+        /// compression.</param>
         /// <returns>A one-dimensional array of <see cref="byte"/>s representing
         /// the image, compressed.</returns>
-        public static byte[] Compress( Image input )
+        /// <exception cref="ArgumentNullException">compressor is null.</exception>
+        public static byte[] Compress( Image input, ICompressor compressor )
         {
-            byte[] imgBytes = new byte[0];
-            byte[] b = ImageToBytes( input );
-            using( MemoryStream ms = new MemoryStream() )
+            if( compressor == null )
             {
-                using( GZipStream z = new GZipStream( ms, CompressionMode.Compress, true ) )
-                {
-                    z.Write( b, 0, b.Length );
-                }
-
-                imgBytes = ms.ToArray();
+                throw new ArgumentNullException( "compressor" );
             }
 
-            return imgBytes;
+            byte[] imgBytes = new byte[0];
+            byte[] b = ImageToBytes( input );
+            return compressor.Compress( b );
         }
 
         /// <summary>
@@ -73,32 +72,37 @@ namespace DIPS.Processor.XML.Compilation
         /// </summary>
         /// <param name="imgInput">The <see cref="byte"/> array representing
         /// the <see cref="Image"/>.</param>
+        /// <param name="compressor">The <see cref="ICompressor"/> to use in
+        /// the decompression.</param>
         /// <returns>An <see cref="Image"/> represented by the inbound
         /// array of <see cref="byte"/>s.</returns>
         /// <exception cref="ArgumentException">the <see cref="byte"/> array
         /// does not represent a previously compressed
         /// <see cref="Image"/>.</exception>
-        public static Image Decompress( byte[] imgInput )
+        /// <exception cref="ArgumentNullException">imgInput or compressor are
+        /// null.</exception>
+        public static Image Decompress( byte[] imgInput, ICompressor compressor )
         {
             if( imgInput == null )
             {
                 throw new ArgumentNullException( "imgInput" );
             }
 
-            Image retImage = null;
+            if( compressor == null )
+            {
+                throw new ArgumentNullException( "compressor" );
+            }
+
             try
             {
-                using( Stream stream = new MemoryStream() )
+                using( var byteStream = new MemoryStream( imgInput ) )
                 {
-                    using( var byteStream = new MemoryStream( imgInput ) )
+                    byte[] decompressed = compressor.Decompress( byteStream.ToArray() );
+                    using( var decompStream = new MemoryStream( decompressed ) )
                     {
-                        using( var z = new GZipStream( byteStream, CompressionMode.Decompress ) )
-                        {
-                            z.CopyTo( stream );
-                        }
+                        Image img = Image.FromStream( decompStream );
+                        return new Bitmap( img );
                     }
-
-                    retImage = Image.FromStream( stream );
                 }
             }
             catch( Exception e )
@@ -106,8 +110,6 @@ namespace DIPS.Processor.XML.Compilation
                 string err = "Input bytes do not represent compressed image.";
                 throw new ArgumentException( err, e );
             }
-
-            return new Bitmap( retImage );
         }
     }
 }
