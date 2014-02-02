@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DIPS.Processor.Client;
+using DIPS.Processor.Client.JobDeployment;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +16,35 @@ namespace DIPS.Processor.XML.Decompilation
     /// </summary>
     public class AlgorithmDecompilerVisitor : IJobXmlVisitor
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AlgorithmDecompilerVisitor"/>.
+        /// </summary>
+        public AlgorithmDecompilerVisitor()
+        {
+            Algorithms = new List<AlgorithmDefinition>();
+            Inputs = new List<JobInput>();
+        }
+
+
+        /// <summary>
+        /// Gets a collection of the decompiled <see cref="AlgorithmDefinition"/>s.
+        /// </summary>
+        public ICollection<AlgorithmDefinition> Algorithms
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets a collection of the decompiled <see cref="JobInput"/>s.
+        /// </summary>
+        public ICollection<JobInput> Inputs
+        {
+            get;
+            private set;
+        }
+
+
         /// <summary>
         /// Performs the visiting logic against an <see cref="XNode"/> representing
         /// an <see cref="AlgorithmDefinition"/>.

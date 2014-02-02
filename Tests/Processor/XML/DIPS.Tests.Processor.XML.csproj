@@ -54,9 +54,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="InputCompressorTests.cs" />
+    <Compile Include="JobValidationVisitorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefinitionBuilderProcessTests.cs" />
     <Compile Include="JobBuilderProcessTests.cs" />
+    <Compile Include="XmlValidatorArgsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Processor\Client\DIPS.Processor.Client.csproj">

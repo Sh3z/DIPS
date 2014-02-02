@@ -44,6 +44,8 @@
     <Compile Include="Decompilation\IJobXmlVisitor.cs" />
     <Compile Include="Decompilation\JobValidationVisitor.cs" />
     <Compile Include="Decompilation\JobXmlTraverser.cs" />
+    <Compile Include="Decompilation\XmlValidationException.cs" />
+    <Compile Include="Decompilation\XmlValidatorArgs.cs" />
     <Compile Include="Decompilation\XmlVisitorDecorator.cs" />
     <Compile Include="DefinitionBuilderProcess.cs" />
     <Compile Include="IBuilderProcess.cs" />
