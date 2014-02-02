@@ -29,7 +29,7 @@ namespace DIPS.Processor.Client.JobDeployment
         public object Identifier
         {
             get;
-            private set;
+            set;
         }
     }
 }
