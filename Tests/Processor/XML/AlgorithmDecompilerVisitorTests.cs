@@ -2,6 +2,10 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DIPS.Processor.XML.Decompilation;
+using System.Xml.Linq;
+using System.Linq;
+using DIPS.Processor.Client;
 
 namespace DIPS.Tests.Processor.XML
 {
@@ -17,44 +21,56 @@ namespace DIPS.Tests.Processor.XML
         ///</summary>
         public TestContext TestContext
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            get;
+            set;
         }
 
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
 
+        /// <summary>
+        /// Tests decompiling an algorithm with no properties.
+        /// </summary>
         [TestMethod]
-        public void TestMethod1()
+        public void TestVisitAlgorithm_NoProperties()
         {
-            //
-            // TODO: Add test logic here
-            //
+            AlgorithmDecompilerVisitor visitor = new AlgorithmDecompilerVisitor();
+            XElement xml = new XElement( "algorithm",
+                new XAttribute( "name", "gamma" ) );
+            visitor.VisitAlgorithm( xml );
+
+            Assert.AreEqual( 1, visitor.Algorithms.Count );
+
+            AlgorithmDefinition algorithm = visitor.Algorithms.First();
+            Assert.AreEqual( "gamma", algorithm.AlgorithmName );
+            Assert.AreEqual( 0, algorithm.Properties.Count );
+        }
+
+        /// <summary>
+        /// Tests decompiling an algorithm with one property of a primitive type.
+        /// </summary>
+        [TestMethod]
+        public void TestVisitAlgorithm_OneProperty_Primitive()
+        {
+            AlgorithmDecompilerVisitor visitor = new AlgorithmDecompilerVisitor();
+            XElement xml = new XElement( "algorithm",
+                new XAttribute( "name", "gamma" ),
+                new XElement( "properties",
+                    new XElement( "property",
+                        new XAttribute( "name", "gamma" ),
+                        new XAttribute( "type", typeof( double ) ),
+                        new XAttribute( "value", "1" ) ) ) );
+            visitor.VisitAlgorithm( xml );
+
+            Assert.AreEqual( 1, visitor.Algorithms.Count );
+
+            AlgorithmDefinition algorithm = visitor.Algorithms.First();
+            Assert.AreEqual( 1, algorithm.Properties.Count );
+
+            Property gamma = algorithm.Properties.First();
+            Assert.AreEqual( "gamma", gamma.Name );
+            Assert.AreEqual( typeof( double ), gamma.Type );
+            Assert.IsNull( gamma.Converter );
+            Assert.IsNull( gamma.Compressor );
+            Assert.AreEqual( 1d, gamma.Value );
         }
     }
 }
