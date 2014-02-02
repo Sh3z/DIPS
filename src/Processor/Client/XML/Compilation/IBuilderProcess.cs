@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Client.JobDeployment;
 using DIPS.Processor.Plugin;
 using System;
 using System.Collections.Generic;
@@ -25,15 +26,15 @@ namespace DIPS.Processor.XML.Compilation
         XElement Build( AlgorithmDefinition definition );
 
         /// <summary>
-        /// Constructs Xml using the <see cref="Image"/>.
+        /// Constructs Xml using the <see cref="JobInput"/>.
         /// </summary>
-        /// <param name="input">The <see cref="Image"/> to be used as input
+        /// <param name="input">The <see cref="JobInput"/> to be used as input
         /// in a job.</param>
         /// <returns>An <see cref="XElement"/> representing the
-        /// <see cref="Image"/>.</returns>
+        /// <see cref="JobInput"/>.</returns>
         /// <exception cref="InvalidOperationException">this
         /// <see cref="IBuilderProcess"/> does not support building
         /// inputs.</exception>
-        XElement BuildInput( Image input );
+        XElement BuildInput( JobInput input );
     }
 }

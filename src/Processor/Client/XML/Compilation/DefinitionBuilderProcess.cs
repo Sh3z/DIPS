@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Client.JobDeployment;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -57,15 +58,15 @@ namespace DIPS.Processor.XML.Compilation
         }
 
         /// <summary>
-        /// Constructs Xml using the <see cref="Image"/>.
+        /// Constructs Xml using the <see cref="JobInput"/>.
         /// </summary>
-        /// <param name="input">The <see cref="Image"/> to be used as input
+        /// <param name="input">The <see cref="JobInput"/> to be used as input
         /// in a job.</param>
         /// <returns>An <see cref="XElement"/> representing the
-        /// <see cref="Image"/>.</returns>
+        /// <see cref="JobInput"/>.</returns>
         /// <see cref="IBuilderProcess"/> does not support building
         /// inputs.</exception>
-        public XElement BuildInput( Image input )
+        public XElement BuildInput( JobInput input )
         {
             throw new InvalidOperationException( "DefinitionBuilderProcess does not support images." );
         }

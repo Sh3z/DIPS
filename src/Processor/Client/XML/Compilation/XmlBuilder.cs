@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Client.JobDeployment;
 using DIPS.Processor.Plugin;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace DIPS.Processor.XML.Compilation
 
             _process = process;
             _algorithms = new List<AlgorithmDefinition>();
-            _inputs = new List<Image>();
+            _inputs = new List<JobInput>();
         }
 
 
@@ -130,7 +131,7 @@ namespace DIPS.Processor.XML.Compilation
         /// <summary>
         /// Contains the set of image inputs.
         /// </summary>
-        private ICollection<Image> _inputs;
+        private ICollection<JobInput> _inputs;
 
         /// <summary>
         /// Contains the actual building process to use against each algorithm.
