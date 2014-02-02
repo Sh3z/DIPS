@@ -120,6 +120,26 @@ namespace DIPS.Processor.Registry
             }
         }
 
+        /// <summary>
+        /// Determines whether a named algorithm has been loaded into the
+        /// cache.
+        /// </summary>
+        /// <param name="algorithmName">The name of the algorithm to determine
+        /// has been cached.</param>
+        /// <returns><c>true</c> if an algorithm with the given name has been
+        /// cached; otherwise, <c>false</c>.</returns>
+        public bool HasCachedAlgorithm( string algorithmName )
+        {
+            if( _pluginCache.Any() == false )
+            {
+                return false;
+            }
+            else
+            {
+                return _pluginCache.Keys.Any( x => x.AlgorithmName == algorithmName );
+            }
+        }
+
 
         /// <summary>
         /// Creates and returns the AlgorithmPlugin from the given definition
