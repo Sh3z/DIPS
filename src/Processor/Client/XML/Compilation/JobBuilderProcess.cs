@@ -8,8 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DIPS.Processor.XML
+namespace DIPS.Processor.XML.Compilation
 {
+    /// <summary>
+    /// Represents the builder process used to construct job definition
+    /// documents.
+    /// </summary>
     public class JobBuilderProcess : IBuilderProcess
     {
         /// <summary>

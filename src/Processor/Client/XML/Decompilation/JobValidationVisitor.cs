@@ -91,6 +91,14 @@ namespace DIPS.Processor.XML.Decompilation
                 return _validationArgs.InputValidator( xml );
             }
 
+            if( xml.NodeType != System.Xml.XmlNodeType.Element )
+            {
+                return false;
+            }
+
+            XElement element = (XElement)xml;
+
+
             return true; // todo
         }
 

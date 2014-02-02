@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DIPS.Processor.XML
+namespace DIPS.Processor.XML.Compilation
 {
     /// <summary>
     /// Represents a building mechanism used by an Xml builder.

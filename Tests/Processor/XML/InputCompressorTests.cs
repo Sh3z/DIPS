@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Diagnostics;
+using DIPS.Processor.XML.Compilation;
 
 namespace DIPS.Tests.Processor.XML
 {

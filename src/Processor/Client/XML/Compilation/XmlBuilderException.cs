@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.XML
+namespace DIPS.Processor.XML.Compilation
 {
     /// <summary>
     /// Represents an exception from the <see cref="XmlBuilder"/> class.

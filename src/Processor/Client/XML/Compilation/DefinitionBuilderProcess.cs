@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace DIPS.Processor.XML
+namespace DIPS.Processor.XML.Compilation
 {
     /// <summary>
     /// Represents the builder process used to construct an algorithm's

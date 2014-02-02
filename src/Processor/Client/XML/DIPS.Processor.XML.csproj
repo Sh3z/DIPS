@@ -48,14 +48,13 @@
     <Compile Include="Decompilation\XmlValidationException.cs" />
     <Compile Include="Decompilation\XmlValidatorArgs.cs" />
     <Compile Include="Decompilation\XmlVisitorDecorator.cs" />
-    <Compile Include="DefinitionBuilderProcess.cs" />
-    <Compile Include="IBuilderProcess.cs" />
-    <Compile Include="InputCompressor.cs" />
-    <Compile Include="JobBuilderProcess.cs" />
+    <Compile Include="Compilation\DefinitionBuilderProcess.cs" />
+    <Compile Include="Compilation\IBuilderProcess.cs" />
+    <Compile Include="Compilation\InputCompressor.cs" />
+    <Compile Include="Compilation\JobBuilderProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XmlBuilder.cs" />
-    <Compile Include="XmlBuilderException.cs" />
-    <Compile Include="XmlDecompiler.cs" />
+    <Compile Include="Compilation\XmlBuilder.cs" />
+    <Compile Include="Compilation\XmlBuilderException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Plugin\DIPS.Processor.Plugin.csproj">

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.XML
+namespace DIPS.Processor.XML.Compilation
 {
     /// <summary>
     /// Provides helper methods to compress/decompress <see cref="Image"/>

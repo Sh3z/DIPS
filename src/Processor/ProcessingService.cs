@@ -2,6 +2,7 @@
 using DIPS.Processor.Executor;
 using DIPS.Processor.Registry;
 using DIPS.Processor.XML;
+using DIPS.Processor.XML.Compilation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
