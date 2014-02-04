@@ -78,7 +78,6 @@ namespace DIPS.UI.Pages
 
             // Set the Data Context as the view-model.
             DataContext = vm;
-            //loadDicom();
             addObjectsTotreeView();
             setupProperties();
         }
@@ -92,22 +91,6 @@ namespace DIPS.UI.Pages
         private void insertImageProperties()
         {
             
-        }
-
-        public void loadDicom()
-        {
-            readDicom dicom = new readDicom();
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            DialogResult result = fbd.ShowDialog();
-            string[] files = Directory.GetFiles(fbd.SelectedPath, "*", SearchOption.AllDirectories);
-            System.Windows.Forms.MessageBox.Show(files.Length + " Files to Process");
-
-            foreach (String s in files)
-            {
-                staticVariables.readFile = s;
-                dicom.read();
-            }
-            System.Windows.Forms.MessageBox.Show("Complete");
         }
 
         private void setupProperties()
