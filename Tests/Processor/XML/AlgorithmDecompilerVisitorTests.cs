@@ -32,7 +32,7 @@ namespace DIPS.Tests.Processor.XML
         [TestMethod]
         public void TestVisitAlgorithm_NoProperties()
         {
-            AlgorithmDecompilerVisitor visitor = new AlgorithmDecompilerVisitor();
+            DecompilationVisitor visitor = new DecompilationVisitor();
             XElement xml = new XElement( "algorithm",
                 new XAttribute( "name", "gamma" ) );
             visitor.VisitAlgorithm( xml );
@@ -50,7 +50,7 @@ namespace DIPS.Tests.Processor.XML
         [TestMethod]
         public void TestVisitAlgorithm_OneProperty_Primitive()
         {
-            AlgorithmDecompilerVisitor visitor = new AlgorithmDecompilerVisitor();
+            DecompilationVisitor visitor = new DecompilationVisitor();
             XElement xml = new XElement( "algorithm",
                 new XAttribute( "name", "gamma" ),
                 new XElement( "properties",

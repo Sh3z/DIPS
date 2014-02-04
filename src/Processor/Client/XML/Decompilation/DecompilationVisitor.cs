@@ -17,12 +17,12 @@ namespace DIPS.Processor.XML.Decompilation
     /// <see cref="AlgorithmDefinition"/> and <see cref="ProcessInput"/>
     /// objects.
     /// </summary>
-    public class AlgorithmDecompilerVisitor : IJobXmlVisitor
+    public class DecompilationVisitor : IJobXmlVisitor
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AlgorithmDecompilerVisitor"/>.
+        /// Initializes a new instance of the <see cref="DecompilationVisitor"/>.
         /// </summary>
-        public AlgorithmDecompilerVisitor()
+        public DecompilationVisitor()
         {
             Algorithms = new List<AlgorithmDefinition>();
             Inputs = new List<JobInput>();
