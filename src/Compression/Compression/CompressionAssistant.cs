@@ -44,6 +44,27 @@ namespace DIPS.Util.Compression
         }
 
         /// <summary>
+        /// Converts an array of <see cref="byte"/>s back into an
+        /// <see cref="Image"/>.
+        /// </summary>
+        /// <param name="bytes">The array of <see cref="byte"/>s to convert.</param>
+        /// <returns>An <see cref="Image"/> form of the byte array.</returns>
+        /// <exception cref="ArgumentNullException">bytes is null.</exception>
+        public static Image BytesToImage( byte[] bytes )
+        {
+            if( bytes == null )
+            {
+                throw new ArgumentNullException( "bytes" );
+            }
+
+            using( MemoryStream stream = new MemoryStream( bytes ) )
+            {
+                Image img = Image.FromStream( stream );
+                return new Bitmap( img );
+            }
+        }
+
+        /// <summary>
         /// Compresses an <see cref="Image"/> into an array of
         /// <see cref="byte"/>s.
         /// </summary>
@@ -98,11 +119,7 @@ namespace DIPS.Util.Compression
                 using( var byteStream = new MemoryStream( imgInput ) )
                 {
                     byte[] decompressed = compressor.Decompress( byteStream.ToArray() );
-                    using( var decompStream = new MemoryStream( decompressed ) )
-                    {
-                        Image img = Image.FromStream( decompStream );
-                        return new Bitmap( img );
-                    }
+                    return BytesToImage( decompressed );
                 }
             }
             catch( Exception e )

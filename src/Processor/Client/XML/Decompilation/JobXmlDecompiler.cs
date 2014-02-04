@@ -1,9 +1,11 @@
 ﻿using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
+using DIPS.Util.Compression;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,7 +55,88 @@ namespace DIPS.Processor.XML.Decompilation
         /// Xml.</returns>
         public JobInput DecompileInput( XNode inputNode )
         {
-            throw new NotImplementedException();
+            if( inputNode.NodeType != XmlNodeType.Element )
+            {
+                throw new ArgumentException( "An XElement is required." );
+            }
+
+            XElement element = (XElement)inputNode;
+            Image input = _resolveInputImage( element );
+            string id = _resolveInputID( element );
+            
+            JobInput theInput = new JobInput( input );
+            theInput.Identifier = id;
+            return theInput;
+        }
+
+
+        /// <summary>
+        /// Reconstructs the image object using the input node
+        /// </summary>
+        /// <param name="data">The input node from the Xml</param>
+        /// <returns>The Image representation.</returns>
+        private Image _resolveInputImage( XElement element )
+        {
+            XNode child = element.FirstNode;
+            if( child == null || child.NodeType != XmlNodeType.CDATA )
+            {
+                throw new ArgumentException( "Input does not provide CDATA node." );
+            }
+
+            XCData data = (XCData)child;
+            byte[] imgBytes = System.Text.Encoding.Default.GetBytes( data.Value );
+            ICompressor compressor = _resolveCompressor( element );
+            if( compressor == null )
+            {
+                return CompressionAssistant.BytesToImage( imgBytes );
+            }
+            else
+            {
+                return CompressionAssistant.Decompress( imgBytes, compressor );
+            }
+        }
+
+        /// <summary>
+        /// Resolves the compressor from the input element
+        /// </summary>
+        /// <param name="element">The source input elememt</param>
+        /// <returns>The compressor used to compress the input, or null if
+        /// no compressor was used.</returns>
+        private ICompressor _resolveCompressor( XElement element )
+        {
+            XAttribute compressorAttr = element.Attribute( "compressor" );
+            ICompressor compressor = null;
+            if( compressorAttr != null )
+            {
+                string compressorName = compressorAttr.Value;
+                compressor = CompressorFactory.ManufactureCompressor( compressorName );
+                if( compressor == null )
+                {
+                    string err = string.Format( "Unknown compressor \"{0}\"", compressorName );
+                    throw new XmlDecompilationException( err );
+                }
+            }
+
+            return compressor;
+        }
+
+
+        /// <summary>
+        /// Resolves the identifier of the input using its given attribute.
+        /// </summary>
+        /// <param name="element">The source element of the input</param>
+        /// <returns>The id given to the input, or an empty string if one is
+        /// not provided.</returns>
+        private string _resolveInputID( XElement element )
+        {
+            string id = string.Empty;
+            XAttribute idArrt = element.Attribute( "identifier" );
+            if( idArrt != null )
+            {
+                id = idArrt.Value;
+            }
+
+            return id;
         }
 
 
