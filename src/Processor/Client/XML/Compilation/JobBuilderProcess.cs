@@ -1,6 +1,7 @@
 ﻿using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Processor.Plugin;
+using DIPS.Util.Compression;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -64,7 +65,31 @@ namespace DIPS.Processor.XML.Compilation
         /// inputs.</exception>
         public XElement BuildInput( JobInput input )
         {
-            return null;
+            ICollection<object> content = new List<object>();
+            if( input.Identifier != null )
+            {
+                XAttribute id = new XAttribute( "identifier", input.Identifier );
+                content.Add( id );
+            }
+
+            byte[] imgBytes = null;
+            if( input.Compressor != null )
+            {
+                string compressorId = CompressorFactory.ResolveIdentifier( input.Compressor );
+                imgBytes = CompressionAssistant.Compress( input.Input, input.Compressor );
+                XAttribute compressor = new XAttribute( "compressor", compressorId );
+                content.Add( compressor );
+            }
+            else
+            {
+                imgBytes = CompressionAssistant.ImageToBytes( input.Input );
+            }
+
+            string bytesAsString = System.Text.Encoding.Default.GetString( imgBytes );
+            XCData imgNode = new XCData( bytesAsString );
+            content.Add( imgNode );
+
+            return new XElement( "input", content );
         }
     }
 }

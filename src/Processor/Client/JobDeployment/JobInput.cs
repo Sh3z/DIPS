@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DIPS.Util.Compression;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -24,6 +25,12 @@ namespace DIPS.Processor.Client.JobDeployment
         {
             get;
             private set;
+        }
+
+        public ICompressor Compressor
+        {
+            get;
+            set;
         }
 
         public object Identifier

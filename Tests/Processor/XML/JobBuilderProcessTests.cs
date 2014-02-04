@@ -7,6 +7,9 @@ using DIPS.Processor.Plugin;
 using System.Diagnostics;
 using DIPS.Processor.Client;
 using DIPS.Processor.XML.Compilation;
+using DIPS.Processor.Client.JobDeployment;
+using DIPS.Util.Compression;
+using System.Drawing;
 
 namespace DIPS.Tests.Processor.XML
 {
@@ -16,6 +19,11 @@ namespace DIPS.Tests.Processor.XML
     [TestClass]
     public class JobBuilderProcessTests
     {
+        public JobBuilderProcessTests()
+        {
+            TestFileName = "compression_test.bmp";
+        }
+
         /// <summary>
         /// Gets or sets the test context which provides
         /// information about and functionality for the current test run.
@@ -24,6 +32,21 @@ namespace DIPS.Tests.Processor.XML
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the test file used for Bitmap tests.
+        /// </summary>
+        public string TestFileName
+        {
+            get;
+            set;
+        }
+
+
+        private Image _createTestImage()
+        {
+            return new Bitmap( Image.FromFile( TestFileName ) );
         }
 
 
@@ -93,6 +116,84 @@ namespace DIPS.Tests.Processor.XML
             XElement value = prop.Descendants( "value" ).FirstOrDefault();
             Assert.IsNotNull( value );
             Assert.AreEqual( "1", value.Value );
+        }
+
+        /// <summary>
+        /// Tests building a job input without an identifier or compression.
+        /// </summary>
+        [TestMethod]
+        public void TestBuildInput_NoIdentifier_NoCompression()
+        {
+            Image img = _createTestImage();
+            JobInput i = new JobInput( img );
+            JobBuilderProcess p = new JobBuilderProcess();
+            XElement element = p.BuildInput( i );
+
+            Assert.AreEqual( "input", element.Name );
+            Assert.IsNull( element.Attribute( "identifier" ) );
+
+            XNode child = element.FirstNode;
+            Assert.IsTrue( child.NodeType == System.Xml.XmlNodeType.CDATA );
+
+            XCData data = (XCData)child;
+            string providedImage = data.Value;
+            string expectedImage = System.Text.Encoding.Default.GetString( CompressionAssistant.ImageToBytes( img ) );
+            Assert.AreEqual( expectedImage, providedImage );
+        }
+
+        /// <summary>
+        /// Tests building an input with an identifier and no compression.
+        /// </summary>
+        [TestMethod]
+        public void TestBuildInput_Identifier_NoCompression()
+        {
+            object identifier = "Test";
+            Image img = _createTestImage();
+            JobInput i = new JobInput( img );
+            i.Identifier = identifier;
+            JobBuilderProcess p = new JobBuilderProcess();
+            XElement element = p.BuildInput( i );
+
+            Assert.AreEqual( "input", element.Name );
+
+            Assert.IsNotNull( element.Attribute( "identifier" ) );
+            Assert.AreEqual( identifier, element.Attribute( "identifier" ).Value );
+
+            XNode child = element.FirstNode;
+            Assert.IsTrue( child.NodeType == System.Xml.XmlNodeType.CDATA );
+
+            XCData data = (XCData)child;
+            string providedImage = data.Value;
+            string expectedImage = System.Text.Encoding.Default.GetString( CompressionAssistant.ImageToBytes( img ) );
+            Assert.AreEqual( expectedImage, providedImage );
+        }
+
+        /// <summary>
+        /// Tests building an input with no identifier, with gzip compression.
+        /// </summary>
+        [TestMethod]
+        public void TestBuildInput_NoIdentifier_Compression()
+        {
+            ICompressor compressor = new GZipCompressor();
+            Image img = _createTestImage();
+            JobInput i = new JobInput( img );
+            i.Compressor = compressor;
+            JobBuilderProcess p = new JobBuilderProcess();
+            XElement element = p.BuildInput( i );
+
+            Assert.AreEqual( "input", element.Name );
+            Assert.IsNull( element.Attribute( "identifier" ) );
+
+            Assert.IsNotNull( element.Attribute( "compressor" ) );
+            Assert.AreEqual( "gzip", element.Attribute( "compressor" ).Value.ToLower() );
+
+            XNode child = element.FirstNode;
+            Assert.IsTrue( child.NodeType == System.Xml.XmlNodeType.CDATA );
+
+            XCData data = (XCData)child;
+            string providedImage = data.Value;
+            string expectedImage = System.Text.Encoding.Default.GetString( CompressionAssistant.Compress( img, compressor ) );
+            Assert.AreEqual( expectedImage, providedImage );
         }
     }
 }
