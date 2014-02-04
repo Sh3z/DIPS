@@ -42,15 +42,39 @@ namespace DIPS.UI.Pages
             get { return _treeview; }
             set { _treeview = value; }
         }
+
+        private List<ImageDataset> _allDatasets;
+
+        public List<ImageDataset> allDatasets
+        {
+            get { return _allDatasets; }
+            set { _allDatasets = value; }
+        }
+
+        private CheckBox _chkFilterActive;
+
+        public CheckBox chkFilterActive
+        {
+            get { return _chkFilterActive; }
+            set { _chkFilterActive = value; }
+        }
         
 
         private void PrepareParameters()
         {
           Filter = new Filter();
 
-            String patientID = txtPatientID.Text;
-            Filter.AcquisitionDateFrom = dtpPickFrom.SelectedDate.Value;
-            Filter.AcquisitionDateTo = dtpDateTo.SelectedDate.Value;
+            Filter.PatientID = txtPatientID.Text;
+            
+            if (dtpDateTo.SelectedDate != null)
+            {
+                Filter.AcquisitionDateFrom = dtpPickFrom.SelectedDate.Value;
+            }
+
+            if (dtpDateTo.SelectedDate != null)
+            {
+                Filter.AcquisitionDateTo = dtpDateTo.SelectedDate.Value;
+            }
 
             if (radFemale.IsChecked == true)
             {
@@ -70,7 +94,10 @@ namespace DIPS.UI.Pages
         {
             PrepareParameters();
             List<ImageDataset> dataset = new List<ImageDataset>();
-            setupTreeview(ImageRepository.generateCustomTreeView(Filter));
+            allDatasets = ImageRepository.generateCustomTreeView(Filter);
+            setupTreeview();
+
+            chkFilterActive.IsChecked = true;
 
             this.Hide();
         }
@@ -80,10 +107,12 @@ namespace DIPS.UI.Pages
             this.Hide();
         }
 
-        private void setupTreeview(List<ImageDataset> allDatasets)
+        public void setupTreeview()
         {
             if (allDatasets != null)
             {
+                TreeView.Items.Clear();
+
                 foreach (ImageDataset ds in allDatasets)
                 {
                     TreeViewItem item = new TreeViewItem();

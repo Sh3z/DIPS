@@ -210,11 +210,28 @@ namespace DIPS.UI.Pages
                 TreeViewFilter tvf = new TreeViewFilter();
                 FilterSettings = tvf;
                 tvf.TreeView = this.treeDatasets;
+                tvf.chkFilterActive = this.chkActiveFilter;
+                
                 FilterSettings.ShowDialog();
             }
             else
             {
                 FilterSettings.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void chkActiveFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (FilterSettings != null)
+            {
+                if (chkActiveFilter.IsChecked.Value)
+                {
+                    FilterSettings.setupTreeview();
+                }
+                else
+                {
+                    setupTreeview();
+                }
             }
         }
 

@@ -59,7 +59,7 @@
         <Image Name="unProcessedImg" HorizontalAlignment="Left" Height="128" Margin="318,22,0,0" VerticalAlignment="Top" Width="128"/>
         <TextBox x:Name="txtImageDesc" HorizontalAlignment="Left" Height="142" Margin="280,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" IsEnabled="False"/>
         <Button x:Name="btnSelectFilter" Content="Filter Options" HorizontalAlignment="Left" Margin="27,43,0,0" VerticalAlignment="Top" Width="84" Click="btnSelectFilter_Click"/>
-        <CheckBox x:Name="chkActiveFilter" Content="Active Filter?" HorizontalAlignment="Left" Margin="129,49,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chkActiveFilter" Content="Active Filter?" HorizontalAlignment="Left" Margin="129,49,0,0" VerticalAlignment="Top" Click="chkActiveFilter_Click"/>
 
     </Grid>
 </Page>
