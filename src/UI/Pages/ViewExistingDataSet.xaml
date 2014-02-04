@@ -54,7 +54,7 @@
         </Border>
 
         <Label x:Name="lblToProcess" Content="----&gt;" HorizontalAlignment="Left" Margin="504,80,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
-        <TreeView x:Name="treeDatasets" HorizontalAlignment="Left" Height="416" Margin="27,22,0,0" VerticalAlignment="Top" Width="196" MouseDoubleClick="treeDatasets_MouseDoubleClick"/>
+        <TreeView x:Name="treeDatasets" HorizontalAlignment="Left" Height="343" Margin="27,95,0,0" VerticalAlignment="Top" Width="196" MouseDoubleClick="treeDatasets_MouseDoubleClick"/>
         <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="439,358,0,0" VerticalAlignment="Top" Width="143" Command="{Binding ProcessImageCommand}" Height="60"/>
         <Image Name="unProcessedImg" HorizontalAlignment="Left" Height="128" Margin="318,22,0,0" VerticalAlignment="Top" Width="128"/>
         <TextBox x:Name="txtImageDesc" HorizontalAlignment="Left" Height="142" Margin="280,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" IsEnabled="False"/>
