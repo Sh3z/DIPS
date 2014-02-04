@@ -21,6 +21,7 @@ namespace DIPS.Processor.XML.Compilation
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlBuilder"/> class.
         /// </summary>
+        /// <exception cref="ArgumentNullException">process is null.</exception>
         public XmlBuilder( IBuilderProcess process )
         {
             if( process == null )
@@ -91,22 +92,29 @@ namespace DIPS.Processor.XML.Compilation
         {
             Xml = new XDocument();
             Xml.Add( new XDeclaration( "1.0", "UTF-8", "yes" ) );
+            ICollection<XNode> children = new List<XNode>();
 
             if( Algorithms.Any() )
             {
-                _buildAlgorithms();
+                XNode algorithms = _buildAlgorithms();
+                children.Add( algorithms );
             }
 
             if( Inputs.Any() )
             {
-                _buildInputs();
+                XNode inputs = _buildInputs();
+                children.Add( inputs );
             }
+
+            XElement root = new XElement( _process.RootNodeName, children );
+            Xml.Add( root );
         }
 
         /// <summary>
         /// Builds all the inputs into the current Xml.
         /// </summary>
-        private void _buildInputs()
+        /// <returns>An XNode representing all the inputs.</returns>
+        private XNode _buildInputs()
         {
             ICollection<XElement> inputs = new List<XElement>();
             foreach( var input in Inputs )
@@ -115,13 +123,14 @@ namespace DIPS.Processor.XML.Compilation
                 inputs.Add( xml );
             }
 
-            Xml.Add( new XElement( "inputs" ) );
+            return new XElement( "inputs", inputs );
         }
 
         /// <summary>
         /// Builds all the algorithms into the current Xml.
         /// </summary>
-        private void _buildAlgorithms()
+        /// <returns>An XNode representing all the algorithms.</returns>
+        private XNode _buildAlgorithms()
         {
             ICollection<XElement> algorithms = new List<XElement>();
             foreach( var def in Algorithms )
@@ -130,7 +139,7 @@ namespace DIPS.Processor.XML.Compilation
                 algorithms.Add( xml );
             }
 
-            Xml.Add( new XElement( "algorithms", algorithms ) );
+            return new XElement( "algorithms", algorithms );
         }
 
 

@@ -17,6 +17,14 @@ namespace DIPS.Processor.XML.Compilation
     public interface IBuilderProcess
     {
         /// <summary>
+        /// Gets the name to give to the root node of the final Xml document.
+        /// </summary>
+        string RootNodeName
+        {
+            get;
+        }
+
+        /// <summary>
         /// Constructs Xml using the <see cref="AlgorithmDefinition"/>.
         /// </summary>
         /// <param name="definition">The <see cref="AlgorithmDefinition"/>

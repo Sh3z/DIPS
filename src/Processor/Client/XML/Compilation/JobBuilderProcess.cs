@@ -19,6 +19,17 @@ namespace DIPS.Processor.XML.Compilation
     public class JobBuilderProcess : IBuilderProcess
     {
         /// <summary>
+        /// Gets the name to give to the root node of the final Xml document.
+        /// </summary>
+        public string RootNodeName
+        {
+            get
+            {
+                return "job";
+            }
+        }
+
+        /// <summary>
         /// Constructs Xml using the <see cref="AlgorithmDefinition"/>.
         /// </summary>
         /// <param name="definition">The <see cref="AlgorithmDefinition"/>
