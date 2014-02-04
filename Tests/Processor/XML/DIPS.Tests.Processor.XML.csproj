@@ -54,7 +54,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AlgorithmDecompilerVisitorTests.cs" />
+    <Compile Include="DecompilationVisitorTests.cs" />
+    <Compile Include="JobXmlDecompilerTests.cs" />
     <Compile Include="JobXmlValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefinitionBuilderProcessTests.cs" />

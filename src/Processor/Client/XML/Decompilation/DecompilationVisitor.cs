@@ -22,8 +22,16 @@ namespace DIPS.Processor.XML.Decompilation
         /// <summary>
         /// Initializes a new instance of the <see cref="DecompilationVisitor"/>.
         /// </summary>
-        public DecompilationVisitor()
+        /// <param name="decompiler">The <see cref="IAlgorithmXmlDecompiler"/>
+        /// providing the translation logic between Xml and object.</param>
+        /// <exception cref="ArgumentNullException">decompiler is null</exception>
+        public DecompilationVisitor( IAlgorithmXmlDecompiler decompiler )
         {
+            if( decompiler == null )
+            {
+                throw new ArgumentNullException( "decompiler" );
+            }
+
             Algorithms = new List<AlgorithmDefinition>();
             Inputs = new List<JobInput>();
         }
@@ -56,22 +64,15 @@ namespace DIPS.Processor.XML.Decompilation
         /// information.</param>
         public void VisitAlgorithm( XNode xml )
         {
-            if( xml.NodeType != System.Xml.XmlNodeType.Element )
+            try
             {
-                return;
+                AlgorithmDefinition d = _decompiler.DecompileAlgorithm( xml );
+                Algorithms.Add( d );
             }
-
-            XElement element = (XElement)xml;
-            IEnumerable<Property> properties = new List<Property>();
-            var propertiesNodes = element.Descendants( "properties" );
-            if( propertiesNodes.Any() )
+            catch( Exception e )
             {
-                properties = _parseProperties( propertiesNodes.First() );
+                throw new XmlDecompilationException( e.Message, e );
             }
-
-            string name = element.Attribute( "name" ).Value;
-            AlgorithmDefinition d = new AlgorithmDefinition( name, properties );
-            Algorithms.Add( d );
         }
 
         /// <summary>
@@ -82,72 +83,21 @@ namespace DIPS.Processor.XML.Decompilation
         /// job.</param>
         public void VisitInput( XNode xml )
         {
-
-        }
-
-
-        /// <summary>
-        /// Parses the properties node.
-        /// </summary>
-        /// <param name="properties">The "properties" node from Xml</param>
-        /// <returns>The set of Property objects represented by the Xml.</returns>
-        private IEnumerable<Property> _parseProperties( XElement properties )
-        {
-            ICollection<Property> props = new List<Property>();
-            foreach( var propertyNode in properties.Descendants( "property" ) )
+            try
             {
-                Property property = _parseProperty( propertyNode );
-                props.Add( property );
+                JobInput i = _decompiler.DecompileInput( xml );
+                Inputs.Add( i );
             }
-
-            return props;
-        }
-
-        /// <summary>
-        /// Parses a single property from Xml
-        /// </summary>
-        /// <param name="property">The proeprty element</param>
-        /// <returns>A Property instance representing the Xml.</returns>
-        private Property _parseProperty( XElement property )
-        {
-            string typeAsString = property.Attribute( "type" ).Value;
-            Type propertyType = Type.GetType( typeAsString );
-            TypeConverter valConverter = TypeDescriptor.GetConverter( propertyType );
-            string valueAsString = property.Attribute( "value" ).Value;
-
-            XAttribute converterAttr = property.Attribute( "converter" );
-            IValueConverter converter = _resolveConverter( converterAttr );
-
-            PropertyBuilder builder = new PropertyBuilder();
-            builder.Name = property.Attribute( "name" ).Value;
-            builder.PropertyType = propertyType;
-            builder.DefaultValue = valConverter.ConvertFromString( valueAsString );
-            builder.Converter = converter;
-            return builder.Build();
-        }
-
-        /// <summary>
-        /// Resolves the converter from the attribute
-        /// </summary>
-        /// <param name="converterAttr">The converter in use</param>
-        /// <returns>The value converter or null</returns>
-        private IValueConverter _resolveConverter( XAttribute converterAttr )
-        {
-            IValueConverter converter = null;
-            if( converterAttr != null )
+            catch( Exception e )
             {
-                try
-                {
-                    Type converterType = Type.GetType( converterAttr.Value );
-                    converter = Activator.CreateInstance( converterType ) as IValueConverter;
-                }
-                catch( Exception e )
-                {
-                    Debug.WriteLine( "Could not resolve converter: " + e );
-                }
+                throw new XmlDecompilationException( e.Message, e );
             }
-
-            return converter;
         }
+
+
+        /// <summary>
+        /// Contains the decompilation logic used by this visitor.
+        /// </summary>
+        private IAlgorithmXmlDecompiler _decompiler;
     }
 }
