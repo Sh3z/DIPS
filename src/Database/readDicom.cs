@@ -81,7 +81,7 @@ namespace DIPS.Database
 
         void nullCheck()
         {
-            if (pName == null) staticVariables.patientName = "NULL";
+            if (pName == null) staticVariables.patientName = "";
             else
             {
                 try
@@ -107,15 +107,15 @@ namespace DIPS.Database
                 staticVariables.imgDateTime = imgDateTime.ToString("yyyy-MM-dd HH:mm:ss");
             }
 
-            if (staticVariables.sex == null || staticVariables.sex == "") staticVariables.sex = "N";
-            if (staticVariables.pBday == null || staticVariables.pBday == "") staticVariables.pBday = "NULL";
-            if (staticVariables.age == null || staticVariables.age == "") staticVariables.age = "NULL";
-            if (staticVariables.imgNumber == null || staticVariables.imgNumber == "") staticVariables.imgNumber = "NULL";
-            if (staticVariables.modality == null || staticVariables.modality == "") staticVariables.modality = "NULL";
-            if (staticVariables.bodyPart == null || staticVariables.bodyPart == "") staticVariables.bodyPart = "NULL";
-            if (staticVariables.studyDesc == null || staticVariables.studyDesc == "") staticVariables.studyDesc = "NULL";
-            if (staticVariables.seriesDesc == null || staticVariables.seriesDesc == "") staticVariables.seriesDesc = "NULL";
-            if (staticVariables.sliceThickness == null || staticVariables.sliceThickness == "") staticVariables.sliceThickness = "NULL";
+            if (staticVariables.sex == null) staticVariables.sex = "";
+            if (staticVariables.pBday == null) staticVariables.pBday = "";
+            if (staticVariables.age == null) staticVariables.age = "";
+            if (staticVariables.imgNumber == null) staticVariables.imgNumber = "";
+            if (staticVariables.modality == null) staticVariables.modality = "";
+            if (staticVariables.bodyPart == null) staticVariables.bodyPart = "";
+            if (staticVariables.studyDesc == null) staticVariables.studyDesc = "";
+            if (staticVariables.seriesDesc == null) staticVariables.seriesDesc = "";
+            if (staticVariables.sliceThickness == null) staticVariables.sliceThickness = "";
         }
     }
 }
