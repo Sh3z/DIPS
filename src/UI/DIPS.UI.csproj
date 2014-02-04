@@ -88,6 +88,9 @@
     <Compile Include="Controls\infoBell.xaml.cs">
       <DependentUpon>infoBell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TechShape.xaml.cs">
+      <DependentUpon>TechShape.xaml</DependentUpon>
+    </Compile>
     <Compile Include="imageDemo.cs" />
     <Compile Include="MainNavi.xaml.cs">
       <DependentUpon>MainNavi.xaml</DependentUpon>
@@ -106,6 +109,9 @@
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TreeViewFilter.xaml.cs">
+      <DependentUpon>TreeViewFilter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ViewExistingDataSet.xaml.cs">
       <DependentUpon>ViewExistingDataSet.xaml</DependentUpon>
@@ -139,6 +145,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\TechShape.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainNavi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,6 +172,10 @@
     <Page Include="Pages\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TreeViewFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ViewExistingDataSet.xaml">
       <SubType>Designer</SubType>
