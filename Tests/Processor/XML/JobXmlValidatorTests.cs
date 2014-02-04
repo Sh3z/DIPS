@@ -8,10 +8,10 @@ using System.Xml.Linq;
 namespace DIPS.Tests.Processor.XML
 {
     /// <summary>
-    /// Summary description for JobValidationVisitorTests
+    /// Summary description for JobJobXmlValidatorTests
     /// </summary>
     [TestClass]
-    public class JobValidationVisitorTests
+    public class JobJobXmlValidatorTests
     {
         /// <summary>
         /// Gets or sets the test context which provides
@@ -25,24 +25,23 @@ namespace DIPS.Tests.Processor.XML
 
 
         /// <summary>
-        /// Tests constructing the validator with null args.
+        /// Tests constructing the validator with a null visitor.
         /// </summary>
         [TestMethod]
-        [ExpectedException( typeof( NullReferenceException ) )]
+        [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestConstructor_NullArgs()
         {
-            ValidationVisitor v = new ValidationVisitor( null );
+            JobXmlValidator v = new JobXmlValidator( null );
         }
 
         /// <summary>
-        /// Tests constructing the visitor with a valid set of args.
+        /// Tests constructing the visitor with a valid visitor.
         /// </summary>
         [TestMethod]
         public void TestConstructor_ValidArgs()
         {
             TestVisitor v = new TestVisitor();
-            XmlValidatorArgs a = new XmlValidatorArgs( v );
-            ValidationVisitor visitor = new ValidationVisitor( a );
+            JobXmlValidator visitor = new JobXmlValidator( v );
         }
 
         /// <summary>
@@ -52,26 +51,9 @@ namespace DIPS.Tests.Processor.XML
         public void TestValidateAlgorithm_NoName_NoThrow()
         {
             TestVisitor v = new TestVisitor();
-            XmlValidatorArgs a = new XmlValidatorArgs( v );
-            ValidationVisitor visitor = new ValidationVisitor( a );
+            JobXmlValidator visitor = new JobXmlValidator( v );
 
             XNode xml = new XElement( "algorithm" );
-            visitor.VisitAlgorithm( xml );
-            Assert.IsFalse( v.VisitedAlgorithm );
-        }
-
-        /// <summary>
-        /// Tests validating an algorithm with a name not registered within the
-        /// cache, and no exception is expected.
-        /// </summary>
-        [TestMethod]
-        public void TestValidateAlgorithm_NameNotInCache_NoThrow()
-        {
-            TestVisitor v = new TestVisitor();
-            XmlValidatorArgs a = new XmlValidatorArgs( v );
-            ValidationVisitor visitor = new ValidationVisitor( a );
-
-            XNode xml = new XElement( "algorithm", new XAttribute( "name", "unknown" ) );
             visitor.VisitAlgorithm( xml );
             Assert.IsFalse( v.VisitedAlgorithm );
         }
@@ -84,8 +66,7 @@ namespace DIPS.Tests.Processor.XML
         public void TestValidateAlgorithm_PropertyNoName_NoThrow()
         {
             TestVisitor v = new TestVisitor();
-            XmlValidatorArgs a = new XmlValidatorArgs( v );
-            ValidationVisitor visitor = new ValidationVisitor( a );
+            JobXmlValidator visitor = new JobXmlValidator( v );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",
@@ -104,8 +85,7 @@ namespace DIPS.Tests.Processor.XML
         public void TestValidateAlgorithm_PropertyNoType_NoThrow()
         {
             TestVisitor v = new TestVisitor();
-            XmlValidatorArgs a = new XmlValidatorArgs( v );
-            ValidationVisitor visitor = new ValidationVisitor( a );
+            JobXmlValidator visitor = new JobXmlValidator( v );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",
@@ -124,8 +104,7 @@ namespace DIPS.Tests.Processor.XML
         public void TestValidateAlgorithm_PropertyBadType_NoThrow()
         {
             TestVisitor v = new TestVisitor();
-            XmlValidatorArgs a = new XmlValidatorArgs( v );
-            ValidationVisitor visitor = new ValidationVisitor( a );
+            JobXmlValidator visitor = new JobXmlValidator( v );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",
@@ -145,8 +124,7 @@ namespace DIPS.Tests.Processor.XML
         public void TestValidateAlgorithm_PropertyNoValue_NoThrow()
         {
             TestVisitor v = new TestVisitor();
-            XmlValidatorArgs a = new XmlValidatorArgs( v );
-            ValidationVisitor visitor = new ValidationVisitor( a );
+            JobXmlValidator visitor = new JobXmlValidator( v );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",
@@ -164,8 +142,7 @@ namespace DIPS.Tests.Processor.XML
         public void TestValidateAlgorithm_ValidXml()
         {
             TestVisitor v = new TestVisitor();
-            XmlValidatorArgs a = new XmlValidatorArgs( v );
-            ValidationVisitor visitor = new ValidationVisitor( a );
+            JobXmlValidator visitor = new JobXmlValidator( v );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",
@@ -185,9 +162,8 @@ namespace DIPS.Tests.Processor.XML
         public void TestValidateAlgorithm_InvalidXml()
         {
             TestVisitor v = new TestVisitor();
-            XmlValidatorArgs a = new XmlValidatorArgs( v );
-            a.ThrowOnError = true;
-            ValidationVisitor visitor = new ValidationVisitor( a );
+            JobXmlValidator visitor = new JobXmlValidator( v );
+            visitor.ThrowOnError = true;
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",

@@ -11,21 +11,31 @@ namespace DIPS.Processor.XML.Decompilation
     /// <summary>
     /// Represents the visitor used to ensure the Xml provided by the traverser
     /// is in a valid format before executing the behaviour of another
-    /// <see cref="IJobXmlVisitor"/>.
+    /// <see cref="IJobXmlVisitor"/>. This class is abstract.
     /// </summary>
-    public class ValidationVisitor : XmlVisitorDecorator
+    public abstract class ValidationVisitor : XmlVisitorDecorator
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidationVisitor"/>
         /// class.
         /// </summary>
-        /// <param name="args">The set of <see cref="XmlValidatorArgs"/> to
-        /// use when validating Xml.</param>
-        /// <exception cref="NullReferenceException">args is null.</exception>
-        public ValidationVisitor( XmlValidatorArgs args )
-            : base( args.Visitor )
+        /// <param name="visitor">The <see cref="IJobXmlVisitor"/> that is called
+        /// when nodes are validated correctly.</param>
+        /// <exception cref="NullReferenceException">visitor is null.</exception>
+        protected ValidationVisitor( IJobXmlVisitor visitor )
+            : base( visitor )
         {
-            _validationArgs = args;
+        }
+
+
+        /// <summary>
+        /// Gets or sets whether this <see cref="ValidationVisitor"/> should throw an
+        /// exception when an invalid node is detected.
+        /// </summary>
+        public bool ThrowOnError
+        {
+            get;
+            set;
         }
 
 
@@ -37,7 +47,7 @@ namespace DIPS.Processor.XML.Decompilation
         /// information.</param>
         public override void VisitAlgorithm( XNode xml )
         {
-            if( _validateAlgorithm( xml ) )
+            if( IsAlgorithmValid( xml ) )
             {
                 DecoratedVisitor.VisitAlgorithm( xml );
             }
@@ -55,7 +65,7 @@ namespace DIPS.Processor.XML.Decompilation
         /// job.</param>
         public override void VisitInput( XNode xml )
         {
-            if( _validateInput( xml ) )
+            if( IsInputValid( xml ) )
             {
                 DecoratedVisitor.VisitInput( xml );
             }
@@ -67,160 +77,35 @@ namespace DIPS.Processor.XML.Decompilation
 
 
         /// <summary>
+        /// Executes the algorithm-node validation logic.
+        /// </summary>
+        /// <param name="algorithmNode">The <see cref="XNode"/> representing an
+        /// algorithm.</param>
+        /// <returns><c>true</c> if the algorithm represented by the
+        /// <see cref="XNode"/> is valid; false otherwise.</returns>
+        protected abstract bool IsAlgorithmValid( XNode algorithmNode );
+
+        /// <summary>
+        /// Executes the input-node validation logic.
+        /// </summary>
+        /// <param name="algorithmNode">The <see cref="XNode"/> representing an
+        /// input.</param>
+        /// <returns><c>true</c> if the input represented by the
+        /// <see cref="XNode"/> is valid; false otherwise.</returns>
+        protected abstract bool IsInputValid( XNode inputNode );
+
+
+        /// <summary>
         /// Throws an XmlValidationException if the args specify we should throw
         /// when invalid Xml is provided.
         /// </summary>
         /// <param name="errNode">The troublesome node.</param>
         private void _throwIfNecessary( XNode errNode )
         {
-            if( _validationArgs.ThrowOnError )
+            if( ThrowOnError )
             {
                 throw new XmlValidationException( errNode );
             }
         }
-
-        /// <summary>
-        /// Performs the validation of the input Xml.
-        /// </summary>
-        /// <param name="xml">The Xml to validate.</param>
-        /// <returns>true if the Xml is valid.</returns>
-        private bool _validateInput( XNode xml )
-        {
-            if( _validationArgs.InputValidator != null )
-            {
-                return _validationArgs.InputValidator( xml );
-            }
-
-            if( xml.NodeType != System.Xml.XmlNodeType.Element )
-            {
-                return false;
-            }
-
-            XElement element = (XElement)xml;
-
-
-            return true; // todo
-        }
-
-
-        /// <summary>
-        /// Performs the validation of the algorithm Xml.
-        /// </summary>
-        /// <param name="xml">The Xml to validate.</param>
-        /// <returns>true if the Xml is valid.</returns>
-        private bool _validateAlgorithm( XNode xml )
-        {
-            if( _validationArgs.AlgorithmValidator != null )
-            {
-                return _validationArgs.AlgorithmValidator( xml );
-            }
-
-            if( xml.NodeType != System.Xml.XmlNodeType.Element )
-            {
-                return false;
-            }
-
-            XElement element = (XElement)xml;
-            if( element.Attribute( "name" ) == null )
-            {
-                return false;
-            }
-
-            string algorithmName = element.Attribute( "name" ).Value;
-            if( RegistryCache.Cache.HasCachedAlgorithm( algorithmName ) == false )
-            {
-                return false;
-            }
-
-            // Validate properties if there are any.
-            var properties = element.Descendants( "property" );
-            if( properties.Any() && _validateProperties( properties ) == false )
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-
-        /// <summary>
-        /// Validates the properties of an algorithm element.
-        /// </summary>
-        /// <param name="properties">The properties of the algorithm.</param>
-        /// <returns>true if the properties are valid.</returns>
-        private bool _validateProperties( IEnumerable<XNode> properties )
-        {
-            foreach( XNode property in properties )
-            {
-                if( property.NodeType != System.Xml.XmlNodeType.Element )
-                {
-                    return false;
-                }
-                else
-                {
-                    if( _validateProperty( (XElement)property ) == false )
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Validates a single property of an algorithm
-        /// </summary>
-        /// <param name="property">The property element</param>
-        /// <returns>true if the property is valid.</returns>
-        private bool _validateProperty( XElement property )
-        {
-            if( property.Attribute( "name" ) == null )
-            {
-                return false;
-            }
-
-            if( property.Attribute( "type" ) == null )
-            {
-                return false;
-            }
-
-            string typeName = property.Attribute( "type" ).Value;
-            if( _validateType( typeName ) == false )
-            {
-                return false;
-            }
-
-            if( property.Attribute( "value" ) == null )
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Validates the incoming type name from Xml
-        /// </summary>
-        /// <param name="typeName">The name of the type</param>
-        /// <returns>true if the type is valid, false otherwise.</returns>
-        private bool _validateType( string typeName )
-        {
-            try
-            {
-                Type type = Type.GetType( typeName );
-                return type != null;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-
-        /// <summary>
-        /// Contains the set of validation args in use.
-        /// </summary>
-        private XmlValidatorArgs _validationArgs;
     }
 }
