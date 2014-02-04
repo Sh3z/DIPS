@@ -26,7 +26,10 @@ namespace DIPS.Database
                 blob = ms.ToArray();
                 ms.Close();
             }
-            catch (Exception e) { }
+            catch (Exception e) 
+            {
+                blob = null;
+            }
             return blob;
         }
     }

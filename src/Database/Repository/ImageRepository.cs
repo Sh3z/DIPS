@@ -11,9 +11,9 @@ using DIPS.Database;
 
 namespace Database
 {
-    public class ImageRepository
+    public static class ImageRepository
     {
-        public List<ImageDataset> generateTreeView()
+        public static List<ImageDataset> generateTreeView()
         {
             Technique t = new Technique();
             List<ImageDataset> allDatasetsActive = null;
@@ -60,7 +60,7 @@ namespace Database
             return allDatasetsActive;
         }
 
-        public List<String> retrieveImageProperties(String fileID)
+        public static List<String> retrieveImageProperties(String fileID)
         {
             List<String> properties = new List<String>();
             SqlConnection con = new SqlConnection(staticVariables.sql);
@@ -71,14 +71,14 @@ namespace Database
             SqlDataReader dataReader = cmd.ExecuteReader();
             while (dataReader.Read())
             {
-                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Birthdate")));
-                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Age")));
-                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Sex")));
-                properties.Add(dataReader.GetDateTime(dataReader.GetOrdinal("Image Date Time")).ToString());
-                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Body Part")));
-                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Study Description")));
-                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Series Description")));
-                properties.Add(dataReader.GetString(dataReader.GetOrdinal("Slice Thickness")));
+                properties.Add("Birthdate : " + dataReader.GetString(dataReader.GetOrdinal("Birthdate")));
+                properties.Add("Age : " + dataReader.GetString(dataReader.GetOrdinal("Age")));
+                properties.Add("Sex : " + dataReader.GetString(dataReader.GetOrdinal("Sex")));
+                properties.Add("Image Date Time : " + dataReader.GetDateTime(dataReader.GetOrdinal("Image Date Time")).ToString());
+                properties.Add("Body Part : " + dataReader.GetString(dataReader.GetOrdinal("Body Part")));
+                properties.Add("Study Description : " + dataReader.GetString(dataReader.GetOrdinal("Study Description")));
+                properties.Add("Series Description : " + dataReader.GetString(dataReader.GetOrdinal("Series Description")));
+                properties.Add("Slice Thickness : " + dataReader.GetString(dataReader.GetOrdinal("Slice Thickness")));
 
                 //foreach(String s in properties) System.Diagnostics.Debug.WriteLine("hehe " + s);
                 break;

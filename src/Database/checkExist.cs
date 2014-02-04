@@ -17,10 +17,19 @@ namespace DIPS.Database
 
             SqlCommand cmd = new SqlCommand("spr_CheckPatientExist_v001", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = staticVariables.pBday;
-            cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = staticVariables.age;
-            cmd.Parameters.Add("@sex", SqlDbType.Char).Value = staticVariables.sex;
-            cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = staticVariables.patientName;
+
+            if (staticVariables.pBday == "") cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = DBNull.Value;
+            else cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = staticVariables.pBday;
+
+            if (staticVariables.age == "") cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = DBNull.Value;
+            else cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = staticVariables.age;
+
+            if (staticVariables.sex == "") cmd.Parameters.Add("@sex", SqlDbType.Char).Value = DBNull.Value;
+            else cmd.Parameters.Add("@sex", SqlDbType.Char).Value = staticVariables.sex;
+
+            if (staticVariables.patientName == "") cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = DBNull.Value;
+            else cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = staticVariables.patientName;
+
             SqlDataReader dataReader = cmd.ExecuteReader();
 
             while (dataReader.Read())
@@ -96,14 +105,14 @@ namespace DIPS.Database
         {
             Random rand = new Random(System.DateTime.Now.Millisecond);
             String alphabet = "";
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
                 char alpha = 'A';
                 alpha = (char)(alpha + rand.Next(0, 26));
                 alphabet += alpha;
             }
             String patientID = "";
-            if (staticVariables.pBday.Equals("NULL")) patientID = alphabet + rand.Next(50000000, 99999999);
+            if (staticVariables.pBday.Equals("")) patientID = alphabet + rand.Next(10000000, 17000000);
             else patientID = alphabet + staticVariables.pBday;
 
             return patientID;
