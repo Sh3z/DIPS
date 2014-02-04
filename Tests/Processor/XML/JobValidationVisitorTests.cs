@@ -31,7 +31,7 @@ namespace DIPS.Tests.Processor.XML
         [ExpectedException( typeof( NullReferenceException ) )]
         public void TestConstructor_NullArgs()
         {
-            JobValidationVisitor v = new JobValidationVisitor( null );
+            ValidationVisitor v = new ValidationVisitor( null );
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace DIPS.Tests.Processor.XML
         {
             TestVisitor v = new TestVisitor();
             XmlValidatorArgs a = new XmlValidatorArgs( v );
-            JobValidationVisitor visitor = new JobValidationVisitor( a );
+            ValidationVisitor visitor = new ValidationVisitor( a );
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace DIPS.Tests.Processor.XML
         {
             TestVisitor v = new TestVisitor();
             XmlValidatorArgs a = new XmlValidatorArgs( v );
-            JobValidationVisitor visitor = new JobValidationVisitor( a );
+            ValidationVisitor visitor = new ValidationVisitor( a );
 
             XNode xml = new XElement( "algorithm" );
             visitor.VisitAlgorithm( xml );
@@ -69,7 +69,7 @@ namespace DIPS.Tests.Processor.XML
         {
             TestVisitor v = new TestVisitor();
             XmlValidatorArgs a = new XmlValidatorArgs( v );
-            JobValidationVisitor visitor = new JobValidationVisitor( a );
+            ValidationVisitor visitor = new ValidationVisitor( a );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "unknown" ) );
             visitor.VisitAlgorithm( xml );
@@ -85,7 +85,7 @@ namespace DIPS.Tests.Processor.XML
         {
             TestVisitor v = new TestVisitor();
             XmlValidatorArgs a = new XmlValidatorArgs( v );
-            JobValidationVisitor visitor = new JobValidationVisitor( a );
+            ValidationVisitor visitor = new ValidationVisitor( a );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",
@@ -105,7 +105,7 @@ namespace DIPS.Tests.Processor.XML
         {
             TestVisitor v = new TestVisitor();
             XmlValidatorArgs a = new XmlValidatorArgs( v );
-            JobValidationVisitor visitor = new JobValidationVisitor( a );
+            ValidationVisitor visitor = new ValidationVisitor( a );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",
@@ -125,7 +125,7 @@ namespace DIPS.Tests.Processor.XML
         {
             TestVisitor v = new TestVisitor();
             XmlValidatorArgs a = new XmlValidatorArgs( v );
-            JobValidationVisitor visitor = new JobValidationVisitor( a );
+            ValidationVisitor visitor = new ValidationVisitor( a );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",
@@ -146,7 +146,7 @@ namespace DIPS.Tests.Processor.XML
         {
             TestVisitor v = new TestVisitor();
             XmlValidatorArgs a = new XmlValidatorArgs( v );
-            JobValidationVisitor visitor = new JobValidationVisitor( a );
+            ValidationVisitor visitor = new ValidationVisitor( a );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",
@@ -165,7 +165,7 @@ namespace DIPS.Tests.Processor.XML
         {
             TestVisitor v = new TestVisitor();
             XmlValidatorArgs a = new XmlValidatorArgs( v );
-            JobValidationVisitor visitor = new JobValidationVisitor( a );
+            ValidationVisitor visitor = new ValidationVisitor( a );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",
@@ -187,7 +187,7 @@ namespace DIPS.Tests.Processor.XML
             TestVisitor v = new TestVisitor();
             XmlValidatorArgs a = new XmlValidatorArgs( v );
             a.ThrowOnError = true;
-            JobValidationVisitor visitor = new JobValidationVisitor( a );
+            ValidationVisitor visitor = new ValidationVisitor( a );
 
             XNode xml = new XElement( "algorithm", new XAttribute( "name", "gamma" ),
                 new XElement( "properties",

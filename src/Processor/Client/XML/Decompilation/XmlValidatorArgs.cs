@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace DIPS.Processor.XML.Decompilation
 {
     /// <summary>
-    /// Provides constructor information for the <see cref="JobValidationVisitor"/>
+    /// Provides constructor information for the <see cref="ValidationVisitor"/>
     /// class. This class cannot be inherited.
     /// </summary>
     public sealed class XmlValidatorArgs
@@ -34,7 +34,7 @@ namespace DIPS.Processor.XML.Decompilation
 
         /// <summary>
         /// Gets the <see cref="IJobXmlVisitor"/> being decorated by the
-        /// <see cref="JobValidationVisitor"/>.
+        /// <see cref="ValidationVisitor"/>.
         /// </summary>
         public IJobXmlVisitor Visitor
         {

@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Decompilation\AlgorithmDecompilerVisitor.cs" />
     <Compile Include="Decompilation\IJobXmlVisitor.cs" />
-    <Compile Include="Decompilation\JobValidationVisitor.cs" />
+    <Compile Include="Decompilation\ValidationVisitor.cs" />
     <Compile Include="Decompilation\JobXmlTraverser.cs" />
     <Compile Include="Decompilation\XmlValidationException.cs" />
     <Compile Include="Decompilation\XmlValidatorArgs.cs" />

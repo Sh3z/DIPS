@@ -13,16 +13,16 @@ namespace DIPS.Processor.XML.Decompilation
     /// is in a valid format before executing the behaviour of another
     /// <see cref="IJobXmlVisitor"/>.
     /// </summary>
-    public class JobValidationVisitor : XmlVisitorDecorator
+    public class ValidationVisitor : XmlVisitorDecorator
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="JobValidationVisitor"/>
+        /// Initializes a new instance of the <see cref="ValidationVisitor"/>
         /// class.
         /// </summary>
         /// <param name="args">The set of <see cref="XmlValidatorArgs"/> to
         /// use when validating Xml.</param>
         /// <exception cref="NullReferenceException">args is null.</exception>
-        public JobValidationVisitor( XmlValidatorArgs args )
+        public ValidationVisitor( XmlValidatorArgs args )
             : base( args.Visitor )
         {
             _validationArgs = args;
