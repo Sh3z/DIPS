@@ -15,7 +15,7 @@ namespace DIPS.Database
         public static Boolean patientExist = false;
         public static Boolean sameSeries = false;
         public static Boolean imageExist = false;
-        public static String sql = "Data Source=.\\Yeh;Initial Catalog=medicalImaging;Integrated Security=True";
+        public static String sql = "Data Source=Carly-PC;Initial Catalog=medicalImaging;Integrated Security=True";
 
         public static String pID = "";
         public static String patientName = "";

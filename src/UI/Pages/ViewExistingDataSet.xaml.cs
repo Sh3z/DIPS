@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Forms;
+using DIPS.UI.Controls;
 
 namespace DIPS.UI.Pages
 {
@@ -63,6 +64,14 @@ namespace DIPS.UI.Pages
         {
             get { return _propList; }
             set { _propList = value; }
+        }
+
+        private TreeViewFilter _filterSettings;
+
+        public TreeViewFilter FilterSettings
+        {
+            get { return _filterSettings; }
+            set { _filterSettings = value; }
         }
         
         
@@ -124,14 +133,18 @@ namespace DIPS.UI.Pages
 
         private void setupTreeview()
         {
-            foreach (ImageDataset ds in allDatasets)
+            if (allDatasets != null)
             {
-                TreeViewItem item = new TreeViewItem();
-                item.Header = ds.name;
-                item.ItemsSource = ds.relatedImages;
+                foreach (ImageDataset ds in allDatasets)
+                {
+                    TreeViewItem item = new TreeViewItem();
+                    item.Header = ds.name;
+                    item.ItemsSource = ds.relatedImages;
 
-                treeDatasets.Items.Add(item);
+                    treeDatasets.Items.Add(item);
+                }
             }
+            
         }
 
         private void setupTreeviewObjects()
@@ -204,6 +217,21 @@ namespace DIPS.UI.Pages
             {
                 txtImageDesc.Text += desc;
                 txtImageDesc.Text += Environment.NewLine;
+            }
+        }
+
+        private void btnSelectFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (FilterSettings == null)
+            {
+                TreeViewFilter tvf = new TreeViewFilter();
+                FilterSettings = tvf;
+                tvf.TreeView = this.treeDatasets;
+                FilterSettings.ShowDialog();
+            }
+            else
+            {
+                FilterSettings.Visibility = Visibility.Visible;
             }
         }
 

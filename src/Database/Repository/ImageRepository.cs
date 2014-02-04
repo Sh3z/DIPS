@@ -37,7 +37,7 @@ namespace Database
             return allDatasetsActive;
         }
 
-        public static List<ImageDataset> generateCustomTreeView(TreeViewFilter filter)
+        public static List<ImageDataset> generateCustomTreeView(Filter filter)
         {
             Technique t = new Technique();
             List<ImageDataset> allDatasetsActive = null;

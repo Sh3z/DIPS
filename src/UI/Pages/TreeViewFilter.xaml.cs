@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Database;
+using Database.Objects;
+using DIPS.Database.Objects;
 
 namespace DIPS.UI.Pages
 {
@@ -24,44 +27,73 @@ namespace DIPS.UI.Pages
             InitializeComponent();
         }
 
-        private DateTime dateFrom;
-        private DateTime dateTo;
-        private String patientID;
-        private Char sex;
+        private Filter _filter;
+
+        public Filter Filter
+        {
+            get { return _filter; }
+            set { _filter = value; }
+        }
+
+        private TreeView _treeview;
+
+        public TreeView TreeView
+        {
+            get { return _treeview; }
+            set { _treeview = value; }
+        }
         
 
         private void PrepareParameters()
         {
-            dateFrom = new DateTime();
-            dateTo = new DateTime();
+          Filter = new Filter();
 
             String patientID = txtPatientID.Text;
-            dateFrom = dtpPickFrom.SelectedDate.Value;
-            dateTo = dtpDateTo.SelectedDate.Value;
+            Filter.AcquisitionDateFrom = dtpPickFrom.SelectedDate.Value;
+            Filter.AcquisitionDateTo = dtpDateTo.SelectedDate.Value;
 
             if (radFemale.IsChecked == true)
             {
-                sex = 'F';
+                Filter.Gender = 'F';
             } else if (radMale.IsChecked == true)
             {
-                sex = 'M';
+                Filter.Gender = 'M';
             }
         }
 
         private void ValidateFields()
         {
-
+            
         }
 
         private void btnApplyFilter_Click(object sender, RoutedEventArgs e)
         {
             PrepareParameters();
+            List<ImageDataset> dataset = new List<ImageDataset>();
+            setupTreeview(ImageRepository.generateCustomTreeView(Filter));
+
             this.Hide();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
+        }
+
+        private void setupTreeview(List<ImageDataset> allDatasets)
+        {
+            if (allDatasets != null)
+            {
+                foreach (ImageDataset ds in allDatasets)
+                {
+                    TreeViewItem item = new TreeViewItem();
+                    item.Header = ds.name;
+                    item.ItemsSource = ds.relatedImages;
+
+                    TreeView.Items.Add(item);
+                }
+            }
+
         }
     }
 }

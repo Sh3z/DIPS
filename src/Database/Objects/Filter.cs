@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Database.Objects
 {
-    public class TreeViewFilter
+    public class Filter
     {
         private String _PatientID;
 
