@@ -13,8 +13,18 @@ using System.Xml.Linq;
 
 namespace DIPS.Processor.XML.Decompilation
 {
+    /// <summary>
+    /// Provides decompilation behaviour for job Xml.
+    /// </summary>
     public class JobXmlDecompiler : IAlgorithmXmlDecompiler
     {
+        /// <summary>
+        /// Decompiles an Xml node back into an <see cref="AlgorithmDefinition"/>.
+        /// </summary>
+        /// <param name="algorithmNode">The <see cref="XNode"/> representing the
+        /// <see cref="AlgorithmDefinition"/>.</param>
+        /// <returns>An <see cref="AlgorithmDefinition"/> object represented by
+        /// the provided Xml.</returns>
         public AlgorithmDefinition DecompileAlgorithm( XNode algorithmNode )
         {
             if( algorithmNode.NodeType != XmlNodeType.Element )
@@ -34,6 +44,13 @@ namespace DIPS.Processor.XML.Decompilation
             return new AlgorithmDefinition( name, properties );
         }
 
+        /// <summary>
+        /// Decompiles an Xml node back into a <see cref="JobInput"/>.
+        /// </summary>
+        /// <param name="inputNode">The <see cref="XNode"/> represnting the
+        /// <see cref="JobInput."/></param>
+        /// <returns>A <see cref="JobInput"/> object represented by the provided
+        /// Xml.</returns>
         public JobInput DecompileInput( XNode inputNode )
         {
             throw new NotImplementedException();
