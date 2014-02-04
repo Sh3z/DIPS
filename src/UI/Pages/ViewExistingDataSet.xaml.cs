@@ -19,6 +19,7 @@ using System.Data;
 using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Forms;
 
 namespace DIPS.UI.Pages
 {
@@ -78,44 +79,9 @@ namespace DIPS.UI.Pages
             // Set the Data Context as the view-model.
             DataContext = vm;
             //loadDicom();
-            /*
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = @"Bitmaps|*.bmp|Jpgs|*.jpg";
-            bool? result = dialog.ShowDialog();
-            if( result.HasValue && result.Value )
-            {
-                Bitmap theBmp = new Bitmap( dialog.FileName );
-                vm.ImageToProcess = theBmp;
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("File not present");
-            }
-            */
             addObjectsTotreeView();
             setupProperties();
         }
-
-        //public void loadDicom()
-        //{
-        //    readDicom dicom = new readDicom();
-        //    //FolderBrowserDialog fbd = new FolderBrowserDialog();
-        //    //DialogResult result = fbd.ShowDialog();
-        //    //try
-        //    //{
-        //    //    string[] files = Directory.GetFiles(fbd.SelectedPath, "*", SearchOption.AllDirectories);
-        //    //    System.Windows.Forms.MessageBox.Show(files.Length + " Files to Process");
-
-        //    //    foreach (String s in files)
-        //    //    {
-        //    //        staticVariables.readFile = s;
-        //    //        dicom.read();
-        //    //    }
-        //        System.Windows.Forms.MessageBox.Show("Complete");
-        //    }
-        //    catch (Exception e) { }
-        //}
-
 
         /// <summary>
         /// Contains the reference to the view-model.
@@ -126,6 +92,22 @@ namespace DIPS.UI.Pages
         private void insertImageProperties()
         {
             
+        }
+
+        public void loadDicom()
+        {
+            readDicom dicom = new readDicom();
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            DialogResult result = fbd.ShowDialog();
+            string[] files = Directory.GetFiles(fbd.SelectedPath, "*", SearchOption.AllDirectories);
+            System.Windows.Forms.MessageBox.Show(files.Length + " Files to Process");
+
+            foreach (String s in files)
+            {
+                staticVariables.readFile = s;
+                dicom.read();
+            }
+            System.Windows.Forms.MessageBox.Show("Complete");
         }
 
         private void setupProperties()
@@ -153,58 +135,8 @@ namespace DIPS.UI.Pages
         }
 
         private void setupTreeviewObjects()
-        {/*
-            PatientImage img1 = new PatientImage();
-            PatientImage img2 = new PatientImage();
-            PatientImage img3 = new PatientImage();
-            PatientImage img4 = new PatientImage();
-            PatientImage img5 = new PatientImage();
-            PatientImage img6 = new PatientImage();
-            PatientImage img7 = new PatientImage();
-            PatientImage img8 = new PatientImage();
-            PatientImage img9 = new PatientImage();
-            PatientImage img10 = new PatientImage();
-
-            Patient patient1 = new Patient();
-            Patient patient2 = new Patient();
-
-            img1.imgID = 1;
-            img2.imgID = 2;
-            img3.imgID = 3;
-            img4.imgID = 4;
-            img5.imgID = 5;
-            img6.imgID = 6;
-            img7.imgID = 7;
-            img8.imgID = 8;
-            img9.imgID = 9;
-            img10.imgID = 10;
-
-            ObservableCollection<PatientImage> imageCollectionDS1 = new ObservableCollection<PatientImage>();
-            ObservableCollection<PatientImage> imageCollectionDS2 = new ObservableCollection<PatientImage>();
-            ObservableCollection<PatientImage> imageCollectionDS3 = new ObservableCollection<PatientImage>();
-            ObservableCollection<PatientImage> imageCollectionDS4 = new ObservableCollection<PatientImage>();
-
-            imageCollectionDS1.Add(img1);
-            imageCollectionDS2.Add(img2);
-            imageCollectionDS3.Add(img3);
-            imageCollectionDS3.Add(img4);
-
-            ImageDataset imgDS1 = new ImageDataset("August", imageCollectionDS1);
-            ImageDataset imgDS2 = new ImageDataset("September", imageCollectionDS2);
-            ImageDataset imgDS3 = new ImageDataset("October", imageCollectionDS3);
-            ImageDataset imgDS4 = new ImageDataset("November", imageCollectionDS4);
-
-            List<ImageDataset> allDatasetsActive = new List<ImageDataset>();
-
-            allDatasetsActive.Add(imgDS1);
-            allDatasetsActive.Add(imgDS2);
-            allDatasetsActive.Add(imgDS3);
-            allDatasetsActive.Add(imgDS4);*/
-
-            ImageRepository imgRepo = new ImageRepository();
-            //initialise all datasets var
-            //allDatasets = new List<ImageDataset>();
-            allDatasets = imgRepo.generateTreeView();
+        {
+            allDatasets = ImageRepository.generateTreeView();
         }
 
         private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -256,11 +188,23 @@ namespace DIPS.UI.Pages
                     String imgName = selectedItem.Text;
 
                     setImage(imgName);
+
+                    populateImageDescription(ImageRepository.retrieveImageProperties(imgName));
                 }
 
                 //retrieveProperties(Text);
             }
             catch (Exception e2) { }
+        }
+
+        private void populateImageDescription(List<String> description)
+        {
+            txtImageDesc.Text = String.Empty;
+            foreach (string desc in description)
+            {
+                txtImageDesc.Text += desc;
+                txtImageDesc.Text += Environment.NewLine;
+            }
         }
 
     }

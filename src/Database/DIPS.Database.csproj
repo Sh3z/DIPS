@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="checkExist.cs" />
+    <Compile Include="Objects\TreeViewFilter.cs" />
     <Compile Include="Repository\ImageRepository.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

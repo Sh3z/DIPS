@@ -14,25 +14,22 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
+-- Author:		<Chuo Yeh Poo>
+-- Create date: <28/01/2013>
+-- Description:	<Retrieve patients with custom requirement to produce treeview>
 -- =============================================
 ALTER PROCEDURE spr_CustomList_v001
 	-- Add the parameters for the stored procedure here
-	@Sex varchar(3),
-	@SexNotEquals varchar(3),
-	@IDcontains varchar(20),
-	@IDStartsWith varchar(12),
-	@IDEndsWith varchar(12),
-	@IDEquals varchar(15),
-	@IDNotEquals varchar(15),
-	@AcquireDays int,
-	@AcquireWeeks int,
-	@AcquireMonths int,
-	@AcquireYears int,
-	@AcquireBetweenFrom date,
-	@AcquireBetweenTo date
+	@Sex varchar(3) = NULL,
+	@SexNotEquals varchar(3) = NULL,
+	@IDcontains varchar(20) = NULL,
+	@IDEquals varchar(15) = NULL,
+	@AcquireDays int = NULL,
+	@AcquireWeeks int = NULL,
+	@AcquireMonths int = NULL,
+	@AcquireYears int = NULL,
+	@AcquireBetweenFrom date = NULL,
+	@AcquireBetweenTo date = NULL
 AS
 BEGIN
 
@@ -61,19 +58,17 @@ BEGIN
 		SET @AcquireBetweenTo = DATEADD(YEAR,1000,CAST(current_timestamp as DATE))
 
 
-	SELECT * FROM patient P inner join imageProperties IP on P.tableID = IP.patientID join images I on IP.seriesID = I.seriesID
+	SELECT p.patientID as 'Patient ID', i.fileID as 'File ID'
+	FROM patient P inner join imageProperties IP on P.tableID = IP.patientID join images I on IP.seriesID = I.seriesID
 	WHERE sex = ISNULL(@Sex, sex)
 	and sex <> ISNULL(@SexNotEquals,'NA')
 	and P.patientID = ISNULL(@IDEquals,P.patientID)
-	and P.patientID <> ISNULL(@IDNotEquals,'N/A')
-	and P.patientID like CONCAT('%',ISNULL(@IDcontains,P.patientID),'%')
-	and P.patientID like CONCAT(ISNULL(@IDStartsWith,P.patientID),'%')
-	and P.patientID like CONCAT('%',ISNULL(@IDEndsWith,P.patientID))
+	and (@IDcontains IS NULL OR P.patientID like CONCAT('%',@IDcontains,'%'))
 	and CAST(imageAcquisitionDate as DATE) >= @AcquireWithinDays
 	and CAST(imageAcquisitionDate as DATE) >= @AcquireWithinWeeks
 	and CAST(imageAcquisitionDate as DATE) >= @AcquireWithinMonths
 	and CAST(imageAcquisitionDate as DATE) >= @AcquireWithinYears
 	and imageAcquisitionDate between @AcquireBetweenFrom and @AcquireBetweenTo
-	
+
 END
 GO

@@ -3,8 +3,8 @@ tableID int identity PRIMARY KEY,
 patientID varchar(30) UNIQUE,
 birthdate varchar(10),
 age varchar(10),
-sex char(1) NOT NULL,
-seriesAvailable int NOT NULL
+sex char(1),
+seriesAvailable int
 );
 create table name(
 patientID int FOREIGN KEY REFERENCES patient(tableID),
@@ -14,8 +14,8 @@ create table imageProperties(
 seriesID int identity PRIMARY KEY,
 patientID int FOREIGN KEY REFERENCES patient(tableID),
 modality varchar(15),
-imageAcquisitionDate datetime NOT NULL,
-importToDatabaseDate datetime Default(getdate()),
+imageAcquisitionDate datetime,
+importToDatabaseDate datetime default current_timestamp,
 bodyPart varchar(20),
 studyDescription varchar(50),
 seriesDescription varchar(50),
@@ -23,10 +23,10 @@ sliceThickness varchar(20)
 );
 create table images(
 fileID int identity PRIMARY KEY,
-seriesID int NOT NULL FOREIGN KEY REFERENCES imageProperties(seriesID),
+seriesID int FOREIGN KEY REFERENCES imageProperties(seriesID),
 imageNumber varchar(5),
 imageBlob varbinary(MAX),
-processed bit NOT NULL,
+processed bit,
 );
 
 select * from patient;
