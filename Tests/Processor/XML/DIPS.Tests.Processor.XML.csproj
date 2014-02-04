@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefinitionBuilderProcessTests.cs" />
     <Compile Include="JobBuilderProcessTests.cs" />
+    <Compile Include="XmlBuilderTests.cs" />
     <Compile Include="XmlValidatorArgsTests.cs" />
   </ItemGroup>
   <ItemGroup>

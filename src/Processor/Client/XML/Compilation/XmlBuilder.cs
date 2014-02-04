@@ -90,8 +90,7 @@ namespace DIPS.Processor.XML.Compilation
         /// </summary>
         private void _performBuild()
         {
-            Xml = new XDocument();
-            Xml.Add( new XDeclaration( "1.0", "UTF-8", "yes" ) );
+            Xml = new XDocument( new XDeclaration( "1.0", "UTF-8", "yes" ) );
             ICollection<XNode> children = new List<XNode>();
 
             if( Algorithms.Any() )
