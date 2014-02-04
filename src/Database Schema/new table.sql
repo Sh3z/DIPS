@@ -38,3 +38,23 @@ drop table images;
 drop table imageProperties;
 drop table name;
 drop table patient;
+
+select * from patient where birthdate = '';
+
+select * from imageProperties where CAST(imageAcquisitionDate as DATE) > DATEADD(year,-3,CAST(current_timestamp as DATE));
+select * from imageProperties where importToDatabaseDate > DATEADD(month,-3,current_timestamp);
+select * from imageProperties where CAST(importToDatabaseDate as DATE) >= DATEADD(DAY,(-7*2),CAST(current_timestamp as DATE));
+select * from imageProperties where imageAcquisitionDate between '2013-01-01' and '2005-01-01';
+select * from imageProperties where imageAcquisitionDate between '1801-01-01' and '3000-01-01';
+
+select CAST(importToDatabaseDate as DATE) from imageProperties;
+select CAST(current_timestamp as DATE) from imageProperties;
+
+
+select P.patientID, I.fileID from patient P inner join imageProperties IP on P.tableID = IP.patientID join images I on IP.seriesID = I.seriesID;
+
+select * from patient where sex in (select distinct sex from patient);
+select * from imageProperties where imageAcquisitionDate > DATEADD(year,-3,current_timestamp);
+select * from imageProperties where modality in (select distinct modality from imageProperties);
+select distinct top(3) sliceThickness from imageProperties order by sliceThickness desc;
+select * from images where processed = 0;
