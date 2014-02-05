@@ -51,7 +51,7 @@ namespace DIPS.Processor
         /// <returns>The result from processin the job.</returns>
         private JobResult _runJob( JobRequest req )
         {
-            JobTicket ticket = new JobTicket( req );
+            JobTicket ticket = new JobTicket( req, null );
             _worker.Handle( ticket );
             return ticket.Result;
         }

@@ -36,7 +36,7 @@ namespace DIPS.Processor
 
         public IJobTicket Enqueue( JobRequest req )
         {
-            JobTicket ticket = new JobTicket( req );
+            JobTicket ticket = new JobTicket( req, _queue );
             _queue.Enqueue( ticket );
             return ticket;
         }
@@ -53,7 +53,7 @@ namespace DIPS.Processor
 
         public Task<JobResult> Process( JobRequest req )
         {
-            JobTicket ticket = new JobTicket( req );
+            JobTicket ticket = new JobTicket( req, _queue );
             return _executor.ProcessSync( ticket );
         }
 

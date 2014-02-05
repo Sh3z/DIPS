@@ -17,12 +17,19 @@ namespace DIPS.Processor
         /// </summary>
         /// <param name="req">The <see cref="JobRequest"/> this ticket
         /// represents within the queue.</param>
+        /// <param name="handler">The first element in the chain of objects
+        /// that handles this <see cref="JobTicket"/> being cancelled.</param>
         /// <exception cref="ArgumentNullException">req is null.</exception>
-        public JobTicket( JobRequest req )
+        public JobTicket( JobRequest req, ITicketCancellationHandler handler )
         {
             if( req == null )
             {
                 throw new ArgumentNullException( "req" );
+            }
+
+            if( handler == null )
+            {
+                throw new ArgumentNullException( "handler" );
             }
 
             Request = req;
@@ -90,7 +97,10 @@ namespace DIPS.Processor
         /// </summary>
         public void Cancel()
         {
-            Cancelled = true;
+            if( _cancellationHandler.Handle( this ) )
+            {
+                _onJobCancelled();
+            }
         }
 
 
@@ -110,12 +120,19 @@ namespace DIPS.Processor
             }
         }
 
-        internal void OnJobCancelled()
+        private void _onJobCancelled()
         {
             if( JobCancelled != null )
             {
                 JobCancelled( this, EventArgs.Empty );
             }
         }
+
+
+        /// <summary>
+        /// Contains the first element in the handler chain for cancelling
+        /// this ticket.
+        /// </summary>
+        private ITicketCancellationHandler _cancellationHandler;
     }
 }

@@ -34,7 +34,19 @@ namespace DIPS.Tests.Processor
         [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestConstructor_NullRequest()
         {
-            JobTicket ticket = new JobTicket( null );
+            JobTicket ticket = new JobTicket( null, new DudHandler() );
+        }
+
+        /// <summary>
+        /// Tests attempting to create a ticket with a null handler.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ArgumentNullException ) )]
+        public void TestConstructor_NullHandler()
+        {
+            IJobDefinition d = new DudDefinition();
+            JobRequest r = new JobRequest( d );
+            JobTicket ticket = new JobTicket( r, null );
         }
 
         /// <summary>
@@ -45,7 +57,7 @@ namespace DIPS.Tests.Processor
         {
             IJobDefinition d = new DudDefinition();
             JobRequest r = new JobRequest( d );
-            JobTicket t = new JobTicket( r );
+            JobTicket t = new JobTicket( r, new DudHandler() );
 
             Assert.AreEqual( r, t.Request );
             Assert.IsNull( t.Result );
@@ -65,6 +77,20 @@ namespace DIPS.Tests.Processor
             public IEnumerable<JobInput> GetInputs()
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        class DudHandler : ITicketCancellationHandler
+        {
+            public ITicketCancellationHandler Successor
+            {
+                get;
+                set;
+            }
+
+            public bool Handle( IJobTicket ticket )
+            {
+                return false;
             }
         }
     }

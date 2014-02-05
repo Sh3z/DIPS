@@ -66,7 +66,7 @@ namespace DIPS.Tests.Processor
 
             IJobDefinition d = new DudDefinition();
             JobRequest r = new JobRequest( d );
-            JobTicket t = new JobTicket( r );
+            JobTicket t = new JobTicket( r, new DudHandler() );
             queue.Enqueue( t );
 
             Assert.IsTrue( eventFired );
@@ -96,7 +96,7 @@ namespace DIPS.Tests.Processor
 
             IJobDefinition d = new DudDefinition();
             JobRequest r = new JobRequest( d );
-            JobTicket t = new JobTicket( r );
+            JobTicket t = new JobTicket( r, new DudHandler() );
             queue.Enqueue( t );
 
             IJobTicket t1 = queue.Dequeue();
@@ -115,10 +115,10 @@ namespace DIPS.Tests.Processor
             JobQueue queue = new JobQueue();
             IJobDefinition d = new DudDefinition();
             JobRequest r = new JobRequest( d );
-            JobTicket t = new JobTicket( r );
+            JobTicket t = new JobTicket( r, new DudHandler() );
             queue.Enqueue( t );
             JobRequest r2 = new JobRequest( d );
-            JobTicket t2 = new JobTicket( r2 );
+            JobTicket t2 = new JobTicket( r2, new DudHandler() );
             queue.Enqueue( t2 );
 
             IJobTicket ta = queue.Dequeue();
@@ -153,7 +153,7 @@ namespace DIPS.Tests.Processor
             JobQueue queue = new JobQueue();
             IJobDefinition d = new DudDefinition();
             JobRequest r = new JobRequest( d );
-            JobTicket t = new JobTicket( r );
+            JobTicket t = new JobTicket( r, new DudHandler() );
             queue.Enqueue( t );
             bool result = queue.Handle( t );
 
@@ -172,6 +172,20 @@ namespace DIPS.Tests.Processor
             public IEnumerable<JobInput> GetInputs()
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        class DudHandler : ITicketCancellationHandler
+        {
+            public ITicketCancellationHandler Successor
+            {
+                get;
+                set;
+            }
+
+            public bool Handle( IJobTicket ticket )
+            {
+                return false;
             }
         }
     }
