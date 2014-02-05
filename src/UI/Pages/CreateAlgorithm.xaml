@@ -10,12 +10,12 @@
         <Label x:Name="lblName" Content="Algorithm Name:" HorizontalAlignment="Left" Margin="13,7,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="23" Margin="114,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
-        <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="219" Margin="10,53,0,0" VerticalAlignment="Top" Width="224"/>
-        <Rectangle x:Name="rectTarget" HorizontalAlignment="Left" Height="185" Margin="309,74,0,0" Stroke="Black" VerticalAlignment="Top" Width="158" Fill="AliceBlue" AllowDrop="True" Drop="rectTarget_Drop" />
-        <Rectangle x:Name="rectImage1" Fill="Green" HorizontalAlignment="Left" Height="34" Margin="27,87,0,0" Stroke="Black" VerticalAlignment="Top" Width="33" MouseLeftButtonDown="rect_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectImage2" HorizontalAlignment="Left" Height="34" Fill="Blue" Margin="81,87,0,0" Stroke="Black" VerticalAlignment="Top" Width="33" MouseLeftButtonDown="rect_MouseLeftButtonDown"/>
-        <Rectangle x:Name="rectImage3" HorizontalAlignment="Left" Height="34" Margin="135,87,0,0" Fill="red" Stroke="Black" VerticalAlignment="Top" Width="33" MouseLeftButtonDown="rect_MouseLeftButtonDown"/>
-        <GroupBox Header="Algorithm" HorizontalAlignment="Left" Margin="284,53,0,0" VerticalAlignment="Top" Height="219" Width="198"/>
+        <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="219" Margin="10,53,0,0" VerticalAlignment="Top" Width="224">
+            <StackPanel x:Name="stackListOfAvailableTech" HorizontalAlignment="Left" Height="197" VerticalAlignment="Top" Width="212"/>
+        </GroupBox>
+        <GroupBox Header="Algorithm" HorizontalAlignment="Left" Margin="284,53,0,0" VerticalAlignment="Top" Height="219" Width="198">
+            <StackPanel x:Name="stackListOfSelectedTech" HorizontalAlignment="Left" Height="197" VerticalAlignment="Top" Width="186" Drop="stackTarget_Drop"/>
+        </GroupBox>
         <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="358,11,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>

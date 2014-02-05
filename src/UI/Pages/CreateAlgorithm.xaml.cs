@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DIPS.Database.Objects;
+using DIPS.UI.Controls;
 
 namespace DIPS.UI.Pages
 {
@@ -23,19 +25,31 @@ namespace DIPS.UI.Pages
         public CreateAlgorithm()
         {
             InitializeComponent();
+
+            TechShape tech1 = new TechShape();
+            tech1 = setupParameters();
+
+            stackListOfAvailableTech.Children.Add(tech1);
         }
 
-        private void rect_MouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
+        private TechShape setupParameters()
         {
-            Rectangle r = (Rectangle)sender;
-            DataObject dataObj = new DataObject(r.Fill);
-            DragDrop.DoDragDrop(r, dataObj, DragDropEffects.Move);
+            Technique tech1 = new Technique();
+            tech1.Name = "Fuzzy1";
+            tech1.ID = 1;
+
+            TechShape techShape1 = new TechShape();
+            techShape1.Tech = tech1;
+
+            return techShape1;
         }
 
-        private void rectTarget_Drop(object sender, DragEventArgs e)
+       
+
+        private void stackTarget_Drop(object sender, DragEventArgs e)
         {
-            SolidColorBrush scb = (SolidColorBrush)e.Data.GetData(typeof(SolidColorBrush));
-            rectTarget.Fill = scb;
+            TechShape tech = (TechShape)e.Data.GetData(typeof(TechShape));
+            stackListOfSelectedTech.Children.Add(tech);
         }
     }
 
