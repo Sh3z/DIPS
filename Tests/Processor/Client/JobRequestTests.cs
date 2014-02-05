@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Client.JobDeployment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -22,23 +23,13 @@ namespace DIPS.Tests.Processor.Client
         }
 
         /// <summary>
-        /// Tests attempting to construct a <see cref="JobRequest"/> with no algorithm.
+        /// Tests attempting to construct a <see cref="JobRequest"/> with no definition.
         /// </summary>
         [TestMethod]
         [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestConstructor_NullAlgorithm()
         {
-            Assert.Inconclusive( "Rewrite test" );
-        }
-
-        /// <summary>
-        /// Tests attempting to construct a <see cref="JobRequest"/> with null images..
-        /// </summary>
-        [TestMethod]
-        [ExpectedException( typeof( ArgumentNullException ) )]
-        public void TestConstructor_NullImages()
-        {
-            Assert.Inconclusive( "Rewrite test" );
+            JobRequest r = new JobRequest( null );
         }
 
         /// <summary>
@@ -47,22 +38,10 @@ namespace DIPS.Tests.Processor.Client
         [TestMethod]
         public void TestConstructor_ValidArguments()
         {
-            Assert.Inconclusive( "Rewrite test" );
-        }
+            ObjectJobDefinition d = new ObjectJobDefinition( new AlgorithmDefinition[] { }, new JobInput[] { } );
+            JobRequest r = new JobRequest( d );
 
-
-        /// <summary>
-        /// Represents a blank <see cref="IAlgorithmStep"/> implementation for testing uses.
-        /// </summary>
-        class AlgorithmStepImpl : IAlgorithmStep
-        {
-            /// <summary>
-            /// Does nothing.
-            /// </summary>
-            /// <param name="stateOfJob">N/A</param>
-            public void Run( JobState stateOfJob )
-            {
-            }
+            Assert.AreEqual( d, r.Job );
         }
     }
 }
