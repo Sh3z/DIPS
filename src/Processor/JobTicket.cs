@@ -18,9 +18,20 @@ namespace DIPS.Processor
 
             Request = req;
             Cancelled = false;
+            JobID = Guid.NewGuid();
         }
 
 
+        /// <summary>
+        /// Gets the unique identifier for this ticket.
+        /// </summary>
+        public Guid JobID
+        {
+            get;
+            private set;
+        }
+
+        public event EventHandler JobCancelled;
 
         public event EventHandler JobStarted;
 
@@ -64,6 +75,14 @@ namespace DIPS.Processor
             if( JobCompleted != null )
             {
                 JobCompleted( this, EventArgs.Empty );
+            }
+        }
+
+        internal void OnJobCancelled()
+        {
+            if( JobCancelled != null )
+            {
+                JobCancelled( this, EventArgs.Empty );
             }
         }
     }

@@ -4,6 +4,8 @@ namespace DIPS.Processor.Client
 {
     public interface IJobTicket
     {
+        event EventHandler JobCancelled;
+
         event EventHandler JobCompleted;
 
         event EventHandler JobStarted;
