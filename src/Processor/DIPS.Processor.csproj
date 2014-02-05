@@ -45,6 +45,7 @@
     <Compile Include="Executor\QueueExecutor.cs" />
     <Compile Include="IJobQueue.cs" />
     <Compile Include="IRequestHandler.cs" />
+    <Compile Include="ITicketCancellationHandler.cs" />
     <Compile Include="JobTicket.cs" />
     <Compile Include="ProcessingJob.cs" />
     <Compile Include="ProcessingService.cs" />

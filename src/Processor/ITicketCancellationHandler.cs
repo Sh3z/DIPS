@@ -32,6 +32,7 @@ namespace DIPS.Processor
         /// </summary>
         /// <param name="ticket">The <see cref="IJobTicket"/> that has been
         /// cancelled.</param>
-        void Handle( IJobTicket ticket );
+        /// <returns>true if the request has been handled; false otherwise.</returns>
+        bool Handle( IJobTicket ticket );
     }
 }

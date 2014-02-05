@@ -1,5 +1,6 @@
 ﻿using DIPS.Processor;
 using DIPS.Processor.Client;
+using DIPS.Processor.Client.JobDeployment;
 using DIPS.Processor.Queue;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -26,13 +27,21 @@ namespace DIPS.Tests.Processor
             set;
         }
 
+
+        /// <summary>
+        /// Tests constructing a JobQueue.
+        /// </summary>
         [TestMethod]
         public void TestConstructor()
         {
             JobQueue queue = new JobQueue();
             Assert.IsFalse( queue.HasPendingJobs );
+            Assert.AreEqual( 0, queue.NumberOfJobs );
         }
 
+        /// <summary>
+        /// Tests enqueueing an object that is not a job.
+        /// </summary>
         [TestMethod]
         public void TestEnqueue_InvalidRequest()
         {
@@ -45,6 +54,9 @@ namespace DIPS.Tests.Processor
             Assert.IsFalse( eventFired );
         }
 
+        /// <summary>
+        /// Tests enqueueing a valid job.
+        /// </summary>
         [TestMethod]
         public void TestEnqueue_ValidRequest()
         {
@@ -52,13 +64,19 @@ namespace DIPS.Tests.Processor
             bool eventFired = false;
             queue.JobAdded += ( s, e ) => eventFired = true;
 
-            Assert.Inconclusive( "Rewrite test" );
+            IJobDefinition d = new DudDefinition();
+            JobRequest r = new JobRequest( d );
+            JobTicket t = new JobTicket( r );
+            queue.Enqueue( t );
 
-            //queue.Enqueue( ticket );
-            //Assert.IsTrue( queue.HasPendingJobs );
-            //Assert.IsTrue( eventFired );
+            Assert.IsTrue( eventFired );
+            Assert.AreEqual( 1, queue.NumberOfJobs );
+            Assert.IsTrue( queue.HasPendingJobs );
         }
 
+        /// <summary>
+        /// Tests dequeueing from an empty JobQueue.
+        /// </summary>
         [TestMethod]
         public void TestDequeue_NoJobs()
         {
@@ -67,42 +85,94 @@ namespace DIPS.Tests.Processor
             Assert.IsNull( req );
         }
 
+        /// <summary>
+        /// Tests enqueueing, then dequeueing a job.
+        /// </summary>
         [TestMethod]
         public void TestDequeue_OneJob()
         {
             JobQueue queue = new JobQueue();
-            Assert.Inconclusive( "Rewrite test" );
+            bool eventFired = false;
 
-            //JobRequest req = new JobRequest( Algorithm.CreateWithSteps( new List<IAlgorithmStep>() ), new List<IImageSource>() );
-            //JobTicket ticket = new JobTicket( req );
-            //queue.Enqueue( ticket );
+            IJobDefinition d = new DudDefinition();
+            JobRequest r = new JobRequest( d );
+            JobTicket t = new JobTicket( r );
+            queue.Enqueue( t );
 
-            //IJobTicket dequeued = queue.Dequeue();
-            //Assert.AreSame( ticket, dequeued );
-            //Assert.IsFalse( queue.HasPendingJobs );
+            IJobTicket t1 = queue.Dequeue();
+            Assert.AreEqual( t, t1 );
+            Assert.AreEqual( 0, queue.NumberOfJobs );
+            Assert.IsFalse( queue.HasPendingJobs );
         }
 
+        /// <summary>
+        /// Tests enqueueing several jobs, then dequeueing them to assert
+        /// they are dequeued in the correct order.
+        /// </summary>
         [TestMethod]
         public void TestDequeue_MultipleJobs()
         {
-            Assert.Inconclusive( "Rewrite test" );
-            //JobQueue queue = new JobQueue();
-            
-            //// Add 3 jobs
-            //for( int i = 0; i < 3; i++ )
-            //{
-            //    JobRequest req = new JobRequest( Algorithm.CreateWithSteps( new List<IAlgorithmStep>() ), new List<IImageSource>() );
-            //    JobTicket ticket = new JobTicket( req );
-            //    queue.Enqueue( ticket );
-            //}
+            JobQueue queue = new JobQueue();
+            IJobDefinition d = new DudDefinition();
+            JobRequest r = new JobRequest( d );
+            JobTicket t = new JobTicket( r );
+            queue.Enqueue( t );
+            JobRequest r2 = new JobRequest( d );
+            JobTicket t2 = new JobTicket( r2 );
+            queue.Enqueue( t2 );
 
-            //// Dequeue each job one-by-one and assert the queue state
-            //IJobTicket dequeued = queue.Dequeue();
-            //Assert.IsTrue( queue.HasPendingJobs );
-            //dequeued = queue.Dequeue();
-            //Assert.IsTrue( queue.HasPendingJobs );
-            //dequeued = queue.Dequeue();
-            //Assert.IsFalse( queue.HasPendingJobs );
+            IJobTicket ta = queue.Dequeue();
+            Assert.AreEqual( t, ta );
+            Assert.IsTrue( queue.HasPendingJobs );
+            Assert.AreEqual( 1, queue.NumberOfJobs );
+
+            IJobTicket tb = queue.Dequeue();
+            Assert.AreEqual( t2, tb );
+            Assert.IsFalse( queue.HasPendingJobs );
+            Assert.AreEqual( 0, queue.NumberOfJobs );
+        }
+
+        /// <summary>
+        /// Tests cancelling an object the queue cannot handle and
+        /// has no successor.
+        /// </summary>
+        [TestMethod]
+        public void TestHandleCancel_Unhandleable_NoSuccessor()
+        {
+            JobQueue queue = new JobQueue();
+            bool result = queue.Handle( null );
+            Assert.IsFalse( result );
+        }
+
+        /// <summary>
+        /// Tests cancelling an object the queue can handle.
+        /// </summary>
+        [TestMethod]
+        public void TestHandleCancel_Handleable()
+        {
+            JobQueue queue = new JobQueue();
+            IJobDefinition d = new DudDefinition();
+            JobRequest r = new JobRequest( d );
+            JobTicket t = new JobTicket( r );
+            queue.Enqueue( t );
+            bool result = queue.Handle( t );
+
+            Assert.IsTrue( result );
+            Assert.IsFalse( queue.HasPendingJobs );
+        }
+
+
+        class DudDefinition : IJobDefinition
+        {
+            public IEnumerable<AlgorithmDefinition> GetAlgorithms()
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerable<JobInput> GetInputs()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

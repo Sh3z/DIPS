@@ -7,14 +7,29 @@ using System.Threading.Tasks;
 
 namespace DIPS.Processor.Queue
 {
-    public class JobQueue : IJobQueue
+    public class JobQueue : IJobQueue, ITicketCancellationHandler
     {
         public JobQueue()
         {
-            _internalQueue = new Queue<IJobTicket>();
+            _internalCollection = new List<IJobTicket>();
         }
 
         public event EventHandler JobAdded;
+
+        /// <summary>
+        /// Sets the successive <see cref="ITicketCancellationHandler"/> to
+        /// this instance.
+        /// </summary>
+        /// <remarks>
+        /// In the event the current <see cref="ITicketCancellationHandler"/>
+        /// cannot handle the cancellation of a ticket, it should instead delegate
+        /// to the successor. If no successor is set, the request should be ignored.
+        /// </remarks>
+        public ITicketCancellationHandler Successor
+        {
+            get;
+            set;
+        }
 
         public int NumberOfJobs
         {
@@ -22,7 +37,7 @@ namespace DIPS.Processor.Queue
             {
                 lock( this )
                 {
-                    return _internalQueue.Count;
+                    return _internalCollection.Count;
                 }
             }
         }
@@ -33,7 +48,7 @@ namespace DIPS.Processor.Queue
             {
                 lock( this )
                 {
-                    return _internalQueue.Any();
+                    return _internalCollection.Any();
                 }
             }
         }
@@ -47,7 +62,7 @@ namespace DIPS.Processor.Queue
 
             lock( this )
             {
-                _internalQueue.Enqueue( req );
+                _internalCollection.Add( req );
                 notifyJobAdded();
             }
         }
@@ -56,14 +71,39 @@ namespace DIPS.Processor.Queue
         {
             lock( this )
             {
-                if( _internalQueue.Any() )
+                if( _internalCollection.Any() )
                 {
-                    return _internalQueue.Dequeue();
+                    IJobTicket ticket = _internalCollection.First();
+                    _internalCollection.RemoveAt( 0 );
+                    return ticket;
                 }
                 else
                 {
                     return null;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Handles the cancellation of the job represented by the ticket.
+        /// </summary>
+        /// <param name="ticket">The <see cref="IJobTicket"/> that has been
+        /// cancelled.</param>
+        /// <returns>true if the request has been handled; false otherwise.</returns>
+        public bool Handle( IJobTicket ticket )
+        {
+            if( _internalCollection.Contains( ticket ) )
+            {
+                _internalCollection.Remove( ticket );
+                return true;
+            }
+            else if( Successor != null )
+            {
+                return Successor.Handle( ticket );
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -76,6 +116,6 @@ namespace DIPS.Processor.Queue
             }
         }
 
-        private Queue<IJobTicket> _internalQueue;
+        private IList<IJobTicket> _internalCollection;
     }
 }
