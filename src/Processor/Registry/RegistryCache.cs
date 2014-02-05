@@ -94,30 +94,15 @@ namespace DIPS.Processor.Registry
 
             if( definition != null )
             {
-                _pluginCache.TryGetValue( definition, out output );
+                var match = _pluginCache.Keys
+                    .FirstOrDefault( x => x.AlgorithmName == definition.AlgorithmName );
+                if( match != null )
+                {
+                    output = _pluginCache[match];
+                }
             }
             
             return output;
-        }
-
-        /// <summary>
-        /// Resolves the <see cref="AlgorithmPlugin"/> represented by the
-        /// <see cref="AlgorithmDefinition"/>.
-        /// </summary>
-        /// <param name="definition">The <see cref="AlgorithmDefinition"/> to
-        /// resolve the plugin for.</param>
-        /// <returns>The <see cref="AlgorithmPlugin"/> instance represented by
-        /// the <see cref="AlgorithmDefinition"/>, or null if no plugin is defined.</returns>
-        public AlgorithmPlugin ResolvePlugin( AlgorithmDefinition definition )
-        {
-            if( definition == null )
-            {
-                return null;
-            }
-            else
-            {
-                return _generatePluginFromDefinition( definition );
-            }
         }
 
         /// <summary>
@@ -140,24 +125,6 @@ namespace DIPS.Processor.Registry
             }
         }
 
-
-        /// <summary>
-        /// Creates and returns the AlgorithmPlugin from the given definition
-        /// </summary>
-        /// <param name="definition">The definition of the plugin to create</param>
-        /// <returns>The AlgorithmPlugin instance, or null if it is not defined</returns>
-        private AlgorithmPlugin _generatePluginFromDefinition( AlgorithmDefinition definition )
-        {
-            Type pluginType = ResolveType( definition );
-            if( pluginType == null )
-            {
-                return null;
-            }
-            else
-            {
-                return Activator.CreateInstance( pluginType ) as AlgorithmPlugin;
-            }
-        }
 
         /// <summary>
         /// Initializes the plugins from the registry key

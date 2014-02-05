@@ -68,31 +68,6 @@ namespace DIPS.Tests.Processor.Registry
         }
 
         /// <summary>
-        /// Tests resolving the AlgorithmPlugin object from null.
-        /// </summary>
-        [TestMethod]
-        public void TestResolvePlugin_NullDefinition()
-        {
-            AlgorithmPlugin p = RegistryCache.Cache.ResolvePlugin( null );
-            Assert.IsNull( p );
-        }
-
-        /// <summary>
-        /// Tests resolving a valid AlgorithmPlugin.
-        /// </summary>
-        [TestMethod]
-        public void TestResolvePlugin_ValidDefinition()
-        {
-            AlgorithmDefinition d = RegistryCache.Cache.GetLoadedPlugins().FirstOrDefault( x => x.AlgorithmName.ToLower() == "gamma" );
-            AlgorithmPlugin p = RegistryCache.Cache.ResolvePlugin( d );
-
-            Assert.IsNotNull( p );
-
-            AlgorithmDefinition d2 = PluginReflector.CreateDefinition( p );
-            Assert.IsTrue( d.Equals( d2 ) );
-        }
-
-        /// <summary>
         /// Tests determining whether the registry cache has cached an algorithm
         /// that does not exist.
         /// </summary>
