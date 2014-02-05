@@ -7,13 +7,23 @@ using System.Threading.Tasks;
 
 namespace DIPS.Processor.Queue
 {
+    /// <summary>
+    /// Represents the job queue and cancellation handler.
+    /// </summary>
     public class JobQueue : IJobQueue, ITicketCancellationHandler
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobQueue"/> class.
+        /// </summary>
         public JobQueue()
         {
             _internalCollection = new List<IJobTicket>();
         }
 
+
+        /// <summary>
+        /// Occurs when a job is added to this <see cref="IJobQueue"/>.
+        /// </summary>
         public event EventHandler JobAdded;
 
         /// <summary>
@@ -31,6 +41,9 @@ namespace DIPS.Processor.Queue
             set;
         }
 
+        /// <summary>
+        /// Gets the number of jobs remaining within this <see cref="IJobQueue"/>.
+        /// </summary>
         public int NumberOfJobs
         {
             get
@@ -42,6 +55,10 @@ namespace DIPS.Processor.Queue
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="IJobQueue"/>
+        /// has more jobs to process.
+        /// </summary>
         public bool HasPendingJobs
         {
             get
@@ -53,6 +70,11 @@ namespace DIPS.Processor.Queue
             }
         }
 
+        /// <summary>
+        /// Enqueues a new job to this <see cref="IJobQueue"/>.
+        /// </summary>
+        /// <param name="req">The <see cref="IJobTicket"/> representing the
+        /// job information.</param>
         public void Enqueue( IJobTicket req )
         {
             if( req == null )
@@ -67,6 +89,11 @@ namespace DIPS.Processor.Queue
             }
         }
 
+        /// <summary>
+        /// Dequeues the next job to execute.
+        /// </summary>
+        /// <returns>The <see cref="IJobTicket"/> representing the
+        /// job.</returns>
         public IJobTicket Dequeue()
         {
             lock( this )
@@ -108,6 +135,9 @@ namespace DIPS.Processor.Queue
         }
 
 
+        /// <summary>
+        /// Notifies any listeners that a job has been added.
+        /// </summary>
         private void notifyJobAdded()
         {
             if( JobAdded != null )
@@ -116,6 +146,10 @@ namespace DIPS.Processor.Queue
             }
         }
 
+
+        /// <summary>
+        /// Contains the internal queue. We use a list to allow deletion.
+        /// </summary>
         private IList<IJobTicket> _internalCollection;
     }
 }
