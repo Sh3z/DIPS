@@ -116,6 +116,8 @@ namespace DIPS.UI.Pages
 
         private void setupTreeview()
         {
+            treeDatasets.Items.Clear();
+
             if (allDatasets != null)
             {
                 foreach (ImageDataset ds in allDatasets)
@@ -205,7 +207,7 @@ namespace DIPS.UI.Pages
 
         private void btnSelectFilter_Click(object sender, RoutedEventArgs e)
         {
-            if (FilterSettings == null)
+            if (FilterSettings == null || FilterSettings.Activate() == false)
             {
                 TreeViewFilter tvf = new TreeViewFilter();
                 FilterSettings = tvf;

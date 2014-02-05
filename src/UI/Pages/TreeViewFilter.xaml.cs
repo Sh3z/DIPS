@@ -124,5 +124,10 @@ namespace DIPS.UI.Pages
             }
 
         }
+
+        private void windowFilter_Closed(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
     }
 }

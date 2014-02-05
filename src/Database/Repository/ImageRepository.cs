@@ -41,6 +41,11 @@ namespace Database
         {
             Technique t = new Technique();
             List<ImageDataset> allDatasetsActive = null;
+            DateTime invalidDate = new DateTime();
+            invalidDate = DateTime.Parse("01/01/0001 00:00:00");
+
+            int dateCompareResultFrom = DateTime.Compare(invalidDate,filter.AcquisitionDateFrom);
+            int dateCompareResultTo = DateTime.Compare(invalidDate,filter.AcquisitionDateTo);
 
             try
             {
@@ -50,9 +55,9 @@ namespace Database
                 cmd.CommandType = CommandType.StoredProcedure;
                 if(filter.PatientID!=null) 
                     cmd.Parameters.Add("@IDEquals", SqlDbType.VarChar).Value = filter.PatientID;
-                if (filter.AcquisitionDateFrom != null) 
+                if (filter.AcquisitionDateFrom != null && dateCompareResultFrom != 0)
                     cmd.Parameters.Add("@AcquireBetweenFrom", SqlDbType.Date).Value = filter.AcquisitionDateFrom;
-                if (filter.AcquisitionDateTo != null) 
+                if (filter.AcquisitionDateTo != null && dateCompareResultTo != 0) 
                     cmd.Parameters.Add("@AcquireBetweenTo", SqlDbType.Date).Value = filter.AcquisitionDateTo;
                 cmd.Parameters.Add("@Sex", SqlDbType.VarChar).Value = filter.Gender;
                 SqlDataReader data = cmd.ExecuteReader();

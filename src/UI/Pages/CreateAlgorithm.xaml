@@ -23,7 +23,7 @@
         <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="365" Margin="27,63,0,0" VerticalAlignment="Top" Width="295">
             <ScrollViewer>
                 <StackPanel x:Name="stackListOfAvailableTech" Grid.Column="1"
-            Background="LightBlue"
+            Background="LightGray"
             AllowDrop="True"
             DragOver="panel_DragOver"
             Drop="panel_Drop">
