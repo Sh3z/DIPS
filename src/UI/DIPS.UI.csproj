@@ -120,6 +120,9 @@
     <Compile Include="Pages\TreeViewFilter.xaml.cs">
       <DependentUpon>TreeViewFilter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ViewAlgorithms.xaml.cs">
+      <DependentUpon>ViewAlgorithms.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ViewExistingDataSet.xaml.cs">
       <DependentUpon>ViewExistingDataSet.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
     <Page Include="Pages\TreeViewFilter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ViewAlgorithms.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ViewExistingDataSet.xaml">
       <SubType>Designer</SubType>

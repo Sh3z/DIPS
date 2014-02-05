@@ -39,7 +39,7 @@
 
 
         </Border>
-        <xctk:PropertyGrid x:Name="_propertyGrid" Margin="766,-41,10,69"
+        <xctk:PropertyGrid x:Name="_propertyGrid" Margin="766,22,10,115"
                                      AutoGenerateProperties="True" IsManipulationEnabled="True"/>
         <Border x:Name="brdProcessed" 
     		BorderThickness="2"
@@ -54,12 +54,12 @@
         </Border>
 
         <Label x:Name="lblToProcess" Content="----&gt;" HorizontalAlignment="Left" Margin="504,80,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
-        <TreeView x:Name="treeDatasets" HorizontalAlignment="Left" Height="358" Margin="27,80,0,0" VerticalAlignment="Top" Width="196" MouseDoubleClick="treeDatasets_MouseDoubleClick"/>
+        <TreeView x:Name="treeDatasets" HorizontalAlignment="Left" Height="358" Margin="26,56,0,0" VerticalAlignment="Top" Width="196" MouseDoubleClick="treeDatasets_MouseDoubleClick"/>
         <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="439,358,0,0" VerticalAlignment="Top" Width="143" Command="{Binding ProcessImageCommand}" Height="60"/>
         <Image Name="unProcessedImg" HorizontalAlignment="Left" Height="128" Margin="318,22,0,0" VerticalAlignment="Top" Width="128"/>
         <TextBox x:Name="txtImageDesc" HorizontalAlignment="Left" Height="142" Margin="280,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" IsEnabled="False"/>
-        <Button x:Name="btnSelectFilter" Content="Filter Options" HorizontalAlignment="Left" Margin="27,43,0,0" VerticalAlignment="Top" Width="84" Click="btnSelectFilter_Click"/>
-        <CheckBox x:Name="chkActiveFilter" Content="Active Filter?" HorizontalAlignment="Left" Margin="129,49,0,0" VerticalAlignment="Top" Click="chkActiveFilter_Click"/>
+        <Button x:Name="btnSelectFilter" Content="Filter Options" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Width="84" Click="btnSelectFilter_Click"/>
+        <CheckBox x:Name="chkActiveFilter" Content="Active Filter?" HorizontalAlignment="Left" Margin="128,25,0,0" VerticalAlignment="Top" Click="chkActiveFilter_Click"/>
 
     </Grid>
 </Page>

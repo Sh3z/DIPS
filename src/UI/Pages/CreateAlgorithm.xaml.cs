@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DIPS.Database.Objects;
 using DIPS.UI.Controls;
+using Xceed.Wpf.Toolkit.PropertyGrid;
 
 namespace DIPS.UI.Pages
 {
@@ -28,8 +29,6 @@ namespace DIPS.UI.Pages
 
             List<TechShape> tech1 = new List<TechShape>();
             tech1 = setupParameters();
-
-            
         }
 
         private List<TechShape> setupParameters()
@@ -120,6 +119,40 @@ namespace DIPS.UI.Pages
                     e.Effects = DragDropEffects.Move;
                 }
             }
+        }
+
+        private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                setupProperties();
+            }
+        }
+
+        private void setupProperties()
+        {
+            ImageProperties propList = new ImageProperties();
+            _propertyGrid.SelectedObject = propList;
+        }
+
+        private Boolean validateFields()
+        {
+            if (String.IsNullOrEmpty(txtName.Text))
+            {
+                MessageBox.Show("Please enter a name for the algorithm.","Name missing",MessageBoxButton.OK,MessageBoxImage.Exclamation);
+                return false;
+            }
+            return true;
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (validateFields())
+            {
+                MessageBox.Show("Algorithm saved", "Save successful", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.NavigationService.GoBack();
+            }
+           
         }
     }
 

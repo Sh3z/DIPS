@@ -10,7 +10,7 @@
         <Label x:Name="lblDateFrom" Content="Date From:" HorizontalAlignment="Left" Margin="55,53,0,0" VerticalAlignment="Top" Height="25" Width="72"/>
         <GroupBox x:Name="grpSex" Header="Sex" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Height="64" Width="272"/>
         <Label x:Name="lblDateTo" Content="Date To:" HorizontalAlignment="Left" Margin="68,85,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.537,1.577"/>
-        <Button x:Name="btnApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="176,218,0,0" VerticalAlignment="Top" Width="74" Click="btnApplyFilter_Click"/>
+        <Button x:Name="btnApplyFilter" Content="Apply" HorizontalAlignment="Left" Margin="169,218,0,0" VerticalAlignment="Top" Width="74" Click="btnApplyFilter_Click"/>
         <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="46,218,0,0" VerticalAlignment="Top" Width="74" Click="btnCancel_Click"/>
         <DatePicker x:Name="dtpPickFrom" HorizontalAlignment="Left" Margin="127,54,0,0" VerticalAlignment="Top" Width="116"/>
         <DatePicker x:Name="dtpDateTo" HorizontalAlignment="Left" Margin="127,85,0,0" VerticalAlignment="Top" Width="116"/>

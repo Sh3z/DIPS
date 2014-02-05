@@ -91,8 +91,8 @@ namespace DIPS.UI.Pages
 
         private void btnCreateAlgorithm_Click(object sender, RoutedEventArgs e)
         {
-            CreateAlgorithm createAlgorithmScreen = new CreateAlgorithm();
-            this.NavigationService.Navigate(createAlgorithmScreen);
+            ViewAlgorithms viewAlgorithmScreen = new ViewAlgorithms();
+            this.NavigationService.Navigate(viewAlgorithmScreen);
         }
     }
 }
