@@ -19,6 +19,9 @@ namespace DIPS.Processor.Client.JobDeployment
             {
                 throw new ArgumentNullException( "inputs" );
             }
+
+            _algorithms = algorithms;
+            _inputs = inputs;
         }
 
         public IEnumerable<AlgorithmDefinition> GetAlgorithms()
