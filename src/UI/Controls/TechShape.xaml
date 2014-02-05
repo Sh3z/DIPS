@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Height="70.955" Width="109.642" AllowDrop="True" MouseLeftButtonDown="rect_MouseLeftButtonDown">
+             mc:Ignorable="d" Height="70.955" Width="109.642" MouseLeftButtonDown="rect_MouseLeftButtonDown">
     <Grid>
         <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="71" VerticalAlignment="Top" Width="110">
             <Rectangle x:Name="rect" Fill="LightBlue" HorizontalAlignment="Left" Height="51" Stroke="Black" VerticalAlignment="Top" Width="92" Canvas.Left="10" Canvas.Top="10" AllowDrop="False"/>

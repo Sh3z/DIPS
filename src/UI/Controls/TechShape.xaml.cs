@@ -45,8 +45,9 @@ namespace DIPS.UI.Controls
         private void rect_MouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
         {
             TechShape r = (TechShape)sender;
-            DataObject dataObj = new DataObject(this);
-            DragDrop.DoDragDrop(r, dataObj, DragDropEffects.Move);
+            DataObject data = new DataObject();
+            data.SetData("Object", this);
+            DragDrop.DoDragDrop(r, data, DragDropEffects.Move);
         }
     }
 }

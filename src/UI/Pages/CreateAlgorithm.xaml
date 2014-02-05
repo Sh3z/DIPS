@@ -4,17 +4,32 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d"
-	Title="CreateAlgorithm" Height="282.09" Width="504.478">
+	Title="CreateAlgorithm" Height="438.09" Width="961.478">
 
     <Grid>
         <Label x:Name="lblName" Content="Algorithm Name:" HorizontalAlignment="Left" Margin="13,7,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="23" Margin="114,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
-        <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="219" Margin="10,53,0,0" VerticalAlignment="Top" Width="224">
-            <StackPanel x:Name="stackListOfAvailableTech" HorizontalAlignment="Left" Height="197" VerticalAlignment="Top" Width="212"/>
+        <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="365" Margin="27,63,0,0" VerticalAlignment="Top" Width="295">
+            <ScrollViewer>
+                <StackPanel x:Name="stackListOfAvailableTech" Grid.Column="1"
+            Background="LightBlue"
+            AllowDrop="True"
+            DragOver="panel_DragOver"
+            Drop="panel_Drop">
+                </StackPanel>
+            </ScrollViewer>
         </GroupBox>
-        <GroupBox Header="Algorithm" HorizontalAlignment="Left" Margin="284,53,0,0" VerticalAlignment="Top" Height="219" Width="198">
-            <StackPanel x:Name="stackListOfSelectedTech" HorizontalAlignment="Left" Height="197" VerticalAlignment="Top" Width="186" Drop="stackTarget_Drop"/>
+        <GroupBox Header="Algorithm" Margin="357,63,0,0" VerticalAlignment="Top" Height="356" HorizontalAlignment="Left" Width="281">
+            <ScrollViewer>
+                <StackPanel Grid.Column="1"
+            Background="Honeydew"
+            AllowDrop="True"
+            DragOver="panel_DragOver"
+            Drop="panel_Drop">
+                </StackPanel>
+            </ScrollViewer>
+
         </GroupBox>
         <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="358,11,0,0" VerticalAlignment="Top" Width="75"/>
 
