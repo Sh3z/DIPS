@@ -10,6 +10,12 @@ namespace DIPS.Processor.Client
     /// </summary>
     public sealed class JobRequest
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobRequest"/> class.
+        /// </summary>
+        /// <param name="job">The <see cref="IJobDefinition"/> containing the
+        /// details of the job.</param>
+        /// <exception cref="ArgumentNullException">job is null.</exception>
         public JobRequest( IJobDefinition job )
         {
             if( job == null )
@@ -21,7 +27,9 @@ namespace DIPS.Processor.Client
         }
 
 
-
+        /// <summary>
+        /// Gets the definition of the job to run.
+        /// </summary>
         public IJobDefinition Job
         {
             get;
