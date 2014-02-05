@@ -119,21 +119,37 @@ namespace DIPS.Processor.Queue
         /// <returns>true if the request has been handled; false otherwise.</returns>
         public bool Handle( IJobTicket ticket )
         {
+            lock( this )
+            {
+                if( Successor != null )
+                {
+                    return Successor.Handle( ticket );
+                }
+                else
+                {
+                    return _selfHandleCancellation( ticket );
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Executes the cancellation-handling code determined by this class.
+        /// </summary>
+        /// <param name="ticket">The ticket to cancel</param>
+        /// <returns>true if the cancellation was handled, false otherwise.</returns>
+        private bool _selfHandleCancellation( IJobTicket ticket )
+        {
             if( _internalCollection.Contains( ticket ) )
             {
                 _internalCollection.Remove( ticket );
                 return true;
-            }
-            else if( Successor != null )
-            {
-                return Successor.Handle( ticket );
             }
             else
             {
                 return false;
             }
         }
-
 
         /// <summary>
         /// Notifies any listeners that a job has been added.
