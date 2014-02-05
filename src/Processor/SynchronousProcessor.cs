@@ -52,7 +52,7 @@ namespace DIPS.Processor
         private JobResult _runJob( JobRequest req )
         {
             JobTicket ticket = new JobTicket( req, null );
-            _worker.Handle( ticket );
+            _worker.RunJob( ticket );
             return ticket.Result;
         }
 

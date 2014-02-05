@@ -10,7 +10,7 @@ namespace DIPS.Processor.Executor
 {
     class JobWorker : IRequestHandler
     {
-        public void Handle( IJobTicket req )
+        public void RunJob( IJobTicket req )
         {
             JobTicket ticket = req as JobTicket;
             ticket.OnJobStarted();

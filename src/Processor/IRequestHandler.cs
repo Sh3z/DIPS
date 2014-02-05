@@ -9,6 +9,6 @@ namespace DIPS.Processor
 {
     public interface IRequestHandler
     {
-        void Handle( IJobTicket job );
+        void RunJob( IJobTicket job );
     }
 }

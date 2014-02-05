@@ -96,7 +96,7 @@ namespace DIPS.Tests.Processor
             private set;
         }
 
-        public void Handle( IJobTicket job )
+        public void RunJob( IJobTicket job )
         {
             DidWork = true;
         }
