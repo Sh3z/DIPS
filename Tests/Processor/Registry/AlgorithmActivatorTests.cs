@@ -24,13 +24,33 @@ namespace DIPS.Tests.Processor.Registry
             set;
         }
 
+
+        /// <summary>
+        /// Tests constructing an activator with a null registrar.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ArgumentNullException ) )]
+        public void TestConstructor_NullRegistrar()
+        {
+            AlgorithmActivator activator = new AlgorithmActivator( null );
+        }
+
+        /// <summary>
+        /// Tests constructing an activator with a valid registrar.
+        /// </summary>
+        [TestMethod]
+        public void TestConstructor_ValidRegistrar()
+        {
+            AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
+        }
+
         /// <summary>
         /// Tests checking if null can be activated.
         /// </summary>
         [TestMethod]
         public void TestCanActivate_NullDefinition()
         {
-            AlgorithmActivator activator = new AlgorithmActivator();
+            AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
             bool canActivate = activator.CanActivate( null );
             Assert.IsFalse( canActivate );
         }
@@ -41,7 +61,7 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestCanActivate_NotCached()
         {
-            AlgorithmActivator activator = new AlgorithmActivator();
+            AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
             AlgorithmDefinition d = new AlgorithmDefinition( "unknown", new Property[] { } );
             bool canActivate = activator.CanActivate( d );
             Assert.IsFalse( canActivate );
@@ -63,9 +83,9 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestCanActivate_ValidDefinition()
         {
-            AlgorithmActivator activator = new AlgorithmActivator();
-            AlgorithmDefinition d = new AlgorithmDefinition( "gamma",
-                new Property[] { new Property( "gamma", typeof( double ) ) } );
+            AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
+            AlgorithmDefinition d = new AlgorithmDefinition( "Test",
+                new Property[] { new Property( "Test", typeof( double ) ) } );
             bool canActivate = activator.CanActivate( d );
             Assert.IsTrue( canActivate );
         }
@@ -77,7 +97,7 @@ namespace DIPS.Tests.Processor.Registry
         [ExpectedException( typeof( ArgumentException ) )]
         public void TestActivate_NullDefinition()
         {
-            AlgorithmActivator activator = new AlgorithmActivator();
+            AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
             activator.Activate( null );
         }
 
@@ -87,8 +107,8 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestActivate_NoProperties()
         {
-            AlgorithmActivator activator = new AlgorithmActivator();
-            AlgorithmDefinition d = new AlgorithmDefinition( "gamma", new Property[] {} );
+            AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
+            AlgorithmDefinition d = new AlgorithmDefinition( "Test", new Property[] {} );
             AlgorithmPlugin p = activator.Activate( d );
 
             Assert.IsNotNull( p );
@@ -103,9 +123,9 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestActivate_OneProperty_UnknownName()
         {
-            AlgorithmActivator activator = new AlgorithmActivator();
-            AlgorithmDefinition d = new AlgorithmDefinition( "gamma",
-                new Property[] { new Property( "unknown", typeof( string ) ) } );
+            AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
+            AlgorithmDefinition d = new AlgorithmDefinition( "Test",
+                new Property[] { new Property( "unknown", typeof( double ) ) } );
             AlgorithmPlugin p = activator.Activate( d );
 
             Assert.IsNotNull( p );
@@ -119,14 +139,52 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestActivate_OneProperty_UnknownType()
         {
-            AlgorithmActivator activator = new AlgorithmActivator();
-            AlgorithmDefinition d = new AlgorithmDefinition( "gamma",
-                new Property[] { new Property( "gamma", typeof( string ) ) } );
+            AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
+            AlgorithmDefinition d = new AlgorithmDefinition( "Test",
+                new Property[] { new Property( "Test", typeof( string ) ) } );
             AlgorithmPlugin p = activator.Activate( d );
 
             Assert.IsNotNull( p );
 
             // Todo more testing logic.
+        }
+
+
+        class TestPlugin : AlgorithmPlugin
+        {
+            [PluginVariable( "Test", typeof( double ) )]
+            public double Test
+            {
+                get;
+                set;
+            }
+
+            public override void Run()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        class TestRegistrar : IAlgorithmRegistrar
+        {
+            public IEnumerable<AlgorithmDefinition> KnownAlgorithms
+            {
+                get
+                {
+                    return new [] { new AlgorithmDefinition( "Test",
+                        new [] { new Property( "Test", typeof( double ) ) } ) };
+                }
+            }
+
+            public bool KnowsAlgorithm( string algorithmName )
+            {
+                return algorithmName == "Test";
+            }
+
+            public Type FetchType( string algorithmName )
+            {
+                return KnowsAlgorithm( algorithmName ) ? typeof( TestPlugin ) : null;
+            }
         }
     }
 }

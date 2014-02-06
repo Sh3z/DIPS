@@ -15,6 +15,24 @@ namespace DIPS.Processor.Registry
     public class AlgorithmActivator
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="AlgorithmActivator"/>
+        /// class.
+        /// </summary>
+        /// <param name="registrar">The <see cref="IAlgorithmRegistrar"/> containing
+        /// the information about the known algorithms.</param>
+        /// <exception cref="ArgumentNullException">registrar is null.</exception>
+        public AlgorithmActivator( IAlgorithmRegistrar registrar )
+        {
+            if( registrar == null )
+            {
+                throw new ArgumentNullException( "registrar" );
+            }
+
+            _registrar = registrar;
+        }
+
+
+        /// <summary>
         /// Determines whether the <see cref="AlgorithmDefinition"/> provided can
         /// be activated into an object.
         /// </summary>
@@ -29,14 +47,13 @@ namespace DIPS.Processor.Registry
                 return false;
             }
 
-            if( RegistryCache.Cache
-                .KnowsAlgorithm( definition.AlgorithmName ) == false )
+            if( _registrar.KnowsAlgorithm( definition.AlgorithmName ) == false )
             {
                 return false;
             }
 
             // We need a parameterless constructor.
-            Type type = RegistryCache.Cache.FetchType( definition.AlgorithmName );
+            Type type = _registrar.FetchType( definition.AlgorithmName );
             if( type.GetConstructor( Type.EmptyTypes ) == null )
             {
                 return false;
@@ -52,7 +69,7 @@ namespace DIPS.Processor.Registry
                 throw new ArgumentException( "Cannot activate provided definition." );
             }
 
-            Type type = RegistryCache.Cache.FetchType( definition.AlgorithmName );
+            Type type = _registrar.FetchType( definition.AlgorithmName );
             AlgorithmPlugin plugin = Activator.CreateInstance( type ) as AlgorithmPlugin;
 
             // Use Linq to quickly grab all attributed properties.
@@ -79,5 +96,8 @@ namespace DIPS.Processor.Registry
 
             return plugin;
         }
+
+
+        private IAlgorithmRegistrar _registrar;
     }
 }
