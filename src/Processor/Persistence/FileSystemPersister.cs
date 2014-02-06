@@ -99,6 +99,103 @@ namespace DIPS.Processor.Persistence
             }
         }
 
+        /// <summary>
+        /// Loads a particular object back from the storage this
+        /// <see cref="IJobPersister"/> is maintaining a connection to.
+        /// </summary>
+        /// <param name="identifier">The identifier of the particular
+        /// image to reload.</param>
+        /// <returns>The <see cref="PersistedResult"/> of the image represented
+        /// by the identifier, or null if no image with the given identifier
+        /// exists.</returns>
+        public PersistedResult Load( object identifier )
+        {
+            IEnumerable<PersistedResult> results = Load();
+            if( results.Any() )
+            {
+                return results.FirstOrDefault( x => x.RestoredIdentifier.Equals( identifier ) );
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Loads all persisted results  from the storage this
+        /// <see cref="IJobPersister"/> is maintaining a connection to.
+        /// </summary>
+        /// <returns>A set of <see cref="PersistedResult"/>s from the job this
+        /// <see cref="IJobPersister"/> has previously persisted.</returns>
+        public IEnumerable<PersistedResult> Load()
+        {
+            ICollection<PersistedResult> results = new List<PersistedResult>();
+            string dir = string.Format( @"{0}/{{{1}}}", TargetDirectory, _ticket.JobID );
+            if( Directory.Exists( dir ) )
+            {
+                results = _loadFromDir( dir );
+            }
+
+            return results;
+        }
+
+
+        /// <summary>
+        /// Loads all previous results from a given directory.
+        /// </summary>
+        /// <param name="dir">The directory to load from</param>
+        /// <returns>An enumerable set of previous results.</returns>
+        private ICollection<PersistedResult> _loadFromDir( string dir )
+        {
+            ICollection<PersistedResult> results = new List<PersistedResult>();
+            var files = Directory.EnumerateFiles( dir, "*.png" );
+            foreach( string fileName in files )
+            {
+                PersistedResult result = _createResult( fileName );
+                if( result != null )
+                {
+                    results.Add( result );
+                }
+            }
+
+            return results;
+        }
+
+        /// <summary>
+        /// Attempts to create a result for the given file.
+        /// </summary>
+        /// <param name="fileName">The path to the file</param>
+        /// <returns>A PersistedResult instance, or null if the file
+        /// cannot be converted.</returns>
+        private PersistedResult _createResult( string fileName )
+        {
+            try
+            {
+                Image img = null;
+                using( Stream stream = File.Open( fileName, FileMode.Open ) )
+                {
+                    img = Image.FromStream(stream);
+                    img = new Bitmap(img);
+                }
+                
+                string id = Path.GetFileNameWithoutExtension( fileName );
+                int idAsInt = 0;
+                bool parsed = int.TryParse( id, out idAsInt );
+                if( parsed )
+                {
+                    return new PersistedResult( img, idAsInt );
+                }
+                else
+                {
+                    return new PersistedResult( img, id );
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Resolves the full path to save the image to.

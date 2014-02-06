@@ -20,5 +20,24 @@ namespace DIPS.Processor.Persistence
         /// <param name="identifier">The identifier for the input provided
         /// by the client.</param>
         void Persist( Image output, object identifier );
+
+        /// <summary>
+        /// Loads a particular object back from the storage this
+        /// <see cref="IJobPersister"/> is maintaining a connection to.
+        /// </summary>
+        /// <param name="identifier">The identifier of the particular
+        /// image to reload.</param>
+        /// <returns>The <see cref="PersistedResult"/> of the image represented
+        /// by the identifier, or null if no image with the given identifier
+        /// exists.</returns>
+        PersistedResult Load( object identifier );
+
+        /// <summary>
+        /// Loads all persisted results  from the storage this
+        /// <see cref="IJobPersister"/> is maintaining a connection to.
+        /// </summary>
+        /// <returns>A set of <see cref="PersistedResult"/>s from the job this
+        /// <see cref="IJobPersister"/> has previously persisted.</returns>
+        IEnumerable<PersistedResult> Load();
     }
 }

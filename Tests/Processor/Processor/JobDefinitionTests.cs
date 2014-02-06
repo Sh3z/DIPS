@@ -69,6 +69,17 @@ namespace DIPS.Tests.Processor
             {
                 throw new NotImplementedException();
             }
+
+
+            public PersistedResult Load( object identifier )
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerable<PersistedResult> Load()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

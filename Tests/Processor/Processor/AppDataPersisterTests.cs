@@ -145,6 +145,81 @@ namespace DIPS.Tests.Processor
             Assert.IsTrue( fileExists );
         }
 
+        /// <summary>
+        /// Tests loading results from an empty directory.
+        /// </summary>
+        [TestMethod]
+        public void TestLoadAll_EmptyDirectory()
+        {
+            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
+            var results = persister.Load();
+
+            Assert.IsNotNull( results );
+            Assert.IsFalse( results.Any() );
+        }
+
+        /// <summary>
+        /// Tests loading a persisted result.
+        /// </summary>
+        [TestMethod]
+        public void TestLoadAll_OneResult()
+        {
+            string id = "test";
+            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
+            Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
+            persister.Persist( toPersist, id );
+            var results = persister.Load();
+
+            Assert.IsTrue( results.Any() );
+            Assert.AreEqual( 1, results.Count() );
+
+            PersistedResult r = results.First();
+            Assert.AreEqual( id, r.RestoredIdentifier );
+        }
+
+        /// <summary>
+        /// Tests loading a result by ID when there are no saved files
+        /// </summary>
+        [TestMethod]
+        public void TestLoadByID_NoFiles()
+        {
+            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
+            var result = persister.Load( "test" );
+
+            Assert.IsNull( result );
+        }
+
+        /// <summary>
+        /// Tests loading a result by ID when a file with the ID does not exist.
+        /// </summary>
+        [TestMethod]
+        public void TestLoadByID_OneFileMismatchingID()
+        {
+            string id = "test";
+            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
+            Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
+            persister.Persist( toPersist, id );
+            var result = persister.Load( "unknown" );
+
+            Assert.IsNull( result );
+        }
+
+        /// <summary>
+        /// Tests loading a result by ID where there is a match.
+        /// </summary>
+        [TestMethod]
+        public void TestLoadByID_OneFileMatchingID()
+        {
+            string id = "test";
+            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
+            Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
+            persister.Persist( toPersist, id );
+            var result = persister.Load( id );
+
+            Assert.IsNotNull( result );
+            Assert.AreEqual( id, result.RestoredIdentifier );
+        }
+
 
         class TestDefinition : IJobDefinition
         {

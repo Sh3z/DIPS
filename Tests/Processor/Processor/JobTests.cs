@@ -97,6 +97,17 @@ namespace DIPS.Tests.Processor
             {
                 DidPersist = true;
             }
+
+
+            public PersistedResult Load( object identifier )
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerable<PersistedResult> Load()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         class GoodPlugin : AlgorithmPlugin
