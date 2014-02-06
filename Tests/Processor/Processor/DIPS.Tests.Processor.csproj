@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>$(FEMOREBIN)\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>$(FEMOREBIN)\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -54,6 +54,7 @@
     <Compile Include="JobTicketTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueExecutorTests.cs" />
+    <Compile Include="RegistryFactoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Processor\Client\DIPS.Processor.Client.csproj">
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\..\..\src\Processor\DIPS.Processor.csproj">
       <Project>{bbc18fc7-4ed1-4a6a-8e1b-e05035ff85d8}</Project>
       <Name>DIPS.Processor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Processor\Plugin\DIPS.Processor.Plugin.csproj">
+      <Project>{5bc8fe69-c985-4b78-86f2-441a82fb435f}</Project>
+      <Name>DIPS.Processor.Plugin</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
