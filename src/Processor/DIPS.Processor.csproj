@@ -52,6 +52,7 @@
     <Compile Include="ITicketCancellationHandler.cs" />
     <Compile Include="Job.cs" />
     <Compile Include="JobTicket.cs" />
+    <Compile Include="Persistence\PersistedResult.cs" />
     <Compile Include="ProcessingService.cs" />
     <Compile Include="ProcessInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
