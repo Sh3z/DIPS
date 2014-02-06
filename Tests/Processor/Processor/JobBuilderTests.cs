@@ -209,17 +209,17 @@ namespace DIPS.Tests.Processor
 
         class DudPersister : IJobPersister
         {
-            public void Persist( Image output, object identifier )
+            public void Persist( Guid jobID, Image output, object identifier )
             {
                 throw new NotImplementedException();
             }
 
-            public PersistedResult Load( object identifier )
+            public PersistedResult Load( Guid jobID, object identifier )
             {
                 throw new NotImplementedException();
             }
 
-            public IEnumerable<PersistedResult> Load()
+            public IEnumerable<PersistedResult> Load( Guid jobID )
             {
                 throw new NotImplementedException();
             }

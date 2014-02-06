@@ -1,5 +1,6 @@
 ﻿using DIPS.Processor.Client;
 using DIPS.Processor.Executor;
+using DIPS.Processor.Persistence;
 using DIPS.Processor.Queue;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace DIPS.Processor
         public BatchProcessor( IPluginFactory factory )
         {
             _queue = new JobQueue();
-            _executor = new QueueExecutor( _queue, new TicketWorker( factory ) );
+            _executor = new QueueExecutor(
+                _queue, new TicketWorker( factory, new FileSystemPersister( FileSystemPersister.OutputDataPath ) ) );
         }
 
         public bool IsProcessing

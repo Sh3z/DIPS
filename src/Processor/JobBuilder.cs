@@ -76,6 +76,15 @@ namespace DIPS.Processor
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the unique identifier of the job.
+        /// </summary>
+        public Guid JobID
+        {
+            get;
+            set;
+        }
+
 
         /// <summary>
         /// Resets the status of this <see cref="JobBuilder"/> to perform another
@@ -164,7 +173,7 @@ namespace DIPS.Processor
         /// <returns>A JobDefinition for use by a Job</returns>
         private JobDefinition _createJobDefinition( ICollection<AlgorithmPlugin> plugins )
         {
-            JobDefinition d = new JobDefinition( plugins, Persister );
+            JobDefinition d = new JobDefinition( JobID, plugins, Persister );
             foreach( JobInput input in _inputs )
             {
                 d.Inputs.Add( input );

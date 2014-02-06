@@ -7,6 +7,7 @@ using DIPS.Processor;
 using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Processor.Plugin;
+using DIPS.Processor.Persistence;
 
 namespace DIPS.Tests.Processor
 {
@@ -34,7 +35,7 @@ namespace DIPS.Tests.Processor
         [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestConstructor_NullFactory()
         {
-            TicketWorker w = new TicketWorker( null );
+            TicketWorker w = new TicketWorker( null, new DudPersister() );
         }
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace DIPS.Tests.Processor
                 new JobInput[] { } );
             JobRequest r = new JobRequest( d );
             JobTicket ticket = new JobTicket( r, new DudCancellationHandler() );
-            TicketWorker w = new TicketWorker( new RegistryFactory() );
+            TicketWorker w = new TicketWorker( new RegistryFactory(), new DudPersister() );
 
             bool didError = false;
             bool didFinish = false;
@@ -71,7 +72,7 @@ namespace DIPS.Tests.Processor
                 new JobInput[] { } );
             JobRequest r = new JobRequest( d );
             JobTicket ticket = new JobTicket( r, new DudCancellationHandler() );
-            TicketWorker w = new TicketWorker( new RegistryFactory() );
+            TicketWorker w = new TicketWorker( new RegistryFactory(), new DudPersister() );
 
             bool didError = false;
             bool didFinish = false;
@@ -95,6 +96,23 @@ namespace DIPS.Tests.Processor
             public bool Handle( IJobTicket ticket )
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        class DudPersister : IJobPersister
+        {
+            public void Persist( Guid jobID, System.Drawing.Image output, object identifier )
+            {
+            }
+
+            public PersistedResult Load( Guid jobID, object identifier )
+            {
+                return null;
+            }
+
+            public IEnumerable<PersistedResult> Load( Guid jobID )
+            {
+                return null;
             }
         }
 

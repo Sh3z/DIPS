@@ -19,23 +19,15 @@ namespace DIPS.Processor.Persistence
         /// Initializes a new instance of the <see cref="FileSystemPersister"/>
         /// class.
         /// </summary>
-        /// <param name="ticket">The <see cref="JobTicket"/> this persister
-        /// will save jobs for.</param>
         /// <param name="dir">The directory to save jobs to.</param>
         /// <exception cref="ArgumentException">dir is null or empty.</exception>
-        /// <exception cref="ArgumentNullException">ticket is null.</exception>
         /// <exception cref="IOException">the directory provided does not exist,
         /// and this persister cannot create it.</exception>
-        public FileSystemPersister( JobTicket ticket, string dir )
+        public FileSystemPersister( string dir )
         {
             if( string.IsNullOrEmpty( dir ) )
             {
                 throw new ArgumentException( "dir" );
-            }
-
-            if( ticket == null )
-            {
-                throw new ArgumentNullException( "ticket" );
             }
 
             if( Directory.Exists( dir ) == false )
@@ -43,7 +35,6 @@ namespace DIPS.Processor.Persistence
                 _createDirectory( dir );
             }
 
-            _ticket = ticket;
             TargetDirectory = dir;
         }
 
@@ -85,14 +76,15 @@ namespace DIPS.Processor.Persistence
         /// <summary>
         /// Persits the output of a job.
         /// </summary>
+        /// <param name="jobID">The unique identifier of the job to save
+        /// the image against.</param>
         /// <param name="output">The <see cref="Image"/> generated from a
         /// complete job.</param>
         /// <param name="identifier">The identifier for the input provided
         /// by the client.</param>
-        public void Persist( Image output, object identifier )
+        public void Persist( Guid jobID, Image output, object identifier )
         {
-            Guid jobGuid = _ticket.JobID;
-            string fullPath = _resolvePath( identifier, jobGuid );
+            string fullPath = _resolvePath( identifier, jobID );
             using( Stream stream = File.Create( fullPath ) )
             {
                 output.Save( stream, ImageFormat.Png );
@@ -103,14 +95,16 @@ namespace DIPS.Processor.Persistence
         /// Loads a particular object back from the storage this
         /// <see cref="IJobPersister"/> is maintaining a connection to.
         /// </summary>
+        /// <param name="jobID">The unique identifier of the job to load the
+        /// resilts for.</param>
         /// <param name="identifier">The identifier of the particular
         /// image to reload.</param>
         /// <returns>The <see cref="PersistedResult"/> of the image represented
         /// by the identifier, or null if no image with the given identifier
         /// exists.</returns>
-        public PersistedResult Load( object identifier )
+        public PersistedResult Load( Guid jobID, object identifier )
         {
-            IEnumerable<PersistedResult> results = Load();
+            IEnumerable<PersistedResult> results = Load( jobID );
             if( results.Any() )
             {
                 return results.FirstOrDefault( x => x.RestoredIdentifier.Equals( identifier ) );
@@ -125,12 +119,14 @@ namespace DIPS.Processor.Persistence
         /// Loads all persisted results  from the storage this
         /// <see cref="IJobPersister"/> is maintaining a connection to.
         /// </summary>
+        /// <param name="jobID">The unique identifier of the job to load the
+        /// resilts for.</param>
         /// <returns>A set of <see cref="PersistedResult"/>s from the job this
         /// <see cref="IJobPersister"/> has previously persisted.</returns>
-        public IEnumerable<PersistedResult> Load()
+        public IEnumerable<PersistedResult> Load( Guid jobID )
         {
             ICollection<PersistedResult> results = new List<PersistedResult>();
-            string dir = string.Format( @"{0}/{{{1}}}", TargetDirectory, _ticket.JobID );
+            string dir = string.Format( @"{0}/{{{1}}}", TargetDirectory, jobID );
             if( Directory.Exists( dir ) )
             {
                 results = _loadFromDir( dir );
@@ -245,11 +241,6 @@ namespace DIPS.Processor.Persistence
             }
         }
 
-
-        /// <summary>
-        /// Retains the ticket of the job.
-        /// </summary>
-        private JobTicket _ticket;
 
         /// <summary>
         /// Retains the current id for jobs with no identifiers.

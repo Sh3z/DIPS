@@ -17,11 +17,12 @@ namespace DIPS.Processor
         /// <summary>
         /// Initializes a new instance of the <see cref="JobDefinition"/> class.
         /// </summary>
+        /// <param name="jobID">The unique identifier of the job.</param>
         /// <param name="processes">The set of processes to run in the job.</param>
         /// <param name="persister">The persister to use when saving the results of
         /// the job.</param>
         /// <exception cref="ArgumentNullException">processes or persister are null.</exception>
-        public JobDefinition( IEnumerable<AlgorithmPlugin> processes, IJobPersister persister )
+        public JobDefinition( Guid jobID, IEnumerable<AlgorithmPlugin> processes, IJobPersister persister )
         {
             if( processes == null )
             {
@@ -36,6 +37,16 @@ namespace DIPS.Processor
             Processes = processes;
             Persister = persister;
             Inputs = new List<JobInput>();
+        }
+
+        
+        /// <summary>
+        /// The unique identifier of the job within the processor system.
+        /// </summary>
+        public Guid JobID
+        {
+            get;
+            private set;
         }
 
         /// <summary>

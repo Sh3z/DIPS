@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 namespace DIPS.Processor.Persistence
 {
     /// <summary>
-    /// Represents the object used to persist job outputs.
+    /// Represents the job persister that retains the results of a job
+    /// in memory.
     /// </summary>
-    public interface IJobPersister
+    public class MemoryPersister : IJobPersister
     {
         /// <summary>
         /// Persits the output of a job.
@@ -21,7 +22,21 @@ namespace DIPS.Processor.Persistence
         /// complete job.</param>
         /// <param name="identifier">The identifier for the input provided
         /// by the client.</param>
-        void Persist( Guid jobID, Image output, object identifier );
+        public void Persist( Guid jobID, Image output, object identifier )
+        {
+            PersistedResult r = null;
+            if( identifier is string )
+            {
+                r = new PersistedResult( output, (string)identifier );
+            }
+            else
+            {
+                r = new PersistedResult( output, _sequence );
+            }
+
+            _sequence++;
+            _results.Add( r );
+        }
 
         /// <summary>
         /// Loads a particular object back from the storage this
@@ -34,7 +49,17 @@ namespace DIPS.Processor.Persistence
         /// <returns>The <see cref="PersistedResult"/> of the image represented
         /// by the identifier, or null if no image with the given identifier
         /// exists.</returns>
-        PersistedResult Load( Guid jobID, object identifier );
+        public PersistedResult Load( Guid jobID, object identifier )
+        {
+            if( _results.Any() )
+            {
+                return _results.First( x => identifier.Equals( x.RestoredIdentifier ) );
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         /// <summary>
         /// Loads all persisted results  from the storage this
@@ -44,6 +69,20 @@ namespace DIPS.Processor.Persistence
         /// resilts for.</param>
         /// <returns>A set of <see cref="PersistedResult"/>s from the job this
         /// <see cref="IJobPersister"/> has previously persisted.</returns>
-        IEnumerable<PersistedResult> Load( Guid jobID );
+        public IEnumerable<PersistedResult> Load( Guid jobID )
+        {
+            return _results;
+        }
+
+
+        /// <summary>
+        /// Contains the set of results from the job.
+        /// </summary>
+        private ICollection<PersistedResult> _results;
+
+        /// <summary>
+        /// Contains the numeric sequence identifier.
+        /// </summary>
+        private int _sequence;
     }
 }

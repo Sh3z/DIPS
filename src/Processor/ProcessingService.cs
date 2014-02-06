@@ -1,5 +1,6 @@
 ﻿using DIPS.Processor.Client;
 using DIPS.Processor.Executor;
+using DIPS.Processor.Persistence;
 using DIPS.Processor.Registry;
 using DIPS.Processor.XML;
 using DIPS.Processor.XML.Compilation;
@@ -59,7 +60,9 @@ namespace DIPS.Processor
         /// jobs within the client.</returns>
         public ISynchronousProcessor CreateSynchronousProcessor()
         {
-            return new SynchronousProcessor( new TicketWorker( _pluginFactory ) );
+            IJobPersister persister = new MemoryPersister();
+            IWorker worker = new TicketWorker( _pluginFactory, persister );
+            return new SynchronousProcessor( worker );
         }
 
         /// <summary>

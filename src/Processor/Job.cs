@@ -92,7 +92,7 @@ namespace DIPS.Processor
                 jobInput = plugin.Output ?? jobInput;
             }
 
-            _definition.Persister.Persist( jobInput, input.Identifier );
+            _definition.Persister.Persist( _definition.JobID, jobInput, input.Identifier );
         }
 
 

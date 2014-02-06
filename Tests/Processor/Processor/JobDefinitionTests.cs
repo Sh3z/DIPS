@@ -33,7 +33,7 @@ namespace DIPS.Tests.Processor
         [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestConstructor_NullProcesses()
         {
-            JobDefinition d = new JobDefinition( null, new DudPersister() );
+            JobDefinition d = new JobDefinition( Guid.Empty, null, new DudPersister() );
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace DIPS.Tests.Processor
         [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestConstructor_NullPersister()
         {
-            JobDefinition d = new JobDefinition( new AlgorithmPlugin[] { }, null );
+            JobDefinition d = new JobDefinition( Guid.Empty, new AlgorithmPlugin[] { }, null );
         }
 
         /// <summary>
@@ -54,8 +54,9 @@ namespace DIPS.Tests.Processor
         {
             IEnumerable<AlgorithmPlugin> plugins = new AlgorithmPlugin[] { };
             IJobPersister persister = new DudPersister();
-            JobDefinition d = new JobDefinition( plugins, persister );
+            JobDefinition d = new JobDefinition( Guid.Empty, plugins, persister );
 
+            Assert.AreEqual(Guid.Empty, d.JobID);
             Assert.AreEqual( plugins, d.Processes );
             Assert.AreEqual( persister, d.Persister );
             Assert.IsNotNull( d.Inputs );
@@ -65,18 +66,17 @@ namespace DIPS.Tests.Processor
 
         class DudPersister : IJobPersister
         {
-            public void Persist( Image output, object identifier )
+            public void Persist( Guid jobID, Image output, object identifier )
             {
                 throw new NotImplementedException();
             }
 
-
-            public PersistedResult Load( object identifier )
+            public PersistedResult Load( Guid jobID, object identifier )
             {
                 throw new NotImplementedException();
             }
 
-            public IEnumerable<PersistedResult> Load()
+            public IEnumerable<PersistedResult> Load( Guid jobID )
             {
                 throw new NotImplementedException();
             }

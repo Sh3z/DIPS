@@ -11,14 +11,20 @@ namespace DIPS.Processor.Executor
 {
     public class TicketWorker : IWorker
     {
-        public TicketWorker( IPluginFactory factory )
+        public TicketWorker( IPluginFactory factory, IJobPersister persister )
         {
             if( factory == null )
             {
                 throw new ArgumentNullException( "factory" );
             }
 
+            if( persister == null )
+            {
+                throw new ArgumentNullException( "persister" );
+            }
+
             _factory = factory;
+            _persister = persister;
         }
 
 
@@ -28,7 +34,7 @@ namespace DIPS.Processor.Executor
             ticket.OnJobStarted();
 
             JobBuilder builder = new JobBuilder( _factory );
-            builder.Persister = new FileSystemPersister( ticket, FileSystemPersister.OutputDataPath );
+            builder.Persister = _persister;
             builder.ApplyDefinition( ticket.Request.Job );
             if( builder.Build() )
             {
@@ -56,5 +62,6 @@ namespace DIPS.Processor.Executor
 
 
         private IPluginFactory _factory;
+        private IJobPersister _persister;
     }
 }

@@ -43,7 +43,7 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestConstructor_ValidDefinition()
         {
-            JobDefinition d = new JobDefinition( new AlgorithmPlugin[] { }, new DudPersister() );
+            JobDefinition d = new JobDefinition( Guid.Empty, new AlgorithmPlugin[] { }, new DudPersister() );
             Job j = new Job( d );
         }
 
@@ -55,7 +55,7 @@ namespace DIPS.Tests.Processor
         {
             JobInput i = new JobInput( Image.FromFile( "img.bmp" ) );
             DudPersister p = new DudPersister();
-            JobDefinition d = new JobDefinition(
+            JobDefinition d = new JobDefinition( Guid.Empty,
                 new AlgorithmPlugin[] { new GoodPlugin() }, p );
             d.Inputs.Add( i );
             Job j = new Job( d );
@@ -73,7 +73,7 @@ namespace DIPS.Tests.Processor
         public void TestRun_JobException()
         {
             JobInput i = new JobInput( Image.FromFile( "img.bmp" ) );
-            JobDefinition d = new JobDefinition(
+            JobDefinition d = new JobDefinition( Guid.Empty,
                 new AlgorithmPlugin[] { new BadPlugin() }, new DudPersister() );
             d.Inputs.Add( i );
             Job j = new Job( d );
@@ -93,18 +93,17 @@ namespace DIPS.Tests.Processor
                 private set;
             }
 
-            public void Persist( Image output, object identifier )
+            public void Persist( Guid jobID, Image output, object identifier )
             {
                 DidPersist = true;
             }
 
-
-            public PersistedResult Load( object identifier )
+            public PersistedResult Load( Guid jobID, object identifier )
             {
                 throw new NotImplementedException();
             }
 
-            public IEnumerable<PersistedResult> Load()
+            public IEnumerable<PersistedResult> Load( Guid jobID )
             {
                 throw new NotImplementedException();
             }

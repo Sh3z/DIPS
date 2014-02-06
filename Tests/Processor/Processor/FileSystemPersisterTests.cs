@@ -75,23 +75,13 @@ namespace DIPS.Tests.Processor
 
 
         /// <summary>
-        /// Tests constructing the persister with a null ticket
-        /// </summary>
-        [TestMethod]
-        [ExpectedException( typeof( ArgumentNullException ) )]
-        public void TestConstructor_NullTicket()
-        {
-            FileSystemPersister persister = new FileSystemPersister( null, FileSystemPersister.OutputDataPath );
-        }
-
-        /// <summary>
         /// Tests constructing the persister with a null target path.
         /// </summary>
         [TestMethod]
         [ExpectedException( typeof( ArgumentException ) )]
         public void TestConstructor_NullPath()
         {
-            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, null );
+            FileSystemPersister persister = new FileSystemPersister( null );
         }
 
         /// <summary>
@@ -101,7 +91,7 @@ namespace DIPS.Tests.Processor
         [ExpectedException( typeof( ArgumentException ) )]
         public void TestConstructor_EmptyPath()
         {
-            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, string.Empty );
+            FileSystemPersister persister = new FileSystemPersister( string.Empty );
         }
 
         /// <summary>
@@ -110,10 +100,10 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestPersist_NoIdentifier()
         {
-            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
             Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
             object identifier = null;
-            persister.Persist( toPersist, identifier );
+            persister.Persist( CurrentTicket.JobID, toPersist, identifier );
 
             // File should be called 0.png
             string path = string.Format( @"{0}/{{{1}}}/0.png", CurrentDirectory, CurrentTicket.JobID );
@@ -121,7 +111,7 @@ namespace DIPS.Tests.Processor
             Assert.IsTrue( fileExists );
 
             // Persist again, should be 1.png
-            persister.Persist( toPersist, identifier );
+            persister.Persist( CurrentTicket.JobID, toPersist, identifier );
 
             path = string.Format( @"{0}/{{{1}}}/1.png", CurrentDirectory, CurrentTicket.JobID );
             fileExists = File.Exists( path );
@@ -135,9 +125,9 @@ namespace DIPS.Tests.Processor
         public void TestPersist_WithIdentifier()
         {
             string id = "test";
-            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
             Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
-            persister.Persist( toPersist, id );
+            persister.Persist( CurrentTicket.JobID, toPersist, id );
 
             // File should be called output_0.png
             string path = string.Format( @"{0}/{{{1}}}/{2}.png", CurrentDirectory, CurrentTicket.JobID, id );
@@ -151,8 +141,8 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestLoadAll_EmptyDirectory()
         {
-            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
-            var results = persister.Load();
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
+            var results = persister.Load( CurrentTicket.JobID );
 
             Assert.IsNotNull( results );
             Assert.IsFalse( results.Any() );
@@ -165,10 +155,10 @@ namespace DIPS.Tests.Processor
         public void TestLoadAll_OneResult()
         {
             string id = "test";
-            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
             Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
-            persister.Persist( toPersist, id );
-            var results = persister.Load();
+            persister.Persist( CurrentTicket.JobID, toPersist, id );
+            var results = persister.Load( CurrentTicket.JobID );
 
             Assert.IsTrue( results.Any() );
             Assert.AreEqual( 1, results.Count() );
@@ -183,8 +173,8 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestLoadByID_NoFiles()
         {
-            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
-            var result = persister.Load( "test" );
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
+            var result = persister.Load( CurrentTicket.JobID, "test" );
 
             Assert.IsNull( result );
         }
@@ -196,10 +186,10 @@ namespace DIPS.Tests.Processor
         public void TestLoadByID_OneFileMismatchingID()
         {
             string id = "test";
-            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
             Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
-            persister.Persist( toPersist, id );
-            var result = persister.Load( "unknown" );
+            persister.Persist( CurrentTicket.JobID, toPersist, id );
+            var result = persister.Load( CurrentTicket.JobID, "unknown" );
 
             Assert.IsNull( result );
         }
@@ -211,10 +201,10 @@ namespace DIPS.Tests.Processor
         public void TestLoadByID_OneFileMatchingID()
         {
             string id = "test";
-            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
             Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
-            persister.Persist( toPersist, id );
-            var result = persister.Load( id );
+            persister.Persist( CurrentTicket.JobID, toPersist, id );
+            var result = persister.Load( CurrentTicket.JobID, id );
 
             Assert.IsNotNull( result );
             Assert.AreEqual( id, result.RestoredIdentifier );
