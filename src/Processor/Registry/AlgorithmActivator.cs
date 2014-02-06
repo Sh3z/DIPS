@@ -70,19 +70,20 @@ namespace DIPS.Processor.Registry
         /// to restore back into an object.</param>
         /// <returns>The <see cref="AlgorithmPlugin"/> represented by the
         /// <see cref="AlgorithmDefinition"/>.</returns>
-        /// <exception cref="ArgumentException">the provided definition cannot
+        /// <exception cref="ActivationException">the provided definition cannot
         /// be converted back into an object.</exception>
         public AlgorithmPlugin Activate( AlgorithmDefinition definition )
         {
             if( CanActivate( definition ) == false )
             {
-                throw new ArgumentException( "Cannot activate provided definition." );
+                throw new ActivationException( "Cannot activate provided definition." );
             }
 
             Type type = _registrar.FetchType( definition.AlgorithmName );
             AlgorithmPlugin plugin = Activator.CreateInstance( type ) as AlgorithmPlugin;
 
             _reflectiveSetProperties( definition, type, plugin );
+            _interpreterExecution( definition, plugin );
 
             return plugin;
         }
@@ -115,6 +116,27 @@ namespace DIPS.Processor.Registry
                 if( p != null && property.PropertyType == p.Type )
                 {
                     property.SetValue( plugin, p.Value );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the plugin requests to set its properties through
+        /// interpretation
+        /// </summary>
+        /// <param name="definition">The definition containing the property values</param>
+        /// <param name="plugin">The plugin instance to set the values against</param>
+        private void _interpreterExecution( AlgorithmDefinition definition, AlgorithmPlugin plugin )
+        {
+            if( plugin is IPropertyInterpreter )
+            {
+                try
+                {
+                    ( plugin as IPropertyInterpreter ).Interpret( definition.Properties );
+                }
+                catch( Exception e )
+                {
+                    throw new ActivationException( e.Message, e );
                 }
             }
         }

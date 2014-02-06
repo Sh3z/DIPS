@@ -97,7 +97,7 @@ namespace DIPS.Tests.Processor.Registry
         /// Tests activating a null plugin.
         /// </summary>
         [TestMethod]
-        [ExpectedException( typeof( ArgumentException ) )]
+        [ExpectedException( typeof( ActivationException ) )]
         public void TestActivate_NullDefinition()
         {
             AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
@@ -177,6 +177,38 @@ namespace DIPS.Tests.Processor.Registry
             Assert.AreEqual( value, t.Test );
         }
 
+        /// <summary>
+        /// Tests activating a plugin that uses the interpreter.
+        /// </summary>
+        [TestMethod]
+        public void TestActivate_Interpreter_NoException()
+        {
+            AlgorithmActivator activator = new AlgorithmActivator( new InterpreterRegistrar() );
+            AlgorithmDefinition d = new AlgorithmDefinition( "Test",
+                new Property[] { new Property( "Test", typeof( double ) ) } );
+            AlgorithmPlugin p = activator.Activate( d );
+
+            Assert.IsNotNull( p );
+            Assert.AreEqual( typeof( TestPluginInterpreter ), p.GetType() );
+
+            TestPluginInterpreter t = p as TestPluginInterpreter;
+            Assert.IsTrue( t.DidInterpret );
+        }
+
+        /// <summary>
+        /// Tests activating a plugin that uses an interpreter, that throws
+        /// an exception.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ActivationException ) )]
+        public void TestActivate_Interpreter_Exception()
+        {
+            AlgorithmActivator activator = new AlgorithmActivator( new InterpreterRegistrar() );
+            AlgorithmDefinition d = new AlgorithmDefinition( "Test",
+                new Property[] { new Property( "throw", typeof( double ) ) } );
+            AlgorithmPlugin p = activator.Activate( d );
+        }
+
 
         class TestPlugin : AlgorithmPlugin
         {
@@ -207,6 +239,51 @@ namespace DIPS.Tests.Processor.Registry
             public override void Run()
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        class TestPluginInterpreter : AlgorithmPlugin, IPropertyInterpreter
+        {
+            public bool DidInterpret
+            {
+                get;
+                private set;
+            }
+
+            public override void Run()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Interpret( PropertySet properties )
+            {
+                if( properties.Contains( "throw" ) )
+                {
+                    throw new Exception();
+                }
+                else
+                {
+                    DidInterpret = true;
+                }
+            }
+        }
+
+        class InterpreterRegistrar : IAlgorithmRegistrar
+        {
+
+            public IEnumerable<AlgorithmDefinition> KnownAlgorithms
+            {
+                get { return new[] { new AlgorithmDefinition( "Interpreter", new Property[] { } ) }; }
+            }
+
+            public bool KnowsAlgorithm( string algorithmName )
+            {
+                return true;
+            }
+
+            public Type FetchType( string algorithmName )
+            {
+                return typeof( TestPluginInterpreter );
             }
         }
 
