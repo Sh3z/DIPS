@@ -41,13 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm.cs" />
     <Compile Include="AlgorithmDefinition.cs" />
     <Compile Include="IAlgorithmStep.cs" />
-    <Compile Include="IImageSource.cs" />
     <Compile Include="IJobTicket.cs" />
-    <Compile Include="Imaging\IImageProcess.cs" />
-    <Compile Include="Imaging\ImageProcessingStep.cs" />
     <Compile Include="IProcessingService.cs" />
     <Compile Include="ISynchronousProcessor.cs" />
     <Compile Include="JobDeployment\IJobDefinition.cs" />

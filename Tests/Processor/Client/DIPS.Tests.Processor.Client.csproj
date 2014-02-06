@@ -52,8 +52,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AlgorithmDefinitionTests.cs" />
-    <Compile Include="AlgorithmTests.cs" />
-    <Compile Include="JobRequestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyBuilderTests.cs" />
     <Compile Include="PropertyTests.cs" />

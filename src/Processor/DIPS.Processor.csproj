@@ -48,7 +48,6 @@
     <Compile Include="IRequestHandler.cs" />
     <Compile Include="ITicketCancellationHandler.cs" />
     <Compile Include="JobTicket.cs" />
-    <Compile Include="ProcessingJob.cs" />
     <Compile Include="ProcessingService.cs" />
     <Compile Include="ProcessInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
