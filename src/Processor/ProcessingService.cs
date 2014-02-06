@@ -98,7 +98,7 @@ namespace DIPS.Processor
         private void _createAlgorithmXml()
         {
             XmlBuilder builder = new XmlBuilder( new DefinitionBuilderProcess() );
-            foreach( var algorithm in RegistryCache.Cache.GetLoadedPlugins() )
+            foreach( var algorithm in RegistryCache.Cache.KnownAlgorithms )
             {
                 builder.Algorithms.Add( algorithm );
             }

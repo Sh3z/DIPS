@@ -15,7 +15,7 @@ namespace DIPS.Processor.Registry
     /// Provides access to the information within the DIPS registry. This class
     /// cannot be inherited.
     /// </summary>
-    public sealed class RegistryCache
+    public sealed class RegistryCache : IAlgorithmRegistrar
     {
         /// <summary>
         /// Static initializer.
@@ -71,49 +71,49 @@ namespace DIPS.Processor.Registry
         }
 
         /// <summary>
-        /// Gets an enumerable set of the loaded plugins.
+        /// Gets a set of the known algorithms, exposed by identifier and
+        /// properties.
         /// </summary>
-        /// <returns>An enumerable set of <see cref="AlgorithmDefinition"/>s
-        /// representing the loaded plugins.</returns>
-        public IEnumerable<AlgorithmDefinition> GetLoadedPlugins()
+        public IEnumerable<AlgorithmDefinition> KnownAlgorithms
         {
-            return _pluginCache.Keys;
+            get
+            {
+                return _pluginCache.Keys;
+            }
         }
 
         /// <summary>
-        /// Resolves the true <see cref="Type"/> of the algorithm represented
-        /// by the provided <see cref="AlgorithmDefinition"/> instance.
+        /// Resolves the <see cref="Type"/> of the algorithm with the given
+        /// identifier.
         /// </summary>
-        /// <param name="definition">The cached <see cref="AlgorithmDefinition"/>
-        /// object.</param>
-        /// <returns>The real <see cref="Type"/> of the plugin represented by the
-        /// <see cref="AlgorithmDefinition"/>, or null if one cannot be found.</returns>
-        public Type ResolveType( AlgorithmDefinition definition )
+        /// <param name="algorithmName">The identifier of the algorithm to resolv
+        /// the type for.</param>
+        /// <returns>The <see cref="Type"/> of the algorithm represented by the given
+        /// identifier; null if no algorithm is associated with the given
+        /// identifier.</returns>
+        public Type FetchType( string algorithmName )
         {
             Type output = null;
 
-            if( definition != null )
+            var match = _pluginCache.Keys
+                    .FirstOrDefault( x => x.AlgorithmName == algorithmName );
+            if( match != null )
             {
-                var match = _pluginCache.Keys
-                    .FirstOrDefault( x => x.AlgorithmName == definition.AlgorithmName );
-                if( match != null )
-                {
-                    output = _pluginCache[match];
-                }
+                output = _pluginCache[match];
             }
             
             return output;
         }
 
         /// <summary>
-        /// Determines whether a named algorithm has been loaded into the
-        /// cache.
+        /// Determines whether this <see cref="IAlgorithmRegistrar"/> is aware
+        /// of an algorithm with the provided identifier.
         /// </summary>
-        /// <param name="algorithmName">The name of the algorithm to determine
-        /// has been cached.</param>
-        /// <returns><c>true</c> if an algorithm with the given name has been
-        /// cached; otherwise, <c>false</c>.</returns>
-        public bool HasCachedAlgorithm( string algorithmName )
+        /// <param name="algorithmName">The identifier of the algorithm.</param>
+        /// <returns><c>true</c> if this <see cref="IAlgorithmRegistrar"/> is aware
+        /// of the algorithm with the given identifier; <c>false</c>
+        /// otherwise.</returns>
+        public bool KnowsAlgorithm( string algorithmName )
         {
             if( _pluginCache.Any() == false )
             {

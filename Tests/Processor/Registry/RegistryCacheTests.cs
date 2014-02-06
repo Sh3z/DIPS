@@ -33,7 +33,7 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestLoadCache()
         {
-            var loadedPlugins = RegistryCache.Cache.GetLoadedPlugins();
+            var loadedPlugins = RegistryCache.Cache.KnownAlgorithms;
 
             Assert.IsTrue( loadedPlugins.Count() > 0 );
 
@@ -47,7 +47,7 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestResolveType_NullDefinition()
         {
-            Type type = RegistryCache.Cache.ResolveType( null );
+            Type type = RegistryCache.Cache.FetchType( null );
 
             Assert.IsNull( type );
         }
@@ -58,8 +58,8 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestResolveType_ValidDefinition()
         {
-            AlgorithmDefinition d = RegistryCache.Cache.GetLoadedPlugins().FirstOrDefault( x => x.AlgorithmName.ToLower() == "gamma" );
-            Type type = RegistryCache.Cache.ResolveType( d );
+            AlgorithmDefinition d = RegistryCache.Cache.KnownAlgorithms.FirstOrDefault( x => x.AlgorithmName.ToLower() == "gamma" );
+            Type type = RegistryCache.Cache.FetchType( d.AlgorithmName );
 
             Assert.IsNotNull( type );
 
@@ -74,7 +74,7 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestHasCachedAlgorithm_UnknownName()
         {
-            bool cached = RegistryCache.Cache.HasCachedAlgorithm( "unknown" );
+            bool cached = RegistryCache.Cache.KnowsAlgorithm( "unknown" );
             Assert.IsFalse( cached );
         }
 
@@ -85,7 +85,7 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestHasCachedAlgorithm_KnownName()
         {
-            bool cached = RegistryCache.Cache.HasCachedAlgorithm( "gamma" );
+            bool cached = RegistryCache.Cache.KnowsAlgorithm( "gamma" );
             Assert.IsTrue( cached );
         }
     }

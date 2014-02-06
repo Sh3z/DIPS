@@ -30,13 +30,13 @@ namespace DIPS.Processor.Registry
             }
 
             if( RegistryCache.Cache
-                .HasCachedAlgorithm( definition.AlgorithmName ) == false )
+                .KnowsAlgorithm( definition.AlgorithmName ) == false )
             {
                 return false;
             }
 
             // We need a parameterless constructor.
-            Type type = RegistryCache.Cache.ResolveType( definition );
+            Type type = RegistryCache.Cache.FetchType( definition.AlgorithmName );
             if( type.GetConstructor( Type.EmptyTypes ) == null )
             {
                 return false;
@@ -52,7 +52,7 @@ namespace DIPS.Processor.Registry
                 throw new ArgumentException( "Cannot activate provided definition." );
             }
 
-            Type type = RegistryCache.Cache.ResolveType( definition );
+            Type type = RegistryCache.Cache.FetchType( definition.AlgorithmName );
             AlgorithmPlugin plugin = Activator.CreateInstance( type ) as AlgorithmPlugin;
 
             // Use Linq to quickly grab all attributed properties.
