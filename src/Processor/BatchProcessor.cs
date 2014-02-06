@@ -11,10 +11,10 @@ namespace DIPS.Processor
 {
     public class BatchProcessor
     {
-        public BatchProcessor()
+        public BatchProcessor( IPluginFactory factory )
         {
             _queue = new JobQueue();
-            _executor = new QueueExecutor( _queue, new TicketWorker() );
+            _executor = new QueueExecutor( _queue, new TicketWorker( factory ) );
         }
 
         public bool IsProcessing
@@ -49,12 +49,6 @@ namespace DIPS.Processor
         public void StopProcessing()
         {
             _executor.Stop();
-        }
-
-        public Task<JobResult> Process( JobRequest req )
-        {
-            JobTicket ticket = new JobTicket( req, _queue );
-            return _executor.ProcessSync( ticket );
         }
 
         private JobQueue _queue;

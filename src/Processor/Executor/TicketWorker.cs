@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,37 +9,52 @@ using System.Threading.Tasks;
 
 namespace DIPS.Processor.Executor
 {
-    class TicketWorker : IWorker
+    public class TicketWorker : IWorker
     {
+        public TicketWorker( IPluginFactory factory )
+        {
+            if( factory == null )
+            {
+                throw new ArgumentNullException( "factory" );
+            }
+
+            _factory = factory;
+        }
+
+
         public void Work( IJobTicket req )
         {
             JobTicket ticket = req as JobTicket;
             ticket.OnJobStarted();
 
-            //Dictionary<IImageSource, Bitmap> results = new Dictionary<IImageSource, Bitmap>();
-            foreach( var imgSource in req.Request.Job.GetInputs() )
+            JobBuilder builder = new JobBuilder( _factory );
+            builder.Persister = new FileSystemPersister( ticket, FileSystemPersister.OutputDataPath );
+            builder.ApplyDefinition( ticket.Request.Job );
+            if( builder.Build() )
             {
-                //Bitmap result = execute_image( req.Request, imgSource );
-                //results.Add( imgSource, result );
+                _runJob( builder.Job, ticket );
             }
-
-            //ticket.Result = new JobResult( req.Result.Algorithm, results );
-            ticket.OnJobCompleted();
+            else
+            {
+                ticket.OnJobError();
+            }
         }
 
-        //private Bitmap execute_image( JobRequest req, IImageSource imgSource )
-        //{
-        //    Bitmap original = imgSource.Image;
-        //    Bitmap current = original.Clone() as Bitmap;
-        //    List<IAlgorithmStep> previous = new List<IAlgorithmStep>();
-        //    //foreach( var algorithmStep in req.Algorithm )
-        //    //{
-        //    //    JobState state = new JobState( new List<IAlgorithmStep>( previous ), original, current );
-        //    //    algorithmStep.Run( state );
-        //    //    current = state.ProcessedBitmap ?? current;
-        //    //}
 
-        //    return current;
-        //}
+        private void _runJob( Job job, JobTicket ticket )
+        {
+            if( job.Run() )
+            {
+                ticket.OnJobCompleted();
+            }
+            else
+            {
+                //Exception err = job.Exception;
+                ticket.OnJobError();
+            }
+        }
+
+
+        private IPluginFactory _factory;
     }
 }
