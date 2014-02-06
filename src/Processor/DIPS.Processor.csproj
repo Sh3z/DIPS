@@ -43,6 +43,7 @@
     <Compile Include="BatchProcessor.cs" />
     <Compile Include="Executor\TicketWorker.cs" />
     <Compile Include="Executor\QueueExecutor.cs" />
+    <Compile Include="JobBuilder.cs" />
     <Compile Include="JobDefinition.cs" />
     <Compile Include="Persistence\FileSystemPersister.cs" />
     <Compile Include="Persistence\IJobPersister.cs" />

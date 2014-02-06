@@ -52,6 +52,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FileSystemPersisterTests.cs" />
+    <Compile Include="JobBuilderTests.cs" />
     <Compile Include="JobDefinitionTests.cs" />
     <Compile Include="JobQueueTests.cs" />
     <Compile Include="JobTests.cs" />
