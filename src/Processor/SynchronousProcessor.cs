@@ -17,9 +17,9 @@ namespace DIPS.Processor
         /// Initializes a new instance of the <see cref="SynchronousProcessor"/>
         /// class.
         /// </summary>
-        /// <param name="handler">The <see cref="IRequestHandler"/> to execute
+        /// <param name="handler">The <see cref="IWorker"/> to execute
         /// jobs against.</param>
-        public SynchronousProcessor( IRequestHandler handler )
+        public SynchronousProcessor( IWorker handler )
         {
             if( handler == null )
             {
@@ -60,6 +60,6 @@ namespace DIPS.Processor
         /// <summary>
         /// Contains the object used to execute the job.
         /// </summary>
-        private IRequestHandler _worker;
+        private IWorker _worker;
     }
 }

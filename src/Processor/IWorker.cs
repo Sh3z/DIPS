@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DIPS.Processor
 {
-    public interface IRequestHandler
+    public interface IWorker
     {
         void RunJob( IJobTicket job );
     }

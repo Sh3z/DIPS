@@ -83,7 +83,7 @@ namespace DIPS.Tests.Processor
         }
     }
 
-    class WorkerImpl : IRequestHandler
+    class WorkerImpl : IWorker
     {
         public WorkerImpl()
         {

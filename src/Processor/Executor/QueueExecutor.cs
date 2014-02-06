@@ -10,7 +10,7 @@ namespace DIPS.Processor.Executor
 {
     public class QueueExecutor
     {
-        public QueueExecutor( IJobQueue queue, IRequestHandler worker )
+        public QueueExecutor( IJobQueue queue, IWorker worker )
         {
             if( queue == null )
             {
@@ -139,7 +139,7 @@ namespace DIPS.Processor.Executor
 
 
         private IJobQueue _queue;
-        private IRequestHandler _worker;
+        private IWorker _worker;
         private Thread _jobThread;
         private bool _stop;
     }
