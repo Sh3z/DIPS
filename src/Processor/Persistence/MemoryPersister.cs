@@ -14,6 +14,16 @@ namespace DIPS.Processor.Persistence
     public class MemoryPersister : IJobPersister
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryPersister"/>
+        /// class.
+        /// </summary>
+        public MemoryPersister()
+        {
+            _resultsMap = new Dictionary<Guid, ICollection<PersistedResult>>();
+        }
+
+
+        /// <summary>
         /// Persits the output of a job.
         /// </summary>
         /// <param name="jobID">The unique identifier of the job to save
@@ -35,7 +45,7 @@ namespace DIPS.Processor.Persistence
             }
 
             _sequence++;
-            _results.Add( r );
+            _storeResult( jobID, r );
         }
 
         /// <summary>
@@ -43,7 +53,7 @@ namespace DIPS.Processor.Persistence
         /// <see cref="IJobPersister"/> is maintaining a connection to.
         /// </summary>
         /// <param name="jobID">The unique identifier of the job to load the
-        /// resilts for.</param>
+        /// results for.</param>
         /// <param name="identifier">The identifier of the particular
         /// image to reload.</param>
         /// <returns>The <see cref="PersistedResult"/> of the image represented
@@ -51,9 +61,10 @@ namespace DIPS.Processor.Persistence
         /// exists.</returns>
         public PersistedResult Load( Guid jobID, object identifier )
         {
-            if( _results.Any() )
+            var jobResults = Load( jobID );
+            if( _resultsMap.Any() )
             {
-                return _results.First( x => identifier.Equals( x.Identifier ) );
+                return jobResults.FirstOrDefault( x => identifier.Equals( x.Identifier ) );
             }
             else
             {
@@ -71,14 +82,43 @@ namespace DIPS.Processor.Persistence
         /// <see cref="IJobPersister"/> has previously persisted.</returns>
         public IEnumerable<PersistedResult> Load( Guid jobID )
         {
-            return _results;
+            if( _resultsMap.ContainsKey( jobID ) )
+            {
+                return _resultsMap[jobID];
+            }
+            else
+            {
+                return new List<PersistedResult>();
+            }
         }
 
 
         /// <summary>
-        /// Contains the set of results from the job.
+        /// Saves the result to the provided job.
         /// </summary>
-        private ICollection<PersistedResult> _results;
+        /// <param name="job">The job associated with the result.</param>
+        /// <param name="result">The result to save</param>
+        private void _storeResult( Guid job, PersistedResult result )
+        {
+            ICollection<PersistedResult> results = null;
+            _resultsMap.TryGetValue( job, out results );
+            if( results != null )
+            {
+                results.Add( result );
+            }
+            else
+            {
+                results = new List<PersistedResult>();
+                results.Add( result );
+                _resultsMap.Add( job, results );
+            }
+        }
+
+
+        /// <summary>
+        /// Contains the job id to results mapping.
+        /// </summary>
+        private IDictionary<Guid, ICollection<PersistedResult>> _resultsMap;
 
         /// <summary>
         /// Contains the numeric sequence identifier.

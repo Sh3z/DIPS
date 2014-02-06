@@ -57,6 +57,7 @@
     <Compile Include="JobQueueTests.cs" />
     <Compile Include="JobTests.cs" />
     <Compile Include="JobTicketTests.cs" />
+    <Compile Include="MemoryPersisterTests.cs" />
     <Compile Include="PersistedResultTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueExecutorTests.cs" />
