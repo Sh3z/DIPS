@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmDefinition.cs" />
-    <Compile Include="IAlgorithmStep.cs" />
     <Compile Include="IJobTicket.cs" />
     <Compile Include="IProcessedImage.cs" />
     <Compile Include="IProcessingService.cs" />
@@ -53,7 +52,6 @@
     <Compile Include="JobDeployment\ObjectJobDefinition.cs" />
     <Compile Include="JobDeployment\XmlJobDefinition.cs" />
     <Compile Include="JobResult.cs" />
-    <Compile Include="JobState.cs" />
     <Compile Include="ProcessedImageIdentifierComparer.cs" />
     <Compile Include="ProcessedImageSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
