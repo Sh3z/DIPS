@@ -171,13 +171,7 @@ namespace DIPS.Processor.Persistence
         {
             try
             {
-                Image img = null;
-                using( Stream stream = File.Open( fileName, FileMode.Open ) )
-                {
-                    img = Image.FromStream(stream);
-                    img = new Bitmap(img);
-                }
-                
+                Image img = _loadImage( fileName );
                 string id = Path.GetFileNameWithoutExtension( fileName );
                 int idAsInt = 0;
                 bool parsed = int.TryParse( id, out idAsInt );
@@ -196,6 +190,19 @@ namespace DIPS.Processor.Persistence
             }
         }
 
+        /// <summary>
+        /// Loads the Image from the file
+        /// </summary>
+        /// <param name="path">The path to the file containing the image</param>
+        /// <returns>The Image object represented by the file</returns>
+        private Image _loadImage( string path )
+        {
+            using( Stream stream = File.Open( path, FileMode.Open ) )
+            {
+                Image tmp = Image.FromStream( stream );
+                return new Bitmap( tmp );
+            }
+        }
 
         /// <summary>
         /// Resolves the full path to save the image to.
