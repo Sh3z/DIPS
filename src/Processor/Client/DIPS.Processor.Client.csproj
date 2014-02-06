@@ -52,6 +52,7 @@
     <Compile Include="JobDeployment\ObjectJobDefinition.cs" />
     <Compile Include="JobDeployment\XmlJobDefinition.cs" />
     <Compile Include="JobResult.cs" />
+    <Compile Include="JobState.cs" />
     <Compile Include="ProcessedImageIdentifierComparer.cs" />
     <Compile Include="ProcessedImageSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
