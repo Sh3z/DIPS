@@ -43,10 +43,13 @@
     <Compile Include="BatchProcessor.cs" />
     <Compile Include="Executor\JobWorker.cs" />
     <Compile Include="Executor\QueueExecutor.cs" />
+    <Compile Include="JobDefinition.cs" />
+    <Compile Include="Persistence\IJobPersister.cs" />
     <Compile Include="IJobQueue.cs" />
     <Compile Include="IPluginFactory.cs" />
     <Compile Include="IWorker.cs" />
     <Compile Include="ITicketCancellationHandler.cs" />
+    <Compile Include="Job.cs" />
     <Compile Include="JobTicket.cs" />
     <Compile Include="ProcessingService.cs" />
     <Compile Include="ProcessInput.cs" />
