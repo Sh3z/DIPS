@@ -3,6 +3,7 @@ using DIPS.Processor.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -81,6 +82,20 @@ namespace DIPS.Processor.Registry
             Type type = _registrar.FetchType( definition.AlgorithmName );
             AlgorithmPlugin plugin = Activator.CreateInstance( type ) as AlgorithmPlugin;
 
+            _reflectiveSetProperties( definition, type, plugin );
+
+            return plugin;
+        }
+
+
+        /// <summary>
+        /// Sets the values of all annotated properties using reflection.
+        /// </summary>
+        /// <param name="definition">The algorithm definition containing the properties.</param>
+        /// <param name="type">The underlying Type object of the plugin</param>
+        /// <param name="plugin">The instance of the plugin to set the values against</param>
+        private void _reflectiveSetProperties( AlgorithmDefinition definition, Type type, AlgorithmPlugin plugin )
+        {
             // Use Linq to quickly grab all attributed properties.
             var attributedProperties =
                 from p in type.GetProperties()
@@ -91,19 +106,17 @@ namespace DIPS.Processor.Registry
                     Property = p,
                     DefinedName = attr.VariableIdentifier
                 };
+
             foreach( var attributedProperty in attributedProperties )
             {
-                Property p = definition.Properties.FirstOrDefault( x => x.Name == attributedProperty.DefinedName );
-                if( p != null )
+                PropertyInfo property = attributedProperty.Property;
+                Property p = definition.Properties
+                    .FirstOrDefault( x => x.Name == attributedProperty.DefinedName );
+                if( p != null && property.PropertyType == p.Type )
                 {
-                    if( attributedProperty.Property.PropertyType == p.Type )
-                    {
-                        attributedProperty.Property.SetValue( plugin, p.Value );
-                    }
+                    property.SetValue( plugin, p.Value );
                 }
             }
-
-            return plugin;
         }
 
 
