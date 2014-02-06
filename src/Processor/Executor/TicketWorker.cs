@@ -42,6 +42,8 @@ namespace DIPS.Processor.Executor
             }
             else
             {
+                Exception err = new Exception( "Error constructing job from definition." );
+                ticket.Result = new JobResult( err );
                 ticket.OnJobError();
             }
         }
@@ -51,11 +53,14 @@ namespace DIPS.Processor.Executor
         {
             if( job.Run() )
             {
+                IEnumerable<PersistedResult> results = _persister.Load( ticket.JobID );
+                ticket.Result = new JobResult( results );
                 ticket.OnJobCompleted();
             }
             else
             {
-                //Exception err = job.Exception;
+                Exception err = job.Exception;
+                ticket.Result = new JobResult( err );
                 ticket.OnJobError();
             }
         }

@@ -8,6 +8,7 @@ using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Processor.Plugin;
 using DIPS.Processor.Persistence;
+using System.Drawing;
 
 namespace DIPS.Tests.Processor
 {
@@ -69,6 +70,9 @@ namespace DIPS.Tests.Processor
 
             Assert.IsTrue( didError );
             Assert.IsFalse( didFinish );
+
+            JobResult result = ticket.Result;
+            Assert.AreEqual( JobState.Error, result.Result );
         }
 
         /// <summary>
@@ -78,11 +82,11 @@ namespace DIPS.Tests.Processor
         public void TestWork_PluginException()
         {
             ObjectJobDefinition d = new ObjectJobDefinition(
-                new [] { new AlgorithmDefinition( "Test", new Property[] {} ) },
-                new JobInput[] { } );
+                new[] { new AlgorithmDefinition( "Test", new Property[] { } ) },
+                new[] { new JobInput( Image.FromFile( "img.bmp" ) ) } );
             JobRequest r = new JobRequest( d );
             JobTicket ticket = new JobTicket( r, new DudCancellationHandler() );
-            TicketWorker w = new TicketWorker( new RegistryFactory(), new DudPersister() );
+            TicketWorker w = new TicketWorker( new DudPluginFactory(), new DudPersister() );
 
             bool didError = false;
             bool didFinish = false;
@@ -92,6 +96,10 @@ namespace DIPS.Tests.Processor
 
             Assert.IsTrue( didError );
             Assert.IsFalse( didFinish );
+
+            JobResult result = ticket.Result;
+            Assert.AreEqual( JobState.Error, result.Result );
+            Assert.AreEqual( typeof( NotImplementedException ), result.Exception.GetType() );
         }
 
 
