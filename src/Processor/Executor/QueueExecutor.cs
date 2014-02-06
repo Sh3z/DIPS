@@ -71,19 +71,6 @@ namespace DIPS.Processor.Executor
             }
         }
 
-        public Task<JobResult> ProcessSync( IJobTicket toProcess )
-        {
-            Func<object, JobResult> function = new Func<object, JobResult>( process_sync );
-            return Task<JobResult>.Factory.StartNew( function, toProcess );
-        }
-
-        private JobResult process_sync( object ticket )
-        {
-            IJobTicket theTicket = ticket as IJobTicket;
-            _worker.Work( theTicket );
-            return theTicket.Result;
-        }
-
 
         private void job_added( object sender, EventArgs e )
         {

@@ -24,7 +24,8 @@ namespace DIPS.Processor
         /// </summary>
         public ProcessingService()
         {
-            _processor = new BatchProcessor();
+            _pluginFactory = new RegistryFactory();
+            _processor = new BatchProcessor( _pluginFactory );
         }
 
 
@@ -58,7 +59,7 @@ namespace DIPS.Processor
         /// jobs within the client.</returns>
         public ISynchronousProcessor CreateSynchronousProcessor()
         {
-            return new SynchronousProcessor( new TicketWorker() );
+            return new SynchronousProcessor( new TicketWorker( _pluginFactory ) );
         }
 
         /// <summary>
@@ -112,5 +113,7 @@ namespace DIPS.Processor
         /// Contains the underlying processing module.
         /// </summary>
         private BatchProcessor _processor;
+
+        private IPluginFactory _pluginFactory;
     }
 }
