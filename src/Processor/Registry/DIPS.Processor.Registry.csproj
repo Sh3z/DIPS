@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivationException.cs" />
     <Compile Include="AlgorithmActivator.cs" />
     <Compile Include="IAlgorithmRegistrar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
