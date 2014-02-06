@@ -89,8 +89,8 @@ namespace DIPS.Tests.Processor
             Image img = Image.FromFile( "img.bmp" );
             PersistedResult r = new PersistedResult( img, id );
 
-            Assert.AreEqual( id, r.RestoredIdentifier );
-            Assert.AreEqual( img, r.Image );
+            Assert.AreEqual( id, r.Identifier );
+            Assert.AreEqual( img, r.Output );
             Assert.IsFalse( r.PersisterGeneratedIdentifier );
         }
 
@@ -104,8 +104,8 @@ namespace DIPS.Tests.Processor
             Image img = Image.FromFile( "img.bmp" );
             PersistedResult r = new PersistedResult( img, id );
 
-            Assert.AreEqual( id, int.Parse( r.RestoredIdentifier ) );
-            Assert.AreEqual( img, r.Image );
+            Assert.AreEqual( id, int.Parse( r.Identifier ) );
+            Assert.AreEqual( img, r.Output );
             Assert.IsTrue( r.PersisterGeneratedIdentifier );
         }
     }

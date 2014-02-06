@@ -164,7 +164,7 @@ namespace DIPS.Tests.Processor
             Assert.AreEqual( 1, results.Count() );
 
             PersistedResult r = results.First();
-            Assert.AreEqual( id, r.RestoredIdentifier );
+            Assert.AreEqual( id, r.Identifier );
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace DIPS.Tests.Processor
             var result = persister.Load( CurrentTicket.JobID, id );
 
             Assert.IsNotNull( result );
-            Assert.AreEqual( id, result.RestoredIdentifier );
+            Assert.AreEqual( id, result.Identifier );
         }
 
 

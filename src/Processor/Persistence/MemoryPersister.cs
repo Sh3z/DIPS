@@ -53,7 +53,7 @@ namespace DIPS.Processor.Persistence
         {
             if( _results.Any() )
             {
-                return _results.First( x => identifier.Equals( x.RestoredIdentifier ) );
+                return _results.First( x => identifier.Equals( x.Identifier ) );
             }
             else
             {

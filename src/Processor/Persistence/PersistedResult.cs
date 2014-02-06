@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DIPS.Processor.Client;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,13 +11,13 @@ namespace DIPS.Processor.Persistence
     /// <summary>
     /// Represents a previously persisted result.
     /// </summary>
-    public class PersistedResult
+    public class PersistedResult : IProcessedImage
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PersistedResult"/>
         /// class.
         /// </summary>
-        /// <param name="img">The <see cref="Image"/> that was persisted.</param>
+        /// <param name="img">The <see cref="Output"/> that was persisted.</param>
         /// <param name="identifier">The identifier originally provided by the
         /// client.</param>
         /// <exception cref="ArgumentNullException">img is null</exception>
@@ -34,8 +35,8 @@ namespace DIPS.Processor.Persistence
                 throw new ArgumentException( "identifier" );
             }
 
-            Image = img;
-            RestoredIdentifier = identifier;
+            Output = img;
+            Identifier = identifier;
             PersisterGeneratedIdentifier = false;
         }
 
@@ -43,7 +44,7 @@ namespace DIPS.Processor.Persistence
         /// Initializes a new instance of the <see cref="PersistedResult"/>
         /// class.
         /// </summary>
-        /// <param name="img">The <see cref="Image"/> that was persisted.</param>
+        /// <param name="img">The <see cref="Output"/> that was persisted.</param>
         /// <param name="sequenceIdentifier">The numeric ordering of the
         /// image provided by the persister, due to the client not providing
         /// an identifier.</param>
@@ -63,8 +64,8 @@ namespace DIPS.Processor.Persistence
                     "Sequence identifier must be greater than or equal to zero." );
             }
 
-            Image = img;
-            RestoredIdentifier = sequenceIdentifier.ToString();
+            Output = img;
+            Identifier = sequenceIdentifier.ToString();
             PersisterGeneratedIdentifier = true;
         }
 
@@ -72,7 +73,7 @@ namespace DIPS.Processor.Persistence
         /// <summary>
         /// Gets the <see cref="Image"/> loaded from the persister.
         /// </summary>
-        public Image Image
+        public Image Output
         {
             get;
             private set;
@@ -81,7 +82,7 @@ namespace DIPS.Processor.Persistence
         /// <summary>
         /// Gets the identifier provided to the image.
         /// </summary>
-        public string RestoredIdentifier
+        public string Identifier
         {
             get;
             private set;

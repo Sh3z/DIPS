@@ -107,7 +107,7 @@ namespace DIPS.Processor.Persistence
             IEnumerable<PersistedResult> results = Load( jobID );
             if( results.Any() )
             {
-                return results.FirstOrDefault( x => x.RestoredIdentifier.Equals( identifier ) );
+                return results.FirstOrDefault( x => x.Identifier.Equals( identifier ) );
             }
             else
             {
