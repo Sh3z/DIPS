@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DIPS.Processor.Executor
 {
-    class JobWorker : IWorker
+    class TicketWorker : IWorker
     {
         public void Work( IJobTicket req )
         {

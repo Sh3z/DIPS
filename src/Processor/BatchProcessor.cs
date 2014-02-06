@@ -14,7 +14,7 @@ namespace DIPS.Processor
         public BatchProcessor()
         {
             _queue = new JobQueue();
-            _executor = new QueueExecutor( _queue, new JobWorker() );
+            _executor = new QueueExecutor( _queue, new TicketWorker() );
         }
 
         public bool IsProcessing

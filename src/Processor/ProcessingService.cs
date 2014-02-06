@@ -58,7 +58,7 @@ namespace DIPS.Processor
         /// jobs within the client.</returns>
         public ISynchronousProcessor CreateSynchronousProcessor()
         {
-            return new SynchronousProcessor( new JobWorker() );
+            return new SynchronousProcessor( new TicketWorker() );
         }
 
         /// <summary>
