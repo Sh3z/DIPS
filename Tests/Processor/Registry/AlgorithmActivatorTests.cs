@@ -74,7 +74,10 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestCanActivate_NoParameterlessConstructor()
         {
-            Assert.Inconclusive( "Cannot unit test at present." );
+            AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
+            AlgorithmDefinition d = new AlgorithmDefinition( "BadConstructor", null );
+            bool canActivate = activator.CanActivate( d );
+            Assert.IsFalse( canActivate );
         }
 
         /// <summary>
@@ -112,8 +115,10 @@ namespace DIPS.Tests.Processor.Registry
             AlgorithmPlugin p = activator.Activate( d );
 
             Assert.IsNotNull( p );
+            Assert.AreEqual( typeof( TestPlugin ), p.GetType() );
 
-            // Todo more testing logic.
+            TestPlugin test = p as TestPlugin;
+            Assert.AreEqual( 1, test.Test );
         }
 
         /// <summary>
@@ -129,8 +134,10 @@ namespace DIPS.Tests.Processor.Registry
             AlgorithmPlugin p = activator.Activate( d );
 
             Assert.IsNotNull( p );
+            Assert.AreEqual( typeof( TestPlugin ), p.GetType() );
 
-            // Todo more testing logic.
+            TestPlugin test = p as TestPlugin;
+            Assert.AreEqual( 1, test.Test );
         }
 
         /// <summary>
@@ -145,18 +152,56 @@ namespace DIPS.Tests.Processor.Registry
             AlgorithmPlugin p = activator.Activate( d );
 
             Assert.IsNotNull( p );
+            Assert.AreEqual( typeof( TestPlugin ), p.GetType() );
 
-            // Todo more testing logic.
+            TestPlugin t = p as TestPlugin;
+            Assert.AreEqual( 1, t.Test );
+        }
+
+        /// <summary>
+        /// Tests activating a plugin with a valid property.
+        /// </summary>
+        [TestMethod]
+        public void TestActivate_OneProperty_KnownType()
+        {
+            double value = 0d;
+            AlgorithmActivator activator = new AlgorithmActivator( new TestRegistrar() );
+            AlgorithmDefinition d = new AlgorithmDefinition( "Test",
+                new Property[] { new Property( "Test", typeof( double ) ) { Value = value } } );
+            AlgorithmPlugin p = activator.Activate( d );
+
+            Assert.IsNotNull( p );
+            Assert.AreEqual( typeof( TestPlugin ), p.GetType() );
+
+            TestPlugin t = p as TestPlugin;
+            Assert.AreEqual( value, t.Test );
         }
 
 
         class TestPlugin : AlgorithmPlugin
         {
+            public TestPlugin()
+            {
+                Test = 1;
+            }
+
             [PluginVariable( "Test", typeof( double ) )]
             public double Test
             {
                 get;
                 set;
+            }
+
+            public override void Run()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        class TestPluginNoParameterlessConstructor : AlgorithmPlugin
+        {
+            public TestPluginNoParameterlessConstructor( double param )
+            {
             }
 
             public override void Run()
@@ -171,8 +216,9 @@ namespace DIPS.Tests.Processor.Registry
             {
                 get
                 {
-                    return new [] { new AlgorithmDefinition( "Test",
-                        new [] { new Property( "Test", typeof( double ) ) } ) };
+                    return new[] { new AlgorithmDefinition( "Test",
+                        new [] { new Property( "Test", typeof( double ) ) } ),
+                    new AlgorithmDefinition("ConstructorTest", null)};
                 }
             }
 
@@ -183,7 +229,8 @@ namespace DIPS.Tests.Processor.Registry
 
             public Type FetchType( string algorithmName )
             {
-                return KnowsAlgorithm( algorithmName ) ? typeof( TestPlugin ) : null;
+                return algorithmName == "Test" ?
+                    typeof( TestPlugin ) : typeof( TestPluginNoParameterlessConstructor );
             }
         }
     }

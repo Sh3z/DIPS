@@ -98,6 +98,9 @@ namespace DIPS.Processor.Registry
         }
 
 
+        /// <summary>
+        /// Contains the registrar encapsulating the known algorithms.
+        /// </summary>
         private IAlgorithmRegistrar _registrar;
     }
 }
