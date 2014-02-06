@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AppDataPersisterTests.cs" />
     <Compile Include="JobDefinitionTests.cs" />
     <Compile Include="JobQueueTests.cs" />
     <Compile Include="JobTests.cs" />

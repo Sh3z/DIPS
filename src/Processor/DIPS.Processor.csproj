@@ -44,6 +44,7 @@
     <Compile Include="Executor\TicketWorker.cs" />
     <Compile Include="Executor\QueueExecutor.cs" />
     <Compile Include="JobDefinition.cs" />
+    <Compile Include="Persistence\AppDataPersister.cs" />
     <Compile Include="Persistence\IJobPersister.cs" />
     <Compile Include="IJobQueue.cs" />
     <Compile Include="IPluginFactory.cs" />
