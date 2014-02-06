@@ -39,6 +39,16 @@ namespace DIPS.Tests.Processor
         }
 
         /// <summary>
+        /// Tests creating a worker with a null persister
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ArgumentNullException ) )]
+        public void TestConstructor_NullPersister()
+        {
+            TicketWorker w = new TicketWorker( new RegistryFactory(), null );
+        }
+
+        /// <summary>
         /// Tests running an invalid job.
         /// </summary>
         [TestMethod]

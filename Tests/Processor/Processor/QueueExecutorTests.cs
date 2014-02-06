@@ -1,5 +1,6 @@
 ﻿using DIPS.Processor;
 using DIPS.Processor.Client;
+using DIPS.Processor.Client.JobDeployment;
 using DIPS.Processor.Executor;
 using DIPS.Processor.Queue;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -62,15 +63,17 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestWork_OneJob()
         {
+            ObjectJobDefinition d = new ObjectJobDefinition(
+                new AlgorithmDefinition[] { },
+                new JobInput[] { } );
+            JobRequest r = new JobRequest( d );
+            JobTicket ticket = new JobTicket( r, new DudCancellationHandler() );
             JobQueue queue = new JobQueue();
             WorkerImpl worker = new WorkerImpl();
             QueueExecutor executor = new QueueExecutor( queue, worker );
             bool didComplete = false;
             executor.ExhaustedQueue += ( s, e ) => didComplete = true;
-
-            Assert.Inconclusive( "Rewrite test" );
-
-            //queue.Enqueue( ticket );
+            queue.Enqueue( ticket );
 
             executor.Start();
 
@@ -80,6 +83,20 @@ namespace DIPS.Tests.Processor
             }
 
             Assert.IsTrue( worker.DidWork );
+        }
+
+        class DudCancellationHandler : ITicketCancellationHandler
+        {
+            public ITicketCancellationHandler Successor
+            {
+                get;
+                set;
+            }
+
+            public bool Handle( IJobTicket ticket )
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 
