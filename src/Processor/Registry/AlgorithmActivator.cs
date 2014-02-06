@@ -62,6 +62,15 @@ namespace DIPS.Processor.Registry
             return true;
         }
 
+        /// <summary>
+        /// Actives the algorithm provided in the definition.
+        /// </summary>
+        /// <param name="definition">The <see cref="AlgorithmDefinition"/>
+        /// to restore back into an object.</param>
+        /// <returns>The <see cref="AlgorithmPlugin"/> represented by the
+        /// <see cref="AlgorithmDefinition"/>.</returns>
+        /// <exception cref="ArgumentException">the provided definition cannot
+        /// be converted back into an object.</exception>
         public AlgorithmPlugin Activate( AlgorithmDefinition definition )
         {
             if( CanActivate( definition ) == false )
