@@ -34,6 +34,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>External Library\Dicom.dll</HintPath>
     </Reference>
+    <Reference Include="Dicom.Codec, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>External Library\Dicom.Codec.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -46,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="checkExist.cs" />
+    <Compile Include="Objects\Filter.cs" />
     <Compile Include="Repository\ImageRepository.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -75,6 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="External Library\Database.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External Library\Dicom.Codec.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="External Library\Dicom.dll">

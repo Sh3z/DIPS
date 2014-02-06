@@ -15,7 +15,7 @@
         <ListBox x:Name="lstSelectedTechniques" HorizontalAlignment="Left" Height="135" Margin="447,115,0,0" VerticalAlignment="Top" Width="125" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding selectedTechniques}" />
         <Label Content="Selected Techniques" HorizontalAlignment="Left" Margin="447,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="125"/>
         <Button x:Name="btnSelectTech" Content="-&gt;" HorizontalAlignment="Left" Margin="407,140,0,0" VerticalAlignment="Top" Width="29" RenderTransformOrigin="0.5,0.5" Click="btnSelectTech_Click"/>
-        <Button x:Name="btnBuildTech" Content="Build Technique" HorizontalAlignment="Left" Margin="600,72,0,0" VerticalAlignment="Top" Width="123" RenderTransformOrigin="0.533,-0.6" Height="42"/>
+        <Button x:Name="btnBuildTech" Content="Build Technique" HorizontalAlignment="Left" Margin="600,72,0,0" VerticalAlignment="Top" Width="123" RenderTransformOrigin="0.533,-0.6" Height="42" Click="btnBuildTech_Click"/>
         <ListBox x:Name="lstSelectedFiles" HorizontalAlignment="Left" Height="135" Margin="29,115,0,0" VerticalAlignment="Top" Width="166">
             <ListBox.ItemTemplate>
                 <DataTemplate>

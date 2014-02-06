@@ -28,9 +28,9 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.patientID, i.fileID
+	select p.patientID as 'Patient ID', i.fileID as 'File ID'
 	from patient p join imageProperties iv on p.tableID = iv.patientID 
-	join images i on iv.tableID = i.classID 
+	join images i on iv.seriesID = i.seriesID 
 	group by p.patientID,i.fileID
 	order by 1, 2;
 END

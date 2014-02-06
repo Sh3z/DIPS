@@ -21,8 +21,7 @@ GO
 CREATE PROCEDURE spr_InsertName_v001 
 	-- Add the parameters for the stored procedure here
 	@id int,
-	@fname varchar(30),
-	@lname varchar(30)
+	@pName varchar(50)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -30,6 +29,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO name (patientID,firstName,lastName) VALUES (@id,@fname,@lname)
+	INSERT INTO name (patientID,patientName) VALUES (@id,@pName)
 END
 GO

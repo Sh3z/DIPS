@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using Xceed.Wpf.Toolkit.PropertyGrid;
 using Database;
 using DIPS.Database;
-using System.Windows.Forms;
 using System.IO;
 using System;
 using System.Data.SqlClient;
@@ -20,6 +19,8 @@ using System.Data;
 using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Forms;
+using DIPS.UI.Controls;
 
 namespace DIPS.UI.Pages
 {
@@ -64,6 +65,14 @@ namespace DIPS.UI.Pages
             get { return _propList; }
             set { _propList = value; }
         }
+
+        private TreeViewFilter _filterSettings;
+
+        public TreeViewFilter FilterSettings
+        {
+            get { return _filterSettings; }
+            set { _filterSettings = value; }
+        }
         
         
         
@@ -78,45 +87,9 @@ namespace DIPS.UI.Pages
 
             // Set the Data Context as the view-model.
             DataContext = vm;
-           
-            /*
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = @"Bitmaps|*.bmp|Jpgs|*.jpg";
-            bool? result = dialog.ShowDialog();
-            if( result.HasValue && result.Value )
-            {
-                Bitmap theBmp = new Bitmap( dialog.FileName );
-                vm.ImageToProcess = theBmp;
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("File not present");
-            }
-            */
             addObjectsTotreeView();
             setupProperties();
         }
-
-        public void loadDicom()
-        {
-            readDicom dicom = new readDicom();
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            DialogResult result = fbd.ShowDialog();
-            try
-            {
-                string[] files = Directory.GetFiles(fbd.SelectedPath, "*", SearchOption.AllDirectories);
-                System.Windows.Forms.MessageBox.Show(files.Length + " Files to Process");
-
-                foreach (String s in files)
-                {
-                    staticVariables.readFile = s;
-                    dicom.read();
-                }
-                System.Windows.Forms.MessageBox.Show("Complete");
-            }
-            catch (Exception e) { }
-        }
-
 
         /// <summary>
         /// Contains the reference to the view-model.
@@ -143,69 +116,25 @@ namespace DIPS.UI.Pages
 
         private void setupTreeview()
         {
-            foreach (ImageDataset ds in allDatasets)
-            {
-                TreeViewItem item = new TreeViewItem();
-                item.Header = ds.name;
-                item.ItemsSource = ds.relatedImages;
+            treeDatasets.Items.Clear();
 
-                treeDatasets.Items.Add(item);
+            if (allDatasets != null)
+            {
+                foreach (ImageDataset ds in allDatasets)
+                {
+                    TreeViewItem item = new TreeViewItem();
+                    item.Header = ds.name;
+                    item.ItemsSource = ds.relatedImages;
+
+                    treeDatasets.Items.Add(item);
+                }
             }
+            
         }
 
         private void setupTreeviewObjects()
-        {/*
-            PatientImage img1 = new PatientImage();
-            PatientImage img2 = new PatientImage();
-            PatientImage img3 = new PatientImage();
-            PatientImage img4 = new PatientImage();
-            PatientImage img5 = new PatientImage();
-            PatientImage img6 = new PatientImage();
-            PatientImage img7 = new PatientImage();
-            PatientImage img8 = new PatientImage();
-            PatientImage img9 = new PatientImage();
-            PatientImage img10 = new PatientImage();
-
-            Patient patient1 = new Patient();
-            Patient patient2 = new Patient();
-
-            img1.imgID = 1;
-            img2.imgID = 2;
-            img3.imgID = 3;
-            img4.imgID = 4;
-            img5.imgID = 5;
-            img6.imgID = 6;
-            img7.imgID = 7;
-            img8.imgID = 8;
-            img9.imgID = 9;
-            img10.imgID = 10;
-
-            ObservableCollection<PatientImage> imageCollectionDS1 = new ObservableCollection<PatientImage>();
-            ObservableCollection<PatientImage> imageCollectionDS2 = new ObservableCollection<PatientImage>();
-            ObservableCollection<PatientImage> imageCollectionDS3 = new ObservableCollection<PatientImage>();
-            ObservableCollection<PatientImage> imageCollectionDS4 = new ObservableCollection<PatientImage>();
-
-            imageCollectionDS1.Add(img1);
-            imageCollectionDS2.Add(img2);
-            imageCollectionDS3.Add(img3);
-            imageCollectionDS3.Add(img4);
-
-            ImageDataset imgDS1 = new ImageDataset("August", imageCollectionDS1);
-            ImageDataset imgDS2 = new ImageDataset("September", imageCollectionDS2);
-            ImageDataset imgDS3 = new ImageDataset("October", imageCollectionDS3);
-            ImageDataset imgDS4 = new ImageDataset("November", imageCollectionDS4);
-
-            List<ImageDataset> allDatasetsActive = new List<ImageDataset>();
-
-            allDatasetsActive.Add(imgDS1);
-            allDatasetsActive.Add(imgDS2);
-            allDatasetsActive.Add(imgDS3);
-            allDatasetsActive.Add(imgDS4);*/
-
-            ImageRepository imgRepo = new ImageRepository();
-            //initialise all datasets var
-            //allDatasets = new List<ImageDataset>();
-            allDatasets = imgRepo.generateTreeView();
+        {
+            allDatasets = ImageRepository.generateTreeView();
         }
 
         private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -228,29 +157,86 @@ namespace DIPS.UI.Pages
             cmd.Parameters.Add("@fID", SqlDbType.VarChar).Value = fileID;
             byte[] image = (byte[])cmd.ExecuteScalar();
 
-            TypeConverter tc = TypeDescriptor.GetConverter(typeof(BitmapImage));
-            BitmapImage theBmp = (BitmapImage)tc.ConvertFrom(image);
-            ImageSource source = theBmp;
-            unProcessedImg.Source = source;
+            BitmapImage theBmp = ToImage(image);
+                        
+            unProcessedImg.Source = theBmp;
             con.Close();
+        }
+
+        public BitmapImage ToImage(byte[] array)
+        {
+            using (var ms = new System.IO.MemoryStream(array))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad; // here
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
         }
 
         private void treeDatasets_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             try
             {
-                TreeViewItem tviSender = sender as TreeViewItem;
-
-                if (tviSender.IsSelected)
+                if (sender != null)
                 {
-                    PatientImage image = sender as PatientImage; 
-                    setImage(image.imgID.ToString());
+                    System.Windows.Controls.TextBlock selectedItem = e.OriginalSource as System.Windows.Controls.TextBlock;
+                    String imgName = selectedItem.Text;
+
+                    setImage(imgName);
+
+                    populateImageDescription(ImageRepository.retrieveImageProperties(imgName));
                 }
 
                 //retrieveProperties(Text);
             }
             catch (Exception e2) { }
         }
+
+        private void populateImageDescription(List<String> description)
+        {
+            txtImageDesc.Text = String.Empty;
+            foreach (string desc in description)
+            {
+                txtImageDesc.Text += desc;
+                txtImageDesc.Text += Environment.NewLine;
+            }
+        }
+
+        private void btnSelectFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (FilterSettings == null || FilterSettings.Activate() == false)
+            {
+                TreeViewFilter tvf = new TreeViewFilter();
+                FilterSettings = tvf;
+                tvf.TreeView = this.treeDatasets;
+                tvf.chkFilterActive = this.chkActiveFilter;
+                
+                FilterSettings.ShowDialog();
+            }
+            else
+            {
+                FilterSettings.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void chkActiveFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (FilterSettings != null)
+            {
+                if (chkActiveFilter.IsChecked.Value)
+                {
+                    FilterSettings.setupTreeview();
+                }
+                else
+                {
+                    setupTreeview();
+                }
+            }
+        }
+
     }
 
       

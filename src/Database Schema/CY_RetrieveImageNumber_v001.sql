@@ -15,11 +15,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <01/19/2014>
--- Description:	<Retrieve series available for specific patient>
+-- Create date: <22/01/2014>
+-- Description:	<Retrieve Image Number by specific patient>
 -- =============================================
-ALTER PROCEDURE spr_RetrieveSeriesAvailable_v001
-	@databaseID int
+CREATE PROCEDURE spr_RetrieveImageNumber_v001
+	-- Add the parameters for the stored procedure here
+	@databaseID int,
+	@classID int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -27,6 +29,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select tableID from imageProperties where patientID=@databaseID;
+	select i.imageNumber as 'Image Number'
+	from imageProperties ip inner join images i on ip.seriesID = i.seriesID
+	where ip.patientID = @databaseID and i.seriesID = @classID
 END
 GO

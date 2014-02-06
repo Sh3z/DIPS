@@ -142,5 +142,11 @@ namespace DIPS.UI.Pages.LoadNewDataset
         {
             passToInactiveTech();
         }
+
+        private void btnBuildTech_Click(object sender, RoutedEventArgs e)
+        {
+            CreateAlgorithm createAlgorithmScreen = new CreateAlgorithm();
+            this.NavigationService.Navigate(createAlgorithmScreen);
+        }
     }
 }

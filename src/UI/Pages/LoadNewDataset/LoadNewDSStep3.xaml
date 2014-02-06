@@ -9,17 +9,22 @@
     <Grid>
         <Label x:Name="lblTechList" Content="Click to confirm that you want to forward with processing the following files:" HorizontalAlignment="Left" Margin="65,10,0,0" VerticalAlignment="Top"/>
         <ListBox x:Name="lstLoadedFiles" HorizontalAlignment="Left" Height="108" Margin="189,55,0,0" VerticalAlignment="Top" Width="180">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Path=Name}"/>
-                </StackPanel>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
-        <TextBlock x:Name="lblTurnOffComp" HorizontalAlignment="Left" Margin="65,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="413"><Run Language="en-gb" Text="Processing these files will take xx hours and xx minutes.  Please tick the box below to switch your computer off when processing is complete."/></TextBlock>
-        <CheckBox x:Name="chkTurnOffComputer" Content="Turn off computer after processing complete?" HorizontalAlignment="Left" Margin="140,246,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="lblTurnOffComp" HorizontalAlignment="Left" Margin="125,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="297"><Run Language="en-gb" Text="Processing these files will take xx hours and xx minutes."/></TextBlock>
         <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="240,295,0,0" VerticalAlignment="Top" Width="75" Click="btnProcess_Click"/>
+        <ComboBox x:Name="cboPostProcess" HorizontalAlignment="Left" Margin="283,236,0,0" VerticalAlignment="Top" Width="124">
+            <ComboBoxItem Content="Nothing" IsSelected="True"/>
+            <ComboBoxItem Content="Sleep"/>
+            <ComboBoxItem Content="Shut down"/>
+        </ComboBox>
+        <TextBlock x:Name="lblTurnOffComp_Copy" HorizontalAlignment="Left" Margin="140,228,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="38" Width="138"><Run Language="en-gb" Text="What do I do when the processing is complete?"/></TextBlock>
 
     </Grid>
 </Page>

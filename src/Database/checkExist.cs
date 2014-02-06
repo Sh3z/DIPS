@@ -17,24 +17,34 @@ namespace DIPS.Database
 
             SqlCommand cmd = new SqlCommand("spr_CheckPatientExist_v001", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = staticVariables.pBday;
-            cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = staticVariables.age;
-            cmd.Parameters.Add("@sex", SqlDbType.Char).Value = staticVariables.sex;
-            cmd.Parameters.Add("@fname", SqlDbType.VarChar).Value = staticVariables.firstName;
-            cmd.Parameters.Add("@lname", SqlDbType.VarChar).Value = staticVariables.lastName;
+
+            if (staticVariables.pBday == "") cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = DBNull.Value;
+            else cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = staticVariables.pBday;
+
+            if (staticVariables.age == "") cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = DBNull.Value;
+            else cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = staticVariables.age;
+
+            if (staticVariables.sex == "") cmd.Parameters.Add("@sex", SqlDbType.Char).Value = DBNull.Value;
+            else cmd.Parameters.Add("@sex", SqlDbType.Char).Value = staticVariables.sex;
+
+            if (staticVariables.patientName == "") cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = DBNull.Value;
+            else cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = staticVariables.patientName;
+
             SqlDataReader dataReader = cmd.ExecuteReader();
 
             while (dataReader.Read())
             {
                 staticVariables.patientExist = true;
-                Boolean bodyMatch = staticVariables.bodyPart.Equals(dataReader.GetString(1));
-                Boolean studyMatch = staticVariables.studyDesc.Equals(dataReader.GetString(2));
-                Boolean seriesMatch = staticVariables.seriesDesc.Equals(dataReader.GetString(3));
+                Boolean modelMatch = staticVariables.modality.Equals(dataReader.GetString(dataReader.GetOrdinal("Modality")));
+                Boolean bodyMatch = staticVariables.bodyPart.Equals(dataReader.GetString(dataReader.GetOrdinal("Body Parts")));
+                Boolean studyMatch = staticVariables.studyDesc.Equals(dataReader.GetString(dataReader.GetOrdinal("Study Description")));
+                Boolean seriesMatch = staticVariables.seriesDesc.Equals(dataReader.GetString(dataReader.GetOrdinal("Series Description")));
 
-                if (bodyMatch == true && (studyMatch == true && seriesMatch == true))
+                if ((modelMatch==true && bodyMatch == true) && (studyMatch == true && seriesMatch == true))
                 {
                     staticVariables.sameSeries = true;
-                    staticVariables.databaseID = dataReader.GetInt32(0);
+                    staticVariables.databaseID = dataReader.GetInt32(dataReader.GetOrdinal("Patient ID"));
+                    staticVariables.seriesID = dataReader.GetInt32(dataReader.GetOrdinal("Series ID"));
                     break;
                 }
             }
@@ -61,23 +71,31 @@ namespace DIPS.Database
             }
             else if (staticVariables.sameSeries == false)
             {
-                SqlCommand cmd2 = new SqlCommand("spr_RetrieveSeriesAvailable_v001", con);
-                cmd2.CommandType = CommandType.StoredProcedure;
-                cmd2.Parameters.Add("@databaseID", SqlDbType.Int).Value = staticVariables.databaseID;
-                SqlDataReader reader = cmd2.ExecuteReader();
-                while (reader.Read())
-                {
-                    staticVariables.imageSeries = reader.GetInt32(0);
-                    staticVariables.imageSeries++;
-                    break;
-                }
-                reader.Close();
-
-                SqlCommand cmd3 = new SqlCommand("spr_UpdateSeriesNo_v001", con);
+                SqlCommand cmd3 = new SqlCommand("spr_UpdateSeriesAvailable_v001", con);
                 cmd3.CommandType = CommandType.StoredProcedure;
-                cmd3.Parameters.Add("@series", SqlDbType.Int).Value = staticVariables.imageSeries;
                 cmd3.Parameters.Add("@databaseID", SqlDbType.Int).Value = staticVariables.databaseID;
                 cmd3.ExecuteNonQuery();
+            }
+            else if (staticVariables.sameSeries == true)
+            {
+                 SqlCommand cmd2 = new SqlCommand("spr_RetrieveImageNumber_v001", con);
+                 cmd2.CommandType = CommandType.StoredProcedure;
+                 cmd2.Parameters.Add("@databaseID", SqlDbType.VarChar).Value = staticVariables.databaseID;
+                 cmd2.Parameters.Add("@classID", SqlDbType.VarChar).Value = staticVariables.seriesID;
+                 SqlDataReader reader = cmd2.ExecuteReader();
+
+                 
+
+                 while (reader.Read())
+                 {
+                     String imageNumber = reader.GetString(reader.GetOrdinal("Image Number"));
+                     if (imageNumber.Equals(staticVariables.imgNumber))
+                     {
+                         staticVariables.imageExist = true;
+                         break;
+                     }
+                 }
+                 reader.Close();
             }
          
             con.Close();
@@ -87,14 +105,14 @@ namespace DIPS.Database
         {
             Random rand = new Random(System.DateTime.Now.Millisecond);
             String alphabet = "";
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
                 char alpha = 'A';
                 alpha = (char)(alpha + rand.Next(0, 26));
                 alphabet += alpha;
             }
             String patientID = "";
-            if (staticVariables.pBday.Equals("NULL")) patientID = alphabet + rand.Next(50000000, 99999999);
+            if (staticVariables.pBday.Equals("")) patientID = alphabet + rand.Next(10000000, 17000000);
             else patientID = alphabet + staticVariables.pBday;
 
             return patientID;

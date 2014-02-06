@@ -18,8 +18,7 @@ GO
 -- Create date: <01/19/2014>
 -- Description:	<Update series number for specific patient>
 -- =============================================
-CREATE PROCEDURE spr_UpdateSeriesNo_v001
-	@series int,
+CREATE PROCEDURE spr_UpdateSeriesAvailable_v001
 	@databaseID int
 AS
 BEGIN
@@ -28,6 +27,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	update patient set seriesAvailable = @series where tableID=@databaseID;
+	update patient set seriesAvailable = seriesAvailable + 1 where tableID=@databaseID;
 END
 GO

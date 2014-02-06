@@ -12,7 +12,7 @@ namespace DIPS.Database
 {
     public class readDicom
     {
-        String temp = null;
+        String pName = null;
         Boolean dateNull = false;
         Boolean timeNull = false;
         DcmDate date = null;
@@ -20,9 +20,10 @@ namespace DIPS.Database
 
         public void read()
         {
+            if (staticVariables.codecRegistration == false) registerCodec();
             Console.WriteLine(staticVariables.readFile);
             verifyDicom verify = new verifyDicom();
-
+            
             Boolean validDicom = verify.verify();
             if (validDicom == true)
             {
@@ -36,12 +37,13 @@ namespace DIPS.Database
                 try
                 {
                     dff.Load(fs, DicomReadOptions.Default);
-                    temp = dff.Dataset.GetValueString(DicomTags.PatientsName);
+                    pName = dff.Dataset.GetValueString(DicomTags.PatientsName);
 
                     staticVariables.sex = dff.Dataset.GetValueString(DicomTags.PatientsSex);
                     staticVariables.pBday = dff.Dataset.GetValueString(DicomTags.PatientsBirthDate);
                     staticVariables.age = dff.Dataset.GetValueString(DicomTags.PatientsAge);
                     staticVariables.imgNumber = dff.Dataset.GetValueString(DicomTags.InstanceNumber).PadLeft(2, '0');
+                    staticVariables.modality = dff.Dataset.GetValueString(DicomTags.Modality);
                     staticVariables.bodyPart = dff.Dataset.GetValueString(DicomTags.BodyPartExamined);
                     staticVariables.studyDesc = dff.Dataset.GetValueString(DicomTags.StudyDescription);
                     staticVariables.seriesDesc = dff.Dataset.GetValueString(DicomTags.SeriesDescription);
@@ -68,20 +70,32 @@ namespace DIPS.Database
             else Console.WriteLine("Not a Valid DICOM file");
         }
 
+        void registerCodec()
+        {
+            Dicom.Codec.DcmRleCodec.Register();
+            Dicom.Codec.Jpeg.DcmJpegCodec.Register();
+            Dicom.Codec.Jpeg2000.DcmJpeg2000Codec.Register();
+            Dicom.Codec.JpegLs.DcmJpegLsCodec.Register();
+            staticVariables.codecRegistration = true;
+        }
+
         void nullCheck()
         {
-            //temp = patient's name
-            if (temp == null)
-            {
-                staticVariables.firstName = "NULL";
-                staticVariables.lastName = "NULL";
-            }
+            if (pName == null) staticVariables.patientName = "";
             else
             {
-                String[] name = temp.Split('^');
-                staticVariables.firstName = name[1];
-                staticVariables.lastName = name[0];
+                try
+                {
+                    var splitName = new StringBuilder(pName);
+                    splitName.Replace('^', ' ');
+                    staticVariables.patientName = splitName.ToString();
+                }
+                catch (Exception e)
+                {
+                    staticVariables.patientName = pName;
+                }
             }
+
             if (dateNull == true && timeNull == true)
             {
                 DateTime dt = DateTime.MinValue;
@@ -92,13 +106,16 @@ namespace DIPS.Database
                 System.DateTime imgDateTime = date.GetDateTime().Date + time.GetDateTime().TimeOfDay;
                 staticVariables.imgDateTime = imgDateTime.ToString("yyyy-MM-dd HH:mm:ss");
             }
-            if (staticVariables.sex == null) staticVariables.sex = "N";
-            if (staticVariables.pBday == "") staticVariables.pBday = "NULL";
-            if (staticVariables.age == null) staticVariables.age = "NULL";
-            if (staticVariables.bodyPart == null) staticVariables.bodyPart = "NULL";
-            if (staticVariables.studyDesc == "") staticVariables.studyDesc = "NULL";
-            if (staticVariables.seriesDesc == null) staticVariables.seriesDesc = "NULL";
-            if (staticVariables.sliceThickness == null) staticVariables.sliceThickness = "NULL";
+
+            if (staticVariables.sex == null) staticVariables.sex = "";
+            if (staticVariables.pBday == null) staticVariables.pBday = "";
+            if (staticVariables.age == null) staticVariables.age = "";
+            if (staticVariables.imgNumber == null) staticVariables.imgNumber = "";
+            if (staticVariables.modality == null) staticVariables.modality = "";
+            if (staticVariables.bodyPart == null) staticVariables.bodyPart = "";
+            if (staticVariables.studyDesc == null) staticVariables.studyDesc = "";
+            if (staticVariables.seriesDesc == null) staticVariables.seriesDesc = "";
+            if (staticVariables.sliceThickness == null) staticVariables.sliceThickness = "";
         }
     }
 }

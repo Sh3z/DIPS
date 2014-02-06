@@ -21,6 +21,7 @@ GO
 CREATE PROCEDURE spr_InsertImageProperties_v001
 	-- Add the parameters for the stored procedure here
 	@id int,
+	@modality varchar(15),
 	@imgDateTime datetime,
 	@bodyPart varchar(20),
 	@studyDesc varchar(50),
@@ -33,8 +34,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO imageProperties (patientID,imageDateTime,bodyPart,studyDescription,seriesDescription,sliceThickness)
-	OUTPUT INSERTED.tableID 
-	VALUES (@id,@imgDateTime,@bodyPart,@studyDesc,@seriesDesc,@sliceThick)
+	INSERT INTO imageProperties (patientID,modality,imageAcquisitionDate,bodyPart,studyDescription,seriesDescription,sliceThickness)
+	OUTPUT INSERTED.seriesID 
+	VALUES (@id,@modality,@imgDateTime,@bodyPart,@studyDesc,@seriesDesc,@sliceThick)
 END
 GO

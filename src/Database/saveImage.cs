@@ -16,12 +16,20 @@ namespace DIPS.Database
     {
         public byte[] blob()
         {
-            DicomImage img = new DicomImage(staticVariables.readFile);
-            Image im = img.RenderImage();
-            MemoryStream ms = new MemoryStream();
-            im.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
-            byte[] blob = ms.ToArray();
-            ms.Close();
+            byte[] blob = null;
+            try
+            {
+                DicomImage img = new DicomImage(staticVariables.readFile);
+                Image im = img.RenderImage();
+                MemoryStream ms = new MemoryStream();
+                im.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                blob = ms.ToArray();
+                ms.Close();
+            }
+            catch (Exception e) 
+            {
+                blob = null;
+            }
             return blob;
         }
     }
