@@ -17,7 +17,7 @@ namespace DIPS.Tests.Processor
     /// Summary description for AppDataPersisterTests
     /// </summary>
     [TestClass]
-    public class AppDataPersisterTests
+    public class FileSystemPersisterTests
     {
         /// <summary>
         /// Gets or sets the test context which provides
