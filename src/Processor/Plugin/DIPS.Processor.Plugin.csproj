@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="AlgorithmException.cs" />
     <Compile Include="AlgorithmPlugin.cs" />
+    <Compile Include="IPropertyInterpreter.cs" />
     <Compile Include="PluginIdentifierAttribute.cs" />
     <Compile Include="PluginException.cs" />
     <Compile Include="PluginVariableAttribute.cs" />
