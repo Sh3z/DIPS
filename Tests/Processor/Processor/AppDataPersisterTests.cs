@@ -115,15 +115,15 @@ namespace DIPS.Tests.Processor
             object identifier = null;
             persister.Persist( toPersist, identifier );
 
-            // File should be called output_0.png
-            string path = string.Format( @"{0}/{{{1}}}/output_0.png", CurrentDirectory, CurrentTicket.JobID );
+            // File should be called 0.png
+            string path = string.Format( @"{0}/{{{1}}}/0.png", CurrentDirectory, CurrentTicket.JobID );
             bool fileExists = File.Exists( path );
             Assert.IsTrue( fileExists );
 
-            // Persist again, should be output_1.png
+            // Persist again, should be 1.png
             persister.Persist( toPersist, identifier );
 
-            path = string.Format( @"{0}/{{{1}}}/output_1.png", CurrentDirectory, CurrentTicket.JobID );
+            path = string.Format( @"{0}/{{{1}}}/1.png", CurrentDirectory, CurrentTicket.JobID );
             fileExists = File.Exists( path );
             Assert.IsTrue( fileExists );
         }

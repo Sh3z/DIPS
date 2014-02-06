@@ -117,10 +117,10 @@ namespace DIPS.Processor.Persistence
             string fileName = identifier != null ? identifier.ToString() : null;
             if( string.IsNullOrEmpty( fileName ) )
             {
-                fileName = string.Format( @"output_{0}", _id );
-                _id++;
+                fileName = string.Format( @"{0}", _id );
             }
 
+            _id++;
             return string.Format( @"{0}/{1}.png", jobPath, fileName );
         }
 
