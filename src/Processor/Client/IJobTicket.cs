@@ -18,6 +18,11 @@ namespace DIPS.Processor.Client
         event EventHandler JobCompleted;
 
         /// <summary>
+        /// Occurs when the job encounters an error.
+        /// </summary>
+        event EventHandler JobError;
+
+        /// <summary>
         /// Occurs when the job has begun.
         /// </summary>
         event EventHandler JobStarted;

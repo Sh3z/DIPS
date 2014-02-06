@@ -62,6 +62,11 @@ namespace DIPS.Processor
         /// </summary>
         public event EventHandler JobCompleted;
 
+        /// <summary>
+        /// Occurs when the job encounters an error.
+        /// </summary>
+        public event EventHandler JobError;
+
 
         /// <summary>
         /// Gets a value indicating whether this job was cancelled by the client.
@@ -117,6 +122,14 @@ namespace DIPS.Processor
             if( JobCompleted != null )
             {
                 JobCompleted( this, EventArgs.Empty );
+            }
+        }
+
+        internal void OnJobError()
+        {
+            if( JobError != null )
+            {
+                JobError( this, EventArgs.Empty );
             }
         }
 
