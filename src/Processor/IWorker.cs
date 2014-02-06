@@ -9,6 +9,6 @@ namespace DIPS.Processor
 {
     public interface IWorker
     {
-        void RunJob( IJobTicket job );
+        void Work( IJobTicket job );
     }
 }

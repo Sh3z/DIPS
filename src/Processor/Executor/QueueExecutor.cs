@@ -80,7 +80,7 @@ namespace DIPS.Processor.Executor
         private JobResult process_sync( object ticket )
         {
             IJobTicket theTicket = ticket as IJobTicket;
-            _worker.RunJob( theTicket );
+            _worker.Work( theTicket );
             return theTicket.Result;
         }
 
@@ -125,7 +125,7 @@ namespace DIPS.Processor.Executor
         {
             if( ticket.Cancelled == false )
             {
-                _worker.RunJob( ticket );
+                _worker.Work( ticket );
             }
         }
 
