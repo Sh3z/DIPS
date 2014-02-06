@@ -11,7 +11,7 @@ namespace DIPS.Processor
     /// <summary>
     /// Executes jobs on the calling thread.
     /// </summary>
-    public class SynchronousProcessor : ISynchronousProcessor
+    public class SynchronousProcessor : ISynchronousProcessor, ITicketCancellationHandler
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SynchronousProcessor"/>
@@ -27,6 +27,36 @@ namespace DIPS.Processor
             }
 
             _worker = handler;
+        }
+
+
+        /// <summary>
+        /// Sets the successive <see cref="ITicketCancellationHandler"/> to
+        /// this instance.
+        /// </summary>
+        /// <remarks>
+        /// In the event the current <see cref="ITicketCancellationHandler"/>
+        /// cannot handle the cancellation of a ticket, it should instead delegate
+        /// to the successor. If no successor is set, the request should be ignored.
+        /// </remarks>
+        ITicketCancellationHandler ITicketCancellationHandler.Successor
+        {
+            set
+            {
+                throw new InvalidOperationException( "Synchronous processes cannot be cancelled." );
+            }
+        }
+
+        /// <summary>
+        /// Handles the cancellation of the job represented by the ticket.
+        /// </summary>
+        /// <param name="ticket">The <see cref="IJobTicket"/> that has been
+        /// cancelled.</param>
+        /// <returns>true if the request has been handled; false otherwise.</returns>
+        bool ITicketCancellationHandler.Handle( IJobTicket ticket )
+        {
+            // We don't permit cancelling.
+            return false;
         }
 
 
@@ -51,7 +81,7 @@ namespace DIPS.Processor
         /// <returns>The result from processin the job.</returns>
         private JobResult _runJob( JobRequest req )
         {
-            JobTicket ticket = new JobTicket( req, null );
+            JobTicket ticket = new JobTicket( req, this );
             _worker.Work( ticket );
             return ticket.Result;
         }
