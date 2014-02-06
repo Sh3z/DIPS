@@ -11,25 +11,40 @@ namespace DIPS.Processor.Persistence
 {
     /// <summary>
     /// Represents the job persister used to save jobs to the Windows
-    /// APPDATA directory.
+    /// filesystem.
     /// </summary>
-    public class AppDataPersister : IJobPersister
+    public class FileSystemPersister : IJobPersister
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AppDataPersister"/>
+        /// Initializes a new instance of the <see cref="FileSystemPersister"/>
         /// class.
         /// </summary>
         /// <param name="ticket">The <see cref="JobTicket"/> this persister
         /// will save jobs for.</param>
+        /// <param name="dir">The directory to save jobs to.</param>
+        /// <exception cref="ArgumentException">dir is null or empty.</exception>
         /// <exception cref="ArgumentNullException">ticket is null.</exception>
-        public AppDataPersister( JobTicket ticket )
+        /// <exception cref="IOException">the directory provided does not exist,
+        /// and this persister cannot create it.</exception>
+        public FileSystemPersister( JobTicket ticket, string dir )
         {
+            if( string.IsNullOrEmpty( dir ) )
+            {
+                throw new ArgumentException( "dir" );
+            }
+
             if( ticket == null )
             {
                 throw new ArgumentNullException( "ticket" );
             }
 
+            if( Directory.Exists( dir ) == false )
+            {
+                _createDirectory( dir );
+            }
+
             _ticket = ticket;
+            TargetDirectory = dir;
         }
 
 
@@ -57,6 +72,17 @@ namespace DIPS.Processor.Persistence
 
 
         /// <summary>
+        /// Gets the path to the directory this <see cref="FileSystemPersister"/>
+        /// will save files to.
+        /// </summary>
+        public string TargetDirectory
+        {
+            get;
+            private set;
+        }
+
+
+        /// <summary>
         /// Persits the output of a job.
         /// </summary>
         /// <param name="output">The <see cref="Image"/> generated from a
@@ -65,12 +91,6 @@ namespace DIPS.Processor.Persistence
         /// by the client.</param>
         public void Persist( Image output, object identifier )
         {
-            string appDataPath = Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData );
-            if( Directory.Exists( appDataPath ) == false )
-            {
-                throw new IOException( "AppData cannot be resolved." );
-            }
-
             Guid jobGuid = _ticket.JobID;
             string fullPath = _resolvePath( identifier, jobGuid );
             using( Stream stream = File.Create( fullPath ) )
@@ -88,10 +108,10 @@ namespace DIPS.Processor.Persistence
         /// <returns>The path to the file to save the image to.</returns>
         private string _resolvePath( object identifier, Guid jobGuid )
         {
-            string jobPath = string.Format( @"{0}/{{{1}}}", OutputDataPath, jobGuid );
+            string jobPath = string.Format( @"{0}/{{{1}}}", TargetDirectory, jobGuid );
             if( Directory.Exists( jobPath ) == false )
             {
-                Directory.CreateDirectory( jobPath );
+                _createDirectory( jobPath );
             }
 
             string fileName = identifier != null ? identifier.ToString() : null;
@@ -102,6 +122,23 @@ namespace DIPS.Processor.Persistence
             }
 
             return string.Format( @"{0}/{1}.png", jobPath, fileName );
+        }
+
+        /// <summary>
+        /// Creates a directory at the given path.
+        /// </summary>
+        /// <param name="dir">The path to the directory to create.</param>
+        private void _createDirectory( string dir )
+        {
+            try
+            {
+                Directory.CreateDirectory( dir );
+            }
+            catch( Exception e )
+            {
+                string err = string.Format( "Cannot create directory \"{0}\"", dir );
+                throw new IOException( err, e );
+            }
         }
 
 

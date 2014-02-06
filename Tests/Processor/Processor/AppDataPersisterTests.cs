@@ -40,6 +40,16 @@ namespace DIPS.Tests.Processor
         }
 
         /// <summary>
+        /// Gets or sets the current directory to use in testing.
+        /// </summary>
+        private string CurrentDirectory
+        {
+            get;
+            set;
+        }
+
+
+        /// <summary>
         /// Initializer called before tests.
         /// </summary>
         [TestInitialize]
@@ -47,6 +57,7 @@ namespace DIPS.Tests.Processor
         {
             JobRequest r = new JobRequest( new TestDefinition() );
             CurrentTicket = new JobTicket( r, new TestCancellation() );
+            CurrentDirectory = Directory.GetCurrentDirectory() + "/TestOutput";
         }
 
         /// <summary>
@@ -56,9 +67,9 @@ namespace DIPS.Tests.Processor
         public void Clean()
         {
             // Delete all files in our test directory.
-            if( Directory.Exists( AppDataPersister.OutputDataPath ) )
+            if( Directory.Exists( CurrentDirectory ) )
             {
-                Directory.Delete( AppDataPersister.OutputDataPath, true );
+                Directory.Delete( CurrentDirectory, true );
             }
         }
 
@@ -70,7 +81,27 @@ namespace DIPS.Tests.Processor
         [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestConstructor_NullTicket()
         {
-            AppDataPersister persister = new AppDataPersister( null );
+            FileSystemPersister persister = new FileSystemPersister( null, FileSystemPersister.OutputDataPath );
+        }
+
+        /// <summary>
+        /// Tests constructing the persister with a null target path.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ArgumentException ) )]
+        public void TestConstructor_NullPath()
+        {
+            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, null );
+        }
+
+        /// <summary>
+        /// Tests constructing the persister with an empty target path.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ArgumentException ) )]
+        public void TestConstructor_EmptyPath()
+        {
+            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, string.Empty );
         }
 
         /// <summary>
@@ -79,20 +110,20 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestPersist_NoIdentifier()
         {
-            AppDataPersister persister = new AppDataPersister( CurrentTicket );
+            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
             Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
             object identifier = null;
             persister.Persist( toPersist, identifier );
 
             // File should be called output_0.png
-            string path = string.Format( @"{0}/{{{1}}}/output_0.png", AppDataPersister.OutputDataPath, CurrentTicket.JobID );
+            string path = string.Format( @"{0}/{{{1}}}/output_0.png", CurrentDirectory, CurrentTicket.JobID );
             bool fileExists = File.Exists( path );
             Assert.IsTrue( fileExists );
 
             // Persist again, should be output_1.png
             persister.Persist( toPersist, identifier );
 
-            path = string.Format( @"{0}/{{{1}}}/output_1.png", AppDataPersister.OutputDataPath, CurrentTicket.JobID );
+            path = string.Format( @"{0}/{{{1}}}/output_1.png", CurrentDirectory, CurrentTicket.JobID );
             fileExists = File.Exists( path );
             Assert.IsTrue( fileExists );
         }
@@ -104,12 +135,12 @@ namespace DIPS.Tests.Processor
         public void TestPersist_WithIdentifier()
         {
             string id = "test";
-            AppDataPersister persister = new AppDataPersister( CurrentTicket );
+            FileSystemPersister persister = new FileSystemPersister( CurrentTicket, CurrentDirectory );
             Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
             persister.Persist( toPersist, id );
 
             // File should be called output_0.png
-            string path = string.Format( @"{0}/{{{1}}}/{2}.png", AppDataPersister.OutputDataPath, CurrentTicket.JobID, id );
+            string path = string.Format( @"{0}/{{{1}}}/{2}.png", CurrentDirectory, CurrentTicket.JobID, id );
             bool fileExists = File.Exists( path );
             Assert.IsTrue( fileExists );
         }
