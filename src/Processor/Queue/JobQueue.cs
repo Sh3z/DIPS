@@ -121,13 +121,17 @@ namespace DIPS.Processor.Queue
         {
             lock( this )
             {
-                if( Successor != null )
+                if( _selfHandleCancellation( ticket ) )
+                {
+                    return true;
+                }
+                else if( Successor != null )
                 {
                     return Successor.Handle( ticket );
                 }
                 else
                 {
-                    return _selfHandleCancellation( ticket );
+                    return false;
                 }
             }
         }
