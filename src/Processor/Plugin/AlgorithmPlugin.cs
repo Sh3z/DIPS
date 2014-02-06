@@ -14,9 +14,9 @@ namespace DIPS.Processor.Plugin
     public abstract class AlgorithmPlugin
     {
         /// <summary>
-        /// Gets or sets the input <see cref="Bitmap"/> to this <see cref="AlgorithmPlugin"/>.
+        /// Gets or sets the input <see cref="Image"/> to this <see cref="AlgorithmPlugin"/>.
         /// </summary>
-        public Bitmap Input
+        public Image Input
         {
             get;
             set;
@@ -26,7 +26,7 @@ namespace DIPS.Processor.Plugin
         /// Gets the output of this <see cref="AlgorithmPlugin"/> generated after executing
         /// the Run method on this <see cref="AlgorithmPlugin"/>.
         /// </summary>
-        public Bitmap Output
+        public Image Output
         {
             get;
             protected set;
