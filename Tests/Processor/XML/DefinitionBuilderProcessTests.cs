@@ -84,7 +84,7 @@ namespace DIPS.Tests.Processor.XML
             Type type = Type.GetType( typeAttr.Value );
             Assert.AreEqual( typeof( double ), type );
 
-            XAttribute defaultValAttr = firstProperty.Attribute( "default-value" );
+            XAttribute defaultValAttr = firstProperty.Attribute( "value" );
             Assert.IsNotNull( defaultValAttr );
             Assert.AreEqual( "1", defaultValAttr.Value );
         }
