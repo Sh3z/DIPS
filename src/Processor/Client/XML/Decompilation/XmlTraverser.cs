@@ -8,17 +8,17 @@ using System.Xml.Linq;
 namespace DIPS.Processor.XML.Decompilation
 {
     /// <summary>
-    /// Traverses job Xml and provides visiting of appropriate nodes.
+    /// Traverses Xml and provides visiting of appropriate nodes.
     /// </summary>
-    public class JobXmlTraverser
+    public class XmlTraverser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="JobXmlTraverser"/> class.
+        /// Initializes a new instance of the <see cref="XmlTraverser"/> class.
         /// </summary>
         /// <param name="visitor">The <see cref="IJobXmlVisitor"/> passed into
         /// various nodes of the Xml.</param>
         /// <exception cref="ArgumentNullException">visitor is null.</exception>
-        public JobXmlTraverser( IJobXmlVisitor visitor )
+        public XmlTraverser( IJobXmlVisitor visitor )
         {
             if( visitor == null )
             {
