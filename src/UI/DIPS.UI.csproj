@@ -95,9 +95,7 @@
     <Compile Include="Controls\infoBell.xaml.cs">
       <DependentUpon>infoBell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TechShape.xaml.cs">
-      <DependentUpon>TechShape.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\TechShape.cs" />
     <Compile Include="imageDemo.cs" />
     <Compile Include="MainNavi.xaml.cs">
       <DependentUpon>MainNavi.xaml</DependentUpon>
@@ -155,9 +153,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\TechShape.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\TechShape.Generic.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainNavi.xaml">
       <SubType>Designer</SubType>
@@ -192,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ViewExistingDataSet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
