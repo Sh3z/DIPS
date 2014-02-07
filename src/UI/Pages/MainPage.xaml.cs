@@ -15,6 +15,7 @@ using System.Windows.Resources;
 using DIPS.ViewModel;
 using DIPS.UI.Pages;
 using DIPS.UI.Pages.LoadNewDataset;
+using DIPS.Processor.Client;
 
 namespace DIPS.UI.Pages
 {
@@ -28,11 +29,23 @@ namespace DIPS.UI.Pages
             InitializeComponent();
         }
 
+
+        /// <summary>
+        /// Gets or sets the <see cref="IProcessingService"/> connected to
+        /// the active DIPS processor.
+        /// </summary>
+        public IProcessingService Service
+        {
+            get;
+            set;
+        }
+
+
         private void btnViewExistingDS_Click(object sender, RoutedEventArgs e)
         {
             // Create the window and provide it with the presentation layer.
-            PrototypeViewModel vm = new PrototypeViewModel();
-            ViewExistingDataSet viewWindow = new ViewExistingDataSet(vm);
+            //PrototypeViewModel vm = new PrototypeViewModel();
+            ViewExistingDataSet viewWindow = new ViewExistingDataSet(null);
             viewWindow.WindowNav = this;
 
             this.NavigationService.Navigate(viewWindow);
@@ -92,6 +105,7 @@ namespace DIPS.UI.Pages
         private void btnCreateAlgorithm_Click(object sender, RoutedEventArgs e)
         {
             ViewAlgorithms viewAlgorithmScreen = new ViewAlgorithms();
+            viewAlgorithmScreen.Service = Service;
             this.NavigationService.Navigate(viewAlgorithmScreen);
         }
     }

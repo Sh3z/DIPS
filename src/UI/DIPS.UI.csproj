@@ -203,6 +203,14 @@
       <Project>{a200fc0f-f24e-4f28-b34e-88b1ebd4773c}</Project>
       <Name>DIPS.Database</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Processor\Client\DIPS.Processor.Client.csproj">
+      <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
+      <Name>DIPS.Processor.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Processor\Client\XML\DIPS.Processor.XML.csproj">
+      <Project>{e9c0ce2f-6645-41ab-ae80-2d8d63da1a61}</Project>
+      <Name>DIPS.Processor.XML</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ViewModel\DIPS.ViewModel.csproj">
       <Project>{aa521185-aa1a-4461-810c-b0bf60063136}</Project>
       <Name>DIPS.ViewModel</Name>

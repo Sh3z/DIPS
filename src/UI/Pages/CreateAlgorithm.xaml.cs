@@ -15,6 +15,10 @@ using System.Windows.Shapes;
 using DIPS.Database.Objects;
 using DIPS.UI.Controls;
 using Xceed.Wpf.Toolkit.PropertyGrid;
+using DIPS.Processor.Client;
+using System.Diagnostics;
+using System.Xml.Linq;
+using DIPS.Processor.XML.Decompilation;
 
 namespace DIPS.UI.Pages
 {
@@ -26,9 +30,43 @@ namespace DIPS.UI.Pages
         public CreateAlgorithm()
         {
             InitializeComponent();
+        }
 
-            List<TechShape> tech1 = new List<TechShape>();
-            tech1 = setupParameters();
+
+        /// <summary>
+        /// Gets or sets the <see cref="IProcessingService"/> connected to
+        /// the active DIPS processor.
+        /// </summary>
+        public IProcessingService Service
+        {
+            get
+            {
+                return _service;
+            }
+            set
+            {
+                _service = value;
+                _updateDisplayedAlgorithms();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private IProcessingService _service;
+
+
+        private void _updateDisplayedAlgorithms()
+        {
+            ICollection<TechShape> shapes = new List<TechShape>();
+            foreach( AlgorithmDefinition algorithm in _service.GetAlgorithmDefinitions() )
+            {
+                TechShape shape = new TechShape();
+                shape.TechniqueName = algorithm.AlgorithmName;
+                shapes.Add( shape );
+            }
+
+            foreach( TechShape shape in shapes )
+            {
+                stackListOfAvailableTech.Children.Add( shape );
+            }
         }
 
         private List<TechShape> setupParameters()

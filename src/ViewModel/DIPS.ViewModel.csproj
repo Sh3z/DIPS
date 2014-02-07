@@ -63,22 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ImageCommands.cs" />
-    <Compile Include="Commands\ProcessImageCommand.cs" />
+    <None Include="Commands\ProcessImageCommand.cs" />
     <Compile Include="Converters\BitmapToImageSourceConverter.cs" />
     <Compile Include="IFemoreViewModel.cs" />
     <Compile Include="ImageProcessedArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PrototypeViewModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Imaging\Client\DIPS.Imaging.Client.csproj">
-      <Project>{0f082ecf-cd3a-413b-bf90-755338507eda}</Project>
-      <Name>DIPS.Imaging.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Imaging\Core\DIPS.Imaging.Core.csproj">
-      <Project>{06f728ca-eb01-4b33-92e5-8f4cc5f73841}</Project>
-      <Name>DIPS.Imaging.Core</Name>
-    </ProjectReference>
+    <None Include="PrototypeViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

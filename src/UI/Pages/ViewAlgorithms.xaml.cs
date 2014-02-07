@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DIPS.Processor.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,9 +26,22 @@ namespace DIPS.UI.Pages
             InitializeComponent();
         }
 
+
+        /// <summary>
+        /// Gets or sets the <see cref="IProcessingService"/> connected to
+        /// the active DIPS processor.
+        /// </summary>
+        public IProcessingService Service
+        {
+            get;
+            set;
+        }
+
+
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             CreateAlgorithm createAlgorithmScreen = new CreateAlgorithm();
+            createAlgorithmScreen.Service = Service;
             this.NavigationService.Navigate(createAlgorithmScreen);
         }
     }

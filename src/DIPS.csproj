@@ -156,6 +156,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Processor\Client\DIPS.Processor.Client.csproj">
+      <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
+      <Name>DIPS.Processor.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="Processor\DIPS.Processor.csproj">
+      <Project>{bbc18fc7-4ed1-4a6a-8e1b-e05035ff85d8}</Project>
+      <Name>DIPS.Processor</Name>
+    </ProjectReference>
     <ProjectReference Include="UI\DIPS.UI.csproj">
       <Project>{61e59efc-83e6-404e-aa7f-366cffbda7f4}</Project>
       <Name>DIPS.UI</Name>

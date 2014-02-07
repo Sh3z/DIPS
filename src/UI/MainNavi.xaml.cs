@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DIPS.UI.Pages;
+using DIPS.Processor.Client;
 
 namespace DIPS.UI
 {
@@ -23,7 +24,32 @@ namespace DIPS.UI
         public MainNavi()
         {
             InitializeComponent();
-            contentFrame.Navigate(new MainPage());
+            _main = new MainPage();
+            contentFrame.Navigate( _main );
         }
+
+
+        /// <summary>
+        /// Gets or sets the <see cref="IProcessingService"/> connected to
+        /// the active DIPS processor.
+        /// </summary>
+        public IProcessingService Service
+        {
+            get
+            {
+                return _main.Service;
+            }
+            set
+            {
+                _main.Service = value;
+            }
+        }
+
+
+
+        /// <summary>
+        /// Contains a reference to the root page view.
+        /// </summary>
+        private MainPage _main;
     }
 }
