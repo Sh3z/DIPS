@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DecompilationVisitorTests.cs" />
+    <Compile Include="DefinitionXmlValidatorTests.cs" />
     <Compile Include="JobXmlDecompilerTests.cs" />
     <Compile Include="JobXmlValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
