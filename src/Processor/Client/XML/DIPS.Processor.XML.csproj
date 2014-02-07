@@ -49,8 +49,8 @@
     <Compile Include="Decompilation\JobXmlDecompiler.cs" />
     <Compile Include="Decompilation\JobXmlValidator.cs" />
     <Compile Include="Decompilation\ValidationVisitor.cs" />
-    <Compile Include="Decompilation\JobXmlTraverser.cs" />
     <Compile Include="Decompilation\XmlDecompilationException.cs" />
+    <Compile Include="Decompilation\XmlTraverser.cs" />
     <Compile Include="Decompilation\XmlValidationException.cs" />
     <Compile Include="Decompilation\XmlValidatorArgs.cs" />
     <Compile Include="Decompilation\XmlVisitorDecorator.cs" />
