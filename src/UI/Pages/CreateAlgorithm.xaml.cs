@@ -44,15 +44,20 @@ namespace DIPS.UI.Pages
             tech2.ID = 2;
 
             TechShape techShape1 = new TechShape();
-            techShape1.Tech = tech1;
+            //techShape1.Tech = tech1;
+            techShape1.TechniqueName = tech1.Name;
             TechShape techShape2 = new TechShape();
-            techShape2.Tech = tech2;
+            //techShape2.Tech = tech2;
+            techShape2.TechniqueName = tech2.Name;
             TechShape techShape3 = new TechShape();
-            techShape3.Tech = tech2;
+            //techShape3.Tech = tech2;
+            techShape3.TechniqueName = tech2.Name;
             TechShape techShape4 = new TechShape();
-            techShape4.Tech = tech2;
+            //techShape4.Tech = tech2;
+            techShape4.TechniqueName = tech2.Name;
             TechShape techShape5 = new TechShape();
-            techShape5.Tech = tech2;
+            //techShape5.Tech = tech2;
+            techShape5.TechniqueName = tech2.Name;
 
             techList1.Add(techShape1);
             techList1.Add(techShape2);

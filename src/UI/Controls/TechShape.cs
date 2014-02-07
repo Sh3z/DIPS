@@ -25,6 +25,8 @@ namespace DIPS.UI.Controls
         static TechShape()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TechShape), new FrameworkPropertyMetadata(typeof(TechShape)));
+
+            TechniqueNameProperty = DependencyProperty.Register("TechniqueName", typeof(string), typeof(TechShape), new PropertyMetadata(string.Empty));
         }
 
 
@@ -35,6 +37,22 @@ namespace DIPS.UI.Controls
                 Tech = new Technique();
             }
         }
+
+
+        public static readonly DependencyProperty TechniqueNameProperty;
+
+        public string TechniqueName
+        {
+            get
+            {
+                return GetValue(TechniqueNameProperty) as string;
+            }
+            set
+            {
+                SetValue(TechniqueNameProperty, value);
+            }
+        }
+
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
