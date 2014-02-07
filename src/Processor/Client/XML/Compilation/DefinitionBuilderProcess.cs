@@ -21,7 +21,7 @@ namespace DIPS.Processor.XML.Compilation
     /// <example>
     ///     <algorithm name="gaussian">
     ///         <properties>
-    ///             <property name="factor" type="System.Double" default="3" />
+    ///             <property name="factor" type="System.Double" value="3" />
     ///         </properties>
     ///     </algorithm>
     /// </example>
