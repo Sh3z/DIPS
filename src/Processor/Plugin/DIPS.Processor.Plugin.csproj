@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmException.cs" />
+    <Compile Include="AlgorithmMetadataAttribute.cs" />
     <Compile Include="AlgorithmPlugin.cs" />
     <Compile Include="IPropertyInterpreter.cs" />
     <Compile Include="AlgorithmAttribute.cs" />

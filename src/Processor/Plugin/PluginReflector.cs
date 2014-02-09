@@ -87,7 +87,17 @@ namespace DIPS.Processor.Plugin
             }
 
             IEnumerable<Property> properties = _gatherAlgorithmProperties( processType );
-            return new AlgorithmDefinition( identifier.PluginName, properties );
+            AlgorithmDefinition d = new AlgorithmDefinition( identifier.PluginName, properties );
+
+            // Add the metadata if it has been provided.
+            AlgorithmMetadataAttribute attr = _getMetadataAttribute( processType );
+            if( attr != null )
+            {
+                d.DisplayName = attr.DisplayName;
+                d.Description = attr.Description;
+            }
+
+            return d;
         }
 
         /// <summary>
@@ -100,6 +110,18 @@ namespace DIPS.Processor.Plugin
         {
             var attributes = processType.GetCustomAttributes();
             return attributes.FirstOrDefault( x => x.GetType() == typeof( AlgorithmAttribute ) ) as AlgorithmAttribute;
+        }
+
+        /// <summary>
+        /// Gets the metata attribtue from the incoming type
+        /// </summary>
+        /// <param name="processType">The type to locate the attribute from</param>
+        /// <returns>The AlgorithmMetadataAttribute found in the type, or null if one
+        /// can't be found</returns>
+        private static AlgorithmMetadataAttribute _getMetadataAttribute( Type processType )
+        {
+            var attributes = processType.GetCustomAttributes();
+            return attributes.FirstOrDefault( x => x.GetType() == typeof( AlgorithmMetadataAttribute ) ) as AlgorithmMetadataAttribute;
         }
 
 

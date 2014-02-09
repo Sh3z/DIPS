@@ -153,6 +153,15 @@ namespace DIPS.Tests.Processor.Plugin
             Assert.AreEqual( typeof( StringToDoubleConverter ), p.Converter.GetType() );
         }
 
+        [TestMethod]
+        public void TestCreateDefinition_PluginWithMetadata()
+        {
+            AlgorithmDefinition d = PluginReflector.CreateDefinition( typeof( AnnotatedPluginWithMetadata ) );
+
+            Assert.AreEqual( "Display Name", d.DisplayName );
+            Assert.AreEqual( "Description", d.Description );
+        }
+
 
         class NonAnnotatedPlugin : AlgorithmPlugin
         {
@@ -164,6 +173,16 @@ namespace DIPS.Tests.Processor.Plugin
 
         [Algorithm( "Plugin" )]
         class AnnotatedPlugin : AlgorithmPlugin
+        {
+            public override void Run()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        [Algorithm( "Plugin" )]
+        [AlgorithmMetadata( "Display Name", Description = "Description" )]
+        class AnnotatedPluginWithMetadata : AlgorithmPlugin
         {
             public override void Run()
             {

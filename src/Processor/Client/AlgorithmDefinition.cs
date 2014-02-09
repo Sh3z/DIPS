@@ -51,6 +51,26 @@ namespace DIPS.Processor.Client
         }
 
         /// <summary>
+        /// Gets or sets the displayable form of this
+        /// <see cref="AlgorithmDefinition"/>s name, provided by the plugin.
+        /// </summary>
+        public string DisplayName
+        {
+            get;
+            set;
+        }
+        
+        /// <summary>
+        /// Gets or sets the description of this
+        /// <see cref="AlgorithmDefinition"/>, provided by the plugin.
+        /// </summary>
+        public string Description
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets the set of properties associated with the algorithm.
         /// </summary>
         public PropertySet Properties

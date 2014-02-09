@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 namespace DIPS.Processor.Plugin.Base
 {
     [Algorithm( "gamma" )]
+    [AlgorithmMetadata(
+        "Gamma Correction",
+        Description = "Corrects Gamma level of input using provided target Gamma." )]
     public class GammaCorrection : AlgorithmPlugin
     {
         [AlgorithmProperty( "gamma", 3d )]
@@ -19,7 +22,7 @@ namespace DIPS.Processor.Plugin.Base
 
         public override void Run()
         {
-            
+
         }
     }
 }
