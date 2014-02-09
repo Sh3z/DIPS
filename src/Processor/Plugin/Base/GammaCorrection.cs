@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace DIPS.Processor.Plugin.Base
 {
-    [PluginIdentifier( "gamma" )]
+    [Algorithm( "gamma" )]
     public class GammaCorrection : AlgorithmPlugin
     {
-        [PluginVariable( "gamma", 3d )]
+        [AlgorithmProperty( "gamma", 3d )]
         public double Gamma
         {
             get;

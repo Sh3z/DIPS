@@ -15,14 +15,14 @@ namespace DIPS.Processor.Plugin
     /// class.
     /// </remarks>
     [AttributeUsage( AttributeTargets.Class )]
-    public sealed class PluginIdentifierAttribute : Attribute
+    public sealed class AlgorithmAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PluginIdentifierAttribute"/>
+        /// Initializes a new instance of the <see cref="AlgorithmAttribute"/>
         /// class with the name of the plugin.
         /// </summary>
         /// <param name="pluginName">The unique name of this plugin.</param>
-        public PluginIdentifierAttribute( string pluginName )
+        public AlgorithmAttribute( string pluginName )
         {
             if( string.IsNullOrEmpty( pluginName ) )
             {
@@ -35,7 +35,7 @@ namespace DIPS.Processor.Plugin
 
         /// <summary>
         /// Gets the name of the plugin represented by the class annotated with
-        /// this <see cref="PluginIdentifierAttribute"/>.
+        /// this <see cref="AlgorithmAttribute"/>.
         /// </summary>
         public string PluginName
         {

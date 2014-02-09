@@ -14,7 +14,7 @@ namespace DIPS.Processor.Plugin.Matlab
         /// <summary>
         /// Contains the serialized Mathlab file, as bytes.
         /// </summary>
-        [PluginVariable( "matlab-file", "", PublicType = typeof( string ), PublicTypeConverter = typeof( FileToBytesConverter ) )]
+        [AlgorithmProperty( "matlab-file", "", PublicType = typeof( string ), PublicTypeConverter = typeof( FileToBytesConverter ) )]
         public byte[] SerializedMatlabFile
         {
             get;

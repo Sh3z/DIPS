@@ -100,7 +100,7 @@ namespace DIPS.Processor.Registry
             // Use Linq to quickly grab all attributed properties.
             var attributedProperties =
                 from p in type.GetProperties()
-                let attr = p.GetCustomAttributes( false ).OfType<PluginVariableAttribute>().FirstOrDefault()
+                let attr = p.GetCustomAttributes( false ).OfType<AlgorithmPropertyAttribute>().FirstOrDefault()
                 where attr != null
                 select new
                 {

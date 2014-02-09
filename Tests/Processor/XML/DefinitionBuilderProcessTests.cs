@@ -95,10 +95,10 @@ namespace DIPS.Tests.Processor.XML
             Debug.WriteLine( node.ToString() );
         }
 
-        [PluginIdentifier( "Test" )]
+        [Algorithm( "Test" )]
         class ParameterTest : AlgorithmPlugin
         {
-            [PluginVariable( "Value", 1d )]
+            [AlgorithmProperty( "Value", 1d )]
             public double Value
             {
                 get;

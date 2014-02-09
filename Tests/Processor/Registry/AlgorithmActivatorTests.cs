@@ -217,7 +217,7 @@ namespace DIPS.Tests.Processor.Registry
                 Test = 1;
             }
 
-            [PluginVariable( "Test", typeof( double ) )]
+            [AlgorithmProperty( "Test", typeof( double ) )]
             public double Test
             {
                 get;

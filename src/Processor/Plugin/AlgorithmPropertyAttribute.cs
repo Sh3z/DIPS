@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 namespace DIPS.Processor.Plugin
 {
     /// <summary>
-    /// Exposes variables of a plugin exposed using the <see cref="PluginIdentifierAttribute"/>
+    /// Exposes variables of a plugin exposed using the <see cref="AlgorithmAttribute"/>
     /// to metadata. This class cannot be inherited.
     /// </summary>
     [AttributeUsage( AttributeTargets.Property )]
-    public sealed class PluginVariableAttribute : Attribute
+    public sealed class AlgorithmPropertyAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PluginVariableAttribute"/>
+        /// Initializes a new instance of the <see cref="AlgorithmPropertyAttribute"/>
         /// class.
         /// </summary>
         /// <param name="identifier">The unique name of the identifier of the
         /// variable.</param>
         /// <param name="defaultValue">The default value associated with the
         /// property.</param>
-        public PluginVariableAttribute( string identifier, object defaultValue )
+        public AlgorithmPropertyAttribute( string identifier, object defaultValue )
         {
             if( string.IsNullOrEmpty( identifier ) )
             {

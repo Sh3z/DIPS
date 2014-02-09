@@ -162,7 +162,7 @@ namespace DIPS.Tests.Processor.Plugin
             }
         }
 
-        [PluginIdentifier( "Plugin" )]
+        [Algorithm( "Plugin" )]
         class AnnotatedPlugin : AlgorithmPlugin
         {
             public override void Run()
@@ -171,10 +171,10 @@ namespace DIPS.Tests.Processor.Plugin
             }
         }
 
-        [PluginIdentifier( "Plugin" )]
+        [Algorithm( "Plugin" )]
         class AnnotatedPluginWithProperty : AlgorithmPlugin
         {
-            [PluginVariable( "Value", 3d )]
+            [AlgorithmProperty( "Value", 3d )]
             public double Value
             {
                 get;
@@ -187,10 +187,10 @@ namespace DIPS.Tests.Processor.Plugin
             }
         }
 
-        [PluginIdentifier( "Plugin" )]
+        [Algorithm( "Plugin" )]
         class AnnotatedPluginWithPropertyAndCompressor : AlgorithmPlugin
         {
-            [PluginVariable( "Value", null, CompressorType = typeof( GZipCompressor ) )]
+            [AlgorithmProperty( "Value", null, CompressorType = typeof( GZipCompressor ) )]
             public string Value
             {
                 get;
@@ -203,10 +203,10 @@ namespace DIPS.Tests.Processor.Plugin
             }
         }
 
-        [PluginIdentifier( "Plugin" )]
+        [Algorithm( "Plugin" )]
         class AnnotatedPluginWithPropertyFauxType : AlgorithmPlugin
         {
-            [PluginVariable( "Value", 1d, PublicType = typeof( string ) )]
+            [AlgorithmProperty( "Value", 1d, PublicType = typeof( string ) )]
             public double Value
             {
                 get;
@@ -219,10 +219,10 @@ namespace DIPS.Tests.Processor.Plugin
             }
         }
 
-        [PluginIdentifier( "Plugin" )]
+        [Algorithm( "Plugin" )]
         class AnnotatedPluginWithPropertyFauxTypeAndConverter : AlgorithmPlugin
         {
-            [PluginVariable( "Value", "1", PublicType = typeof( string ), PublicTypeConverter = typeof( StringToDoubleConverter ) )]
+            [AlgorithmProperty( "Value", "1", PublicType = typeof( string ), PublicTypeConverter = typeof( StringToDoubleConverter ) )]
             public double Value
             {
                 get;
@@ -235,10 +235,10 @@ namespace DIPS.Tests.Processor.Plugin
             }
         }
 
-        [PluginIdentifier( "Plugin" )]
+        [Algorithm( "Plugin" )]
         class AnnotatedPluginWithPropertyFauxTypeBadConverter : AlgorithmPlugin
         {
-            [PluginVariable( "Value", 1d, PublicType = typeof( string ), PublicTypeConverter = typeof( string ) )]
+            [AlgorithmProperty( "Value", 1d, PublicType = typeof( string ), PublicTypeConverter = typeof( string ) )]
             public double Value
             {
                 get;

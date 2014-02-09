@@ -27,7 +27,7 @@ namespace DIPS.Processor.Plugin
         /// of the <see cref="AlgorithmPlugin"/>.</returns>
         /// <exception cref="ArgumentNullException">plugin is null</exception>
         /// <exception cref="ArgumentException">the supplied <see cref="AlgorithmPlugin"/>
-        /// is not annotated with the <see cref="PluginIdentifierAttribute"/>
+        /// is not annotated with the <see cref="AlgorithmAttribute"/>
         /// attribute.</exception>
         public static AlgorithmDefinition CreateDefinition( AlgorithmPlugin plugin )
         {
@@ -52,7 +52,7 @@ namespace DIPS.Processor.Plugin
         /// <exception cref="ArgumentNullException">pluginType is null.</exception>
         /// <exception cref="ArgumentException">pluginType is not a subclass of
         /// <see cref="AlgorithmPlugin"/>; the supplied <see cref="Type"/>
-        /// is not annotated with the <see cref="PluginIdentifierAttribute"/>
+        /// is not annotated with the <see cref="AlgorithmAttribute"/>
         /// attribute.</exception>
         public static AlgorithmDefinition CreateDefinition( Type pluginType )
         {
@@ -80,7 +80,7 @@ namespace DIPS.Processor.Plugin
                     string.Format( "Type {0} is not a subclass of {1}", processType, typeof( AlgorithmPlugin ) ) );
             }
 
-            PluginIdentifierAttribute identifier = _getIdentifierAttribute( processType );
+            AlgorithmAttribute identifier = _getIdentifierAttribute( processType );
             if( identifier == null )
             {
                 throw new ArgumentException( "Supplied AlgorithmPlugin is not annotated correctly." );
@@ -96,10 +96,10 @@ namespace DIPS.Processor.Plugin
         /// <param name="processType">The type to locate the attribute from</param>
         /// <returns>The PluginIdentifierAttribute foudn in the type, or null if one can't
         /// be found</returns>
-        private static PluginIdentifierAttribute _getIdentifierAttribute( Type processType )
+        private static AlgorithmAttribute _getIdentifierAttribute( Type processType )
         {
             var attributes = processType.GetCustomAttributes();
-            return attributes.FirstOrDefault( x => x.GetType() == typeof( PluginIdentifierAttribute ) ) as PluginIdentifierAttribute;
+            return attributes.FirstOrDefault( x => x.GetType() == typeof( AlgorithmAttribute ) ) as AlgorithmAttribute;
         }
 
 
@@ -114,10 +114,10 @@ namespace DIPS.Processor.Plugin
             List<Property> properties = new List<Property>();
             foreach( PropertyInfo property in processType.GetProperties() )
             {
-                var varAttrs = property.GetCustomAttributes().OfType<PluginVariableAttribute>();
+                var varAttrs = property.GetCustomAttributes().OfType<AlgorithmPropertyAttribute>();
                 if( varAttrs.Any() )
                 {
-                    PluginVariableAttribute attr = varAttrs.First();
+                    AlgorithmPropertyAttribute attr = varAttrs.First();
                     Property p = _createProperty( property, attr );
                     properties.Add( p );
                 }
@@ -135,7 +135,7 @@ namespace DIPS.Processor.Plugin
         /// <param name="attr">The additional information provided by the
         /// plugin</param>
         /// <returns>A Property definition</returns>
-        private static Property _createProperty( PropertyInfo property, PluginVariableAttribute attr )
+        private static Property _createProperty( PropertyInfo property, AlgorithmPropertyAttribute attr )
         {
             _guardBadAttribute( attr );
 
@@ -162,7 +162,7 @@ namespace DIPS.Processor.Plugin
         /// Scrutinizes the variable attribute and ensures it has been annotated correctly.
         /// </summary>
         /// <param name="attr">The attribute to scrutinize.</param>
-        private static void _guardBadAttribute( PluginVariableAttribute attr )
+        private static void _guardBadAttribute( AlgorithmPropertyAttribute attr )
         {
             if( attr.CompressorType != null )
             {
