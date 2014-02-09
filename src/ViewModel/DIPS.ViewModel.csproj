@@ -65,6 +65,7 @@
     <Compile Include="Commands\ImageCommands.cs" />
     <None Include="Commands\ProcessImageCommand.cs" />
     <Compile Include="Converters\BitmapToImageSourceConverter.cs" />
+    <Compile Include="ViewModel.cs" />
     <Compile Include="IFemoreViewModel.cs" />
     <Compile Include="ImageProcessedArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
