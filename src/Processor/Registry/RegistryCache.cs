@@ -163,7 +163,7 @@ namespace DIPS.Processor.Registry
         /// class, and the type subclasses AlgorithmPlugin</returns>
         private bool _isValidType( Type type )
         {
-            return type.GetCustomAttributes().OfType<AlgorithmAttribute>().Any()
+            return type.GetCustomAttribute( typeof( AlgorithmAttribute ) ) != null
                 && type.IsSubclassOf( typeof( AlgorithmPlugin ) );
         }
 

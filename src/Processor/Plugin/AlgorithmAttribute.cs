@@ -14,7 +14,7 @@ namespace DIPS.Processor.Plugin
     /// Objects annotated with this <see cref="Attribute"/> must subclass the <see cref="Plugin"/>
     /// class.
     /// </remarks>
-    [AttributeUsage( AttributeTargets.Class )]
+    [AttributeUsage( AttributeTargets.Class, AllowMultiple = false )]
     public sealed class AlgorithmAttribute : Attribute
     {
         /// <summary>
