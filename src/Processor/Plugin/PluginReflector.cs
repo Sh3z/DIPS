@@ -88,6 +88,7 @@ namespace DIPS.Processor.Plugin
 
             IEnumerable<Property> properties = _gatherAlgorithmProperties( processType );
             AlgorithmDefinition d = new AlgorithmDefinition( identifier.PluginName, properties );
+            d.ParameterObjectType = identifier.ParameterObjectType;
 
             // Add the metadata if it has been provided.
             AlgorithmMetadataAttribute attr = _getMetadataAttribute( processType );

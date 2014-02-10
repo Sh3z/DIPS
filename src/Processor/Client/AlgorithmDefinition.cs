@@ -80,6 +80,16 @@ namespace DIPS.Processor.Client
         }
 
         /// <summary>
+        /// Gets or sets the <see cref="Type"/> of the object used by the plugin
+        /// to describe its properties.
+        /// </summary>
+        public Type ParameterObjectType
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Determines whether this <see cref="AlgorithmDefinition"/> is equivilant to
         /// the provided <see cref="AlgorithmDefinition"/>.
         /// </summary>

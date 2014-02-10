@@ -162,6 +162,14 @@ namespace DIPS.Tests.Processor.Plugin
             Assert.AreEqual( "Description", d.Description );
         }
 
+        [TestMethod]
+        public void TestCreateDefinition_PluginWithParameterObject()
+        {
+            AlgorithmDefinition d = PluginReflector.CreateDefinition( typeof( AnnotatedPluginWithParameterObjectType ) );
+
+            Assert.AreEqual( typeof( string ), d.ParameterObjectType );
+        }
+
 
         class NonAnnotatedPlugin : AlgorithmPlugin
         {
@@ -270,6 +278,14 @@ namespace DIPS.Tests.Processor.Plugin
             }
         }
 
+        [Algorithm( "Test", ParameterObjectType = typeof( string ) )]
+        class AnnotatedPluginWithParameterObjectType : AlgorithmPlugin
+        {
+            public override void Run( object parameterObject )
+            {
+                throw new NotImplementedException();
+            }
+        }
 
 
 
