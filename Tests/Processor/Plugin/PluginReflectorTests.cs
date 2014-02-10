@@ -167,7 +167,15 @@ namespace DIPS.Tests.Processor.Plugin
         {
             AlgorithmDefinition d = PluginReflector.CreateDefinition( typeof( AnnotatedPluginWithParameterObjectType ) );
 
-            Assert.AreEqual( typeof( string ), d.ParameterObjectType );
+            Assert.IsNotNull( d.ParameterObject );
+            Assert.AreEqual( typeof( PropertiesObj ), d.ParameterObject.GetType() );
+        }
+
+        [TestMethod]
+        [ExpectedException( typeof( PluginReflectionException ) )]
+        public void TestCreateDefinition_PluginWithParameterObject_ActivationError()
+        {
+            AlgorithmDefinition d = PluginReflector.CreateDefinition( typeof( AnnotatedPluginWithBadParameterObjectType ) );
         }
 
 
@@ -278,7 +286,7 @@ namespace DIPS.Tests.Processor.Plugin
             }
         }
 
-        [Algorithm( "Test", ParameterObjectType = typeof( string ) )]
+        [Algorithm( "Test", ParameterObjectType = typeof( PropertiesObj ) )]
         class AnnotatedPluginWithParameterObjectType : AlgorithmPlugin
         {
             public override void Run( object parameterObject )
@@ -287,7 +295,26 @@ namespace DIPS.Tests.Processor.Plugin
             }
         }
 
+        [Algorithm( "Test", ParameterObjectType = typeof( BadPropertiesObj ) )]
+        class AnnotatedPluginWithBadParameterObjectType : AlgorithmPlugin
+        {
+            public override void Run( object parameterObject )
+            {
+                throw new NotImplementedException();
+            }
+        }
 
+        class PropertiesObj
+        {
+        }
+
+        class BadPropertiesObj
+        {
+            public BadPropertiesObj()
+            {
+                throw new Exception();
+            }
+        }
 
 
         class StringToDoubleConverter : IValueConverter

@@ -48,6 +48,7 @@
     <Compile Include="AlgorithmAttribute.cs" />
     <Compile Include="PluginException.cs" />
     <Compile Include="AlgorithmPropertyAttribute.cs" />
+    <Compile Include="PluginReflectionException.cs" />
     <Compile Include="PluginReflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -88,7 +88,11 @@ namespace DIPS.Processor.Plugin
 
             IEnumerable<Property> properties = _gatherAlgorithmProperties( processType );
             AlgorithmDefinition d = new AlgorithmDefinition( identifier.PluginName, properties );
-            d.ParameterObjectType = identifier.ParameterObjectType;
+
+            if( identifier.ParameterObjectType != null )
+            {
+                d.ParameterObject = _activatePluginPropertiesObject( identifier.ParameterObjectType );
+            }
 
             // Add the metadata if it has been provided.
             AlgorithmMetadataAttribute attr = _getMetadataAttribute( processType );
@@ -99,6 +103,23 @@ namespace DIPS.Processor.Plugin
             }
 
             return d;
+        }
+
+        /// <summary>
+        /// Attempts to activate the incoming type
+        /// </summary>
+        /// <param name="propertiesType">The type of the plugins parameter object</param>
+        /// <returns>The object returned from instantiating the type</returns>
+        private static object _activatePluginPropertiesObject( Type propertiesType )
+        {
+            try
+            {
+                return Activator.CreateInstance( propertiesType );
+            }
+            catch( Exception e )
+            {
+                throw new PluginReflectionException( "Could not instantiate properties object", e );
+            }
         }
 
         /// <summary>
