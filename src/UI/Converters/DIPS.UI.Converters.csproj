@@ -48,6 +48,10 @@
       <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
       <Name>DIPS.Processor.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ViewModel\DIPS.ViewModel.csproj">
+      <Project>{aa521185-aa1a-4461-810c-b0bf60063136}</Project>
+      <Name>DIPS.ViewModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

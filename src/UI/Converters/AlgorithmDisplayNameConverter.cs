@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,13 +32,13 @@ namespace DIPS.UI.Converters
                 return null;
             }
 
-            if( value is AlgorithmDefinition == false )
+            if( value is AlgorithmViewModel == false )
             {
                 return string.Empty;
             }
 
-            AlgorithmDefinition d = value as AlgorithmDefinition;
-            return d.DisplayName ?? d.AlgorithmName;
+            AlgorithmViewModel d = value as AlgorithmViewModel;
+            return d.Definition.DisplayName ?? d.Definition.AlgorithmName;
         }
 
         /// <summary>

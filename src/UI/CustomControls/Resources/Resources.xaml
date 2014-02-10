@@ -17,7 +17,7 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             MinHeight="{TemplateBinding MinHeight}"
                             MaxWidth="{TemplateBinding MaxWidth}">
-                        <!-- The ListView should be presenting a set of AlgorithmDefinitions to satisfy this Binding. -->
+                        <!-- The ListView should be presenting a set of AlgorithmViewModels to satisfy this Binding. -->
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Text="{Binding Converter={StaticResource AlgorithmToName}}" />
                     </Border>

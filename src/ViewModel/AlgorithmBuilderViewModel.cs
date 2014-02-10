@@ -21,35 +21,35 @@ namespace DIPS.ViewModel
         /// </summary>
         public AlgorithmBuilderViewModel()
         {
-            AvailableAlgorithms = new ObservableCollection<AlgorithmDefinition>();
-            ComposedAlgorithms = new ObservableCollection<AlgorithmDefinition>();
+            AvailableAlgorithms = new ObservableCollection<AlgorithmViewModel>();
+            ComposedAlgorithms = new ObservableCollection<AlgorithmViewModel>();
         }
 
 
         /// <summary>
-        /// Gets the collection of <see cref="AlgorithmDefinition"/>s available
+        /// Gets the collection of <see cref="AlgorithmViewModel"/>s available
         /// for building a technique with.
         /// </summary>
-        public ObservableCollection<AlgorithmDefinition> AvailableAlgorithms
+        public ObservableCollection<AlgorithmViewModel> AvailableAlgorithms
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// Gets the collection of <see cref="AlgorithmDefinition"/>s chosen
+        /// Gets the collection of <see cref="AlgorithmViewModel"/>s chosen
         /// for the current composite algorithm.
         /// </summary>
-        public ObservableCollection<AlgorithmDefinition> ComposedAlgorithms
+        public ObservableCollection<AlgorithmViewModel> ComposedAlgorithms
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// Gets or sets the selected <see cref="AlgorithmDefinition"/>.
+        /// Gets or sets the selected <see cref="AlgorithmViewModel"/>.
         /// </summary>
-        public AlgorithmDefinition SelectedAlgorithm
+        public AlgorithmViewModel SelectedAlgorithm
         {
             get
             {
@@ -62,6 +62,6 @@ namespace DIPS.ViewModel
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private AlgorithmDefinition _selectedAlgorithm;
+        private AlgorithmViewModel _selectedAlgorithm;
     }
 }

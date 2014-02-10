@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmBuilderViewModel.cs" />
+    <Compile Include="AlgorithmViewModel.cs" />
     <Compile Include="Commands\ImageCommands.cs" />
     <None Include="Commands\ProcessImageCommand.cs" />
     <Compile Include="Converters\BitmapToImageSourceConverter.cs" />

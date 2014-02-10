@@ -45,7 +45,8 @@ namespace DIPS.UI.Pages
             AlgorithmBuilderViewModel vm = new AlgorithmBuilderViewModel();
             foreach( var algorithm in Service.GetAlgorithmDefinitions() )
             {
-                vm.AvailableAlgorithms.Add( algorithm );
+                AlgorithmViewModel viewModel = new AlgorithmViewModel( algorithm );
+                vm.AvailableAlgorithms.Add( viewModel );
             }
 
             createAlgorithmScreen.DataContext = vm;

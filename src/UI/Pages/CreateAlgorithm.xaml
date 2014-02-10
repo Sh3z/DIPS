@@ -53,6 +53,7 @@
 
         </GroupBox>
         <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="488,20,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
-        <xctk:PropertyGrid x:Name="_propertyGrid" Margin="766,63,10,10" IsManipulationEnabled="True"/>
+        <xctk:PropertyGrid Margin="766,63,10,10" IsManipulationEnabled="True"
+                           SelectedObject="{Binding Path=SelectedAlgorithm.ParameterObject}"/>
     </Grid>
 </Page>
