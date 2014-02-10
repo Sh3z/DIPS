@@ -98,7 +98,6 @@
     <Compile Include="Controls\infoBell.xaml.cs">
       <DependentUpon>infoBell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TechShape.cs" />
     <Compile Include="imageDemo.cs" />
     <Compile Include="MainNavi.xaml.cs">
       <DependentUpon>MainNavi.xaml</DependentUpon>
@@ -153,10 +152,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\infoBell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\TechShape.Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,6 +212,10 @@
     <ProjectReference Include="..\ViewModel\DIPS.ViewModel.csproj">
       <Project>{aa521185-aa1a-4461-810c-b0bf60063136}</Project>
       <Name>DIPS.ViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="CustomControls\DIPS.UI.CustomControls.csproj">
+      <Project>{f78c7061-6832-44d8-a554-4fe884d20acf}</Project>
+      <Name>DIPS.UI.CustomControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

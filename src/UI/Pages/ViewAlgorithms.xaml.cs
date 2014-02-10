@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,14 @@ namespace DIPS.UI.Pages
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             CreateAlgorithm createAlgorithmScreen = new CreateAlgorithm();
-            createAlgorithmScreen.Service = Service;
+            AlgorithmBuilderViewModel vm = new AlgorithmBuilderViewModel();
+            foreach( var algorithm in Service.GetAlgorithmDefinitions() )
+            {
+                vm.AvailableAlgorithms.Add( algorithm );
+            }
+
+            createAlgorithmScreen.DataContext = vm;
+
             this.NavigationService.Navigate(createAlgorithmScreen);
         }
     }

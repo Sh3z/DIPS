@@ -4,8 +4,18 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+      xmlns:custom="clr-namespace:DIPS.UI.CustomControls;assembly=DIPS.UI.CustomControls"
       mc:Ignorable="d"
 	Title="CreateAlgorithm" Height="438.09" Width="961.478">
+    
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/DIPS.UI.CustomControls;component/Resources/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid>
         <Label x:Name="lblName" Content="Algorithm Name:" HorizontalAlignment="Left" Margin="210,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
@@ -22,27 +32,27 @@
 
         <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="365" Margin="27,63,0,0" VerticalAlignment="Top" Width="295">
             <ScrollViewer>
-                <StackPanel x:Name="stackListOfAvailableTech" Grid.Column="1"
-            Background="LightGray"
-            AllowDrop="True"
-            DragOver="panel_DragOver"
-            Drop="panel_Drop">
-                </StackPanel>
+                <ListView
+                    ItemsSource="{Binding Path=AvailableAlgorithms}"
+                    Background="LightGray"
+                    ItemContainerStyle="{StaticResource AlgorithmItemStyle}"
+                    dd:DragDrop.IsDragSource="True"
+                    dd:DragDrop.IsDropTarget="False" />
             </ScrollViewer>
         </GroupBox>
         <GroupBox Header="Algorithm" Margin="412,63,0,0" VerticalAlignment="Top" Height="365" HorizontalAlignment="Left" Width="303">
             <ScrollViewer>
-                <StackPanel Grid.Column="2"
-            Background="Lavender"
-            AllowDrop="True"
-            DragOver="panel_DragOver"
-            Drop="panel_Drop" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown">
-                </StackPanel>
+                <ListView
+                    ItemsSource="{Binding Path=ComposedAlgorithms, Mode=TwoWay}"
+                    SelectedItem="{Binding Path=SelectedAlgorithm, Mode=TwoWay}"
+                    Background="Lavender"
+                    ItemContainerStyle="{StaticResource AlgorithmItemStyle}"
+                    dd:DragDrop.IsDragSource="True"
+                    dd:DragDrop.IsDropTarget="True" />
             </ScrollViewer>
 
         </GroupBox>
         <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="488,20,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
-        <xctk:PropertyGrid x:Name="_propertyGrid" Margin="766,63,10,10"
-                                     AutoGenerateProperties="True" IsManipulationEnabled="True"/>
+        <xctk:PropertyGrid x:Name="_propertyGrid" Margin="766,63,10,10" IsManipulationEnabled="True"/>
     </Grid>
 </Page>
