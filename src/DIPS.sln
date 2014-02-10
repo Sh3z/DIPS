@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Processor.Plugin", "Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Processor.Registry", "Processor\Registry\DIPS.Processor.Registry.csproj", "{3FB76655-E579-4832-A014-4B68893CF1E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.UI.Behaviour", "UI\Behaviour\DIPS.UI.Behaviour.csproj", "{C4763F94-0246-427E-BBD9-CAE26568E69C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.UI.CustomControls", "UI\CustomControls\DIPS.UI.CustomControls.csproj", "{F78C7061-6832-44D8-A554-4FE884D20ACF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.UI.Converters", "UI\Converters\DIPS.UI.Converters.csproj", "{03E26023-30DA-4D8E-B30B-AD228A4B4D60}"
@@ -174,19 +172,6 @@ Global
 		{3FB76655-E579-4832-A014-4B68893CF1E1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3FB76655-E579-4832-A014-4B68893CF1E1}.Release|x64.ActiveCfg = Release|Any CPU
 		{3FB76655-E579-4832-A014-4B68893CF1E1}.Release|x86.ActiveCfg = Release|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Debug|x64.Build.0 = Debug|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Release|x64.ActiveCfg = Release|Any CPU
-		{C4763F94-0246-427E-BBD9-CAE26568E69C}.Release|x86.ActiveCfg = Release|Any CPU
 		{F78C7061-6832-44D8-A554-4FE884D20ACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F78C7061-6832-44D8-A554-4FE884D20ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F78C7061-6832-44D8-A554-4FE884D20ACF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
