@@ -10,7 +10,7 @@ namespace DIPS.Processor.Client
     /// Represents the definition of an <see cref="AlgorithmPlugin"/> through
     /// metadata.
     /// </summary>
-    public class AlgorithmDefinition : IEquatable<AlgorithmDefinition>
+    public class AlgorithmDefinition : IEquatable<AlgorithmDefinition>, ICloneable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AlgorithmDefinition"/>
@@ -114,6 +114,21 @@ namespace DIPS.Processor.Client
             }
 
             return other.Properties.Equals( Properties );
+        }
+
+        /// <summary>
+        /// Creates a copy of this <see cref="AlgorithmDefinition"/>.
+        /// </summary>
+        /// <returns>A new instance of the <see cref="AlgorithmDefinition"/>
+        /// class with the same values as the current
+        /// <see cref="AlgorithmDefinition"/></returns>
+        public object Clone()
+        {
+            AlgorithmDefinition ret = new AlgorithmDefinition( AlgorithmName, Properties );
+            ret.DisplayName = DisplayName;
+            ret.Description = Description;
+            ret.ParameterObject = ParameterObject;
+            return ret;
         }
     }
 }

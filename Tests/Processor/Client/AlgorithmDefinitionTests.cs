@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.Processor.Client;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DIPS.Tests.Processor.Client
 {
@@ -81,6 +82,26 @@ namespace DIPS.Tests.Processor.Client
             Assert.AreEqual( definitionName, d.AlgorithmName );
             Assert.AreEqual( 1, d.Properties.Count );
             Assert.IsTrue( d.Properties.Contains( p ) );
+        }
+
+        /// <summary>
+        /// Tests cloning an AlgorithmDefinition
+        /// </summary>
+        [TestMethod]
+        public void TestClone()
+        {
+            Property p = new Property( "TestProperty", typeof( int ) );
+            IEnumerable<Property> properties = new List<Property> { p };
+            string definitionName = "Test";
+            AlgorithmDefinition d = new AlgorithmDefinition( definitionName, properties );
+            AlgorithmDefinition clone = d.Clone() as AlgorithmDefinition;
+
+            Assert.AreEqual( d.AlgorithmName, clone.AlgorithmName );
+            Assert.AreEqual( d.Description, clone.Description );
+            Assert.AreEqual( d.DisplayName, clone.DisplayName );
+            Assert.AreEqual( d.ParameterObject, clone.ParameterObject );
+            Assert.AreEqual( d.Properties.Count(), clone.Properties.Count() );
+            Assert.IsTrue( d.Properties.SequenceEqual( clone.Properties ) );
         }
     }
 }
