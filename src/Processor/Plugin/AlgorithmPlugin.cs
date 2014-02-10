@@ -37,6 +37,19 @@ namespace DIPS.Processor.Plugin
         /// </summary>
         /// <exception cref="AlgorithmException">an internal exception has occured. This
         /// is accessed through the inner exception property.</exception>
-        public abstract void Run();
+        public virtual void Run()
+        {
+            Run( null );
+        }
+
+        /// <summary>
+        /// Executes the algorithm represented by this <see cref="AlgorithmPlugin"/>.
+        /// </summary>
+        /// <param name="parameterObject">An object of the type provided by the
+        /// <see cref="AlgorithmAttribute"/> describing the properties used by this
+        /// <see cref="AlgorithmPlugin"/>.</param>
+        /// <exception cref="AlgorithmException">an internal exception has occured. This
+        /// is accessed through the inner exception property.</exception>
+        public abstract void Run( object parameterObject );
     }
 }

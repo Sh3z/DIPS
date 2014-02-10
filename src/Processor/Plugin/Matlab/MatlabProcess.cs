@@ -24,9 +24,12 @@ namespace DIPS.Processor.Plugin.Matlab
         /// <summary>
         /// Executes the algorithm represented by this <see cref="AlgorithmPlugin"/>.
         /// </summary>
+        /// <param name="parameterObject">An object of the type provided by the
+        /// <see cref="AlgorithmAttribute"/> describing the properties used by this
+        /// <see cref="AlgorithmPlugin"/>.</param>
         /// <exception cref="AlgorithmException">an internal exception has occured. This
         /// is accessed through the inner exception property.</exception>
-        public override void Run()
+        public override void Run( object parameterObject )
         {
 
         }

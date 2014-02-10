@@ -105,7 +105,7 @@ namespace DIPS.Tests.Processor.XML
                 set;
             }
 
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }

@@ -111,7 +111,7 @@ namespace DIPS.Tests.Processor
 
         class GoodPlugin : AlgorithmPlugin
         {
-            public override void Run()
+            public override void Run( object obj )
             {
                 Output = Input;
             }
@@ -119,7 +119,7 @@ namespace DIPS.Tests.Processor
 
         class BadPlugin : AlgorithmPlugin
         {
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }

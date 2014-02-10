@@ -165,7 +165,7 @@ namespace DIPS.Tests.Processor.Plugin
 
         class NonAnnotatedPlugin : AlgorithmPlugin
         {
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }
@@ -174,7 +174,7 @@ namespace DIPS.Tests.Processor.Plugin
         [Algorithm( "Plugin" )]
         class AnnotatedPlugin : AlgorithmPlugin
         {
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }
@@ -184,7 +184,7 @@ namespace DIPS.Tests.Processor.Plugin
         [AlgorithmMetadata( "Display Name", Description = "Description" )]
         class AnnotatedPluginWithMetadata : AlgorithmPlugin
         {
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }
@@ -200,7 +200,7 @@ namespace DIPS.Tests.Processor.Plugin
                 set;
             }
 
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }
@@ -216,7 +216,7 @@ namespace DIPS.Tests.Processor.Plugin
                 set;
             }
 
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }
@@ -232,7 +232,7 @@ namespace DIPS.Tests.Processor.Plugin
                 set;
             }
 
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }
@@ -248,7 +248,7 @@ namespace DIPS.Tests.Processor.Plugin
                 set;
             }
 
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }
@@ -264,7 +264,7 @@ namespace DIPS.Tests.Processor.Plugin
                 set;
             }
 
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }

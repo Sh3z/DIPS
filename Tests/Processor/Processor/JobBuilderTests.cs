@@ -201,7 +201,7 @@ namespace DIPS.Tests.Processor
 
         class DudPlugin : AlgorithmPlugin
         {
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }

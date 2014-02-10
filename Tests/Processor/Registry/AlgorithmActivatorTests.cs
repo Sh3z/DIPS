@@ -224,7 +224,7 @@ namespace DIPS.Tests.Processor.Registry
                 set;
             }
 
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }
@@ -236,7 +236,7 @@ namespace DIPS.Tests.Processor.Registry
             {
             }
 
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }
@@ -250,7 +250,7 @@ namespace DIPS.Tests.Processor.Registry
                 private set;
             }
 
-            public override void Run()
+            public override void Run( object obj )
             {
                 throw new NotImplementedException();
             }

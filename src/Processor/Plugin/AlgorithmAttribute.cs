@@ -42,5 +42,15 @@ namespace DIPS.Processor.Plugin
             get;
             private set;
         }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Type"/> of the object describing the
+        /// parameters used by the annotated plugin.
+        /// </summary>
+        public Type ParameterObjectType
+        {
+            get;
+            set;
+        }
     }
 }

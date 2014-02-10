@@ -227,7 +227,7 @@ namespace DIPS.Tests.Processor
 
         class TestAlgorithm : AlgorithmPlugin
         {
-            public override void Run()
+            public override void Run( object obj )
             {
                 Output = Input;
             }

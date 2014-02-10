@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DIPS.Processor.Plugin.Base
 {
-    [Algorithm( "gamma" )]
+    [Algorithm( "gamma", ParameterObjectType = typeof( GammaProperties ) )]
     [AlgorithmMetadata(
         "Gamma Correction",
         Description = "Corrects Gamma level of input using provided target Gamma." )]
@@ -20,7 +20,7 @@ namespace DIPS.Processor.Plugin.Base
             set;
         }
 
-        public override void Run()
+        public override void Run( object parameterObject )
         {
 
         }
