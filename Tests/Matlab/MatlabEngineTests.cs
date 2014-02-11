@@ -31,7 +31,7 @@ namespace DIPS.Tests.Matlab
         public void TestCreateCommand_NullCommand()
         {
             MatlabEngine engine = new MatlabEngine();
-            engine.CreateCommand( null );
+            engine.CreateCommand( null as string );
         }
 
         /// <summary>
@@ -56,8 +56,44 @@ namespace DIPS.Tests.Matlab
             string cmdText = "b=a*a";
             MatlabEngine engine = new MatlabEngine();
             MatlabCommand cmd = engine.CreateCommand( cmdText );
+            SingleStatementMatlabCommand theCmd = cmd as SingleStatementMatlabCommand;
 
-            Assert.AreEqual( cmdText, cmd.Input );
+            Assert.AreEqual( cmdText, theCmd.Input );
+        }
+
+        /// <summary>
+        /// Tests creating the multiline command when the session is invalid.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( MatlabException ) )]
+        public void TestCreateComplexCommand_InvalidSession()
+        {
+            MatlabEngine engine = new MatlabEngine();
+            engine.Shutdown();
+
+            engine.CreateCommand( new string[] { } );
+        }
+
+        /// <summary>
+        /// Tests creating the multiline command with no commands
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ArgumentNullException ) )]
+        public void TestCreateComplexCommand_NullCmds()
+        {
+            MatlabEngine engine = new MatlabEngine();
+            engine.CreateCommand( null as IEnumerable<string> );
+        }
+
+        /// <summary>
+        /// Tests creating a valid multiline command
+        /// </summary>
+        [TestMethod]
+        public void TestCreateComplexCommand_ValidArgs()
+        {
+            IEnumerable<string> cmds = new []{ "a=1+1" };
+            MatlabEngine engine = new MatlabEngine();
+            MatlabCommand cmd = engine.CreateCommand( cmds );
         }
     }
 }

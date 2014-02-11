@@ -52,12 +52,12 @@ namespace DIPS.Matlab
 
 
         /// <summary>
-        /// Creates and returns a <see cref="MatlabCommand"/> that can be used
+        /// Creates and returns a <see cref="SingleStatementMatlabCommand"/> that can be used
         /// within the current <see cref="MatlabEngine"/>.
         /// </summary>
         /// <param name="cmd">The command text to be executed when the command
         /// is ran.</param>
-        /// <returns>A <see cref="MatlabCommand"/> applicable to this
+        /// <returns>A <see cref="SingleStatementMatlabCommand"/> applicable to this
         /// <see cref="MatlabEngine"/>.</returns>
         /// <exception cref="ArgumentException">cmd is null or empty.</exception>
         public MatlabCommand CreateCommand( string cmd )
@@ -69,12 +69,33 @@ namespace DIPS.Matlab
                 throw new ArgumentException( "cmd" );
             }
 
-            return new MatlabCommand( _session, cmd );
+            return new SingleStatementMatlabCommand( _session, cmd );
+        }
+
+        /// <summary>
+        /// Creates and returns a <see cref="SingleStatementMatlabCommand"/> capable of executing
+        /// multiple statements.
+        /// </summary>
+        /// <param name="cmds">The collection of command inputs that form the
+        /// command.</param>
+        /// <returns>A <see cref="SingleStatementMatlabCommand"/> applicable to this
+        /// <see cref="MatlabEngine"/>.</returns>
+        /// <exception cref="ArgumentNullException">cmds is null</exception>
+        public MatlabCommand CreateCommand( IEnumerable<string> cmds )
+        {
+            _session.ThrowIfInvalid();
+
+            if( cmds == null )
+            {
+                throw new ArgumentNullException( "cmds" );
+            }
+
+            return new CompositeMatlabCommand( _session, cmds );
         }
 
         /// <summary>
         /// Shuts down this <see cref="MatlabEngine"/> and invalidates any
-        /// attached <see cref="Workspace"/>s or <see cref="MatlabCommand"/>s.
+        /// attached <see cref="Workspace"/>s or <see cref="SingleStatementMatlabCommand"/>s.
         /// </summary>
         public void Shutdown()
         {

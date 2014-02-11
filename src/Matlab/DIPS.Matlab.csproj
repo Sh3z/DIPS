@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MatlabCommand.cs" />
+    <Compile Include="CompositeMatlabCommand.cs" />
+    <Compile Include="SingleStatementMatlabCommand.cs" />
     <Compile Include="MatlabEngine.cs" />
     <Compile Include="MatlabException.cs" />
     <Compile Include="MatlabSession.cs" />

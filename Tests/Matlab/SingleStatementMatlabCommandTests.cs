@@ -11,7 +11,7 @@ namespace DIPS.Tests.Matlab
     /// Summary description for MatlabCommandTests
     /// </summary>
     [TestClass]
-    public class MatlabCommandTests
+    public class SingleStatementMatlabCommandTests
     {
         /// <summary>
         /// Gets or sets the test context which provides
@@ -31,7 +31,7 @@ namespace DIPS.Tests.Matlab
         [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestConstructor_NullSession()
         {
-            MatlabCommand cmd = new MatlabCommand( null, "b=a*a" );
+            SingleStatementMatlabCommand cmd = new SingleStatementMatlabCommand( null, "b=a*a" );
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace DIPS.Tests.Matlab
         {
             MLAppClass matlab = MatlabTestInstance.Instance;
             MatlabSession session = new MatlabSession( matlab );
-            MatlabCommand cmd = new MatlabCommand( session, null );
+            SingleStatementMatlabCommand cmd = new SingleStatementMatlabCommand( session, null );
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace DIPS.Tests.Matlab
             string cmdInput = "b=a*a";
             MLAppClass matlab = MatlabTestInstance.Instance;
             MatlabSession session = new MatlabSession( matlab );
-            MatlabCommand cmd = new MatlabCommand( session, cmdInput );
+            SingleStatementMatlabCommand cmd = new SingleStatementMatlabCommand( session, cmdInput );
 
             Assert.AreEqual( cmdInput, cmd.Input );
         }
@@ -70,7 +70,7 @@ namespace DIPS.Tests.Matlab
             string cmdInput = "b=a*a";
             MLAppClass matlab = MatlabTestInstance.Instance;
             MatlabSession session = new MatlabSession( matlab );
-            MatlabCommand cmd = new MatlabCommand( session, cmdInput );
+            SingleStatementMatlabCommand cmd = new SingleStatementMatlabCommand( session, cmdInput );
             session.Valid = false;
 
             cmd.Execute();
@@ -85,7 +85,7 @@ namespace DIPS.Tests.Matlab
             string cmdInput = "b=a*a";
             MLAppClass matlab = MatlabTestInstance.Instance;
             MatlabSession session = new MatlabSession( matlab );
-            MatlabCommand cmd = new MatlabCommand( session, cmdInput );
+            SingleStatementMatlabCommand cmd = new SingleStatementMatlabCommand( session, cmdInput );
 
             cmd.Execute();
 

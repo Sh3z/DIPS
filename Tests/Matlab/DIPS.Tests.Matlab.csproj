@@ -51,7 +51,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MatlabCommandTests.cs" />
+    <Compile Include="CompositeMatlabCommandTests.cs" />
+    <Compile Include="SingleStatementMatlabCommandTests.cs" />
     <Compile Include="MatlabEngineTests.cs" />
     <Compile Include="MatlabSessionTests.cs" />
     <Compile Include="MatlabTestInstance.cs" />
