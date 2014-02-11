@@ -62,6 +62,17 @@ namespace DIPS.Processor.Plugin.Matlab
         }
 
         /// <summary>
+        /// Gets a value indicating whether this <see cref="MatlabProperties"/>
+        /// has a valid script to run.
+        /// </summary>
+        [Browsable( false )]
+        public bool HasScript
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Contains the collection of individual parameters for use by the
         /// script.
         /// </summary>
@@ -83,10 +94,12 @@ namespace DIPS.Processor.Plugin.Matlab
             if( File.Exists( ScriptFile ) )
             {
                 SerializedFile = File.ReadAllBytes( ScriptFile );
+                HasScript = true;
             }
             else
             {
                 SerializedFile = new byte[0];
+                HasScript = false;
             }
         }
     }
