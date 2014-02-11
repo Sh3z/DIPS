@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2B7635BA-CCB5-4E1F-96D2-683A1AE27013}</ProjectGuid>
+    <ProjectGuid>{7AD3F7BA-B515-4C5C-891D-3B06B6C51B61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DIPS.Tests.Processor.Plugin.Matlab</RootNamespace>
-    <AssemblyName>DIPS.Tests.Processor.Plugin.Matlab</AssemblyName>
+    <RootNamespace>DIPS.Tests.Matlab</RootNamespace>
+    <AssemblyName>DIPS.Tests.Matlab</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,7 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -51,29 +50,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="FileToBytesConverterTests.cs" />
-    <Compile Include="MatlabPropertiesTests.cs" />
+    <Compile Include="MemoryFileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MatlabProcessTests.cs" />
+    <Compile Include="TemporaryFileTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\Processor\Client\DIPS.Processor.Client.csproj">
-      <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
-      <Name>DIPS.Processor.Client</Name>
+    <ProjectReference Include="..\..\src\Matlab\DIPS.Matlab.csproj">
+      <Project>{fa243b9a-1563-4681-b66f-86399c8d9769}</Project>
+      <Name>DIPS.Matlab</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\src\Processor\Plugin\DIPS.Processor.Plugin.csproj">
-      <Project>{5bc8fe69-c985-4b78-86f2-441a82fb435f}</Project>
-      <Name>DIPS.Processor.Plugin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\src\Processor\Plugin\Matlab\DIPS.Processor.Plugin.Matlab.csproj">
-      <Project>{b2a5eebf-504b-4d66-ba8d-d3a76f07fac0}</Project>
-      <Name>DIPS.Processor.Plugin.Matlab</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TestFile.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

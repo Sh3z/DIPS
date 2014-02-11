@@ -1,4 +1,5 @@
-﻿using DIPS.UI.Editors;
+﻿using DIPS.Matlab;
+using DIPS.UI.Editors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,8 +59,10 @@ namespace DIPS.Processor.Plugin.Matlab
         [Browsable( false )]
         public byte[] SerializedFile
         {
-            get;
-            private set;
+            get
+            {
+                return _scriptFile.RawCopy;
+            }
         }
 
         /// <summary>

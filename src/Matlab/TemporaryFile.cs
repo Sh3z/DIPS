@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.Plugin.Matlab
+namespace DIPS.Matlab
 {
     /// <summary>
     /// Represents a temporary file on-disk for allowing other functions to

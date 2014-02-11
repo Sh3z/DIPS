@@ -77,14 +77,16 @@
     <Compile Include="MatlabProcess.cs" />
     <Compile Include="MatlabProperties.cs" />
     <Compile Include="MatlabParameter.cs" />
-    <Compile Include="MemoryFile.cs" />
     <Compile Include="Parameters\FileParameter.cs" />
     <Compile Include="Parameters\FileValue.cs" />
     <Compile Include="Parameters\ObjectValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TemporaryFile.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Matlab\DIPS.Matlab.csproj">
+      <Project>{fa243b9a-1563-4681-b66f-86399c8d9769}</Project>
+      <Name>DIPS.Matlab</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\UI\Editors\DIPS.UI.Editors.csproj">
       <Project>{d85a5e93-45e0-43e4-bb5a-e3b7cdd536a4}</Project>
       <Name>DIPS.UI.Editors</Name>

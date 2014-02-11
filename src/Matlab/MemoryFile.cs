@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.Plugin.Matlab
+namespace DIPS.Matlab
 {
     /// <summary>
     /// Retains the contents of a file in memory for transmission.

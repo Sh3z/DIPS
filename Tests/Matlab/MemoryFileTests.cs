@@ -2,9 +2,9 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DIPS.Processor.Plugin.Matlab;
+using DIPS.Matlab;
 
-namespace DIPS.Tests.Processor.Plugin.Matlab
+namespace DIPS.Tests.Matlab
 {
     /// <summary>
     /// Summary description for MemoryFileTests
