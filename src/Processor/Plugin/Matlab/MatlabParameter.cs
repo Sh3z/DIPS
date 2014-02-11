@@ -42,6 +42,7 @@ namespace DIPS.Processor.Plugin.Matlab
         /// Gets or sets the workspace to set the property.
         /// </summary>
         [Description( "The assigned workspace of this parameter" )]
+        [ItemsSource( typeof( WorkspaceItemsSource ) )]
         public string Workspace
         {
             get;
