@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DIPS.Matlab;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,49 +41,39 @@ namespace DIPS.Processor.Plugin.Matlab
         }
 
 
+        /// <summary>
+        /// Attempts to execute the script. If an exception occurs it is wrapped
+        /// by an AlgorithmException
+        /// </summary>
+        /// <param name="p">The properties to execute the script with.</param>
+        private void _tryExecute( MatlabProperties p )
+        {
+            try
+            {
+                _execute( p );
+            }
+            catch( Exception e )
+            {
+                string err = "Error running MatlabProcess. See inner exception.";
+                throw new AlgorithmException( err, e );
+            }
+        }
+
         private void _execute( MatlabProperties p )
         {
-            // Save the script to a tmp location, run it, then delete it
-            _saveScript( p );
-
-            MLApp.MLAppClass matlab = new MLApp.MLAppClass();
-            foreach( MatlabParameter param in p.Parameters )
+            string scriptName = Path.GetFileName( p.ScriptFile );
+            using( IDisposable tmp = new TemporaryFile( scriptName, p.SerializedFile ) )
             {
-                IParameterValue value = param.Value;
-                value.Put( matlab, param.Name, param.Workspace );
-            }
+                MLApp.MLAppClass matlab = new MLApp.MLAppClass();
+                foreach( MatlabParameter param in p.Parameters )
+                {
+                    IParameterValue value = param.Value;
+                    value.Put( matlab, param.Name, param.Workspace );
+                }
 
-            string cdcmd = string.Format( "cd {0}/{1}", _scriptTmpDir, _scriptTmpFileName );
-            //matlab.Execute( cdcmd );
-            //matlab.Execute( string.Format( "open {1}", _scriptTmpFileName ) );
-            //matlab.Execute( string.Format( "dbstop {0}", _scriptTmpFileName ) );
-            //matlab.Execute( "output = execute" );
-        }
-
-        private void _saveScript( MatlabProperties p )
-        {
-            _scriptTmpFileName = Path.GetFileName( p.ScriptFile );
-            _scriptTmpDir = string.Format( @"{0}/tmp", Directory.GetCurrentDirectory() );
-
-            if( Directory.Exists( _scriptTmpDir ) == false )
-            {
-                Directory.CreateDirectory( _scriptTmpDir );
-            }
-
-            File.WriteAllBytes( string.Format( @"{0}/{1}", _scriptTmpDir, _scriptTmpFileName ), p.SerializedFile );
-        }
-
-        private void _deleteScript()
-        {
-            if( File.Exists( _scriptTmpDir ) )
-            {
-                File.Delete( _scriptTmpDir );
+                matlab.Execute( string.Format( "open {1}", scriptName ) );
+                matlab.Execute( "output = execute" );
             }
         }
-
-
-        private string _scriptTmpDir;
-
-        private string _scriptTmpFileName;
     }
 }
