@@ -27,6 +27,8 @@ namespace DIPS.UI.Editors
         /// editor.</returns>
         public FrameworkElement ResolveEditor( PropertyItem propertyItem )
         {
+            _property = propertyItem;
+
             DockPanel container = new DockPanel();
             container.LastChildFill = true;
 
@@ -39,16 +41,16 @@ namespace DIPS.UI.Editors
             _fileDisplayTextBox.IsReadOnly = true;
             _fileDisplayTextBox.Text = string.Empty;
 
+            string txt = string.Empty;
+            if( propertyItem.Value is string )
+            {
+                txt = propertyItem.Value as string;
+            }
+
+            _fileDisplayTextBox.Text = txt;
+
             container.Children.Add( openDialogButton );
             container.Children.Add( _fileDisplayTextBox );
-
-            // Value of property is bound to path of file.
-            Binding binding = new Binding( "Value" );
-            binding.Source = propertyItem;
-            binding.ValidatesOnExceptions = true;
-            binding.ValidatesOnDataErrors = true;
-            binding.Mode = propertyItem.IsReadOnly ? BindingMode.OneWay : BindingMode.TwoWay;
-            BindingOperations.SetBinding( _fileDisplayTextBox, TextBox.TextProperty, binding );
 
             return container;
         }
@@ -66,6 +68,7 @@ namespace DIPS.UI.Editors
             if( result.HasValue && result.Value )
             {
                 _fileDisplayTextBox.Text = dialog.FileName;
+                _property.Value = dialog.FileName;
             }
         }
 
@@ -74,5 +77,10 @@ namespace DIPS.UI.Editors
         /// Contains the TextBox used to display the current file.
         /// </summary>
         private TextBox _fileDisplayTextBox;
+
+        /// <summary>
+        /// Contains the property within the grid we are editing.
+        /// </summary>
+        private PropertyItem _property;
     }
 }
