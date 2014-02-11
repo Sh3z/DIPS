@@ -1,4 +1,5 @@
-﻿using DIPS.UI.Editors;
+﻿using DIPS.Processor.Plugin.Matlab.Parameters;
+using DIPS.UI.Editors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace DIPS.Processor.Plugin.Matlab
             _types = new List<Type>()
             {
                 typeof( MatlabParameter ),
-                typeof(DerivedParameter)
+                typeof( FileParameter )
             };
         }
 

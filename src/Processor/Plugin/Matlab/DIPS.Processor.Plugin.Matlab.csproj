@@ -70,13 +70,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DerivedParameter.cs" />
     <Compile Include="FileToBytesConverter.cs" />
+    <Compile Include="IParameterValue.cs" />
     <Compile Include="MatlabParametersCollection.cs" />
     <Compile Include="MatlabParametersCollectionEditor.cs" />
     <Compile Include="MatlabProcess.cs" />
     <Compile Include="MatlabProperties.cs" />
     <Compile Include="MatlabParameter.cs" />
+    <Compile Include="Parameters\FileParameter.cs" />
+    <Compile Include="Parameters\FileValue.cs" />
+    <Compile Include="Parameters\ObjectValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +98,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="MLApp">
+      <Guid>{C36E46AB-6A81-457B-9F91-A7719A06287F}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
