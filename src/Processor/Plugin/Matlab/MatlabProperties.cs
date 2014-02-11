@@ -27,7 +27,7 @@ namespace DIPS.Processor.Plugin.Matlab
         /// </summary>
         public MatlabProperties()
         {
-            Parameters = new List<MatlabParameter>();
+            Parameters = new MatlabParametersCollection();
         }
 
 
@@ -55,7 +55,6 @@ namespace DIPS.Processor.Plugin.Matlab
         /// and is updated when the file is set.
         /// </summary>
         [Browsable( false )]
-        [Editor( typeof( CollectionEditor ), typeof( UITypeEditor ) )]
         public byte[] SerializedFile
         {
             get;
@@ -66,9 +65,10 @@ namespace DIPS.Processor.Plugin.Matlab
         /// Contains the collection of individual parameters for use by the
         /// script.
         /// </summary>
-        [Description(   "The individual parameters required by the script. " +
-                        "If you forget to add a parameter, the algorithm will crash. ")]
-        public IList<MatlabParameter> Parameters
+        [Description( "The individual parameters required by the script. " +
+                        "If you forget to add a parameter, the algorithm will crash. " )]
+        [Editor( typeof( MatlabParametersCollectionEditor ), typeof( UITypeEditor ) )]
+        public MatlabParametersCollection Parameters
         {
             get;
             private set;
