@@ -19,6 +19,15 @@ namespace DIPS.Processor.Plugin.Matlab.Parameters
     public class FileValue : IParameterValue
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="FileValue"/> class.
+        /// </summary>
+        public FileValue()
+        {
+            _file = new MemoryFile();
+        }
+
+
+        /// <summary>
         /// Gets or sets the path to the file to be sent to the script.
         /// </summary>
         [Description( "The path to the file to provide to the script. " +
