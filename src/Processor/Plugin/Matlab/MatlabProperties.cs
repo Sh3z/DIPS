@@ -28,6 +28,7 @@ namespace DIPS.Processor.Plugin.Matlab
         public MatlabProperties()
         {
             Parameters = new MatlabParametersCollection();
+            _scriptFile = new MemoryFile();
         }
 
 
@@ -39,16 +40,16 @@ namespace DIPS.Processor.Plugin.Matlab
         {
             get
             {
-                return _filePath;
+                return _scriptFile.Path;
             }
             set
             {
-                _filePath = value;
-                _updateSerializedFile();
+                _scriptFile.Path = value;
+                _scriptFile.Refresh();
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private string _filePath;
+        private MemoryFile _scriptFile;
 
         /// <summary>
         /// Contains the serialized form of the file. This is non-browsable
@@ -83,24 +84,6 @@ namespace DIPS.Processor.Plugin.Matlab
         {
             get;
             private set;
-        }
-
-
-        /// <summary>
-        /// Updates the contents of the serialized file.
-        /// </summary>
-        private void _updateSerializedFile()
-        {
-            if( File.Exists( ScriptFile ) )
-            {
-                SerializedFile = File.ReadAllBytes( ScriptFile );
-                HasScript = true;
-            }
-            else
-            {
-                SerializedFile = new byte[0];
-                HasScript = false;
-            }
         }
     }
 }

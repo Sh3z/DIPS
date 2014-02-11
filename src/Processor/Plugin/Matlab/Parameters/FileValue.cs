@@ -28,16 +28,16 @@ namespace DIPS.Processor.Plugin.Matlab.Parameters
         {
             get
             {
-                return _path;
+                return _file.Path;
             }
             set
             {
-                _path = value;
-                _updateFile();
+                _file.Path = value;
+                _file.Refresh();
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private string _path;
+        private MemoryFile _file;
 
 
         /// <summary>
@@ -87,25 +87,9 @@ namespace DIPS.Processor.Plugin.Matlab.Parameters
         {
             string ext = System.IO.Path.GetExtension( Path );
             _tmpPath = string.Format( @"{0}/tmp/{1}{2}", Directory.GetCurrentDirectory(), name, ext );
-            File.WriteAllBytes( _tmpPath, _file );
+            File.WriteAllBytes( _tmpPath, _file.RawCopy );
         }
 
-        /// <summary>
-        /// Copies the contents of the current file into memory.
-        /// </summary>
-        private void _updateFile()
-        {
-            if( File.Exists( Path ) )
-            {
-                _file = File.ReadAllBytes( Path );
-            }
-        }
-
-
-        /// <summary>
-        /// Contains the raw file for redeployment.
-        /// </summary>
-        private byte[] _file;
 
         /// <summary>
         /// Contains the path to the file in the temporary directory.

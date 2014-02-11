@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="FileToBytesConverterTests.cs" />
     <Compile Include="MatlabPropertiesTests.cs" />
+    <Compile Include="MemoryFileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MatlabProcessTests.cs" />
   </ItemGroup>

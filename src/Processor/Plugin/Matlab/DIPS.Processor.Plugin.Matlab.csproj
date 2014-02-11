@@ -77,6 +77,7 @@
     <Compile Include="MatlabProcess.cs" />
     <Compile Include="MatlabProperties.cs" />
     <Compile Include="MatlabParameter.cs" />
+    <Compile Include="MemoryFile.cs" />
     <Compile Include="Parameters\FileParameter.cs" />
     <Compile Include="Parameters\FileValue.cs" />
     <Compile Include="Parameters\ObjectValue.cs" />
