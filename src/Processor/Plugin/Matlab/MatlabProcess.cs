@@ -1,6 +1,8 @@
 ﻿using DIPS.Matlab;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -61,18 +63,91 @@ namespace DIPS.Processor.Plugin.Matlab
 
         private void _execute( MatlabProperties p )
         {
+            using( MatlabEngine engine = new MatlabEngine() )
+            {
+                _populateEngine( engine, p );
+                _putInput( engine );
+                var script = _extractScript( p );
+                _runScript( engine, script );
+                _setOutput( engine );
+            }
+        }
+
+        private void _populateEngine( MatlabEngine e, MatlabProperties p )
+        {
+            foreach( MatlabParameter parameter in p.Parameters )
+            {
+                Workspace w = parameter.Workspace == "Base" ? e.Base : e.Global;
+                IParameterValue value = parameter.Value;
+                value.Put( parameter.Name, w );
+            }
+        }
+
+        private void _putInput( MatlabEngine e )
+        {
+            string name = "Tmp.bmp";
+            Input.Save( name, ImageFormat.Bmp );
+            e.Base.PutObject( "dipsinput", name );
+        }
+
+        private IEnumerable<string> _extractScript( MatlabProperties p )
+        {
             string scriptName = Path.GetFileName( p.ScriptFile );
             using( IDisposable tmp = new TemporaryFile( scriptName, p.SerializedFile ) )
             {
-                MLApp.MLAppClass matlab = new MLApp.MLAppClass();
-                foreach( MatlabParameter param in p.Parameters )
-                {
-                    IParameterValue value = param.Value;
-                    value.Put( matlab, param.Name, param.Workspace );
-                }
+                return File.ReadAllLines( p.ScriptFile );
+            }
+        }
 
-                matlab.Execute( string.Format( "open {1}", scriptName ) );
-                matlab.Execute( "output = execute" );
+        private void _runScript( MatlabEngine engine, IEnumerable<string> script )
+        {
+            try
+            {
+                string currentDir = Directory.GetCurrentDirectory();
+                string cdToDir = string.Format( "cd {0}", currentDir );
+                MatlabCommand cmd = engine.CreateCommand( cdToDir );
+                cmd.Execute();
+                MatlabCommand c = engine.CreateCommand( script );
+                c.Execute();
+            }
+            catch( Exception e )
+            {
+                string err = "Error executing Matlab script. Ensure all variables have been provided " +
+                    "and that the script functions within Matlab.";
+                throw new AlgorithmException( err, e );
+            }
+        }
+
+        private void _setOutput( MatlabEngine engine )
+        {
+            object output = _getDipsOutput( engine.Base );
+            if( output is string == false )
+            {
+                throw new AlgorithmException( "Script did not output file path" );
+            }
+
+            string outputStr = string.Empty;
+            try
+            {
+                outputStr = output as string;
+                Output = Image.FromFile( outputStr );
+            }
+            catch( Exception e )
+            {
+                throw new AlgorithmException( "Script did not output path to image.", e );
+            }
+        }
+
+        private object _getDipsOutput( Workspace workspace )
+        {
+            try
+            {
+                return workspace.GetVariable( "dipsoutput" );
+            }
+            catch( Exception e )
+            {
+                string err = "Error accessing DIPS output variable.";
+                throw new AlgorithmException( err, e );
             }
         }
     }

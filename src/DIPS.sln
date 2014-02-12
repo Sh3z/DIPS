@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.UI.Editors", "UI\Edito
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Processor.Plugin.Matlab", "Processor\Plugin\Matlab\DIPS.Processor.Plugin.Matlab.csproj", "{B2A5EEBF-504B-4D66-BA8D-D3A76F07FAC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Matlab", "Matlab\DIPS.Matlab.csproj", "{FA243B9A-1563-4681-B66F-86399C8D9769}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -228,6 +230,18 @@ Global
 		{B2A5EEBF-504B-4D66-BA8D-D3A76F07FAC0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B2A5EEBF-504B-4D66-BA8D-D3A76F07FAC0}.Release|x64.ActiveCfg = Release|Any CPU
 		{B2A5EEBF-504B-4D66-BA8D-D3A76F07FAC0}.Release|x86.ActiveCfg = Release|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Release|x64.ActiveCfg = Release|Any CPU
+		{FA243B9A-1563-4681-B66F-86399C8D9769}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -240,5 +254,6 @@ Global
 		{5BC8FE69-C985-4B78-86F2-441A82FB435F} = {7CD7226D-7C95-400E-B6D5-4D6BD654E718}
 		{3FB76655-E579-4832-A014-4B68893CF1E1} = {7CD7226D-7C95-400E-B6D5-4D6BD654E718}
 		{B2A5EEBF-504B-4D66-BA8D-D3A76F07FAC0} = {7CD7226D-7C95-400E-B6D5-4D6BD654E718}
+		{FA243B9A-1563-4681-B66F-86399C8D9769} = {7CD7226D-7C95-400E-B6D5-4D6BD654E718}
 	EndGlobalSection
 EndGlobal

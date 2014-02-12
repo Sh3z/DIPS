@@ -1,4 +1,4 @@
-﻿using MLApp;
+﻿using DIPS.Matlab;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +16,10 @@ namespace DIPS.Processor.Plugin.Matlab
         /// Puts the value of this <see cref="IParameterValue"/> into the
         /// Matlab instance provided.
         /// </summary>
-        /// <param name="app">The running <see cref="IMLApp"/> to put the value
-        /// of this <see cref="IParameterValue"/> into.</param>
-        /// <param name="name">The name to give to the value of this
-        /// <see cref="IParameterValue"/> within Matlab.</param>
-        /// <param name="workspace">The workspace identifier to set the value
-        /// in.</param>
-        void Put( IMLApp app, string name, string workspace );
+        /// <param name="name">The name to give to the value placed
+        /// in the workspace.</param>
+        /// <param name="workspace">The <see cref="Workspace"/> the
+        /// value of this <see cref="IParameterValue"/> should be set.</param>
+        void Put( string name, Workspace workspace );
     }
 }

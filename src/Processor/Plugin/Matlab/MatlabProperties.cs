@@ -72,8 +72,10 @@ namespace DIPS.Processor.Plugin.Matlab
         [Browsable( false )]
         public bool HasScript
         {
-            get;
-            private set;
+            get
+            {
+                return _scriptFile.RawCopy.Length > 0;
+            }
         }
 
         /// <summary>
