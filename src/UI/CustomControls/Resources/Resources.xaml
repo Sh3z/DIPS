@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:DIPS.UI.Converters;assembly=DIPS.UI.Converters">
+
+    <converters:AlgorithmDisplayNameConverter x:Key="AlgorithmToName" />
+    
+    <Style x:Key="AlgorithmItemStyle" TargetType="ListViewItem">
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="Background" Value="LightBlue" />
+        <Setter Property="MinHeight" Value="50" />
+        <Setter Property="MaxWidth" Value="100" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            MinHeight="{TemplateBinding MinHeight}"
+                            MaxWidth="{TemplateBinding MaxWidth}">
+                        <!-- The ListView should be presenting a set of AlgorithmDefinitions to satisfy this Binding. -->
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Text="{Binding Converter={StaticResource AlgorithmToName}}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
