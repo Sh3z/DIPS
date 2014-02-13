@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Plugin;
+using DIPS.Processor.Registry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.Registry
+namespace DIPS.Processor.Pipeline
 {
     /// <summary>
     /// Represents the repository exposing pipeline Xml factories.

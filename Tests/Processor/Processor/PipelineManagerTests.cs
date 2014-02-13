@@ -7,6 +7,7 @@ using DIPS.Processor.Registry;
 using DIPS.Processor.Plugin.Base;
 using DIPS.Processor.Client;
 using System.Linq;
+using DIPS.Processor.Pipeline;
 
 namespace DIPS.Tests.Processor
 {

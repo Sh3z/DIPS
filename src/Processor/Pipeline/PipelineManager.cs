@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DIPS.Processor
+namespace DIPS.Processor.Pipeline
 {
     /// <summary>
     /// Represents the pipeline management module of the server.

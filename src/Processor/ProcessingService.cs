@@ -1,6 +1,7 @@
 ﻿using DIPS.Processor.Client;
 using DIPS.Processor.Executor;
 using DIPS.Processor.Persistence;
+using DIPS.Processor.Pipeline;
 using DIPS.Processor.Registry;
 using DIPS.Processor.XML;
 using DIPS.Processor.XML.Compilation;

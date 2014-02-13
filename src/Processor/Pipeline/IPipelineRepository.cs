@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor
+namespace DIPS.Processor.Pipeline
 {
     /// <summary>
     /// Represents the repository of pipeline information.
