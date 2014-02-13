@@ -8,18 +8,18 @@ using System.Xml.Linq;
 namespace DIPS.Processor.XML.Decompilation
 {
     /// <summary>
-    /// Represents an <see cref="IJobXmlVisitor"/> that supplies additional
-    /// compound behaviour against an <see cref="IJobXmlVisitor"/>. This class
+    /// Represents an <see cref="IXmlVisitor"/> that supplies additional
+    /// compound behaviour against an <see cref="IXmlVisitor"/>. This class
     /// is abstract.
     /// </summary>
-    public abstract class XmlVisitorDecorator : IJobXmlVisitor
+    public abstract class XmlVisitorDecorator : IXmlVisitor
     {
         /// <summary>
         /// Initializes a new instance of the abstract <see cref="XmlVisitorDecorator"/>
         /// class.
         /// </summary>
         /// <param name="decoratedVisitor"></param>
-        protected XmlVisitorDecorator( IJobXmlVisitor decoratedVisitor )
+        protected XmlVisitorDecorator( IXmlVisitor decoratedVisitor )
         {
             if( decoratedVisitor == null )
             {
@@ -31,10 +31,10 @@ namespace DIPS.Processor.XML.Decompilation
 
 
         /// <summary>
-        /// Gets the decorated <see cref="IJobXmlVisitor"/> object this
+        /// Gets the decorated <see cref="IXmlVisitor"/> object this
         /// <see cref="XmlVisitorDecorater"/> is decorating.
         /// </summary>
-        protected IJobXmlVisitor DecoratedVisitor
+        protected IXmlVisitor DecoratedVisitor
         {
             get;
             private set;

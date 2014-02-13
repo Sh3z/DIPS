@@ -59,6 +59,8 @@
     <Compile Include="DefinitionXmlValidatorTests.cs" />
     <Compile Include="JobXmlDecompilerTests.cs" />
     <Compile Include="JobXmlValidatorTests.cs" />
+    <Compile Include="PipelinePersistenceProcessTests.cs" />
+    <Compile Include="PipelineXmlDecompilerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefinitionBuilderProcessTests.cs" />
     <Compile Include="JobBuilderProcessTests.cs" />

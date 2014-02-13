@@ -15,10 +15,10 @@ namespace DIPS.Processor.XML.Decompilation
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlTraverser"/> class.
         /// </summary>
-        /// <param name="visitor">The <see cref="IJobXmlVisitor"/> passed into
+        /// <param name="visitor">The <see cref="IXmlVisitor"/> passed into
         /// various nodes of the Xml.</param>
         /// <exception cref="ArgumentNullException">visitor is null.</exception>
-        public XmlTraverser( IJobXmlVisitor visitor )
+        public XmlTraverser( IXmlVisitor visitor )
         {
             if( visitor == null )
             {
@@ -55,6 +55,6 @@ namespace DIPS.Processor.XML.Decompilation
         /// <summary>
         /// Contains the visitor we accept into portions of the document.
         /// </summary>
-        private IJobXmlVisitor _visitor;
+        private IXmlVisitor _visitor;
     }
 }

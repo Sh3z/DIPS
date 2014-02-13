@@ -15,9 +15,9 @@ namespace DIPS.Processor.XML.Decompilation
         /// <summary>
         /// Initializes a new instance of the <see cref="JobXmlValidator"/> class.
         /// </summary>
-        /// <param name="visitor">The <see cref="IJobXmlVisitor"/> this
+        /// <param name="visitor">The <see cref="IXmlVisitor"/> this
         /// <see cref="XmlVisitorDecorate"/> decorates.</param>
-        public JobXmlValidator( IJobXmlVisitor visitor )
+        public JobXmlValidator( IXmlVisitor visitor )
             : base( visitor )
         {
         }

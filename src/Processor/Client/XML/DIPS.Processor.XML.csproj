@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pipeline\IPipelineXmlInterpreter.cs" />
+    <Compile Include="Pipeline\PipelinePersistanceProcess.cs" />
     <Compile Include="Decompilation\DecompilationVisitor.cs" />
     <Compile Include="Decompilation\DefinitionXmlDecompiler.cs" />
     <Compile Include="Decompilation\DefinitionXmlValidator.cs" />
@@ -48,6 +50,7 @@
     <Compile Include="Decompilation\IJobXmlVisitor.cs" />
     <Compile Include="Decompilation\JobXmlDecompiler.cs" />
     <Compile Include="Decompilation\JobXmlValidator.cs" />
+    <Compile Include="Pipeline\PipelineXmlDecompiler.cs" />
     <Compile Include="Decompilation\ValidationVisitor.cs" />
     <Compile Include="Decompilation\XmlDecompilationException.cs" />
     <Compile Include="Decompilation\XmlTraverser.cs" />

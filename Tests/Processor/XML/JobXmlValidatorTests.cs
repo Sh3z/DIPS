@@ -174,7 +174,7 @@ namespace DIPS.Tests.Processor.XML
         }
 
 
-        class TestVisitor : IJobXmlVisitor
+        class TestVisitor : IXmlVisitor
         {
             public bool VisitedAlgorithm
             {

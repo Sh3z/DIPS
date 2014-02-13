@@ -12,7 +12,7 @@ namespace DIPS.Processor.XML.Decompilation
     /// <summary>
     /// Represents a visitor of appropriate Xml nodes.
     /// </summary>
-    public interface IJobXmlVisitor
+    public interface IXmlVisitor
     {
         /// <summary>
         /// Performs the visiting logic against an <see cref="XNode"/> representing

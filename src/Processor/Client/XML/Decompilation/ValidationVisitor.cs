@@ -11,7 +11,7 @@ namespace DIPS.Processor.XML.Decompilation
     /// <summary>
     /// Represents the visitor used to ensure the Xml provided by the traverser
     /// is in a valid format before executing the behaviour of another
-    /// <see cref="IJobXmlVisitor"/>. This class is abstract.
+    /// <see cref="IXmlVisitor"/>. This class is abstract.
     /// </summary>
     public abstract class ValidationVisitor : XmlVisitorDecorator
     {
@@ -19,10 +19,10 @@ namespace DIPS.Processor.XML.Decompilation
         /// Initializes a new instance of the <see cref="ValidationVisitor"/>
         /// class.
         /// </summary>
-        /// <param name="visitor">The <see cref="IJobXmlVisitor"/> that is called
+        /// <param name="visitor">The <see cref="IXmlVisitor"/> that is called
         /// when nodes are validated correctly.</param>
         /// <exception cref="NullReferenceException">visitor is null.</exception>
-        protected ValidationVisitor( IJobXmlVisitor visitor )
+        protected ValidationVisitor( IXmlVisitor visitor )
             : base( visitor )
         {
         }

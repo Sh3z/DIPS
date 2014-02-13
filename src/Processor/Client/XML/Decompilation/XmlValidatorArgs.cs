@@ -17,10 +17,10 @@ namespace DIPS.Processor.XML.Decompilation
         /// Initializes a new instance of the <see cref="XmlValidatorArgs"/>
         /// class.
         /// </summary>
-        /// <param name="visitor">The <see cref="IJobXmlVisitor"/> that is
+        /// <param name="visitor">The <see cref="IXmlVisitor"/> that is
         /// decorated by the validator.</param>
         /// <exception cref="ArgumentNullException">visitor is null.</exception>
-        public XmlValidatorArgs( IJobXmlVisitor visitor )
+        public XmlValidatorArgs( IXmlVisitor visitor )
         {
             if( visitor == null )
             {
@@ -33,10 +33,10 @@ namespace DIPS.Processor.XML.Decompilation
 
 
         /// <summary>
-        /// Gets the <see cref="IJobXmlVisitor"/> being decorated by the
+        /// Gets the <see cref="IXmlVisitor"/> being decorated by the
         /// <see cref="ValidationVisitor"/>.
         /// </summary>
-        public IJobXmlVisitor Visitor
+        public IXmlVisitor Visitor
         {
             get;
             private set;
