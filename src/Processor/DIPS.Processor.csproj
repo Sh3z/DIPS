@@ -45,6 +45,7 @@
     <Compile Include="Executor\QueueExecutor.cs" />
     <Compile Include="JobBuilder.cs" />
     <Compile Include="JobDefinition.cs" />
+    <Compile Include="JobManager.cs" />
     <Compile Include="Persistence\FileSystemPersister.cs" />
     <Compile Include="Persistence\IJobPersister.cs" />
     <Compile Include="IJobQueue.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="JobTicket.cs" />
     <Compile Include="Persistence\MemoryPersister.cs" />
     <Compile Include="Persistence\PersistedResult.cs" />
+    <Compile Include="PipelineManager.cs" />
     <Compile Include="ProcessingService.cs" />
     <Compile Include="ProcessInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

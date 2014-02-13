@@ -19,9 +19,17 @@ namespace DIPS.Processor.XML.Pipeline
         /// </summary>
         /// <param name="visitor">The <see cref="IXmlVisitor"/> this
         /// <see cref="XmlVisitorDecorate"/> decorates.</param>
-        public PipelineXmlValidator( IXmlVisitor visitor )
+        /// <param name="availableFactories">The set of available factory names for
+        /// the nodes.</param>
+        public PipelineXmlValidator( IXmlVisitor visitor, IEnumerable<string> availableFactories )
             : base( visitor )
         {
+            if( availableFactories == null )
+            {
+                throw new ArgumentNullException( "availableFactories" );
+            }
+
+            _availableFactories = availableFactories;
         }
 
 
@@ -34,12 +42,55 @@ namespace DIPS.Processor.XML.Pipeline
         /// <see cref="XNode"/> is valid; false otherwise.</returns>
         protected override bool IsAlgorithmValid( XNode algorithmNode )
         {
-            throw new NotImplementedException();
+            if( algorithmNode.NodeType != System.Xml.XmlNodeType.Element )
+            {
+                return false;
+            }
+
+            XElement element = (XElement)algorithmNode;
+            if( element.Name != "algorithm" )
+            {
+                return false;
+            }
+
+            XAttribute nameAttr = element.Attribute( "name" );
+            if( nameAttr == null )
+            {
+                return false;
+            }
+
+            if( string.IsNullOrEmpty( nameAttr.Value ) )
+            {
+                return false;
+            }
+
+            // If the algorithm has a properties node, we need the correct factory.
+            if( element.Descendants( "properties" ).Any() )
+            {
+                return _availableFactories.Contains( nameAttr.Value );
+            }
+            else
+            {
+                return true;
+            }
         }
 
+        /// <summary>
+        /// Executes the input-node validation logic.
+        /// </summary>
+        /// <param name="algorithmNode">The <see cref="XNode"/> representing an
+        /// input.</param>
+        /// <returns><c>true</c> if the input represented by the
+        /// <see cref="XNode"/> is valid; false otherwise.</returns>
         protected override bool IsInputValid( XNode inputNode )
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException( "Pipeline definitions do not support inputs." );
         }
+
+
+        /// <summary>
+        /// Contains the set of available factory names.
+        /// </summary>
+        private IEnumerable<string> _availableFactories;
     }
 }

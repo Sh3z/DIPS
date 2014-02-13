@@ -25,32 +25,30 @@ namespace DIPS.Processor
         /// </summary>
         public ProcessingService()
         {
-            _pluginFactory = new RegistryFactory();
-            _processor = new BatchProcessor( _pluginFactory );
+            JobManager = new JobManager( new RegistryFactory() );
+            PipelineManager = new PipelineManager();
         }
 
 
         /// <summary>
-        /// Gets the <see cref="XDocument"/> detailing the currently installed
-        /// algorithms.
+        /// Gets the <see cref="IJobManager"/> module of this
+        /// <see cref="IProcessingService"/>.
         /// </summary>
-        public XDocument AlgorithmDefinitions
+        public IJobManager JobManager
         {
-            get
-            {
-                lock( this )
-                {
-                    if( _algorithms == null )
-                    {
-                        _createAlgorithmXml();
-                    }
-                }
-
-                return _algorithms;
-            }
+            get;
+            private set;
         }
-        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private XDocument _algorithms;
+
+        /// <summary>
+        /// Gets the <see cref="IPipelineManager"/> module of this
+        /// <see cref="IProcessingService"/>.
+        /// </summary>
+        public IPipelineManager PipelineManager
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Returns an enumerable set of <see cref="AlgorithmDefinition"/>s in
@@ -72,26 +70,8 @@ namespace DIPS.Processor
         public ISynchronousProcessor CreateSynchronousProcessor()
         {
             IJobPersister persister = new MemoryPersister();
-            IWorker worker = new TicketWorker( _pluginFactory, persister );
+            IWorker worker = new TicketWorker( new RegistryFactory(), persister );
             return new SynchronousProcessor( worker );
-        }
-
-        /// <summary>
-        /// Enqueues a new job to be executed.
-        /// </summary>
-        /// <param name="job">The <see cref="JobRequest"/> detailing the
-        /// job.</param>
-        /// <returns>An <see cref="IJobTicket"/> providing job monitoring and
-        /// result-tracking capabilities.</returns>
-        public IJobTicket EnqueueJob( JobRequest job )
-        {
-            IJobTicket ticket = _processor.Enqueue( job );
-            if( _processor.IsProcessing == false )
-            {
-                _processor.StartProcessing();
-            }
-
-            return ticket;
         }
 
         /// <summary>
@@ -105,29 +85,5 @@ namespace DIPS.Processor
         {
             return null;
         }
-
-
-        /// <summary>
-        /// Creates the Xml describing the installed plugins.
-        /// </summary>
-        private void _createAlgorithmXml()
-        {
-            XmlBuilder builder = new XmlBuilder( new DefinitionBuilderProcess() );
-            foreach( var algorithm in RegistryCache.Cache.KnownAlgorithms )
-            {
-                builder.Algorithms.Add( algorithm );
-            }
-
-            builder.Build();
-            _algorithms = builder.Xml;
-        }
-
-
-        /// <summary>
-        /// Contains the underlying processing module.
-        /// </summary>
-        private BatchProcessor _processor;
-
-        private IPluginFactory _pluginFactory;
     }
 }

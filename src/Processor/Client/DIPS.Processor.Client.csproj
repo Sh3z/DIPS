@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmDefinition.cs" />
+    <Compile Include="IJobManager.cs" />
     <Compile Include="IJobTicket.cs" />
+    <Compile Include="IPipelineManager.cs" />
     <Compile Include="IProcessedImage.cs" />
     <Compile Include="IProcessingService.cs" />
     <Compile Include="ISynchronousProcessor.cs" />

@@ -13,10 +13,19 @@ namespace DIPS.Processor.Client
     public interface IProcessingService
     {
         /// <summary>
-        /// Gets the <see cref="XDocument"/> detailing the currently installed
-        /// algorithms.
+        /// Gets the <see cref="IJobManager"/> module of this
+        /// <see cref="IProcessingService"/>.
         /// </summary>
-        XDocument AlgorithmDefinitions
+        IJobManager JobManager
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IPipelineManager"/> module of this
+        /// <see cref="IProcessingService"/>.
+        /// </summary>
+        IPipelineManager PipelineManager
         {
             get;
         }
@@ -36,15 +45,6 @@ namespace DIPS.Processor.Client
         /// <returns>An <see cref="ISynchronousProcessor"/> instance for running
         /// jobs within the client.</returns>
         ISynchronousProcessor CreateSynchronousProcessor();
-
-        /// <summary>
-        /// Enqueues a new job to be executed.
-        /// </summary>
-        /// <param name="job">The <see cref="JobRequest"/> detailing the
-        /// job.</param>
-        /// <returns>An <see cref="IJobTicket"/> providing job monitoring and
-        /// result-tracking capabilities.</returns>
-        IJobTicket EnqueueJob( JobRequest job );
 
         /// <summary>
         /// Resolves the <see cref="JobResult"/> for a previously executed job.
