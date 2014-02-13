@@ -51,17 +51,6 @@ namespace DIPS.Processor
         }
 
         /// <summary>
-        /// Returns an enumerable set of <see cref="AlgorithmDefinition"/>s in
-        /// object form.
-        /// </summary>
-        /// <returns>The set of <see cref="AlgorithmDefinition"/>s this service can
-        /// understand.</returns>
-        public IEnumerable<AlgorithmDefinition> GetAlgorithmDefinitions()
-        {
-            return RegistryCache.Cache.KnownAlgorithms;
-        }
-
-        /// <summary>
         /// Creates and returns a new <see cref="ISynchronousProcessor"/> clients
         /// can use to compute jobs on their own threads.
         /// </summary>

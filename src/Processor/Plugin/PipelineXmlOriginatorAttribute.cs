@@ -12,6 +12,12 @@ namespace DIPS.Processor.Plugin
     /// </summary>
     public sealed class PipelineXmlOriginatorAttribute : Attribute
     {
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="PipelineXmlOriginatorAttribute"/> class.
+        /// </summary>
+        /// <param name="pluginType">The <see cref="Type"/> of the plugin
+        /// the annotated class creates Xml for.</param>
         public PipelineXmlOriginatorAttribute( Type pluginType )
         {
             if( pluginType == null )
@@ -19,7 +25,24 @@ namespace DIPS.Processor.Plugin
                 throw new ArgumentNullException( "pluginType" );
             }
 
+            if( pluginType.IsSubclassOf( typeof( AlgorithmPlugin ) ) == false )
+            {
+                throw new ArgumentException(
+                    "Type provided to PipelineXmlOriginatorAttribtue must subclass AlgorithmPlugin" );
+            }
 
+            PluginType = pluginType;
+        }
+
+
+        /// <summary>
+        /// Gets the <see cref="Type"/> of the plugin the associated Xml
+        /// originator creates Xml for.
+        /// </summary>
+        public Type PluginType
+        {
+            get;
+            private set;
         }
     }
 }

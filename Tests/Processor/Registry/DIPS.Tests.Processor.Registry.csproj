@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="AlgorithmActivatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegistryCacheTests.cs" />
+    <Compile Include="ProcessPluginRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Processor\Client\DIPS.Processor.Client.csproj">

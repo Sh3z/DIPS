@@ -8,10 +8,10 @@ using DIPS.Processor.Client;
 namespace DIPS.Tests.Processor.Registry
 {
     /// <summary>
-    /// Summary description for RegistryCacheTests
+    /// Summary description for ProcessPluginRepositoryTests
     /// </summary>
     [TestClass]
-    public class RegistryCacheTests
+    public class ProcessPluginRepositoryTests
     {
         /// <summary>
         /// Gets or sets the test context which provides
@@ -33,7 +33,10 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestLoadCache()
         {
-            var loadedPlugins = RegistryCache.Cache.KnownAlgorithms;
+            ProcessPluginRepository r = new ProcessPluginRepository();
+            RegistryCache.Cache.Initialize( r );
+
+            var loadedPlugins = r.KnownAlgorithms;
 
             Assert.IsTrue( loadedPlugins.Count() > 0 );
 
@@ -47,7 +50,8 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestResolveType_NullDefinition()
         {
-            Type type = RegistryCache.Cache.FetchType( null );
+            ProcessPluginRepository r = new ProcessPluginRepository();
+            Type type = r.FetchType( null );
 
             Assert.IsNull( type );
         }
@@ -58,8 +62,10 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestResolveType_ValidDefinition()
         {
-            AlgorithmDefinition d = RegistryCache.Cache.KnownAlgorithms.FirstOrDefault( x => x.AlgorithmName.ToLower() == "gamma" );
-            Type type = RegistryCache.Cache.FetchType( d.AlgorithmName );
+            ProcessPluginRepository r = new ProcessPluginRepository();
+            RegistryCache.Cache.Initialize( r );
+            AlgorithmDefinition d = r.KnownAlgorithms.FirstOrDefault( x => x.AlgorithmName.ToLower() == "gamma" );
+            Type type = r.FetchType( d.AlgorithmName );
 
             Assert.IsNotNull( type );
 
@@ -74,7 +80,8 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestHasCachedAlgorithm_UnknownName()
         {
-            bool cached = RegistryCache.Cache.KnowsAlgorithm( "unknown" );
+            ProcessPluginRepository r = new ProcessPluginRepository();
+            bool cached = r.KnowsAlgorithm( "unknown" );
             Assert.IsFalse( cached );
         }
 
@@ -85,7 +92,9 @@ namespace DIPS.Tests.Processor.Registry
         [TestMethod]
         public void TestHasCachedAlgorithm_KnownName()
         {
-            bool cached = RegistryCache.Cache.KnowsAlgorithm( "gamma" );
+            ProcessPluginRepository r = new ProcessPluginRepository();
+            RegistryCache.Cache.Initialize( r );
+            bool cached = r.KnowsAlgorithm( "gamma" );
             Assert.IsTrue( cached );
         }
     }

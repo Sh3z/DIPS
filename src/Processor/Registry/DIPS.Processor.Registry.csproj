@@ -42,6 +42,8 @@
     <Compile Include="ActivationException.cs" />
     <Compile Include="AlgorithmActivator.cs" />
     <Compile Include="IAlgorithmRegistrar.cs" />
+    <Compile Include="IPluginRegistry.cs" />
+    <Compile Include="ProcessPluginRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistryCache.cs" />
   </ItemGroup>

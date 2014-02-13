@@ -21,7 +21,9 @@ namespace DIPS.Processor
         /// </summary>
         public RegistryFactory()
         {
-            _activator = new AlgorithmActivator( RegistryCache.Cache );
+            ProcessPluginRepository repo = new ProcessPluginRepository();
+            RegistryCache.Cache.Initialize( repo );
+            _activator = new AlgorithmActivator( repo );
         }
 
 

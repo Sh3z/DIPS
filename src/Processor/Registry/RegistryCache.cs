@@ -15,7 +15,7 @@ namespace DIPS.Processor.Registry
     /// Provides access to the information within the DIPS registry. This class
     /// cannot be inherited.
     /// </summary>
-    public sealed class RegistryCache : IAlgorithmRegistrar
+    public sealed class RegistryCache
     {
         /// <summary>
         /// Static initializer.
@@ -30,8 +30,8 @@ namespace DIPS.Processor.Registry
         /// </summary>
         private RegistryCache()
         {
-            _pluginCache = new Dictionary<AlgorithmDefinition, Type>();
-            Initialize();
+            _assemblies = new List<Assembly>();
+            _initialize();
         }
 
 
@@ -50,121 +50,64 @@ namespace DIPS.Processor.Registry
 
 
         /// <summary>
-        /// Initializes the cache using values from the registry.
+        /// Initializes the provided <see cref="IPluginRegistry"/> with
+        /// the information provided within the Windows registry.
         /// </summary>
-        /// <remarks>
-        /// This is automatically called on construction and does not need to be
-        /// called again, unless the registry is modified.
-        /// </remarks>
-        public void Initialize()
+        /// <param name="registry">The <see cref="IPluginRegistry"/> to
+        /// initialize.</param>
+        public void Initialize( IPluginRegistry registry )
+        {
+            foreach( Assembly assembly in _assemblies )
+            {
+                registry.Initialize( assembly );
+            }
+        }
+
+
+        /// <summary>
+        /// Initializes the cache from the values in the registry
+        /// </summary>
+        private void _initialize()
         {
             try
             {
-                _pluginCache.Clear();
                 RegistryKey dips = Microsoft.Win32.Registry.LocalMachine.OpenSubKey( _regLoc );
-                _initializePlugins( dips.OpenSubKey( "Plugins" ) );
+                _loadAssemblies( dips.OpenSubKey( "Plugins" ) );
             }
             catch( Exception e )
             {
-                Debug.Write( "DIPS registry keys in unknown state:\n" + e );
+
             }
         }
 
         /// <summary>
-        /// Gets a set of the known algorithms, exposed by identifier and
-        /// properties.
+        /// Loads the assemblies from the provided key
         /// </summary>
-        public IEnumerable<AlgorithmDefinition> KnownAlgorithms
+        /// <param name="source">The source of the plugins key</param>
+        private void _loadAssemblies( RegistryKey source )
         {
-            get
+            foreach( string name in source.GetValueNames() )
             {
-                return _pluginCache.Keys;
+                string value = source.GetValue( name ) as string;
+                _tryLoadAssembly( value );
             }
         }
 
         /// <summary>
-        /// Resolves the <see cref="Type"/> of the algorithm with the given
-        /// identifier.
+        /// Attempts to load and cache the assembly with the given name
         /// </summary>
-        /// <param name="algorithmName">The identifier of the algorithm to resolv
-        /// the type for.</param>
-        /// <returns>The <see cref="Type"/> of the algorithm represented by the given
-        /// identifier; null if no algorithm is associated with the given
-        /// identifier.</returns>
-        public Type FetchType( string algorithmName )
+        /// <param name="value">The name of the assembly</param>
+        private void _tryLoadAssembly( string value )
         {
-            Type output = null;
-
-            var match = _pluginCache.Keys
-                    .FirstOrDefault( x => x.AlgorithmName == algorithmName );
-            if( match != null )
+            try
             {
-                output = _pluginCache[match];
+                Assembly assembly = Assembly.LoadFrom( value );
+                _assemblies.Add( assembly );
             }
-            
-            return output;
-        }
-
-        /// <summary>
-        /// Determines whether this <see cref="IAlgorithmRegistrar"/> is aware
-        /// of an algorithm with the provided identifier.
-        /// </summary>
-        /// <param name="algorithmName">The identifier of the algorithm.</param>
-        /// <returns><c>true</c> if this <see cref="IAlgorithmRegistrar"/> is aware
-        /// of the algorithm with the given identifier; <c>false</c>
-        /// otherwise.</returns>
-        public bool KnowsAlgorithm( string algorithmName )
-        {
-            if( _pluginCache.Any() == false )
+            catch( Exception e )
             {
-                return false;
-            }
-            else
-            {
-                return _pluginCache.Keys.Any( x => x.AlgorithmName == algorithmName );
-            }
-        }
 
-
-        /// <summary>
-        /// Initializes the plugins from the registry key
-        /// </summary>
-        /// <param name="pluginsKey">The key in the registry to initialize
-        /// from.</param>
-        private void _initializePlugins( RegistryKey pluginsKey )
-        {
-            foreach( string pluginName in pluginsKey.GetValueNames() )
-            {
-                string pluginDLL = pluginsKey.GetValue( pluginName ) as string;
-                Assembly pluginAssembly = Assembly.LoadFrom( pluginDLL );
-                _cachePluginAssembly( pluginAssembly );
             }
-        }
-
-        /// <summary>
-        /// Caches all the plugins from the target assembly
-        /// </summary>
-        /// <param name="assembly">The assembly to cache the plugins from</param>
-        private void _cachePluginAssembly( Assembly assembly )
-        {
-            var validTypes = assembly.GetTypes().Where( _isValidType );
-            foreach( var type in validTypes )
-            {
-                AlgorithmDefinition definition = PluginReflector.CreateDefinition( type );
-                _pluginCache.Add( definition, type );
-            }
-        }
-
-        /// <summary>
-        /// Determines whether the incoming type is an algorithm definition.
-        /// </summary>
-        /// <param name="type">The type to structinize</param>
-        /// <returns>true if the type is annotated with the PluginIdentifierAttribute
-        /// class, and the type subclasses AlgorithmPlugin</returns>
-        private bool _isValidType( Type type )
-        {
-            return type.GetCustomAttribute( typeof( AlgorithmAttribute ) ) != null
-                && type.IsSubclassOf( typeof( AlgorithmPlugin ) );
         }
 
 
@@ -174,8 +117,8 @@ namespace DIPS.Processor.Registry
         private static readonly string _regLoc = @"SOFTWARE\Wow6432Node\DIPS";
 
         /// <summary>
-        /// Contains the definition -> type pairings of all plugins loaded.
+        /// Maintains the set of loaded assemblies from the Registry.
         /// </summary>
-        private IDictionary<AlgorithmDefinition, Type> _pluginCache;
+        private ICollection<Assembly> _assemblies;
     }
 }
