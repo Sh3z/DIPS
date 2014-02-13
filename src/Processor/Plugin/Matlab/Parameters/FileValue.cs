@@ -48,6 +48,36 @@ namespace DIPS.Processor.Plugin.Matlab.Parameters
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private MemoryFile _file;
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="FileValue"/> is
+        /// in possession of a valid value.
+        /// </summary>
+        [Browsable( true )]
+        [Description( "Indicates if the selected file has been loaded correctly" )]
+        public bool IsValid
+        {
+            get
+            {
+                return _file.RawCopy.Length > 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the raw copy of the file.
+        /// </summary>
+        [Browsable( false )]
+        public byte[] Bytes
+        {
+            get
+            {
+                return _file.RawCopy;
+            }
+            set
+            {
+                _file.RawCopy = value ?? new byte[0];
+            }
+        }
+
 
         /// <summary>
         /// Puts the value of this <see cref="IParameterValue"/> into the

@@ -34,12 +34,12 @@ namespace DIPS.Matlab
         }
 
         /// <summary>
-        /// Gets a copy of the raw byte information from the file.
+        /// Gets or sets a copy of the raw byte information.
         /// </summary>
         public byte[] RawCopy
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>

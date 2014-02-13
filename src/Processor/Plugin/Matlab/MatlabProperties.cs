@@ -63,6 +63,10 @@ namespace DIPS.Processor.Plugin.Matlab
             {
                 return _scriptFile.RawCopy;
             }
+            internal set
+            {
+                _scriptFile.RawCopy = value ?? new byte[0];
+            }
         }
 
         /// <summary>

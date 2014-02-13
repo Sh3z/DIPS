@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DIPS.Processor.Plugin
 {
     /// <summary>
-    /// Represents errors that occur within the plugin system.
+    /// Represents a generic error within a plugin.
     /// </summary>
+    [Serializable]
     public class PluginException : Exception
     {
         /// <summary>
@@ -19,24 +21,37 @@ namespace DIPS.Processor.Plugin
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PluginException"/> class with
-        /// the reason for the Exception.
+        /// Initializes a new instance of the <see cref="PluginException"/> class
+        /// with the specified error message.
         /// </summary>
-        /// <param name="reason">The reason for the error.</param>
-        public PluginException( string reason )
-            : base( reason )
+        /// <param name="err">The reason for the Exception.</param>
+        public PluginException( string err )
+            : base( err )
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PluginException"/> class with
-        /// the reason for the Exception, and the inner Exception that occured.
+        /// Initializes a new instance of the <see cref="PluginException"/> class
+        /// with the specified error message and cause of exception.
         /// </summary>
-        /// <param name="reason">The reason for the error.</param>
-        /// <param name="innerException">The internal Exception that is the cause for this
+        /// <param name="err">The reason for the Exception.</param>
+        /// <param name="innerException">The Exception that is the cause of the current
         /// Exception.</param>
-        public PluginException( string reason, Exception innerException )
-            : base( reason, innerException )
+        public PluginException( string err, Exception innerException )
+            : base( err, innerException )
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PluginException"/> class
+        /// with serialized data.
+        /// </summary>
+        /// <param name="info">The System.Runtime.Serialization.SerializationInfo
+        /// that holds the serialized object data about the exception being thrown.</param>
+        /// <param name="context">The System.Runtime.Serialization.StreamingContext
+        /// that contains contextual information about the source or destination.</param>
+        protected PluginException( SerializationInfo info, StreamingContext context )
+            : base( info, context )
         {
         }
     }

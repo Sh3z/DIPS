@@ -72,13 +72,16 @@
   <ItemGroup>
     <Compile Include="FileToBytesConverter.cs" />
     <Compile Include="IParameterValue.cs" />
+    <Compile Include="MatlabParameterFactory.cs" />
     <Compile Include="MatlabParametersCollection.cs" />
     <Compile Include="MatlabParametersCollectionEditor.cs" />
     <Compile Include="MatlabProcess.cs" />
     <Compile Include="MatlabProperties.cs" />
     <Compile Include="MatlabParameter.cs" />
+    <Compile Include="MatlabXmlInterpreter.cs" />
     <Compile Include="Parameters\FileParameter.cs" />
     <Compile Include="Parameters\FileValue.cs" />
+    <Compile Include="Parameters\GenericParameter.cs" />
     <Compile Include="Parameters\ObjectValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkspaceItemsSource.cs" />

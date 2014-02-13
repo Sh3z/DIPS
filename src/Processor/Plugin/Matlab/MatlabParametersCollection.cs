@@ -25,19 +25,6 @@ namespace DIPS.Processor.Plugin.Matlab
         {
         }
 
-
-        /// <summary>
-        /// Gets the number of <see cref="MatlabParameter"/>s present within this
-        /// <see cref="MatlabParametersCollection"/>.
-        /// </summary>
-        public int Count
-        {
-            get
-            {
-                return List.Count;
-            }
-        }
-
         /// <summary>
         /// Adds a new parameter to this <see cref="MatlabParametersCollection"/>.
         /// </summary>
@@ -46,14 +33,6 @@ namespace DIPS.Processor.Plugin.Matlab
         public void Add( MatlabParameter item )
         {
             List.Add( item );
-        }
-
-        /// <summary>
-        /// Removes all parameters from this <see cref="MatlabParametersCollection"/>.
-        /// </summary>
-        public void Clear()
-        {
-            List.Clear();
         }
 
         /// <summary>
@@ -132,17 +111,6 @@ namespace DIPS.Processor.Plugin.Matlab
         }
 
         /// <summary>
-        /// Removes the item at the specific index within this
-        /// <see cref="MatlabParametersCollection"/>.
-        /// </summary>
-        /// <param name="index">The zero-based index in which to remove
-        /// the item.</param>
-        public void RemoveAt( int index )
-        {
-            List.RemoveAt( index );
-        }
-
-        /// <summary>
         /// Gets or sets the <see cref="MatlabParameter"/> at the specified index
         /// within this <see cref="MatlabParametersCollection"/>.
         /// </summary>
@@ -168,7 +136,7 @@ namespace DIPS.Processor.Plugin.Matlab
         /// <returns>A <see cref="System.Collections.Generic.IEnumerator"/>
         /// used to step through the contents of this
         /// <see cref="MatlabParametersCollection"/>.</returns>
-        public IEnumerator<MatlabParameter> GetEnumerator()
+        new public IEnumerator<MatlabParameter> GetEnumerator()
         {
             return List.OfType<MatlabParameter>().GetEnumerator();
         }
