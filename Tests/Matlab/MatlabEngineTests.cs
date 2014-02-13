@@ -38,7 +38,7 @@ namespace DIPS.Tests.Matlab
         /// Tests creating a command when the session is invalid.
         /// </summary>
         [TestMethod]
-        [ExpectedException( typeof( MatlabException ) )]
+        [ExpectedException( typeof( InvalidSessionException ) )]
         public void TestCreateCommand_InvalidSession()
         {
             string cmdText = "b=a*a";
@@ -65,7 +65,7 @@ namespace DIPS.Tests.Matlab
         /// Tests creating the multiline command when the session is invalid.
         /// </summary>
         [TestMethod]
-        [ExpectedException( typeof( MatlabException ) )]
+        [ExpectedException( typeof( InvalidSessionException ) )]
         public void TestCreateComplexCommand_InvalidSession()
         {
             MatlabEngine engine = new MatlabEngine();

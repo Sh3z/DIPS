@@ -77,7 +77,7 @@ namespace DIPS.Tests.Matlab
         /// Tests placing an object onto the workspace when the session has expired.
         /// </summary>
         [TestMethod]
-        [ExpectedException( typeof( MatlabException ) )]
+        [ExpectedException( typeof( InvalidSessionException ) )]
         public void TestPutObject_ExpiredSession()
         {
             string workspaceName = "Base";
@@ -124,7 +124,7 @@ namespace DIPS.Tests.Matlab
         /// Attempts getting an object from an expired workspace.
         /// </summary>
         [TestMethod]
-        [ExpectedException( typeof( MatlabException ) )]
+        [ExpectedException( typeof( InvalidSessionException ) )]
         public void TestGetVariable_ExpiredSession()
         {
             string workspaceName = "base";

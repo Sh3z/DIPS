@@ -53,6 +53,8 @@ namespace DIPS.Matlab
         /// <summary>
         /// Executes the logic of this <see cref="MatlabCommand"/>.
         /// </summary>
+        /// <exception cref="InvalidSessionException">the Matlab
+        /// session has expired.</exception>
         public override void Execute()
         {
             Session.ThrowIfInvalid();

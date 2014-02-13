@@ -77,7 +77,7 @@ namespace DIPS.Matlab
         {
             if( Valid == false )
             {
-                throw new MatlabException( "The current session is invalid." );
+                throw new InvalidSessionException();
             }
         }
 

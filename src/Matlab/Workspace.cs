@@ -54,6 +54,8 @@ namespace DIPS.Matlab
         /// <param name="name">The name to assign the corresponding value within
         /// the workspace.</param>
         /// <param name="value">The value to assign.</param>
+        /// <exception cref="InvalidSessionException">the Matlab session has
+        /// expired.</exception>
         /// <exception cref="ArgumentException">name is null or empty.</exception>
         public void PutObject( string name, object value )
         {
@@ -72,6 +74,8 @@ namespace DIPS.Matlab
         /// </summary>
         /// <param name="name">The identifier of the variable to extract.</param>
         /// <returns>The value of the variable identified by the name.</returns>
+        /// <exception cref="InvalidSessionException">the Matlab session has
+        /// expired.</exception>
         /// <exception cref="MatlabException">the variable has not been set, or
         /// the value cannot be accessed.</exception>
         public object GetVariable( string name )
@@ -95,6 +99,8 @@ namespace DIPS.Matlab
         /// <returns>The value of the variable</returns>
         private object _tryGetVariable( string name )
         {
+            _session.ThrowIfInvalid();
+
             try
             {
                 return _session.Matlab.GetVariable( name, WorkspaceName );

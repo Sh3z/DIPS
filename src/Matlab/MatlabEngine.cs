@@ -59,6 +59,8 @@ namespace DIPS.Matlab
         /// is ran.</param>
         /// <returns>A <see cref="SingleStatementMatlabCommand"/> applicable to this
         /// <see cref="MatlabEngine"/>.</returns>
+        /// <exception cref="InvalidSessionException">the Matlab session has
+        /// expired.</exception>
         /// <exception cref="ArgumentException">cmd is null or empty.</exception>
         public MatlabCommand CreateCommand( string cmd )
         {
@@ -80,6 +82,8 @@ namespace DIPS.Matlab
         /// command.</param>
         /// <returns>A <see cref="SingleStatementMatlabCommand"/> applicable to this
         /// <see cref="MatlabEngine"/>.</returns>
+        /// <exception cref="InvalidSessionException">the Matlab session has
+        /// expired.</exception>
         /// <exception cref="ArgumentNullException">cmds is null</exception>
         public MatlabCommand CreateCommand( IEnumerable<string> cmds )
         {

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InvalidSessionException.cs" />
     <Compile Include="MatlabCommand.cs" />
     <Compile Include="CompositeMatlabCommand.cs" />
     <Compile Include="SingleStatementMatlabCommand.cs" />

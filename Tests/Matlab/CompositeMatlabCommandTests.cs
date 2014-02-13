@@ -51,7 +51,7 @@ namespace DIPS.Tests.Matlab
         /// Tests executing a command after the session has invalidated
         /// </summary>
         [TestMethod]
-        [ExpectedException( typeof( MatlabException ) )]
+        [ExpectedException( typeof( InvalidSessionException ) )]
         public void TestExecute_InvalidSession()
         {
             MLAppClass matlab = MatlabTestInstance.Instance;

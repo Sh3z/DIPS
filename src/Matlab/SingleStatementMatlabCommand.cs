@@ -54,7 +54,7 @@ namespace DIPS.Matlab
         /// <summary>
         /// Executes this <see cref="SingleStatementMatlabCommand"/>.
         /// </summary>
-        /// <exception cref="MatlabException">the command has been
+        /// <exception cref="InvalidSessionException">the command has been
         /// invalidated.</exception>
         public override void Execute()
         {
