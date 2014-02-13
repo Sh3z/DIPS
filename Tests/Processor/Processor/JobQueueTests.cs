@@ -92,7 +92,6 @@ namespace DIPS.Tests.Processor
         public void TestDequeue_OneJob()
         {
             JobQueue queue = new JobQueue();
-            bool eventFired = false;
 
             IJobDefinition d = new DudDefinition();
             JobRequest r = new JobRequest( d );
