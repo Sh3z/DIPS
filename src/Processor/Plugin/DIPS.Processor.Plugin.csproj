@@ -44,8 +44,10 @@
     <Compile Include="AlgorithmException.cs" />
     <Compile Include="AlgorithmMetadataAttribute.cs" />
     <Compile Include="AlgorithmPlugin.cs" />
+    <Compile Include="IPipelineXmlInterpreter.cs" />
     <Compile Include="IPropertyInterpreter.cs" />
     <Compile Include="AlgorithmAttribute.cs" />
+    <Compile Include="PipelineXmlOriginatorAttribute.cs" />
     <Compile Include="PluginException.cs" />
     <Compile Include="AlgorithmPropertyAttribute.cs" />
     <Compile Include="PluginReflectionException.cs" />

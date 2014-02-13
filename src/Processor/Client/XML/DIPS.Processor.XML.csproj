@@ -41,16 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pipeline\IPipelineXmlInterpreter.cs" />
-    <Compile Include="Pipeline\PipelinePersistanceProcess.cs" />
     <Compile Include="Decompilation\DecompilationVisitor.cs" />
     <Compile Include="Decompilation\DefinitionXmlDecompiler.cs" />
     <Compile Include="Decompilation\DefinitionXmlValidator.cs" />
     <Compile Include="Decompilation\IAlgorithmXmlDecompiler.cs" />
-    <Compile Include="Decompilation\IJobXmlVisitor.cs" />
+    <Compile Include="Decompilation\IXmlVisitor.cs" />
     <Compile Include="Decompilation\JobXmlDecompiler.cs" />
     <Compile Include="Decompilation\JobXmlValidator.cs" />
-    <Compile Include="Pipeline\PipelineXmlDecompiler.cs" />
     <Compile Include="Decompilation\ValidationVisitor.cs" />
     <Compile Include="Decompilation\XmlDecompilationException.cs" />
     <Compile Include="Decompilation\XmlTraverser.cs" />
@@ -60,6 +57,9 @@
     <Compile Include="Compilation\DefinitionBuilderProcess.cs" />
     <Compile Include="Compilation\IBuilderProcess.cs" />
     <Compile Include="Compilation\JobBuilderProcess.cs" />
+    <Compile Include="Pipeline\PipelinePersistanceProcess.cs" />
+    <Compile Include="Pipeline\PipelineXmlDecompiler.cs" />
+    <Compile Include="Pipeline\PipelineXmlValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Compilation\XmlBuilder.cs" />
     <Compile Include="Compilation\XmlBuilderException.cs" />

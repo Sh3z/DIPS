@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DIPS.Processor.XML.Pipeline
+namespace DIPS.Processor.Plugin
 {
     /// <summary>
     /// Represents the object used to translate parameter objects of

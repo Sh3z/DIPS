@@ -1,6 +1,5 @@
 ﻿using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
-using DIPS.Processor.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

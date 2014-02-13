@@ -1,6 +1,5 @@
 ﻿using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
-using DIPS.Processor.Plugin;
 using DIPS.Util.Compression;
 using System;
 using System.Collections.Generic;

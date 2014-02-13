@@ -1,5 +1,6 @@
 ﻿using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
+using DIPS.Processor.Plugin;
 using DIPS.Processor.XML.Decompilation;
 using System;
 using System.Collections.Generic;

@@ -6,6 +6,7 @@ using DIPS.Processor.XML.Pipeline;
 using DIPS.Processor.Client;
 using System.Xml.Linq;
 using System.Linq;
+using DIPS.Processor.Plugin;
 
 namespace DIPS.Tests.Processor.XML
 {

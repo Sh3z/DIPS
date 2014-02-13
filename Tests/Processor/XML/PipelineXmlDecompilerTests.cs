@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.Processor.XML.Pipeline;
 using System.Xml.Linq;
 using DIPS.Processor.XML.Decompilation;
+using DIPS.Processor.Plugin;
 
 namespace DIPS.Tests.Processor.XML
 {
