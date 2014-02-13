@@ -19,11 +19,16 @@ namespace DIPS.Processor
         /// Initializes a new instance of the <see cref="RegistryFactory"/>
         /// class.
         /// </summary>
-        public RegistryFactory()
+        /// <param name="algorithmRegistry">The <see cref="IAlgorithmRegistrar"/>
+        /// containing the loaded algorithm information.</param>
+        public RegistryFactory( IAlgorithmRegistrar algorithmRegistry )
         {
-            ProcessPluginRepository repo = new ProcessPluginRepository();
-            RegistryCache.Cache.Initialize( repo );
-            _activator = new AlgorithmActivator( repo );
+            if( algorithmRegistry == null )
+            {
+                throw new ArgumentNullException( "algorithmRegistry" );
+            }
+
+            _activator = new AlgorithmActivator( algorithmRegistry );
         }
 
 

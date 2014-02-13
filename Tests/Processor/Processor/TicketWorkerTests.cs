@@ -9,6 +9,7 @@ using DIPS.Processor.Client.JobDeployment;
 using DIPS.Processor.Plugin;
 using DIPS.Processor.Persistence;
 using System.Drawing;
+using DIPS.Processor.Registry;
 
 namespace DIPS.Tests.Processor
 {
@@ -46,7 +47,10 @@ namespace DIPS.Tests.Processor
         [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestConstructor_NullPersister()
         {
-            TicketWorker w = new TicketWorker( new RegistryFactory(), null );
+            ProcessPluginRepository r = new ProcessPluginRepository();
+            RegistryCache.Cache.Initialize( r );
+            RegistryFactory factory = new RegistryFactory( r );
+            TicketWorker w = new TicketWorker( factory, null );
         }
 
         /// <summary>
@@ -60,7 +64,10 @@ namespace DIPS.Tests.Processor
                 new JobInput[] { } );
             JobRequest r = new JobRequest( d );
             JobTicket ticket = new JobTicket( r, new DudCancellationHandler() );
-            TicketWorker w = new TicketWorker( new RegistryFactory(), new DudPersister() );
+            ProcessPluginRepository re = new ProcessPluginRepository();
+            RegistryCache.Cache.Initialize( re );
+            RegistryFactory factory = new RegistryFactory( re );
+            TicketWorker w = new TicketWorker( factory, new DudPersister() );
 
             bool didError = false;
             bool didFinish = false;

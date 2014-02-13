@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.Processor;
 using DIPS.Processor.Plugin;
 using DIPS.Processor.Client;
+using DIPS.Processor.Registry;
 
 namespace DIPS.Tests.Processor
 {
@@ -26,12 +27,24 @@ namespace DIPS.Tests.Processor
 
 
         /// <summary>
+        /// Tests creating the factory without a registry.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException( typeof( ArgumentNullException ) )]
+        public void TestConstructor_NullRegistry()
+        {
+            new RegistryFactory( null );
+        }
+
+        /// <summary>
         /// Tests manufacturing a plugin using an invalid definition.
         /// </summary>
         [TestMethod]
         public void TestManufacture_InvalidDefintion()
         {
-            RegistryFactory factory = new RegistryFactory();
+            ProcessPluginRepository r = new ProcessPluginRepository();
+            RegistryCache.Cache.Initialize( r );
+            RegistryFactory factory = new RegistryFactory( r );
             AlgorithmPlugin p = factory.Manufacture( null );
             Assert.IsNull( p );
         }
@@ -43,7 +56,9 @@ namespace DIPS.Tests.Processor
         public void TestManufacture_ValidDefinition()
         {
             AlgorithmDefinition d = new AlgorithmDefinition( "gamma", new Property[] {} );
-            RegistryFactory factory = new RegistryFactory();
+            ProcessPluginRepository r = new ProcessPluginRepository();
+            RegistryCache.Cache.Initialize( r );
+            RegistryFactory factory = new RegistryFactory( r );
             AlgorithmPlugin p = factory.Manufacture( d );
             Assert.IsNotNull( p );
         }

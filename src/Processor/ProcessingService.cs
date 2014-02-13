@@ -25,8 +25,13 @@ namespace DIPS.Processor
         /// </summary>
         public ProcessingService()
         {
-            JobManager = new JobManager( new RegistryFactory() );
-            PipelineManager = new PipelineManager();
+            ProcessPluginRepository algRepo = new ProcessPluginRepository();
+            PipelineXmlRepository pipeRepo = new PipelineXmlRepository();
+            RegistryCache.Cache.Initialize( pipeRepo );
+            RegistryCache.Cache.Initialize( algRepo );
+            _pluginFactory = new RegistryFactory( algRepo );
+            JobManager = new JobManager( _pluginFactory );
+            PipelineManager = new PipelineManager( pipeRepo, algRepo );
         }
 
 
@@ -59,7 +64,7 @@ namespace DIPS.Processor
         public ISynchronousProcessor CreateSynchronousProcessor()
         {
             IJobPersister persister = new MemoryPersister();
-            IWorker worker = new TicketWorker( new RegistryFactory(), persister );
+            IWorker worker = new TicketWorker( _pluginFactory, persister );
             return new SynchronousProcessor( worker );
         }
 
@@ -74,5 +79,8 @@ namespace DIPS.Processor
         {
             return null;
         }
+
+
+        private IPluginFactory _pluginFactory;
     }
 }

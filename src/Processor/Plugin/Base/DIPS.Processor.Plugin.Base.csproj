@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="GammaCorrection.cs" />
     <Compile Include="GammaProperties.cs" />
+    <Compile Include="GammaXmlInterpreter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

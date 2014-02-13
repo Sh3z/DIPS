@@ -20,18 +20,18 @@ namespace DIPS.Processor.Plugin
         /// </summary>
         /// <param name="parameterObject">The value of the algorithms
         /// parameter object</param>
-        /// <returns>The set of <see cref="XElement"/>s describing each
-        /// property to save within the Xml for later restoration.</returns>
-        IEnumerable<XElement> CreateXml( object parameterObject );
+        /// <returns>The <see cref="XElement"/> describing the properties
+        /// within the object.</returns>
+        XElement CreateXml( object parameterObject );
 
         /// <summary>
         /// Converts the provided Xml back into the appropriate parameter
         /// object for the algorithm
         /// </summary>
-        /// <param name="parameterXml">The set of <see cref="XElement"/>s
-        /// provided by the decompiler</param>
+        /// <param name="parameterXml">The <see cref="XElement"/> describing the properties
+        /// within the object.</param>
         /// <returns>The appropriate object used to describe the parameters
         /// for the process.</returns>
-        object CreateObject( IEnumerable<XElement> parameterXml );
+        object CreateObject( XElement parameterXml );
     }
 }

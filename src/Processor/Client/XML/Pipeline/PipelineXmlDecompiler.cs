@@ -54,16 +54,17 @@ namespace DIPS.Processor.XML.Pipeline
             XAttribute nameAttr = element.Attribute( "name" );
             string name = nameAttr.Value;
             AlgorithmDefinition d = new AlgorithmDefinition( name, new Property[] { } );
-            XElement propertyNode = element.Descendants( "properties" ).FirstOrDefault();
-            if( propertyNode != null )
+            XNode propertyNode = element.FirstNode;
+            if( propertyNode != null && propertyNode.NodeType == System.Xml.XmlNodeType.Element )
             {
                 if( _factories.ContainsKey( name ) == false )
                 {
                     throw new ArgumentException( "Unknown process provided" );
                 }
 
+                XElement propElement = (XElement)propertyNode;
                 IPipelineXmlInterpreter factory = _factories[name];
-                d.ParameterObject = factory.CreateObject( propertyNode.Descendants( "property" ) );
+                d.ParameterObject = factory.CreateObject( propElement );
             }
 
             return d;

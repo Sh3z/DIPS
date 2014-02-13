@@ -32,6 +32,7 @@ namespace DIPS.Processor.XML.Decompilation
                 throw new ArgumentNullException( "decompiler" );
             }
 
+            _decompiler = decompiler;
             Algorithms = new List<AlgorithmDefinition>();
             Inputs = new List<JobInput>();
         }

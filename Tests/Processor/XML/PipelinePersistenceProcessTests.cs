@@ -104,13 +104,13 @@ namespace DIPS.Tests.Processor.XML
                 private set;
             }
 
-            public IEnumerable<System.Xml.Linq.XElement> CreateXml( object parameterObject )
+            public XElement CreateXml( object parameterObject )
             {
                 DidCallCreateXml = true;
-                return new System.Xml.Linq.XElement[] { };
+                return new XElement( "properties" );
             }
 
-            public object CreateObject( IEnumerable<System.Xml.Linq.XElement> parameterXml )
+            public object CreateObject( XElement parameterXml )
             {
                 DidCallCreateObject = true;
                 return new object();

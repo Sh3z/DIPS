@@ -66,12 +66,11 @@ namespace DIPS.Processor.XML.Pipeline
 
                 IPipelineXmlInterpreter factory = _factories[algName];
                 var props = factory.CreateXml( definition.ParameterObject );
-                XElement properties = new XElement( "properties", props );
-                return new XElement( "process", name, properties );
+                return new XElement( "algorithm", name, props );
             }
             else
             {
-                return new XElement( "process", name );
+                return new XElement( "algorithm", name );
             }
         }
 
