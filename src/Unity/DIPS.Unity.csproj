@@ -49,8 +49,8 @@
   <ItemGroup>
     <Compile Include="ContainerContainsExtensions.cs" />
     <Compile Include="GlobalContainer.cs" />
-    <Compile Include="Implementations\SaveFileService.cs" />
-    <Compile Include="ISaveFileService.cs" />
+    <Compile Include="Implementations\FilePickerService.cs" />
+    <Compile Include="IFilePickerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

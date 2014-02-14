@@ -14,30 +14,6 @@ using System.Xml.Linq;
 namespace DIPS.ViewModel.Commands
 {
     /// <summary>
-    /// Represents the object providing information to the
-    /// <see cref="PersistPipelineCommand"/> class.
-    /// </summary>
-    public interface IPipelineInfo : INotifyPropertyChanged
-    {
-        /// <summary>
-        /// Gets the name given to the current pipeline.
-        /// </summary>
-        string PipelineName
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Gets the observable collection of process view models defining
-        /// the pipeline.
-        /// </summary>
-        ObservableCollection<AlgorithmViewModel> SelectedProcesses
-        {
-            get;
-        }
-    }
-
-    /// <summary>
     /// Defines the command used to persist a pipeline definition.
     /// </summary>
     public class PersistPipelineCommand : UnityCommand
@@ -72,7 +48,7 @@ namespace DIPS.ViewModel.Commands
         {
             return _info.SelectedProcesses.Any()
                 && string.IsNullOrEmpty( _info.PipelineName ) == false
-                && Container.Contains<ISaveFileService>()
+                && Container.Contains<IFilePickerService>()
                 && Container.Contains<IPipelineManager>();
         }
 
@@ -82,7 +58,8 @@ namespace DIPS.ViewModel.Commands
         /// <param name="parameter">Data used by the command.</param>
         public override void Execute( object parameter )
         {
-            ISaveFileService service = Container.Resolve<ISaveFileService>();
+            IFilePickerService service = Container.Resolve<IFilePickerService>();
+            service.Mode = FilePickerMode.Create;
             service.DefaultExtension = ".xml";
             service.DefaultName = _info.PipelineName;
             service.Filter = "Xml Files (.xml)|*.xml";

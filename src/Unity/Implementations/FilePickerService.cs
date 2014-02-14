@@ -11,14 +11,24 @@ namespace DIPS.Unity.Implementations
     /// Represents the service providing the ability to select a path
     /// to save a file.
     /// </summary>
-    public class SaveFileService : ISaveFileService
+    public class FilePickerService : IFilePickerService
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SaveFileService"/> class.
+        /// Initializes a new instance of the <see cref="FilePickerService"/> class.
         /// </summary>
-        public SaveFileService()
+        public FilePickerService()
         {
             Path = string.Empty;
+        }
+
+
+        /// <summary>
+        /// Sets the mode of this <see cref="IFilePickerService"/>.
+        /// </summary>
+        public FilePickerMode Mode
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -64,12 +74,42 @@ namespace DIPS.Unity.Implementations
         /// <returns>true if a path was selected, false otherwise.</returns>
         public bool SelectPath()
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.FileName = DefaultName;
-            dialog.DefaultExt = DefaultExtension;
-            dialog.Filter = Filter;
-            bool? result = dialog.ShowDialog();
+            FileDialog dialog = _createDialog();
+            return _showDialog( dialog );
+        }
 
+
+        /// <summary>
+        /// Creates an appropriate dialog for the current mode
+        /// </summary>
+        /// <returns>A FileDialog for browsing the filesystem</returns>
+        private FileDialog _createDialog()
+        {
+            FileDialog dialog = null;
+            if( Mode == FilePickerMode.Create )
+            {
+                dialog = new SaveFileDialog();
+                dialog.FileName = DefaultName;
+                dialog.DefaultExt = DefaultExtension;
+            }
+            else
+            {
+                dialog = new OpenFileDialog();
+            }
+
+            dialog.Filter = Filter;
+            return dialog;
+        }
+
+        /// <summary>
+        /// Shows the dialog and performs the appropriate operation
+        /// on the path.
+        /// </summary>
+        /// <param name="dialog">The dialog to display</param>
+        /// <returns>true if a path was selected</returns>
+        private bool _showDialog( FileDialog dialog )
+        {
+            bool? result = dialog.ShowDialog();
             if( result.HasValue && result.Value )
             {
                 Path = dialog.FileName;

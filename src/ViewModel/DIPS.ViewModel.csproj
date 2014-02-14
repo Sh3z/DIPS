@@ -75,10 +75,12 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ImageCommands.cs" />
     <None Include="Commands\ProcessImageCommand.cs" />
+    <Compile Include="Commands\LoadPipelineCommand.cs" />
     <Compile Include="Commands\PersistPipelineCommand.cs" />
     <Compile Include="Converters\BitmapToImageSourceConverter.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\UnityCommand.cs" />
+    <Compile Include="IPipelineInfo.cs" />
     <Compile Include="UserInterfaceVM\CreateAlgorithmViewModel.cs" />
     <Compile Include="UserInterfaceVM\LoadNewDsStep1ViewModel.cs" />
     <Compile Include="UserInterfaceVM\LoadNewDsStep2ViewModel.cs" />

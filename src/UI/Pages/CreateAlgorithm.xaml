@@ -29,7 +29,7 @@
             </Label.RenderTransform>
         </Label>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="311,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="154"
-                 Text="{Binding Path=PipelineName, Mode=TwoWay}"/>
+                 Text="{Binding Path=PipelineName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="365" Margin="27,63,0,0" VerticalAlignment="Top" Width="295">
             <ScrollViewer>
@@ -56,5 +56,7 @@
         <Button Content="Save" HorizontalAlignment="Left" Margin="488,20,0,0" VerticalAlignment="Top" Width="75" Command="{Binding SavePipeline}"/>
         <xctk:PropertyGrid Margin="766,63,10,10" IsManipulationEnabled="True"
                            SelectedObject="{Binding Path=SelectedAlgorithm.ParameterObject}"/>
+        <Button Content="Load" HorizontalAlignment="Left" Margin="568,20,0,0" VerticalAlignment="Top" Width="75"
+                Command="{Binding LoadPipeline}"/>
     </Grid>
 </Page>

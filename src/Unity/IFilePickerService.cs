@@ -7,11 +7,35 @@ using System.Threading.Tasks;
 namespace DIPS.Unity
 {
     /// <summary>
+    /// Represents the possible modes of an <see cref="IFilePickerService"/>.
+    /// </summary>
+    public enum FilePickerMode
+    {
+        /// <summary>
+        /// A file will be created using the picker
+        /// </summary>
+        Create,
+
+        /// <summary>
+        /// A file will be opened using the picker
+        /// </summary>
+        Open
+    }
+
+    /// <summary>
     /// Represents the service providing the ability to select a path
     /// to save a file.
     /// </summary>
-    public interface ISaveFileService
+    public interface IFilePickerService
     {
+        /// <summary>
+        /// Sets the mode of this <see cref="IFilePickerService"/>.
+        /// </summary>
+        FilePickerMode Mode
+        {
+            set;
+        }
+
         /// <summary>
         /// Gets the selected path, or an empty string if no path is
         /// selected.
