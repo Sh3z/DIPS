@@ -80,22 +80,13 @@ namespace DIPS.UI.Pages
         /// Initializes a new <see cref="ViewExistingDataset"/> using the provided <see cref="IFemoreViewModel"/>
         /// as its presentation logic.
         /// </summary>
-        /// <param name="vm">The presentation layer-level view-model.</param>
-        public ViewExistingDataSet(IFemoreViewModel vm)
+        public ViewExistingDataSet()
         {
             InitializeComponent();
 
-            // Set the Data Context as the view-model.
-            DataContext = vm;
             addObjectsTotreeView();
             setupProperties();
         }
-
-        /// <summary>
-        /// Contains the reference to the view-model.
-        /// </summary>
-        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private IFemoreViewModel _viewModel;
 
         private void insertImageProperties()
         {

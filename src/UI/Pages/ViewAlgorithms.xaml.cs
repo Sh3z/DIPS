@@ -43,7 +43,7 @@ namespace DIPS.UI.Pages
         {
             CreateAlgorithm createAlgorithmScreen = new CreateAlgorithm();
             AlgorithmBuilderViewModel vm = new AlgorithmBuilderViewModel();
-            foreach( var algorithm in Service.GetAlgorithmDefinitions() )
+            foreach( var algorithm in Service.PipelineManager.AvailableProcesses )
             {
                 AlgorithmViewModel viewModel = new AlgorithmViewModel( algorithm );
                 vm.AvailableAlgorithms.Add( viewModel );

@@ -45,7 +45,7 @@ namespace DIPS.UI.Pages
         {
             // Create the window and provide it with the presentation layer.
             //PrototypeViewModel vm = new PrototypeViewModel();
-            ViewExistingDataSet viewWindow = new ViewExistingDataSet(null);
+            ViewExistingDataSet viewWindow = new ViewExistingDataSet();
             viewWindow.WindowNav = this;
 
             this.NavigationService.Navigate(viewWindow);
