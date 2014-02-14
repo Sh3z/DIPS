@@ -31,7 +31,7 @@ namespace DIPS.Processor.Plugin.Matlab
 
             MatlabProperties p = parameterObject as MatlabProperties;
             string path = p.ScriptFile;
-            string contentsAsStr = System.Text.Encoding.Default.GetString( p.SerializedFile );
+            string contentsAsStr = System.Convert.ToBase64String( p.SerializedFile );
             ICollection<XElement> paramElements = new List<XElement>();
             foreach( MatlabParameter parameter in p.Parameters )
             {
@@ -74,7 +74,7 @@ namespace DIPS.Processor.Plugin.Matlab
                 && scriptCopyElement.FirstNode.NodeType == System.Xml.XmlNodeType.CDATA )
             {
                 string cdataStr = ( (XCData)scriptCopyElement.FirstNode ).Value;
-                byte[] cdata = System.Text.Encoding.Default.GetBytes( cdataStr );
+                byte[] cdata = System.Convert.FromBase64String( cdataStr );
                 p.SerializedFile = cdata;
             }
 

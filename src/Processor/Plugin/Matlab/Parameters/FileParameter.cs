@@ -55,7 +55,7 @@ namespace DIPS.Processor.Plugin.Matlab.Parameters
             XCData file = null;
             if( _value.IsValid )
             {
-                file = new XCData( System.Text.Encoding.Default.GetString( _value.Bytes ) );
+                file = new XCData( System.Convert.ToBase64String( _value.Bytes ) );
             }
 
             return new XElement( "value",
@@ -82,7 +82,7 @@ namespace DIPS.Processor.Plugin.Matlab.Parameters
                 && xml.FirstNode.NodeType == System.Xml.XmlNodeType.CDATA )
             {
                 string data = ( (XCData)xml.FirstNode ).Value;
-                byte[] cdata = System.Text.Encoding.Default.GetBytes( data );
+                byte[] cdata = System.Convert.FromBase64String( data );
                 _value.Bytes = cdata;
             }
         }
