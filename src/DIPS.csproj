@@ -74,6 +74,14 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -167,6 +175,10 @@
     <ProjectReference Include="UI\DIPS.UI.csproj">
       <Project>{61e59efc-83e6-404e-aa7f-366cffbda7f4}</Project>
       <Name>DIPS.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity\DIPS.Unity.csproj">
+      <Project>{58bea286-5bcf-41b1-aaf0-d06c4663d4fd}</Project>
+      <Name>DIPS.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="ViewModel\DIPS.ViewModel.csproj">
       <Project>{aa521185-aa1a-4461-810c-b0bf60063136}</Project>

@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Unity;
 using DIPS.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace DIPS.UI.Pages
         {
             CreateAlgorithm createAlgorithmScreen = new CreateAlgorithm();
             AlgorithmBuilderViewModel vm = new AlgorithmBuilderViewModel();
+            vm.Container = GlobalContainer.Instance.Container;
             foreach( var algorithm in Service.PipelineManager.AvailableProcesses )
             {
                 AlgorithmViewModel viewModel = new AlgorithmViewModel( algorithm );

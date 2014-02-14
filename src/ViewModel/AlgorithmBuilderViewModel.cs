@@ -1,4 +1,6 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.ViewModel.Commands;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +15,7 @@ namespace DIPS.ViewModel
     /// Represents the object providing the presentation logic for the
     /// algorithm builder view.
     /// </summary>
-    public class AlgorithmBuilderViewModel : ViewModel
+    public class AlgorithmBuilderViewModel : ViewModel, IPipelineInfo
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -22,9 +24,29 @@ namespace DIPS.ViewModel
         public AlgorithmBuilderViewModel()
         {
             AvailableAlgorithms = new ObservableCollection<AlgorithmViewModel>();
-            ComposedAlgorithms = new ObservableCollection<AlgorithmViewModel>();
+            SelectedProcesses = new ObservableCollection<AlgorithmViewModel>();
+            SavePipeline = new PersistPipelineCommand( this );
         }
 
+
+        /// <summary>
+        /// Gets or sets the <see cref="IUnityContainer"/> used in the current
+        /// application.
+        /// </summary>
+        public IUnityContainer Container
+        {
+            get
+            {
+                return _container;
+            }
+            set
+            {
+                _container = value;
+                SavePipeline.Container = value;
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private IUnityContainer _container;
 
         /// <summary>
         /// Gets the collection of <see cref="AlgorithmViewModel"/>s available
@@ -40,7 +62,7 @@ namespace DIPS.ViewModel
         /// Gets the collection of <see cref="AlgorithmViewModel"/>s chosen
         /// for the current composite algorithm.
         /// </summary>
-        public ObservableCollection<AlgorithmViewModel> ComposedAlgorithms
+        public ObservableCollection<AlgorithmViewModel> SelectedProcesses
         {
             get;
             private set;
@@ -63,5 +85,32 @@ namespace DIPS.ViewModel
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private AlgorithmViewModel _selectedAlgorithm;
+
+        /// <summary>
+        /// Gets or sets the name given to the current pipeline.
+        /// </summary>
+        public string PipelineName
+        {
+            get
+            {
+                return _pipelineName;
+            }
+            set
+            {
+                _pipelineName = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private string _pipelineName;
+
+        /// <summary>
+        /// Gets the command used to persist the pipeline.
+        /// </summary>
+        public UnityCommand SavePipeline
+        {
+            get;
+            private set;
+        }
     }
 }

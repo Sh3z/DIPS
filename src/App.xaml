@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM"
              xmlns:userInterfaceVm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel">
     <Application.Resources>
-        <userInterfaceVm:ViewModelLocator x:Key="Locator" d:IsDataSource="True"/>
+        <userInterfaceVm:ViewModelLocator x:Key="Locator"/>
         <DataTemplate DataType="{x:Type userInterfaceVm:LoadNewDsStep1ViewModel}"></DataTemplate>
         <DataTemplate DataType="{x:Type userInterfaceVm:LoadNewDsStep2ViewModel}"></DataTemplate>
         <DataTemplate DataType="{x:Type userInterfaceVm:LoadNewDsStep3ViewModel}"></DataTemplate>

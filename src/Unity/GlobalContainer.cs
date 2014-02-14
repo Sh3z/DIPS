@@ -30,7 +30,11 @@ namespace DIPS.Unity
         {
             Container = new UnityContainer();
             Assembly[] assemblies = new[] { Assembly.GetAssembly( typeof( GlobalContainer ) ) };
-            Container.RegisterTypes( AllClasses.FromAssemblies( assemblies ) );
+            Container.RegisterTypes(
+                AllClasses.FromAssemblies( assemblies ),
+                WithMappings.FromMatchingInterface,
+                WithName.Default,
+                WithLifetime.ContainerControlled );
         }
 
 

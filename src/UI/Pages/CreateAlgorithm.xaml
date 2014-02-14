@@ -28,7 +28,8 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="23" Margin="311,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="154"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="311,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="154"
+                 Text="{Binding Path=PipelineName, Mode=TwoWay}"/>
 
         <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="365" Margin="27,63,0,0" VerticalAlignment="Top" Width="295">
             <ScrollViewer>
@@ -43,7 +44,7 @@
         <GroupBox Header="Algorithm" Margin="412,63,0,0" VerticalAlignment="Top" Height="365" HorizontalAlignment="Left" Width="303">
             <ScrollViewer>
                 <ListView
-                    ItemsSource="{Binding Path=ComposedAlgorithms, Mode=TwoWay}"
+                    ItemsSource="{Binding Path=SelectedProcesses, Mode=TwoWay}"
                     SelectedItem="{Binding Path=SelectedAlgorithm, Mode=TwoWay}"
                     Background="Lavender"
                     ItemContainerStyle="{StaticResource AlgorithmItemStyle}"
@@ -52,7 +53,7 @@
             </ScrollViewer>
 
         </GroupBox>
-        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="488,20,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="488,20,0,0" VerticalAlignment="Top" Width="75" Command="{Binding SavePipeline}"/>
         <xctk:PropertyGrid Margin="766,63,10,10" IsManipulationEnabled="True"
                            SelectedObject="{Binding Path=SelectedAlgorithm.ParameterObject}"/>
     </Grid>

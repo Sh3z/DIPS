@@ -1,6 +1,9 @@
 ﻿using DIPS.Processor;
+using DIPS.Processor.Client;
 using DIPS.UI;
+using DIPS.Unity;
 using DIPS.ViewModel;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -26,6 +29,11 @@ namespace DIPS
 
             // Create the window and provide it with the presentation layer.
             ProcessingService s = new ProcessingService();
+
+            IUnityContainer c = GlobalContainer.Instance.Container;
+            c.RegisterInstance<IProcessingService>( s );
+            c.RegisterInstance<IPipelineManager>( s.PipelineManager );
+
             MainNavi navWindow = new MainNavi();
             navWindow.Service = s;
             navWindow.ShowDialog();
