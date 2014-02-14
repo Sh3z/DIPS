@@ -1,3 +1,19 @@
 ﻿<Application x:Class="DIPS.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" />
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM"
+             xmlns:userInterfaceVm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel">
+    <Application.Resources>
+        <userInterfaceVm:ViewModelLocator x:Key="Locator" d:IsDataSource="True"/>
+        <DataTemplate DataType="{x:Type userInterfaceVm:LoadNewDsStep1ViewModel}"></DataTemplate>
+        <DataTemplate DataType="{x:Type userInterfaceVm:LoadNewDsStep2ViewModel}"></DataTemplate>
+        <DataTemplate DataType="{x:Type userInterfaceVm:LoadNewDsStep3ViewModel}"></DataTemplate>
+        <DataTemplate DataType="{x:Type userInterfaceVm:MainNaviViewModel}"></DataTemplate>
+        <DataTemplate DataType="{x:Type userInterfaceVm:MainViewModel}"></DataTemplate>
+        <DataTemplate DataType="{x:Type userInterfaceVm:TreeViewFilterViewModel}"></DataTemplate>
+        <DataTemplate DataType="{x:Type userInterfaceVm:ViewAlgorithmViewModel}"></DataTemplate>
+        <DataTemplate DataType="{x:Type userInterfaceVm:ViewExistingDatasetViewModel}"></DataTemplate>
+        <DataTemplate DataType="{x:Type userInterfaceVm:ViewModelLocator}"></DataTemplate>     
+    </Application.Resources>
+</Application>
