@@ -17,7 +17,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         public ViewModelLocator()
         {
-            _main = new MainViewModel();
+            _main = new MainViewModel(null);
         }
     }
 }

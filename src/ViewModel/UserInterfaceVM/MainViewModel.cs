@@ -5,24 +5,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using DIPS.Processor.Client;
 using DIPS.ViewModel.Commands;
+using Microsoft.Expression.Interactivity.Core;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
-    public class MainViewModel
+    public class MainViewModel : BaseViewModel
     {
+        /// <summary>
+        /// The current view.
+        /// </summary>
+        private static BaseViewModel _currentViewModel;
+
+        public static BaseViewModel CurrentViewModel
+        {
+            get
+            {
+                return _currentViewModel;
+            }
+            set
+            {
+                if (_currentViewModel == value)
+                    return;
+                _currentViewModel = value;
+            }
+        }
+
+        /// <summary>
+        /// Static instance of one of the ViewModels.
+        /// </summary>
+        readonly static ViewExistingDatasetViewModel _ViewExistingDatasetViewModel = new ViewExistingDatasetViewModel();
         public ICommand ViewExistingDataSetCommand { get; set; }
+
         public ICommand ViewProcessDataSetCommand { get; set; }
         public ICommand ViewCreateAlgorithmCommand { get; set; }
         public ICommand ViewAboutCommand { get; set; }
     
         public IProcessingService Service { get; set; }
 
-        public MainViewModel()
+        public MainViewModel(Frame theFrame)
         {
             SetupCommands();
+            OverallFrame = theFrame;
         }
 
         private void SetupCommands()
@@ -35,8 +62,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private static void ShowExistingDataSet(object obj)
         {
-           
-            //LoadNewDSStep1 loadDS1 = new LoadNewDSStep1();
+            OverallFrame.Content = MainViewModel._ViewExistingDatasetViewModel;
         }
 
         private static void ShowProcessDataSet(object obj)

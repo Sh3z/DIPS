@@ -3,6 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="{Binding Path=Content.Title, ElementName=MainNavi}" Height="400" Width="800" WindowState="Maximized" DataContext="{Binding Main,Source={StaticResource Locator}}">
     <DockPanel>
-        <Frame x:Name="contentFrame" />
+        <Frame Name="MainNaviControl" Content="{Binding ViewModel}" />
     </DockPanel>
 </Window>

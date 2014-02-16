@@ -8,5 +8,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
 {
     public class LoadNewDsStep3ViewModel
     {
+
     }
 }

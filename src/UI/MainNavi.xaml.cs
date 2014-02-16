@@ -25,8 +25,8 @@ namespace DIPS.UI
         public MainNavi()
         {
             InitializeComponent();
-            _main = new MainViewModel();
-            contentFrame.Navigate( _main );
+            _main = new MainViewModel(this.MainNaviControl);
+            this.MainNaviControl.Content = _main;
         }
 
 

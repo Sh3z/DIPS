@@ -3,21 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="300"
 	Width="605">
-<UserControl.DataContext>
-    <vm:MainViewModel/>
-</UserControl.DataContext>
     <Grid>
-        <Button Command="{Binding ViewExistingDataSetCommand}" HorizontalAlignment="Left" Margin="171,147,0,0" VerticalAlignment="Top" Width="28" Height="27" ToolTip="View Existing Datasets" AllowDrop="True">
-            <Button.Template>
-                <ControlTemplate>
-                    <Image Source="../Resources/find.png"/>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
         <Button Command="{Binding ViewCreateAlgorithmCommand}" HorizontalAlignment="Left" Margin="332,147,0,0" VerticalAlignment="Top" Width="26" Height="27" ToolTip="Create New Algorithm" RenderTransformOrigin="4.167,1.765">
             <Button.Template>
                 <ControlTemplate>
@@ -25,7 +14,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        
+
 
         <Button Command="{Binding ViewProcessDataSetCommand}" HorizontalAlignment="Left" Margin="253,147,0,0" VerticalAlignment="Top" Width="27" Height="27" ToolTip="Load New Dataset" RenderTransformOrigin="1,0.833">
             <Button.Template>
@@ -42,7 +31,7 @@
             </Button.Template>
         </Button>
         <TextBlock x:Name="txtTitle" HorizontalAlignment="Left" Margin="165,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" FontFamily="SimHei" FontSize="14"><Run Text="Dynamic Image Processing Software"/><Run Language="en-gb" Text=" v0.1"/><LineBreak/><LineBreak/><Run Text="by Gary Chadwick, Thomas Sherwood, Chuo Yeh Poo "/></TextBlock>
-        <GroupBox Header="Please select an option to begin.." HorizontalAlignment="Left" Margin="164,123,0,0" VerticalAlignment="Top" Height="72" Width="284" RenderTransformOrigin="0.505,0.535">
+        <GroupBox Header="Please select an option to begin.." HorizontalAlignment="Left" Margin="169,122,0,0" VerticalAlignment="Top" Height="72" Width="284" RenderTransformOrigin="0.505,0.535">
             <GroupBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -51,8 +40,15 @@
                     <TranslateTransform X="-0.02" Y="0.006"/>
                 </TransformGroup>
             </GroupBox.RenderTransform>
+            <Button Command="{Binding ViewExistingDataSetCommand}" Margin="5,9,228,14">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="../Resources/find.png"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
         </GroupBox>
-        <TextBox x:Name="txtExplanation" Text="Explanation of functionality will appear here."  HorizontalAlignment="Left" Height="70" Margin="165,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+        <TextBox Text="Explanation of functionality will appear here."  HorizontalAlignment="Left" Height="70" Margin="165,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
 
     </Grid>
 </UserControl>

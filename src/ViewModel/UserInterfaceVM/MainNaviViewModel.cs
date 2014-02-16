@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using DIPS.Processor.Client;
 
 namespace DIPS.ViewModel.UserInterfaceVM
@@ -13,7 +8,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public MainNaviViewModel()
         {
             //InitializeComponent();
-            _main = new MainViewModel();
+            //_main = new MainViewModel();
             //contentFrame.Navigate( _main );
         }
 

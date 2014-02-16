@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
-    public class ViewExistingDatasetViewModel
+    public class ViewExistingDatasetViewModel :BaseViewModel
     {
+        public ViewExistingDatasetViewModel()
+        {
+            
+        }
     }
 }
