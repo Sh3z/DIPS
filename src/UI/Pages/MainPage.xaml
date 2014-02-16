@@ -3,19 +3,22 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="300"
 	Width="605">
-
+<UserControl.DataContext>
+    <vm:MainViewModel/>
+</UserControl.DataContext>
     <Grid>
-        <Button x:Name="btnViewExistingDS" HorizontalAlignment="Left" Margin="171,147,0,0" VerticalAlignment="Top" Width="28" Height="27" Click="btnViewExistingDS_Click" ToolTip="View Existing Datasets" MouseEnter="btnViewExistingDS_MouseEnter" MouseLeave="btnViewExistingDS_MouseLeave" AllowDrop="True">
+        <Button Command="{Binding ViewExistingDataSetCommand}" HorizontalAlignment="Left" Margin="171,147,0,0" VerticalAlignment="Top" Width="28" Height="27" ToolTip="View Existing Datasets" AllowDrop="True">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="../Resources/find.png"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="btnCreateAlgorithm" HorizontalAlignment="Left" Margin="332,147,0,0" VerticalAlignment="Top" Width="26" Height="27" ToolTip="Create New Algorithm" RenderTransformOrigin="4.167,1.765" MouseEnter="btnCreateAlgorithm_MouseEnter" MouseLeave="btnCreateAlgorithm_MouseLeave" Click="btnCreateAlgorithm_Click">
+        <Button Command="{Binding ViewCreateAlgorithmCommand}" HorizontalAlignment="Left" Margin="332,147,0,0" VerticalAlignment="Top" Width="26" Height="27" ToolTip="Create New Algorithm" RenderTransformOrigin="4.167,1.765">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="../Resources/color_wheel.png"/>
@@ -24,14 +27,14 @@
         </Button>
         
 
-        <Button x:Name="btnLoadDataset" HorizontalAlignment="Left" Margin="253,147,0,0" VerticalAlignment="Top" Width="27" Height="27" ToolTip="Load New Dataset" Click="btnLoadDataset_Click" RenderTransformOrigin="1,0.833" MouseEnter="btnLoadDataset_MouseEnter" MouseLeave="btnLoadDataset_MouseLeave">
+        <Button Command="{Binding ViewProcessDataSetCommand}" HorizontalAlignment="Left" Margin="253,147,0,0" VerticalAlignment="Top" Width="27" Height="27" ToolTip="Load New Dataset" RenderTransformOrigin="1,0.833">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="../Resources/cog.png"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="btnAbout" HorizontalAlignment="Left" Margin="409,147,0,0" VerticalAlignment="Top" Width="28" Height="27" ToolTip="About" MouseEnter="btnAbout_MouseEnter" MouseLeave="btnAbout_MouseLeave">
+        <Button Command="{Binding ViewAboutCommand}" HorizontalAlignment="Left" Margin="409,147,0,0" VerticalAlignment="Top" Width="28" Height="27" ToolTip="About">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="../Resources/flag_blue.png"/>

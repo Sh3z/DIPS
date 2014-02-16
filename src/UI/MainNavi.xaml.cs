@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DIPS.UI.Pages;
 using DIPS.Processor.Client;
+using DIPS.ViewModel.UserInterfaceVM;
 
 namespace DIPS.UI
 {
@@ -24,7 +25,7 @@ namespace DIPS.UI
         public MainNavi()
         {
             InitializeComponent();
-            _main = new MainPage();
+            _main = new MainViewModel();
             contentFrame.Navigate( _main );
         }
 
@@ -50,6 +51,14 @@ namespace DIPS.UI
         /// <summary>
         /// Contains a reference to the root page view.
         /// </summary>
-        private MainPage _main;
+        
+        private static MainViewModel _main;
+        public MainViewModel Main
+        {
+            get
+            {
+                return _main;
+            }
+        }
     }
 }
