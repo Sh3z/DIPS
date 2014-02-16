@@ -24,7 +24,7 @@ namespace DIPS.UI.Pages.LoadNewDataset
     /// <summary>
     /// Interaction logic for LoadNewDSStep3.xaml
     /// </summary>
-    public partial class LoadNewDSStep3 : Page
+    public partial class LoadNewDSStep3 : UserControl
     {
         private List<FileInfo> _listOfFiles;
         public List<FileInfo> ListofFiles
@@ -66,7 +66,7 @@ namespace DIPS.UI.Pages.LoadNewDataset
             }
 
             MainPage main = new MainPage();
-            this.NavigationService.Navigate(main);
+            //this.NavigationService.Navigate(main);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

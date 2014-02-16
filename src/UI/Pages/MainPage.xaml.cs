@@ -22,7 +22,7 @@ namespace DIPS.UI.Pages
     /// <summary>
     /// Interaction logic for MainPage.xaml
     /// </summary>
-    public partial class MainPage : Page
+    public partial class MainPage : UserControl
     {
         public MainPage()
         {
@@ -48,13 +48,13 @@ namespace DIPS.UI.Pages
             ViewExistingDataSet viewWindow = new ViewExistingDataSet();
             viewWindow.WindowNav = this;
 
-            this.NavigationService.Navigate(viewWindow);
+            //this.NavigationService.Navigate(viewWindow);
         }
 
         private void btnLoadDataset_Click(object sender, RoutedEventArgs e)
         {
             LoadNewDSStep1 loadDS1 = new LoadNewDSStep1();
-            this.NavigationService.Navigate(loadDS1);
+            //this.NavigationService.Navigate(loadDS1);
         }
 
         private void clearField()
@@ -106,7 +106,7 @@ namespace DIPS.UI.Pages
         {
             ViewAlgorithms viewAlgorithmScreen = new ViewAlgorithms();
             viewAlgorithmScreen.Service = Service;
-            this.NavigationService.Navigate(viewAlgorithmScreen);
+            //this.NavigationService.Navigate(viewAlgorithmScreen);
         }
     }
 }

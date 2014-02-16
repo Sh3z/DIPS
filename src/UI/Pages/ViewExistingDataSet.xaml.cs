@@ -19,7 +19,6 @@ using System.Data;
 using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Forms;
 using DIPS.UI.Controls;
 
 namespace DIPS.UI.Pages
@@ -27,7 +26,7 @@ namespace DIPS.UI.Pages
     /// <summary>
     /// Interaction logic for ViewExistingDataSet.xaml
     /// </summary>
-    public partial class ViewExistingDataSet : Page
+    public partial class ViewExistingDataSet : UserControl
     {       
         /// <summary>
         /// Initializes a new <see cref="ViewExistingDataset"/> using the provided <see cref="IFemoreViewModel"/>

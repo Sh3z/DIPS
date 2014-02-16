@@ -21,7 +21,7 @@ namespace DIPS.UI.Pages
     /// <summary>
     /// Interaction logic for ViewAlgorithms.xaml
     /// </summary>
-    public partial class ViewAlgorithms : Page
+    public partial class ViewAlgorithms : UserControl
     {
         public ViewAlgorithms()
         {
@@ -53,7 +53,7 @@ namespace DIPS.UI.Pages
 
             createAlgorithmScreen.DataContext = vm;
 
-            this.NavigationService.Navigate(createAlgorithmScreen);
+            //this.NavigationService.Navigate(createAlgorithmScreen);
         }
     }
 }

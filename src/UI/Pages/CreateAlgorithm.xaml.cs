@@ -5,7 +5,7 @@ namespace DIPS.UI.Pages
     /// <summary>
     /// Interaction logic for CreateAlgorithm.xaml
     /// </summary>
-    public partial class CreateAlgorithm : Page
+    public partial class CreateAlgorithm : UserControl
     {
         public CreateAlgorithm()
         {

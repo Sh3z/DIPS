@@ -23,7 +23,7 @@ namespace DIPS.UI.Pages.LoadNewDataset
     /// <summary>
     /// Interaction logic for LoadNewDSStep2.xaml
     /// </summary>
-    public partial class LoadNewDSStep2 : Page
+    public partial class LoadNewDSStep2 : UserControl
     {
         private List<FileInfo> _listOfFiles;
 
@@ -64,7 +64,7 @@ namespace DIPS.UI.Pages.LoadNewDataset
         {
             LoadNewDSStep3 loadDS3 = new LoadNewDSStep3();
             loadDS3.ListofFiles = this.ListofFiles;
-            this.NavigationService.Navigate(loadDS3);
+            //this.NavigationService.Navigate(loadDS3);
         }
 
         public void LoadLists()
@@ -146,7 +146,7 @@ namespace DIPS.UI.Pages.LoadNewDataset
         private void btnBuildTech_Click(object sender, RoutedEventArgs e)
         {
             CreateAlgorithm createAlgorithmScreen = new CreateAlgorithm();
-            this.NavigationService.Navigate(createAlgorithmScreen);
+            //this.NavigationService.Navigate(createAlgorithmScreen);
         }
     }
 }

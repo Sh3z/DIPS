@@ -1,11 +1,11 @@
-﻿<Page x:Class="DIPS.UI.Pages.MainPage"
+﻿<UserControl x:Class="DIPS.UI.Pages.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DesignHeight="300"
-	Title="MainPage" Width="605">
+	Width="605">
 
     <Grid>
         <Button x:Name="btnViewExistingDS" HorizontalAlignment="Left" Margin="171,147,0,0" VerticalAlignment="Top" Width="28" Height="27" Click="btnViewExistingDS_Click" ToolTip="View Existing Datasets" MouseEnter="btnViewExistingDS_MouseEnter" MouseLeave="btnViewExistingDS_MouseLeave" AllowDrop="True">
@@ -52,4 +52,4 @@
         <TextBox x:Name="txtExplanation" Text="Explanation of functionality will appear here."  HorizontalAlignment="Left" Height="70" Margin="165,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
 
     </Grid>
-</Page>
+</UserControl>

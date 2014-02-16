@@ -22,7 +22,7 @@ namespace DIPS.UI.Pages.LoadNewDataset
     /// <summary>
     /// Interaction logic for LoadNewDSStep1.xaml
     /// </summary>
-    public partial class LoadNewDSStep1 : Page
+    public partial class LoadNewDSStep1 : UserControl
     {
         private List<FileInfo> _listOfFiles;
 
@@ -92,7 +92,7 @@ namespace DIPS.UI.Pages.LoadNewDataset
                 LoadNewDSStep2 loadDS2 = new LoadNewDSStep2();
                 loadDS2.ListofFiles = ListofFiles;
 
-                this.NavigationService.Navigate(loadDS2);
+                //this.NavigationService.Navigate(loadDS2);
             }
         }
     }

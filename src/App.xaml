@@ -2,18 +2,34 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM"
-             xmlns:userInterfaceVm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel">
+             xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
+             xmlns:vd="clr-namespace:DIPS.UI.Pages.LoadNewDataset;assembly=DIPS.UI"
+             xmlns:v="clr-namespace:DIPS.UI.Pages;assembly=DIPS.UI"
+             >
+  
     <Application.Resources>
-        <userInterfaceVm:ViewModelLocator x:Key="Locator"/>
-        <DataTemplate DataType="{x:Type userInterfaceVm:LoadNewDsStep1ViewModel}"></DataTemplate>
-        <DataTemplate DataType="{x:Type userInterfaceVm:LoadNewDsStep2ViewModel}"></DataTemplate>
-        <DataTemplate DataType="{x:Type userInterfaceVm:LoadNewDsStep3ViewModel}"></DataTemplate>
-        <DataTemplate DataType="{x:Type userInterfaceVm:MainNaviViewModel}"></DataTemplate>
-        <DataTemplate DataType="{x:Type userInterfaceVm:MainViewModel}"></DataTemplate>
-        <DataTemplate DataType="{x:Type userInterfaceVm:TreeViewFilterViewModel}"></DataTemplate>
-        <DataTemplate DataType="{x:Type userInterfaceVm:ViewAlgorithmViewModel}"></DataTemplate>
-        <DataTemplate DataType="{x:Type userInterfaceVm:ViewExistingDatasetViewModel}"></DataTemplate>
-        <DataTemplate DataType="{x:Type userInterfaceVm:ViewModelLocator}"></DataTemplate>     
+        <vm:ViewModelLocator x:Key="Locator"/>
+        
+        <DataTemplate DataType="{x:Type vm:LoadNewDsStep1ViewModel}">
+            <vd:LoadNewDSStep1 />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LoadNewDsStep2ViewModel}">
+            <vd:LoadNewDSStep2/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LoadNewDsStep3ViewModel}">
+            <vd:LoadNewDSStep3/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CreateAlgorithmViewModel}">
+            <v:CreateAlgorithm/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MainViewModel}">
+            <v:MainPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ViewAlgorithmViewModel}">
+            <v:ViewAlgorithms/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ViewExistingDatasetViewModel}">
+            <v:ViewExistingDataSet/>
+        </DataTemplate>
     </Application.Resources>
 </Application>
