@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using DIPS.Database.Objects;
 using DIPS.ViewModel.Commands;
 using Microsoft.Win32;
 
@@ -16,6 +13,19 @@ namespace DIPS.ViewModel.UserInterfaceVM
     {
         public ICommand ProgressToStep2Command { get; set; }
         public ICommand OpenFileDialogCommand { get; set; }
+        public ICommand ClearFieldsCommand { get; set; }
+
+        private ObservableCollection<Technique> _listOfTechniques;
+
+        public ObservableCollection<Technique> ListofTechniques
+        {
+            get { return _listOfTechniques; }
+            set
+            {
+                _listOfTechniques = value;
+                OnPropertyChanged();
+            }
+        }
 
         private ObservableCollection<FileInfo> _listofFiles;
 
@@ -25,31 +35,26 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set
             {
                 _listofFiles = value; 
-            }
-        }
-
-        private ObservableCollection<String> _listOfFileNames;
-
-        public ObservableCollection<String> ListOfFileNames
-        {
-            get { return _listOfFileNames; }
-            set
-            {
-                _listOfFileNames = value;
                 OnPropertyChanged();
             }
         }
-        
 
         public LoadNewDsStep1ViewModel()
         {
             SetupCommands();
+            LoadTechniqueObjects();
         }
 
         private void SetupCommands()
         {
             ProgressToStep2Command = new RelayCommand(new Action<object>(ConfirmAndMoveToStep2));
             OpenFileDialogCommand = new RelayCommand(new Action<object>(SelectFilesForDataset));
+            ClearFieldsCommand = new RelayCommand(new Action<object>(ClearFields));
+        }
+
+        private void ClearFields(object obj)
+        {
+            ListOfFiles.Clear();
         }
 
         private void ConfirmAndMoveToStep2(object obj)
@@ -58,6 +63,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
             {
                 _LoadNewDsStep2ViewModel.ListOfFiles = ListOfFiles;
                 OverallFrame.Content = _LoadNewDsStep2ViewModel;
+
+                if (_LoadNewDsStep2ViewModel != null)
+                {
+                    _LoadNewDsStep2ViewModel.ListofSelectedTechniques.Clear();
+                    _LoadNewDsStep2ViewModel.ListofTechniques.Clear();
+                    _LoadNewDsStep2ViewModel.ListofTechniques = new ObservableCollection<Technique>();
+
+                    LoadTechniqueObjects();
+                    _LoadNewDsStep2ViewModel.ListofTechniques = ListofTechniques;
+                }
             }
             
         }
@@ -80,12 +95,9 @@ namespace DIPS.ViewModel.UserInterfaceVM
             if (isOkay == true)
             {
                 ListOfFiles = new ObservableCollection<FileInfo>();
-                ListOfFileNames = new ObservableCollection<string>();
-
+               
                 foreach (string file in dialogOpen.FileNames)
                 {
-                    ListOfFileNames.Add(file);
-
                     FileInfo uploadFile = new FileInfo(file);
                     ListOfFiles.Add(uploadFile);
                 }
@@ -101,6 +113,31 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
 
             return true;
+        }
+
+        private void LoadTechniqueObjects()
+        {
+            ListofTechniques = new ObservableCollection<Technique>();
+
+            Technique tech1 = new Technique();
+            Technique tech2 = new Technique();
+            Technique tech3 = new Technique();
+            Technique tech4 = new Technique();
+
+            tech1.ID = 1;
+            tech2.ID = 2;
+            tech3.ID = 3;
+            tech4.ID = 4;
+
+            tech1.Name = "Blurring";
+            tech2.Name = "Shading";
+            tech3.Name = "Fuzzy";
+            tech4.Name = "Whitening";
+
+            ListofTechniques.Add(tech1);
+            ListofTechniques.Add(tech2);
+            ListofTechniques.Add(tech3);
+            ListofTechniques.Add(tech4);
         }
     }
 }

@@ -67,6 +67,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private static void ShowProcessDataSet(object obj)
         {
             OverallFrame.Content = _LoadNewDsStep1ViewModel;
+            
+            if (_LoadNewDsStep1ViewModel.ListOfFiles != null)
+            {
+                 _LoadNewDsStep1ViewModel.ListOfFiles.Clear();
+            }
         }
 
         private void ShowCreateAlgorithm(object obj)

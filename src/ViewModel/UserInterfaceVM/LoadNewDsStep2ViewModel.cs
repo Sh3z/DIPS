@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using DIPS.Database.Objects;
 using DIPS.ViewModel.Commands;
@@ -63,7 +59,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
             ListofSelectedTechniques = new ObservableCollection<Technique>();
             
             SetupCommands();
-            LoadTechniqueObjects();
         }
 
          private void ProgressToStep3(object obj)
@@ -71,7 +66,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
              OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
 
              BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles= this.ListOfFiles;
-             BaseViewModel._LoadNewDsStep3ViewModel.ListofTechniques = this.ListofSelectedTechniques;
+             BaseViewModel._LoadNewDsStep3ViewModel.ListOfTechniques = this.ListofSelectedTechniques;
          }
 
         
@@ -115,28 +110,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
             BuildAlgorithmCommand = new RelayCommand(new Action<object>(BuildAlgorithm));
         }
 
-        private void LoadTechniqueObjects()
-        {
-
-            Technique tech1 = new Technique();
-            Technique tech2 = new Technique();
-            Technique tech3 = new Technique();
-            Technique tech4 = new Technique();
-
-            tech1.ID = 1;
-            tech2.ID = 2;
-            tech3.ID = 3;
-            tech4.ID = 4;
-
-            tech1.Name = "Blurring";
-            tech2.Name = "Shading";
-            tech3.Name = "Fuzzy";
-            tech4.Name = "Whitening";
-
-            ListofTechniques.Add(tech1);
-            ListofTechniques.Add(tech2);
-            ListofTechniques.Add(tech3);
-            ListofTechniques.Add(tech4);
-        }
+        
     }
 }
