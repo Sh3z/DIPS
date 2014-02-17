@@ -69,7 +69,7 @@ namespace Database
                     data.Close();
                 }
             }
-            catch (Exception e) { }
+            catch (Exception e) { Console.WriteLine(e); }
 
             return allDatasetsActive;
 
@@ -84,6 +84,7 @@ namespace Database
             PatientImage img = null;
             Patient patient = null;
 
+            string patientName;
             string currentID;
             string prevID = "null";
             string currentSeries;
@@ -95,12 +96,13 @@ namespace Database
             {
                 img = new PatientImage();
                 currentID = data.GetString(data.GetOrdinal("Patient ID"));
+                patientName = data.GetString(data.GetOrdinal("Name"));
                 currentSeries = data.GetString(data.GetOrdinal("Series"));
 
                 if (!currentID.Equals(prevID))
                 {
                     dataSets = new List<ImageDataset>();
-                    patient = new Patient(currentID, dataSets);
+                    patient = new Patient(currentID, patientName, dataSets);
                     patientList.Add(patient);
 
                     imageCollectionDS = new ObservableCollection<PatientImage>();
@@ -138,6 +140,7 @@ namespace Database
                 SqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
+                    properties.Add("Patient ID : " + dataReader.GetString(dataReader.GetOrdinal("Patient ID")));
                     properties.Add("Birthdate : " + dataReader.GetString(dataReader.GetOrdinal("Birthdate")));
                     properties.Add("Age : " + dataReader.GetString(dataReader.GetOrdinal("Age")));
                     properties.Add("Sex : " + dataReader.GetString(dataReader.GetOrdinal("Sex")));

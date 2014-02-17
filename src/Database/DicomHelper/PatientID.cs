@@ -14,21 +14,17 @@ namespace Database.Dicom
         public String generate()
         {
             String patientID = null;
-
-            Char keyword;
-            if (DicomInfo.sex.Length == 0) keyword = 'U';
-            else keyword = DicomInfo.sex[0];
-
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();
+                String sMonth = DateTime.Now.ToString("MMM");
                 SqlCommand command = new SqlCommand("spr_RetrieveNextPatientID_v001", conn);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.Add("@keyword", SqlDbType.Char).Value = keyword;
+                command.Parameters.Add("@keyword", SqlDbType.VarChar).Value = sMonth;
                 String Count = command.ExecuteScalar().ToString();
-                if (Count.Length < 4) Count = Count.PadLeft(4, '0');
+                if (Count.Length < 3) Count = Count.PadLeft(3, '0');
 
-                patientID = keyword + "_" + Count;
+                patientID = sMonth + "_" + Count;
             }
             return patientID;
         }

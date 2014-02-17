@@ -28,9 +28,10 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.birthdate as 'Birthdate', p.age as 'Age', p.sex as 'Sex', iv.imageAcquisitionDate as 'Image Date Time',
-	iv.bodyPart as 'Body Part', iv.studyDescription as 'Study Description', iv.seriesDescription as 'Series Description',
-	iv.sliceThickness as 'Slice Thickness' 
+	select ISNULL(p.patientID, ' - ') as 'Patient ID', ISNULL(p.birthdate, ' - ') as 'Birthdate', 
+	ISNULL(p.age, ' - ') as 'Age', ISNULL(p.sex, ' - ') as 'Sex', iv.imageAcquisitionDate as 'Image Date Time',
+	ISNULL(iv.bodyPart, ' - ') as 'Body Part', ISNULL(iv.studyDescription, ' - ') as 'Study Description',
+	ISNULL(iv.seriesDescription, ' - ') as 'Series Description', ISNULL(iv.sliceThickness, ' - ') as 'Slice Thickness' 
 	from patient p inner join imageProperties iv on p.tableID = iv.patientID join images i on iv.seriesID = i.seriesID
 	where i.fileID = @fileID;
 END

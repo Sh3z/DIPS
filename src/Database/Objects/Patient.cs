@@ -16,6 +16,15 @@ namespace DIPS.Database.Objects
             set { this._patientID = value; }
         }
 
+        private String _patientName;
+
+        public String patientName
+        {
+            get { return _patientName; }
+            set { _patientName = value; }
+        }
+        
+
         private List<ImageDataset> _dataSet;
 
         public List<ImageDataset> dataSet
@@ -24,9 +33,10 @@ namespace DIPS.Database.Objects
             set { _dataSet = value; }
         }
 
-        public Patient(String patientID, List<ImageDataset> dataSet)
+        public Patient(String patientID, String patientName, List<ImageDataset> dataSet)
         {
             this.patientID = patientID;
+            this.patientName = patientName;
             this.dataSet = dataSet;
         }
         
