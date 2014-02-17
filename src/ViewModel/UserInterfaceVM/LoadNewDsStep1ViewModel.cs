@@ -35,8 +35,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             get { return _listOfFileNames; }
             set
             {
-                _listOfFileNames = value; 
-                NotifyPropertyChanged("ListofFileNames");
+                _listOfFileNames = value;
+                OnPropertyChanged();
             }
         }
         
