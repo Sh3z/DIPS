@@ -9,6 +9,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
 {
     public class LoadNewDsStep2ViewModel : BaseViewModel
     {
-        public List<FileInfo> LstOfFiles { get; set; };
+        public List<FileInfo> LstOfFiles { get; set; }
+
+       
     }
 }

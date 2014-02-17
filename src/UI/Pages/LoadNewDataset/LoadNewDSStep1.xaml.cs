@@ -46,11 +46,11 @@ namespace DIPS.UI.Pages.LoadNewDataset
 
         private Boolean validateFields()
         {
-            //if ()
-            //{
-            //    MessageBox.Show("No files have been selected for processing.", "No files selected.", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            //    return false;
-            //}
+            if (!lstFiles.HasItems)
+            {
+                MessageBox.Show("No files have been selected for processing.", "No files selected.", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
 
             return true;
         }
