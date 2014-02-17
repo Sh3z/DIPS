@@ -24,76 +24,11 @@ namespace DIPS.UI.Pages.LoadNewDataset
     /// </summary>
     public partial class LoadNewDSStep1 : UserControl
     {
-        private List<FileInfo> _listOfFiles;
-
-        public List<FileInfo> ListofFiles
-        {
-            get { return _listOfFiles; }
-            set { _listOfFiles = value; }
-        }
         
-
         public LoadNewDSStep1()
         {
             InitializeComponent();
         }
-
-        private void btnSelectFiles_Click(object sender, RoutedEventArgs e)
-        {
-            //open dialog for user to select files
-                selectFilesForDataset();
-        }
-
-        private Boolean validateFields()
-        {
-            if (!lstFiles.HasItems)
-            {
-                MessageBox.Show("No files have been selected for processing.", "No files selected.", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                return false;
-            }
-
-            return true;
-        }
-
-        private void selectFilesForDataset()
-        {
-            Stream myStream;
-            OpenFileDialog dialogOpen = new OpenFileDialog();
-            ;
-            //Setup properties for open file dialog
-            dialogOpen.InitialDirectory = "C:\\";
-            dialogOpen.Filter = @"Bitmaps|*.bmp|Jpgs|*.jpg";
-            dialogOpen.FilterIndex = 1;
-            dialogOpen.Multiselect = true;
-            dialogOpen.Title = "Please select image files which are going to be part of this dataset";
-
-            Nullable<bool> isOkay = dialogOpen.ShowDialog();
-            String[] strFiles = dialogOpen.FileNames;
-                
-            if (isOkay == true)
-            {
-                ListofFiles = new List<FileInfo>();
-
-                foreach (string file in dialogOpen.FileNames)
-                {
-                    //lstFiles.Items.Add(file);
-
-                    FileInfo uploadFile = new FileInfo(file);
-                    ListofFiles.Add(uploadFile);
-                }
-            }
-
-        }
-
-        private void btnConfirm_Click(object sender, RoutedEventArgs e)
-        {
-            if (validateFields())
-            {
-                LoadNewDSStep2 loadDS2 = new LoadNewDSStep2();
-                loadDS2.ListofFiles = ListofFiles;
-
-                //this.NavigationService.Navigate(loadDS2);
-            }
-        }
+       
     }
 }

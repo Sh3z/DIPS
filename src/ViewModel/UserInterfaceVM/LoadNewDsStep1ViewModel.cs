@@ -17,8 +17,29 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public ICommand ProgressToStep2Command { get; set; }
         public ICommand OpenFileDialogCommand { get; set; }
 
-        private ObservableCollection<FileInfo> ListOfFiles { get; set; }
-        public ObservableCollection<String> ListOfFileNames { get; set; }
+        private ObservableCollection<FileInfo> _listofFiles;
+
+        public ObservableCollection<FileInfo> ListOfFiles
+        {
+            get { return _listofFiles; }
+            set
+            {
+                _listofFiles = value; 
+            }
+        }
+
+        private ObservableCollection<String> _listOfFileNames;
+
+        public ObservableCollection<String> ListOfFileNames
+        {
+            get { return _listOfFileNames; }
+            set
+            {
+                _listOfFileNames = value; 
+                NotifyPropertyChanged("ListofFileNames");
+            }
+        }
+        
 
         public LoadNewDsStep1ViewModel()
         {
@@ -58,7 +79,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             if (isOkay == true)
             {
-                ListOfFiles = new List<FileInfo>();
+                ListOfFiles = new ObservableCollection<FileInfo>();
+                ListOfFileNames = new ObservableCollection<string>();
 
                 foreach (string file in dialogOpen.FileNames)
                 {
