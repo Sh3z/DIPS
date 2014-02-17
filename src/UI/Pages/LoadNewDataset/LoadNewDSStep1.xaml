@@ -9,7 +9,15 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="109,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="39" Width="344"><Run Language="en-gb" Text="Please select the images you would like to select for processing.  These will be created as a Dataset."/></TextBlock>
-        <ListBox ItemsSource="{Binding ListOfFileNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="177" Margin="10,126,0,0" VerticalAlignment="Top" Width="263" ScrollViewer.CanContentScroll="True"/>
+        <ListBox ItemsSource="{Binding ListOfFiles, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="177" Margin="10,126,0,0" VerticalAlignment="Top" Width="263" ScrollViewer.CanContentScroll="True">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Label Content="Files Selected" HorizontalAlignment="Left" Margin="99,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462"/>
         <Button Command="{Binding OpenFileDialogCommand}" Content="Select Images" HorizontalAlignment="Left" Margin="312,131,0,0" VerticalAlignment="Top" Width="101" Height="54"/>
         <Button Command="{Binding ProgressToStep2Command}" Content="Confirm Choice" HorizontalAlignment="Left" Margin="312,275,0,0" VerticalAlignment="Top" Width="101"/>

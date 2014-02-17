@@ -4,27 +4,30 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d"
-	Width="540.299" Height="326.866" Loaded="Page_Loaded">
+	Width="540.299" Height="326.866">
 
     <Grid>
-        <Label x:Name="lblTechList" Content="Click to confirm that you want to forward with processing the following files:" HorizontalAlignment="Left" Margin="65,10,0,0" VerticalAlignment="Top"/>
-        <ListBox x:Name="lstLoadedFiles" HorizontalAlignment="Left" Height="108" Margin="189,55,0,0" VerticalAlignment="Top" Width="180">
+        <Label Content="Click to confirm that you want to forward with processing the following files and techniques:" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Width="520"/>
+        <ListBox ItemsSource="{Binding ListOfFiles}" HorizontalAlignment="Left" Height="97" Margin="43,72,0,0" VerticalAlignment="Top" Width="195">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=Name}"/>
+                        <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBlock x:Name="lblTurnOffComp" HorizontalAlignment="Left" Margin="125,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="297"><Run Language="en-gb" Text="Processing these files will take xx hours and xx minutes."/></TextBlock>
-        <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="240,295,0,0" VerticalAlignment="Top" Width="75" Click="btnProcess_Click"/>
-        <ComboBox x:Name="cboPostProcess" HorizontalAlignment="Left" Margin="283,236,0,0" VerticalAlignment="Top" Width="124">
+        <TextBlock HorizontalAlignment="Left" Margin="125,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="297"><Run Language="en-gb" Text="Processing these files will take xx hours and xx minutes."/></TextBlock>
+        <Button Command="{Binding ProcessFilesCommand}" Content="Process" HorizontalAlignment="Left" Margin="240,295,0,0" VerticalAlignment="Top" Width="75" />
+        <ComboBox SelectedItem="{Binding PostProcessAction}" HorizontalAlignment="Left" Margin="283,236,0,0" VerticalAlignment="Top" Width="124">
             <ComboBoxItem Content="Nothing" IsSelected="True"/>
             <ComboBoxItem Content="Sleep"/>
             <ComboBoxItem Content="Shut down"/>
         </ComboBox>
-        <TextBlock x:Name="lblTurnOffComp_Copy" HorizontalAlignment="Left" Margin="140,228,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="38" Width="138"><Run Language="en-gb" Text="What do I do when the processing is complete?"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="140,228,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="38" Width="138"><Run Language="en-gb" Text="What do I do when the processing is complete?"/></TextBlock>
+        <Label Content="Files:" HorizontalAlignment="Left" Margin="123,46,0,0" VerticalAlignment="Top"/>
+        <Label Content="Techniques:" HorizontalAlignment="Left" Margin="358,46,0,0" VerticalAlignment="Top"/>
+        <ListBox ItemsSource="{Binding ListOfTechniques}" Height="100" Margin="317,72,63,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

@@ -48,7 +48,7 @@
                 </Button.Template>
             </Button>
         </GroupBox>
-        <TextBox Text="Explanation of functionality will appear here."  HorizontalAlignment="Left" Height="70" Margin="165,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+        <TextBox Text="Explanation of functionality will appear here."  HorizontalAlignment="Left" Height="70" Margin="178,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268"/>
 
     </Grid>
 </UserControl>
