@@ -59,24 +59,38 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         public LoadNewDsStep2ViewModel()
         {
+            ListofTechniques = new ObservableCollection<Technique>();
+            ListofSelectedTechniques = new ObservableCollection<Technique>();
+            
+            SetupCommands();
             LoadTechniqueObjects();
         }
 
          private void ProgressToStep3(object obj)
          {
              OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
+
              BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles= this.ListOfFiles;
-        }
+             BaseViewModel._LoadNewDsStep3ViewModel.ListofTechniques = this.ListofSelectedTechniques;
+         }
 
         
         private void DeSelectTech(object obj)
         {
-            
+            if (ListofSelectedTechniques.Count > 0 && SelectedTechSelectedItem != null)
+            {
+                Technique tempTech = new Technique();
+
+                tempTech = (Technique)SelectedTechSelectedItem;
+
+                ListofSelectedTechniques.Remove((Technique)tempTech);
+                ListofTechniques.Add(tempTech);
+            }
         }
 
         private void BuildAlgorithm(object obj)
         {
-            
+            OverallFrame.Content = BaseViewModel._CreateAlgorithmViewModel;
         }
 
         private void PassToSelectedTech(object obj)
@@ -103,6 +117,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void LoadTechniqueObjects()
         {
+
             Technique tech1 = new Technique();
             Technique tech2 = new Technique();
             Technique tech3 = new Technique();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,12 +27,9 @@ namespace DIPS.UI.Pages.LoadNewDataset
     /// </summary>
     public partial class LoadNewDSStep3 : UserControl
     {
-        private List<FileInfo> _listOfFiles;
-        public List<FileInfo> ListofFiles
-        {
-            get { return _listOfFiles; }
-            set { _listOfFiles = value; }
-        }
+
+        public ObservableCollection<Technique> ListofTechniques { get; set; }
+        public ObservableCollection<FileInfo> ListofFiles { get; set; }
 
         public LoadNewDSStep3()
         {
