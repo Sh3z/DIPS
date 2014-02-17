@@ -35,11 +35,10 @@ namespace DIPS.ViewModel.UserInterfaceVM
         }
 
         /// <summary>
-        /// Static instance of one of the ViewModels.
+        /// Static instances of the ViewModels.
         /// </summary>
-        readonly static ViewExistingDatasetViewModel _ViewExistingDatasetViewModel = new ViewExistingDatasetViewModel();
+       
         public ICommand ViewExistingDataSetCommand { get; set; }
-
         public ICommand ViewProcessDataSetCommand { get; set; }
         public ICommand ViewCreateAlgorithmCommand { get; set; }
         public ICommand ViewAboutCommand { get; set; }
@@ -62,17 +61,17 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private static void ShowExistingDataSet(object obj)
         {
-            OverallFrame.Content = MainViewModel._ViewExistingDatasetViewModel;
+            OverallFrame.Content = _ViewExistingDatasetViewModel;
         }
 
         private static void ShowProcessDataSet(object obj)
         {
-            
+            OverallFrame.Content = _LoadNewDsStep1ViewModel;
         }
 
         private void ShowCreateAlgorithm(object obj)
         {
-            
+            OverallFrame.Content = _CreateAlgorithmViewModel;
         }
 
         private void ShowAbout(object obj)

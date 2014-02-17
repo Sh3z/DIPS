@@ -46,11 +46,11 @@ namespace DIPS.UI.Pages.LoadNewDataset
 
         private Boolean validateFields()
         {
-            if (!lstFiles.HasItems)
-            {
-                MessageBox.Show("No files have been selected for processing.", "No files selected.", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                return false;
-            }
+            //if ()
+            //{
+            //    MessageBox.Show("No files have been selected for processing.", "No files selected.", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            //    return false;
+            //}
 
             return true;
         }
@@ -76,7 +76,7 @@ namespace DIPS.UI.Pages.LoadNewDataset
 
                 foreach (string file in dialogOpen.FileNames)
                 {
-                    lstFiles.Items.Add(file);
+                    //lstFiles.Items.Add(file);
 
                     FileInfo uploadFile = new FileInfo(file);
                     ListofFiles.Add(uploadFile);
