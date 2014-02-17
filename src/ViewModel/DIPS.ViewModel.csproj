@@ -105,6 +105,10 @@
     <None Include="PrototypeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Database\DIPS.Database.csproj">
+      <Project>{A200FC0F-F24E-4F28-B34E-88B1EBD4773C}</Project>
+      <Name>DIPS.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Processor\Client\DIPS.Processor.Client.csproj">
       <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
       <Name>DIPS.Processor.Client</Name>

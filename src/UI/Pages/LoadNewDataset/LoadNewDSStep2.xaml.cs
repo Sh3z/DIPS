@@ -60,27 +60,22 @@ namespace DIPS.UI.Pages.LoadNewDataset
 
         }
 
-        private void btnSelection_Click(object sender, RoutedEventArgs e)
-        {
-            LoadNewDSStep3 loadDS3 = new LoadNewDSStep3();
-            loadDS3.ListofFiles = this.ListofFiles;
-            //this.NavigationService.Navigate(loadDS3);
-        }
+        
 
         public void LoadLists()
         {
-            lstSelectedFiles.ItemsSource = ListofFiles;
-            lstAvailableTech.ItemsSource = ListofTechniques;
-            lstSelectedTechniques.ItemsSource = selectedTechniques;
+            //lstSelectedFiles.ItemsSource = ListofFiles;
+            //lstAvailableTech.ItemsSource = ListofTechniques;
+            //lstSelectedTechniques.ItemsSource = selectedTechniques;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            this.selectedTechniques = new ObservableCollection<Technique>();
-            ListofTechniques = new ObservableCollection<Technique>();
+            //this.selectedTechniques = new ObservableCollection<Technique>();
+            //ListofTechniques = new ObservableCollection<Technique>();
             
-            LoadTechniqueObjects();
-            LoadLists();
+            //LoadTechniqueObjects();
+            //LoadLists();
         }
 
         private void LoadTechniqueObjects()
@@ -106,42 +101,29 @@ namespace DIPS.UI.Pages.LoadNewDataset
             ListofTechniques.Add(tech4);
         }
 
-        private void btnSelectTech_Click(object sender, RoutedEventArgs e)
-        {
-            passToSelectedTech();
-        }
+        //private void btnSelectTech_Click(object sender, RoutedEventArgs e)
+        //{
+        //    passToSelectedTech();
+        //}
 
-        private void passToSelectedTech()
-        {
-            if (lstAvailableTech.Items.Count > 0)
-            {
-                Technique tempTech = new Technique();
+        
+        //private void passToInactiveTech()
+        //{
+        //    if (lstSelectedTechniques.Items.Count > 0)
+        //    {
+        //        Technique tempTech = new Technique();
                 
-                tempTech = (Technique)lstAvailableTech.SelectedItem;
+        //        tempTech = (Technique)lstSelectedTechniques.SelectedItem;
 
-                ListofTechniques.Remove((Technique)lstAvailableTech.SelectedItem);
-                selectedTechniques.Add(tempTech);
-            }
+        //        ListofTechniques.Add(tempTech);
+        //        selectedTechniques.Remove((Technique)lstSelectedTechniques.SelectedItem);
+        //    }
+        //}
 
-        }
-
-        private void passToInactiveTech()
-        {
-            if (lstSelectedTechniques.Items.Count > 0)
-            {
-                Technique tempTech = new Technique();
-                
-                tempTech = (Technique)lstSelectedTechniques.SelectedItem;
-
-                ListofTechniques.Add(tempTech);
-                selectedTechniques.Remove((Technique)lstSelectedTechniques.SelectedItem);
-            }
-        }
-
-        private void btnDeselectTech_Click(object sender, RoutedEventArgs e)
-        {
-            passToInactiveTech();
-        }
+        //private void btnDeselectTech_Click(object sender, RoutedEventArgs e)
+        //{
+        //    passToInactiveTech();
+        //}
 
         private void btnBuildTech_Click(object sender, RoutedEventArgs e)
         {

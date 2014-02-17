@@ -56,7 +56,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             if (ValidateFields())
             {
-                _LoadNewDsStep2ViewModel.LstOfFiles = ListOfFiles;
+                _LoadNewDsStep2ViewModel.ListOfFiles = ListOfFiles;
                 OverallFrame.Content = _LoadNewDsStep2ViewModel;
             }
             

@@ -5,18 +5,18 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:Controls="clr-namespace:DIPS.UI.Controls" x:Class="DIPS.UI.Pages.LoadNewDataset.LoadNewDSStep2" 
       mc:Ignorable="d"
-	Width="742.941" Height="285.075" Loaded="Page_Loaded" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+	Width="742.941" Height="285.075">
 
     <Grid>
         <TextBlock x:Name="lblStep2Title" HorizontalAlignment="Left" Margin="10,9,-22,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="57" Width="584" Text="Please select the image process techniques you wish to use, select the property values and click to continue.  If you find that the image processing technique is not available, then you can create your own by clicking the relevant button below."/>
-        <ListBox x:Name="lstAvailableTech" HorizontalAlignment="Left" Height="135" Margin="272,115,0,0" VerticalAlignment="Top" Width="125" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ListofTechniques}"/>
+        <ListBox ItemsSource="{Binding ListofTechniques, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedItem="{Binding AvailableTechSelectedItem,Mode=TwoWay}"  HorizontalAlignment="Left" Height="135" Margin="272,115,0,0" VerticalAlignment="Top" Width="125" ScrollViewer.CanContentScroll="True" />
         <Label Content="Available Techniques" HorizontalAlignment="Left" Margin="272,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="125"/>
-        <Button x:Name="btnSelection" Content="Make Selection" HorizontalAlignment="Left" Margin="600,197,0,0" VerticalAlignment="Top" Width="123" Height="62" Click="btnSelection_Click"/>
-        <ListBox x:Name="lstSelectedTechniques" HorizontalAlignment="Left" Height="135" Margin="447,115,0,0" VerticalAlignment="Top" Width="125" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding selectedTechniques}" />
+        <Button Command="{Binding ProgressToStep3Command}" Content="Make Selection" HorizontalAlignment="Left" Margin="600,197,0,0" VerticalAlignment="Top" Width="123" Height="62"/>
+        <ListBox ItemsSource="{Binding ListofSelectedTechniques, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedItem="{Binding SelectedTechSelectedItem,Mode=TwoWay}" HorizontalAlignment="Left" Height="135" Margin="447,115,0,0" VerticalAlignment="Top" Width="125" ScrollViewer.CanContentScroll="True" />
         <Label Content="Selected Techniques" HorizontalAlignment="Left" Margin="447,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="125"/>
-        <Button x:Name="btnSelectTech" Content="-&gt;" HorizontalAlignment="Left" Margin="407,140,0,0" VerticalAlignment="Top" Width="29" RenderTransformOrigin="0.5,0.5" Click="btnSelectTech_Click"/>
-        <Button x:Name="btnBuildTech" Content="Build Technique" HorizontalAlignment="Left" Margin="600,72,0,0" VerticalAlignment="Top" Width="123" RenderTransformOrigin="0.533,-0.6" Height="42" Click="btnBuildTech_Click"/>
-        <ListBox x:Name="lstSelectedFiles" HorizontalAlignment="Left" Height="135" Margin="29,115,0,0" VerticalAlignment="Top" Width="166">
+        <Button Command="{Binding AddTechToSelectedCommand}" Content="-&gt;" HorizontalAlignment="Left" Margin="407,140,0,0" VerticalAlignment="Top" Width="29" RenderTransformOrigin="0.5,0.5" />
+        <Button Command="{Binding BuildAlgorithmCommand}" Content="Build Technique" HorizontalAlignment="Left" Margin="600,72,0,0" VerticalAlignment="Top" Width="123" RenderTransformOrigin="0.533,-0.6" Height="42" />
+        <ListBox ItemsSource="{Binding ListOfFiles}" HorizontalAlignment="Left" Height="135" Margin="29,115,0,0" VerticalAlignment="Top" Width="166">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -25,8 +25,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label x:Name="lblSelectedFiles" Content="Selected Files" HorizontalAlignment="Left" Margin="68,84,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnDeselectTech" Content="&lt;-" HorizontalAlignment="Left" Margin="407,197,0,0" VerticalAlignment="Top" Width="29" RenderTransformOrigin="0.172,0.3" Click="btnDeselectTech_Click"/>
+        <Label Content="Selected Files" HorizontalAlignment="Left" Margin="68,84,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding DeSelectTechCommand}"  Content="&lt;-" HorizontalAlignment="Left" Margin="407,197,0,0" VerticalAlignment="Top" Width="29" RenderTransformOrigin="0.172,0.3" />
 
         <Controls:infoBell x:Name="selectedFileInfo" HorizontalAlignment="Left" Margin="200,163,0,0" VerticalAlignment="Top" Height="42" Width="44" />
 
