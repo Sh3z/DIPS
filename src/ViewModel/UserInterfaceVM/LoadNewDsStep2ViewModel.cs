@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 {
     public class LoadNewDsStep2ViewModel : BaseViewModel
     {
-        public List<FileInfo> LstOfFiles { get; set; }
+        public ObservableCollection<FileInfo> LstOfFiles { get; set; }
 
        
     }
