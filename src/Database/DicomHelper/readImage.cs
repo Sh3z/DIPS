@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace DIPS.Database
 {
-    public class saveImage
+    public class readImage
     {
         public byte[] blob()
         {
             byte[] blob = null;
             try
             {
-                DicomImage img = new DicomImage(staticVariables.readFile);
+                DicomImage img = new DicomImage(DicomInfo.readFile);
                 Image im = img.RenderImage();
                 MemoryStream ms = new MemoryStream();
                 im.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
@@ -28,6 +28,7 @@ namespace DIPS.Database
             }
             catch (Exception e) 
             {
+                Console.WriteLine(e);
                 blob = null;
             }
             return blob;

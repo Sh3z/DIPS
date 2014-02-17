@@ -21,7 +21,8 @@ GO
 CREATE PROCEDURE spr_RetrieveImageNumber_v001
 	-- Add the parameters for the stored procedure here
 	@databaseID int,
-	@classID int
+	@classID int,
+	@number varchar(5)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -29,8 +30,9 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select i.imageNumber as 'Image Number'
+	select COUNT(i.imageNumber) as 'Image Number'
 	from imageProperties ip inner join images i on ip.seriesID = i.seriesID
 	where ip.patientID = @databaseID and i.seriesID = @classID
+	and i.imageNumber = @number
 END
 GO

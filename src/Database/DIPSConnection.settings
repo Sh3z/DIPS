@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Database" GeneratedClassName="SQLConnection">
+  <Profiles />
+  <Settings>
+    <Setting Name="Connection" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source = .\Yeh; Initial Catalog = medicalImaging; Integrated Security = True</Value>
+    </Setting>
+    <Setting Name="MasterConnection" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source = .\Yeh; Initial Catalog = master; Integrated Security = True</Value>
+    </Setting>
+    <Setting Name="DataSource" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.\Yeh</Value>
+    </Setting>
+    <Setting Name="Catalog" Type="System.String" Scope="User">
+      <Value Profile="(Default)">medicalImaging</Value>
+    </Setting>
+    <Setting Name="Security" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

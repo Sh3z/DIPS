@@ -43,9 +43,9 @@ namespace DIPS.UI.Pages
             set { _treeview = value; }
         }
 
-        private List<ImageDataset> _allDatasets;
+        private List<Patient> _allDatasets;
 
-        public List<ImageDataset> allDatasets
+        public List<Patient> allDatasets
         {
             get { return _allDatasets; }
             set { _allDatasets = value; }
@@ -78,10 +78,10 @@ namespace DIPS.UI.Pages
 
             if (radFemale.IsChecked == true)
             {
-                Filter.Gender = 'F';
+                Filter.Gender = "F";
             } else if (radMale.IsChecked == true)
             {
-                Filter.Gender = 'M';
+                Filter.Gender = "M";
             }
         }
 
@@ -94,7 +94,8 @@ namespace DIPS.UI.Pages
         {
             PrepareParameters();
             List<ImageDataset> dataset = new List<ImageDataset>();
-            allDatasets = ImageRepository.generateCustomTreeView(Filter);
+            ImageRepository repo = new ImageRepository();
+            allDatasets = repo.generateCustomTreeView(Filter);
             setupTreeview();
 
             chkFilterActive.IsChecked = true;
@@ -112,17 +113,21 @@ namespace DIPS.UI.Pages
             if (allDatasets != null)
             {
                 TreeView.Items.Clear();
-
-                foreach (ImageDataset ds in allDatasets)
+                foreach (Patient patient in allDatasets)
                 {
-                    TreeViewItem item = new TreeViewItem();
-                    item.Header = ds.name;
-                    item.ItemsSource = ds.relatedImages;
+                    TreeViewItem mainTree = new TreeViewItem();
+                    mainTree.Header = patient.patientID;
 
-                    TreeView.Items.Add(item);
+                    foreach (ImageDataset ds in patient.dataSet)
+                    {
+                        TreeViewItem subTree = new TreeViewItem();
+                        mainTree.Items.Add(subTree);
+                        subTree.Header = ds.series;
+                        subTree.ItemsSource = ds.relatedImages;
+                    }
+                    TreeView.Items.Add(mainTree);
                 }
             }
-
         }
 
         private void windowFilter_Closed(object sender, EventArgs e)

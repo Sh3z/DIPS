@@ -24,12 +24,19 @@ CREATE PROCEDURE spr_InsertPatient_v001
 	@birthday varchar(10),
 	@age varchar(10),
 	@sex char,
-	@series int
+	@series int = NULL
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
+	
+	IF @birthday = ''
+		SET @birthday = NULL
+	IF @age = ''
+		SET @age = NULL
+	IF @sex = ''
+		SET @sex = NULL
 
     -- Insert statements for procedure here
 	INSERT INTO patient (patientID,birthdate,age,sex,seriesAvailable) OUTPUT INSERTED.tableID VALUES (@id,@birthday,@age,@sex,@series)

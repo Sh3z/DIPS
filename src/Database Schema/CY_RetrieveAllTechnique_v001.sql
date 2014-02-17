@@ -15,38 +15,18 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <01/11/2013>
--- Description:	<Insert Image Information>
+-- Create date: <16/02/2014>
+-- Description:	<Retrieve All Image Processing Technique>
 -- =============================================
-CREATE PROCEDURE spr_InsertImageProperties_v001
+CREATE PROCEDURE spr_RetrieveAllTechnique_v001
 	-- Add the parameters for the stored procedure here
-	@id int,
-	@modality varchar(15),
-	@imgDateTime datetime = NULL,
-	@bodyPart varchar(20),
-	@studyDesc varchar(50),
-	@seriesDesc varchar(50),
-	@sliceThick varchar(20)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	IF @modality = ''
-		SET @modality = NULL
-	IF @bodyPart = ''
-		SET @bodyPart = NULL
-	IF @studyDesc = ''
-		SET @studyDesc = NULL
-	IF @seriesDesc = ''
-		SET @seriesDesc = NULL
-	IF @sliceThick = ''
-		SET @sliceThick = NULL
-
     -- Insert statements for procedure here
-	INSERT INTO imageProperties (patientID,modality,imageAcquisitionDate,bodyPart,studyDescription,seriesDescription,sliceThickness)
-	OUTPUT INSERTED.seriesID 
-	VALUES (@id,@modality,@imgDateTime,@bodyPart,@studyDesc,@seriesDesc,@sliceThick)
+	SELECT ID, name from imageProcessing
 END
 GO

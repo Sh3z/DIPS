@@ -15,23 +15,15 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <01/11/2013>
--- Description:	<Insert Patient Name>
+-- Create date: <09/02/2014>
+-- Description:	<Delete patient from the database>
 -- =============================================
-CREATE PROCEDURE spr_InsertName_v001 
+CREATE PROCEDURE spr_DeletePatient_v001
 	-- Add the parameters for the stored procedure here
-	@id int,
-	@pName varchar(50)
+	@patientID varchar(30) = NULL
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-
-	IF @pName = ''
-		SET @pName = NULL
-
-    -- Insert statements for procedure here
-	INSERT INTO name (patientID,patientName) VALUES (@id,@pName)
+	delete from patient where patientID = @patientID
 END
 GO
