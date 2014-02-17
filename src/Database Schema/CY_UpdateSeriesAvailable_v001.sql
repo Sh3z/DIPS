@@ -15,7 +15,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <01/19/2014>
+-- Create date: <19/01/2014>
 -- Description:	<Update series number for specific patient>
 -- =============================================
 CREATE PROCEDURE spr_UpdateSeriesAvailable_v001

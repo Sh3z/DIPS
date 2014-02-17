@@ -16,30 +16,6 @@ namespace DIPS.Database.Objects
             set { _imgID = value; }
         }
 
-        private String _name;
-
-        public String name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-
-        private int _datasetID;
-
-        public int datasetID
-        {
-            get { return _datasetID; }
-            set { _datasetID = value; }
-        }
-
-        private String _patientID;
-
-        public String patientID
-        {
-            get { return _patientID; }
-            set { _patientID = value; }
-        }
-
         public override string ToString()
         {
             return imgID.ToString();

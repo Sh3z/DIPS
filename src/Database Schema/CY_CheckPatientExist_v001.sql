@@ -29,6 +29,14 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
+	IF @birthdate = ''
+		SET @birthdate = NULL
+	IF @age = ''
+		SET @age = NULL
+	IF @sex = ''
+		SET @sex = NULL
+	IF @pName = ''
+		SET @pName = NULL
 
     -- Insert statements for procedure here
 	select ISNULL(p.tableID,'') as 'Patient ID', ISNULL(ip.modality,'') as 'Modality',

@@ -19,14 +19,16 @@ using System.Data;
 using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Forms;
 using DIPS.UI.Controls;
+using Database.DicomHelper;
 
 namespace DIPS.UI.Pages
 {
     /// <summary>
     /// Interaction logic for ViewExistingDataSet.xaml
     /// </summary>
-    public partial class ViewExistingDataSet : UserControl
+    public partial class ViewExistingDataSet : Page
     {       
         /// <summary>
         /// Initializes a new <see cref="ViewExistingDataset"/> using the provided <see cref="IFemoreViewModel"/>
@@ -49,9 +51,9 @@ namespace DIPS.UI.Pages
             }
         }
 
-        private List<ImageDataset> _allDatasets;
+        private List<Patient> _allDatasets;
 
-        public List<ImageDataset> allDatasets
+        public List<Patient> allDatasets
         {
             get { return _allDatasets; }
             set { _allDatasets = value; }
@@ -82,7 +84,6 @@ namespace DIPS.UI.Pages
         public ViewExistingDataSet()
         {
             InitializeComponent();
-
             addObjectsTotreeView();
             setupProperties();
         }
@@ -110,13 +111,19 @@ namespace DIPS.UI.Pages
 
             if (allDatasets != null)
             {
-                foreach (ImageDataset ds in allDatasets)
+                foreach (Patient patient in allDatasets)
                 {
-                    TreeViewItem item = new TreeViewItem();
-                    item.Header = ds.name;
-                    item.ItemsSource = ds.relatedImages;
+                    TreeViewItem mainTree = new TreeViewItem();
+                    mainTree.Header = patient.patientID;
 
-                    treeDatasets.Items.Add(item);
+                    foreach (ImageDataset ds in patient.dataSet)
+                    {
+                        TreeViewItem subTree = new TreeViewItem();
+                        mainTree.Items.Add(subTree);
+                        subTree.Header = ds.series;
+                        subTree.ItemsSource = ds.relatedImages;
+                    }
+                    treeDatasets.Items.Add(mainTree);
                 }
             }
             
@@ -124,7 +131,8 @@ namespace DIPS.UI.Pages
 
         private void setupTreeviewObjects()
         {
-            allDatasets = ImageRepository.generateTreeView();
+            ImageRepository repo = new ImageRepository();
+            allDatasets = repo.generateTreeView();
         }
 
         private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -140,17 +148,17 @@ namespace DIPS.UI.Pages
 
         public void setImage(String fileID)
         {
-            SqlConnection con = new SqlConnection(staticVariables.sql);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("spr_RetrieveImage_v001", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@fID", SqlDbType.VarChar).Value = fileID;
-            byte[] image = (byte[])cmd.ExecuteScalar();
+            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spr_RetrieveImage_v001", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@fID", SqlDbType.VarChar).Value = fileID;
+                byte[] image = (byte[])cmd.ExecuteScalar();
 
-            BitmapImage theBmp = ToImage(image);
-                        
-            unProcessedImg.Source = theBmp;
-            con.Close();
+                BitmapImage theBmp = ToImage(image);
+                unProcessedImg.Source = theBmp;
+            }
         }
 
         public BitmapImage ToImage(byte[] array)
@@ -176,8 +184,8 @@ namespace DIPS.UI.Pages
                     String imgName = selectedItem.Text;
 
                     setImage(imgName);
-
-                    populateImageDescription(ImageRepository.retrieveImageProperties(imgName));
+                    ImageRepository repo = new ImageRepository();
+                    populateImageDescription(repo.retrieveImageProperties(imgName));
                 }
 
                 //retrieveProperties(Text);

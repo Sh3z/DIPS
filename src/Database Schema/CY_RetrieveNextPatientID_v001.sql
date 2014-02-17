@@ -15,38 +15,20 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <01/11/2013>
--- Description:	<Insert Image Information>
+-- Create date: <09/02/2013>
+-- Description:	<Retrieve the total count of patients with specific keyword>
 -- =============================================
-CREATE PROCEDURE spr_InsertImageProperties_v001
+CREATE PROCEDURE spr_RetrieveNextPatientID_v001
 	-- Add the parameters for the stored procedure here
-	@id int,
-	@modality varchar(15),
-	@imgDateTime datetime = NULL,
-	@bodyPart varchar(20),
-	@studyDesc varchar(50),
-	@seriesDesc varchar(50),
-	@sliceThick varchar(20)
+	@keyword varchar(10) = 'N/A'
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	IF @modality = ''
-		SET @modality = NULL
-	IF @bodyPart = ''
-		SET @bodyPart = NULL
-	IF @studyDesc = ''
-		SET @studyDesc = NULL
-	IF @seriesDesc = ''
-		SET @seriesDesc = NULL
-	IF @sliceThick = ''
-		SET @sliceThick = NULL
-
     -- Insert statements for procedure here
-	INSERT INTO imageProperties (patientID,modality,imageAcquisitionDate,bodyPart,studyDescription,seriesDescription,sliceThickness)
-	OUTPUT INSERTED.seriesID 
-	VALUES (@id,@modality,@imgDateTime,@bodyPart,@studyDesc,@seriesDesc,@sliceThick)
+	select ISNULL(MAX(RIGHT(patientID,LEN(patientID)-CHARINDEX('_',patientID)) + 1),1) 
+	from patient where patientID like CONCAT(@keyword,'%')
 END
 GO

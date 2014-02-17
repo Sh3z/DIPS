@@ -15,7 +15,7 @@ namespace DIPS.Database
             //consist of 128 bytes of file header
             //followed by 4 byte DICOM prefix
 
-            FileStream fs = File.OpenRead(staticVariables.readFile);
+            FileStream fs = File.OpenRead(DicomInfo.readFile);
             fs.Seek(128, SeekOrigin.Begin);
             if (fs.ReadByte() == (byte)'D' && fs.ReadByte() == (byte)'I' &&
                 fs.ReadByte() == (byte)'C' && fs.ReadByte() == (byte)'M')

@@ -8,22 +8,27 @@ namespace DIPS.Database.Objects
 {
     public class Patient
     {
-        private int _id;
+        private String _patientID;
 
-        public int id
+        public String patientID
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._patientID; }
+            set { this._patientID = value; }
         }
 
-        private String _name;
+        private List<ImageDataset> _dataSet;
 
-        public String name
+        public List<ImageDataset> dataSet
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return _dataSet; }
+            set { _dataSet = value; }
         }
-        
+
+        public Patient(String patientID, List<ImageDataset> dataSet)
+        {
+            this.patientID = patientID;
+            this.dataSet = dataSet;
+        }
         
     }
 }

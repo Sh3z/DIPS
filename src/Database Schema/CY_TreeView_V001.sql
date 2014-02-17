@@ -28,10 +28,9 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.patientID as 'Patient ID', i.fileID as 'File ID'
+	select p.patientID as 'Patient ID', iv.seriesDescription as 'Series', i.fileID as 'File ID'
 	from patient p join imageProperties iv on p.tableID = iv.patientID 
 	join images i on iv.seriesID = i.seriesID 
-	group by p.patientID,i.fileID
-	order by 1, 2;
+	order by iv.importToDatabaseDate desc
 END
 GO

@@ -9,20 +9,12 @@ namespace DIPS.Database.Objects
 {
     public class ImageDataset
     {
-        private int _dsID;
-        
-        public int dsID
-        {
-            get { return this._dsID; }
-            set { this._dsID = value; }
-        }
+        private String _series;
 
-        private String _name;
-
-        public String name
+        public String series
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return _series; }
+            set { _series = value; }
         }
 
         private ObservableCollection<PatientImage> _relatedImages;
@@ -33,9 +25,9 @@ namespace DIPS.Database.Objects
             set { _relatedImages = value; }
         }
 
-        public ImageDataset(string dsName, ObservableCollection<PatientImage> images)
+        public ImageDataset(string dsSeries, ObservableCollection<PatientImage> images)
         {
-            this.name = dsName;
+            this.series = dsSeries;
             this.relatedImages = images;
         }
 

@@ -32,9 +32,9 @@ namespace Database.Objects
             set { _AcquisitionDateTo = value; }
         }
 
-        private char _Gender;
+        private String _Gender;
 
-        public char Gender
+        public String Gender
         {
             get { return _Gender; }
             set { _Gender = value; }

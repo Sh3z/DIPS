@@ -29,15 +29,49 @@ imageBlob varbinary(MAX),
 processed bit,
 );
 
+create table imageProcessing(
+ID int identity PRIMARY KEY,
+name varchar(100) NOT NULL,
+technique xml
+)
+
 select * from patient;
 select * from name;
 select * from imageProperties;
 select * from images;
+select * from imageProcessing;
 
+drop table imageProcessing;
 drop table images;
 drop table imageProperties;
 drop table name;
 drop table patient;
+
+SELECT @@SERVERNAME AS 'Server Name';
+
+select backup_size from msdb..backupset;
+select compressed_backup_size from msdb..backupset;
+
+BACKUP DATABASE medicalImaging
+TO DISK = 'C:\Users\Yeh\Desktop\localbackup\Test4.BAK'
+
+DROP DATABASE medicalImaging;
+
+RESTORE DATABASE medicalImaging
+FROM DISK = 'C:\Users\Yeh\Desktop\localbackup\Test2.BAK'
+WITH STATS = 1
+
+select Sum(datalength(imageBlob)) from images;
+insert into patient values ('AB12124567','12124567',NULL,'F',NULL);
+delete from images where seriesID in (select seriesID from imageProperties where patientID = (select tableID from patient where patientID = 'KJ15168546'));
+delete from imageProperties where patientID in (select tableID from patient where patientID = 'KJ15168546');
+delete from name where patientID = (select tableID from patient where patientID = 'KJ15168546');
+delete from patient where patientID = 'KJ15168546'
+
+select COUNT(distinct patientID) from imageProperties where modality = NULL;
+select (MAX(tableID) + 1) from patient;
+
+select MAX(RIGHT(patientID,LEN(patientID)-CHARINDEX('_',patientID)) + 1) from patient where patientID like 'NULL%'
 
 select * from patient where birthdate = '';
 
@@ -58,3 +92,4 @@ select * from imageProperties where imageAcquisitionDate > DATEADD(year,-3,curre
 select * from imageProperties where modality in (select distinct modality from imageProperties);
 select distinct top(3) sliceThickness from imageProperties order by sliceThickness desc;
 select * from images where processed = 0;
+
