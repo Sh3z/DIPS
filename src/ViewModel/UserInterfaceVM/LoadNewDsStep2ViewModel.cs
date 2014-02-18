@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
 using DIPS.Database.Objects;
+using DIPS.Processor.Client;
+using DIPS.Unity;
 using DIPS.ViewModel.Commands;
 
 namespace DIPS.ViewModel.UserInterfaceVM
@@ -20,6 +22,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 OnPropertyChanged();
             }
         }
+
+        public IProcessingService Service { get; set; }
 
         private ObservableCollection<Technique> _listOfTechniques;
 
@@ -85,7 +89,15 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void BuildAlgorithm(object obj)
         {
-            OverallFrame.Content = BaseViewModel._CreateAlgorithmViewModel;
+            OverallFrame.Content = BaseViewModel._AlgorithmBuilderViewModel;
+
+            _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
+
+            foreach (var algorithm in Service.PipelineManager.AvailableProcesses)
+            {
+                AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
+                _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
+            }
         }
 
         private void PassToSelectedTech(object obj)

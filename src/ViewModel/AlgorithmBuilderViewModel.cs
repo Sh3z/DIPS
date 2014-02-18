@@ -15,7 +15,7 @@ namespace DIPS.ViewModel
     /// Represents the object providing the presentation logic for the
     /// algorithm builder view.
     /// </summary>
-    public class AlgorithmBuilderViewModel : ViewModel, IPipelineInfo
+    public class AlgorithmBuilderViewModel : BaseViewModel, IPipelineInfo
     {
         /// <summary>
         /// Initializes a new instance of the

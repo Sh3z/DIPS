@@ -5,7 +5,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
-      xmlns:custom="clr-namespace:DIPS.UI.CustomControls;assembly=DIPS.UI.CustomControls"
       mc:Ignorable="d"
 	Height="438.09" Width="961.478">
     

@@ -5,6 +5,7 @@
              xmlns:vd="clr-namespace:DIPS.UI.Pages.LoadNewDataset;assembly=DIPS.UI"
              xmlns:v="clr-namespace:DIPS.UI.Pages;assembly=DIPS.UI"
              xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
+             xmlns:vmr="clr-namespace:DIPS.ViewModel;assembly=DIPS.ViewModel"
              StartupUri="UI/MainNavi.xaml"
              >
   
@@ -20,7 +21,7 @@
         <DataTemplate DataType="{x:Type vm:LoadNewDsStep3ViewModel}">
             <vd:LoadNewDSStep3/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:CreateAlgorithmViewModel}">
+        <DataTemplate DataType="{x:Type vmr:AlgorithmBuilderViewModel}">
             <v:CreateAlgorithm/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:MainViewModel}">

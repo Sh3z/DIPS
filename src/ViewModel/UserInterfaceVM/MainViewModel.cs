@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Database;
 using DIPS.Database.Objects;
 using DIPS.Processor.Client;
+using DIPS.Unity;
 using DIPS.ViewModel.Commands;
 using Microsoft.Expression.Interactivity.Core;
 
@@ -83,7 +84,15 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void ShowCreateAlgorithm(object obj)
         {
-            OverallFrame.Content = _CreateAlgorithmViewModel;
+            OverallFrame.Content = _AlgorithmBuilderViewModel;
+
+            _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
+
+            foreach (var algorithm in Service.PipelineManager.AvailableProcesses)
+            {
+                AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
+                _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
+            }
         }
 
         private void ShowAbout(object obj)
