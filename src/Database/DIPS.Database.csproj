@@ -108,6 +108,7 @@
     <Compile Include="Dicom\DicomInfo.cs" />
     <Compile Include="Connection\DAOInsertPatient.cs" />
     <Compile Include="DicomHelper\verifyDicom.cs" />
+    <Compile Include="Repository\ProcessRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="External Library\Database.dll">

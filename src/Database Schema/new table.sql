@@ -28,24 +28,30 @@ imageNumber varchar(5),
 imageBlob varbinary(MAX),
 processed bit,
 );
-
 create table imageProcessing(
 ID int identity PRIMARY KEY,
 name varchar(100) NOT NULL,
 technique xml
-)
+);
+create table timeLog(
+logID int identity PRIMARY KEY,
+beginTime datetime default current_timestamp
+);
 
 select * from patient;
 select * from name;
 select * from imageProperties;
 select * from images;
-select * from imageProcessing;
 
-drop table imageProcessing;
 drop table images;
 drop table imageProperties;
 drop table name;
 drop table patient;
+
+select * from imageProcessing;
+select * from timeLog;
+drop table timeLog;
+drop table imageProcessing;
 
 SELECT @@SERVERNAME AS 'Server Name';
 
@@ -70,7 +76,6 @@ delete from patient where patientID = 'KJ15168546'
 
 select COUNT(distinct patientID) from imageProperties where modality = NULL;
 select (MAX(tableID) + 1) from patient;
-
 select MAX(RIGHT(patientID,LEN(patientID)-CHARINDEX('_',patientID)) + 1) from patient where patientID like 'NULL%'
 
 select * from patient where birthdate = '';

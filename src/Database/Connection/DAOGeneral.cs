@@ -12,6 +12,23 @@ namespace DIPS.Database
 {
     public class DAOGeneral
     {
+
+        public void createLog()
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spr_CreateLog_v001", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.ExecuteNonQuery();
+
+                SqlCommand cmd2 = new SqlCommand("spr_DeleteExcessLog_v001", conn);
+                cmd2.CommandType = CommandType.StoredProcedure;
+                cmd2.ExecuteNonQuery();
+            }
+            DicomInfo.logCreated = true;
+        }
+
         public void patientExist()
         {
             DicomInfo.patientExist = false;

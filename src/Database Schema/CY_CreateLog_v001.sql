@@ -15,12 +15,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <09/02/2013>
--- Description:	<Retrieve the total count of patients with specific keyword>
+-- Create date: <18/02/2014>
+-- Description:	<Create time log for specific batch of dicom processing>
 -- =============================================
-CREATE PROCEDURE spr_RetrieveNextPatientID_v001
+CREATE PROCEDURE spr_CreateLog_v001
 	-- Add the parameters for the stored procedure here
-	@keyword varchar(10) = 'N/A'
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -28,7 +27,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select ISNULL(MAX(substring(patientID,5,len(patientID))+1),1) 
-	from patient where patientID like CONCAT(@keyword,'%');
+	INSERT INTO timeLog DEFAULT VALUES
 END
 GO

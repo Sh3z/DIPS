@@ -15,20 +15,21 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <09/02/2013>
--- Description:	<Retrieve the total count of patients with specific keyword>
+-- Create date: <18/02/2014>
+-- Description:	<Auto delete time log if exceed 20 rows>
 -- =============================================
-CREATE PROCEDURE spr_RetrieveNextPatientID_v001
+CREATE PROCEDURE spr_DeleteExcessLog_v001
 	-- Add the parameters for the stored procedure here
-	@keyword varchar(10) = 'N/A'
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
+	DECLARE @rowCount int
+	SET @rowCount = (SELECT COUNT(logID) from timeLog)
 
     -- Insert statements for procedure here
-	select ISNULL(MAX(substring(patientID,5,len(patientID))+1),1) 
-	from patient where patientID like CONCAT(@keyword,'%');
+	IF @rowCount > 20
+		DELETE TOP(@rowCount-20) FROM timeLog
 END
 GO
