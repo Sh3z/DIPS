@@ -96,7 +96,7 @@ namespace Database
             {
                 img = new PatientImage();
                 currentID = data.GetString(data.GetOrdinal("Patient ID"));
-                patientName = data.GetString(data.GetOrdinal("patientName"));
+                patientName = data.GetString(data.GetOrdinal("Patient Name"));
                 currentSeries = data.GetString(data.GetOrdinal("Series"));
 
                 if (!currentID.Equals(prevID))

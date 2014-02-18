@@ -56,7 +56,7 @@ BEGIN
 	IF @AcquireBetweenTo IS NULL
 		SET @AcquireBetweenTo = DATEADD(YEAR,1000,CAST(current_timestamp as DATE))
 
-	SELECT P.patientID as 'Patient ID', N.patientName as 'Name', 
+	SELECT P.patientID as 'Patient ID', N.patientName as 'Patient Name', 
 	IP.seriesDescription as 'Series', I.fileID as 'File ID'
 	FROM patient P join name N on P.tableID = N.patientID join
 	imageProperties IP on P.tableID = IP.patientID join 
