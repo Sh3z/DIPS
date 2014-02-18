@@ -14,10 +14,10 @@ namespace Database
 {
     public class ImageRepository
     {
-        public List<Patient> generateTreeView()
+        public ObservableCollection<Patient> generateTreeView()
         {
             Technique t = new Technique();
-            List<Patient> allDatasetsActive = null;
+            ObservableCollection<Patient> allDatasetsActive = null;
 
             try
             {
@@ -38,10 +38,10 @@ namespace Database
             return allDatasetsActive;
         }
 
-        public List<Patient> generateCustomTreeView(Filter filter)
+        public ObservableCollection<Patient> generateCustomTreeView(Filter filter)
         {
             Technique t = new Technique();
-            List<Patient> allDatasetsActive = null;
+            ObservableCollection<Patient> allDatasetsActive = null;
             DateTime invalidDate = new DateTime();
             invalidDate = DateTime.Parse("01/01/0001 00:00:00");
 
@@ -75,10 +75,10 @@ namespace Database
 
         }
 
-        private List<Patient> DatabaseToList(SqlDataReader data)
+        private ObservableCollection<Patient> DatabaseToList(SqlDataReader data)
         {
-            List<Patient> patientList = null;
-            List<ImageDataset> dataSets = null;
+            ObservableCollection<Patient> patientList = null;
+            ObservableCollection<ImageDataset> dataSets = null;
             ObservableCollection<PatientImage> imageCollectionDS = null;
             ImageDataset imgDS = null;
             PatientImage img = null;
@@ -90,18 +90,18 @@ namespace Database
             string currentSeries;
             string prevSeries = "null";
 
-            patientList = new List<Patient>();
+            patientList = new ObservableCollection<Patient>();
 
             while (data.Read())
             {
                 img = new PatientImage();
                 currentID = data.GetString(data.GetOrdinal("Patient ID"));
-                patientName = data.GetString(data.GetOrdinal("Name"));
+                patientName = data.GetString(data.GetOrdinal("patientName"));
                 currentSeries = data.GetString(data.GetOrdinal("Series"));
 
                 if (!currentID.Equals(prevID))
                 {
-                    dataSets = new List<ImageDataset>();
+                    dataSets = new ObservableCollection<ImageDataset>();
                     patient = new Patient(currentID, patientName, dataSets);
                     patientList.Add(patient);
 

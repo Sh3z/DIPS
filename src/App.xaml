@@ -32,5 +32,20 @@
         <DataTemplate DataType="{x:Type vm:ViewExistingDatasetViewModel}">
             <v:ViewExistingDataSet/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TreeViewGroupPatientsViewModel}">
+            <v:ViewExistingDataSet/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TreeViewImageDatasetViewModel}">
+            <v:ViewExistingDataSet/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TreeViewImageViewModel}">
+            <v:ViewExistingDataSet/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TreeViewItemViewModel}">
+            <v:ViewExistingDataSet/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TreeViewPatientViewModel}">
+            <v:ViewExistingDataSet/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

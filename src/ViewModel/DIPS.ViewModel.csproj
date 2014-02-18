@@ -95,6 +95,11 @@
     <Compile Include="UserInterfaceVM\MainNaviViewModel.cs" />
     <Compile Include="UserInterfaceVM\MainViewModel.cs" />
     <Compile Include="UserInterfaceVM\TreeViewFilterViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewGroupPatientsViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewImageDatasetViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewImageViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewItemViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewPatientViewModel.cs" />
     <Compile Include="UserInterfaceVM\ViewAlgorithmViewModel.cs" />
     <Compile Include="UserInterfaceVM\ViewExistingDatasetViewModel.cs" />
     <Compile Include="UserInterfaceVM\ViewModelLocator.cs" />

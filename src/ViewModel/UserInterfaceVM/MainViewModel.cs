@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Database;
+using DIPS.Database.Objects;
 using DIPS.Processor.Client;
 using DIPS.ViewModel.Commands;
 using Microsoft.Expression.Interactivity.Core;
@@ -61,6 +64,10 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private static void ShowExistingDataSet(object obj)
         {
+            ImageRepository imgRepository = new ImageRepository();
+            ObservableCollection<Patient> listofPatients = imgRepository.generateTreeView();
+            
+            TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(listofPatients);
             OverallFrame.Content = _ViewExistingDatasetViewModel;
         }
 

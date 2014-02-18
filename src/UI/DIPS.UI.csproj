@@ -279,9 +279,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Images\Image.png" />
     <Content Include="Images\cog.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\Patient.png" />
+    <Resource Include="Images\Dataset.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\color_wheel.png">

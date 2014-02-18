@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
       mc:Ignorable="d"
 	 Width="984.956" Height="447.761">
     <UserControl.Resources>
@@ -54,12 +55,58 @@
         </Border>
 
         <Label x:Name="lblToProcess" Content="----&gt;" HorizontalAlignment="Left" Margin="504,80,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
-        <TreeView x:Name="treeDatasets" HorizontalAlignment="Left" Height="358" Margin="26,56,0,0" VerticalAlignment="Top" Width="196" MouseDoubleClick="treeDatasets_MouseDoubleClick"/>
+        
+        <TreeView ItemsSource="{Binding Patients}" HorizontalAlignment="Left" Height="358" Margin="26,56,0,0" VerticalAlignment="Top" Width="196">
+            <TreeView.ItemContainerStyle>
+                <!-- 
+        This Style binds a TreeViewItem to a TreeViewItemViewModel. 
+        -->
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+            <TreeView.Resources>
+                <HierarchicalDataTemplate 
+          DataType="{x:Type vm:TreeViewPatientViewModel}" 
+          ItemsSource="{Binding Children}"
+          >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Margin="3,0" Source="/DIPS;component/Images/Patient.png" />
+                        <TextBlock Text="{Binding PatientName}" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+
+                <HierarchicalDataTemplate 
+          DataType="{x:Type vm:TreeViewImageDatasetViewModel}" 
+          ItemsSource="{Binding Children}"
+          >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Margin="3,0" Source="/DIPS;component/Images/Dataset.png" />
+                        <TextBlock Text="{Binding ImgDatasetName}" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+
+                <DataTemplate DataType="{x:Type vm:TreeViewImageViewModel}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Margin="3,0" Source="/DIPS.UI/Images/Image.png" />
+                        <TextBlock Text="{Binding ImageName}" />
+                    </StackPanel>
+                </DataTemplate>
+            </TreeView.Resources>
+        </TreeView>
         <Button x:Name="btnProcess" Content="Process" HorizontalAlignment="Left" Margin="439,358,0,0" VerticalAlignment="Top" Width="143" Command="{Binding ProcessImageCommand}" Height="60"/>
         <Image Name="unProcessedImg" HorizontalAlignment="Left" Height="128" Margin="318,22,0,0" VerticalAlignment="Top" Width="128"/>
         <TextBox x:Name="txtImageDesc" HorizontalAlignment="Left" Height="142" Margin="280,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" IsEnabled="False"/>
-        <Button x:Name="btnSelectFilter" Content="Filter Options" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Width="84" Click="btnSelectFilter_Click"/>
-        <CheckBox x:Name="chkActiveFilter" Content="Active Filter?" HorizontalAlignment="Left" Margin="128,25,0,0" VerticalAlignment="Top" Click="chkActiveFilter_Click"/>
+        <Button x:Name="btnSelectFilter" Content="Filter Options" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Width="84" />
+        <CheckBox x:Name="chkActiveFilter" Content="Active Filter?" HorizontalAlignment="Left" Margin="128,25,0,0" VerticalAlignment="Top" />
 
     </Grid>
 </UserControl>
