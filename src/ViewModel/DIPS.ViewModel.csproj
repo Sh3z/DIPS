@@ -94,6 +94,7 @@
     <Compile Include="UserInterfaceVM\LoadNewDsStep3ViewModel.cs" />
     <Compile Include="UserInterfaceVM\MainNaviViewModel.cs" />
     <Compile Include="UserInterfaceVM\MainViewModel.cs" />
+    <Compile Include="UserInterfaceVM\QueueViewModel.cs" />
     <Compile Include="UserInterfaceVM\TreeViewFilterViewModel.cs" />
     <Compile Include="UserInterfaceVM\TreeViewGroupPatientsViewModel.cs" />
     <Compile Include="UserInterfaceVM\TreeViewImageDatasetViewModel.cs" />

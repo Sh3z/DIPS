@@ -48,5 +48,8 @@
         <DataTemplate DataType="{x:Type vm:TreeViewPatientViewModel}">
             <v:ViewExistingDataSet/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:QueueViewModel}">
+            <v:Queue/>
+        </DataTemplate>
     </Application.Resources>
 </Application>
