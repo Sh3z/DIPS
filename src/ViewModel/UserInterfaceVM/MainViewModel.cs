@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Database;
+using DIPS.Database.Objects;
 using DIPS.Processor.Client;
+using DIPS.Unity;
 using DIPS.ViewModel.Commands;
 using Microsoft.Expression.Interactivity.Core;
 
@@ -61,6 +65,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private static void ShowExistingDataSet(object obj)
         {
+            ImageRepository imgRepository = new ImageRepository();
+            
             OverallFrame.Content = _ViewExistingDatasetViewModel;
         }
 
@@ -76,7 +82,15 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void ShowCreateAlgorithm(object obj)
         {
-            OverallFrame.Content = _CreateAlgorithmViewModel;
+            OverallFrame.Content = _AlgorithmBuilderViewModel;
+
+            _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
+
+            foreach (var algorithm in Service.PipelineManager.AvailableProcesses)
+            {
+                AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
+                _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
+            }
         }
 
         private void ShowAbout(object obj)

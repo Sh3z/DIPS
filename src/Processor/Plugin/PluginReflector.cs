@@ -130,8 +130,15 @@ namespace DIPS.Processor.Plugin
         /// be found</returns>
         private static AlgorithmAttribute _getIdentifierAttribute( Type processType )
         {
-            var attributes = processType.GetCustomAttributes();
-            return attributes.FirstOrDefault( x => x.GetType() == typeof( AlgorithmAttribute ) ) as AlgorithmAttribute;
+            try
+            {
+                var attributes = processType.GetCustomAttributes();
+                return attributes.FirstOrDefault( x => x.GetType() == typeof( AlgorithmAttribute ) ) as AlgorithmAttribute;
+            }
+            catch( Exception e )
+            {
+                throw new ArgumentException( "Algorithm type not annotated correctly", e );
+            }
         }
 
         /// <summary>

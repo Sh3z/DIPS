@@ -27,33 +27,6 @@ namespace DIPS.UI.Pages
         {
             InitializeComponent();
         }
-
-
-        /// <summary>
-        /// Gets or sets the <see cref="IProcessingService"/> connected to
-        /// the active DIPS processor.
-        /// </summary>
-        public IProcessingService Service
-        {
-            get;
-            set;
-        }
-
-
-        private void btnNew_Click(object sender, RoutedEventArgs e)
-        {
-            CreateAlgorithm createAlgorithmScreen = new CreateAlgorithm();
-            AlgorithmBuilderViewModel vm = new AlgorithmBuilderViewModel();
-            vm.Container = GlobalContainer.Instance.Container;
-            foreach( var algorithm in Service.PipelineManager.AvailableProcesses )
-            {
-                AlgorithmViewModel viewModel = new AlgorithmViewModel( algorithm );
-                vm.AvailableAlgorithms.Add( viewModel );
-            }
-
-            createAlgorithmScreen.DataContext = vm;
-
-            //this.NavigationService.Navigate(createAlgorithmScreen);
-        }
+       
     }
 }

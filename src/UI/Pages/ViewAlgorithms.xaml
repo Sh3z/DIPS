@@ -9,8 +9,8 @@
 
     <Grid>
         <DataGrid HorizontalAlignment="Left" Height="235" Margin="30,49,0,0" VerticalAlignment="Top" Width="951"/>
-        <Button x:Name="btnNew" Content="New" HorizontalAlignment="Left" Margin="906,302,0,0" VerticalAlignment="Top" Width="75" Click="btnNew_Click"/>
-        <Label Content="List Of Algorithms" HorizontalAlignment="Left" Margin="449,18,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding AddNewAlgorithmCommand}" Content="New" HorizontalAlignment="Left" Margin="906,302,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label HorizontalAlignment="Left" Margin="449,18,0,0" VerticalAlignment="Top"/>
 
         <Controls:infoBell HorizontalAlignment="Left" Margin="945,14,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.212,0.404" Height="33" Width="37" />
 

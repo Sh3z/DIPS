@@ -11,7 +11,7 @@ namespace DIPS.ViewModel.Commands
     /// Represents an <see cref="ICommand"/> whereby the implementation
     /// resides inside the view-model. This class cannot be inherited.
     /// </summary>
-    public sealed class RelayCommand : ICommand
+    public sealed class RelayCommand : Command
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RelayCommand"/> class.
@@ -45,20 +45,13 @@ namespace DIPS.ViewModel.Commands
 
 
         /// <summary>
-        /// Occurs when the value of CanExecute within this <see cref="RelayCommand"/>
-        /// has changed.
-        /// </summary>
-        public event EventHandler CanExecuteChanged;
-
-
-        /// <summary>
         /// Determines whether this <see cref="RelayCommand"/> can execute.
         /// </summary>
         /// <param name="parameter">The <see cref="object"/> to provide to
         /// the commanding logic.</param>
         /// <returns><c>true</c> if this <see cref="RelayCommand"/> can be
         /// executed.</returns>
-        public bool CanExecute( object parameter )
+        public override bool CanExecute( object parameter )
         {
             if( _canExecute == null )
             {
@@ -76,10 +69,11 @@ namespace DIPS.ViewModel.Commands
         /// </summary>
         /// <param name="parameter">The <see cref="object"/> to provide to
         /// the commanding logic.</param>
-        public void Execute( object parameter )
+        public override void Execute( object parameter )
         {
             _execute( parameter );
         }
+
 
 
         /// <summary>

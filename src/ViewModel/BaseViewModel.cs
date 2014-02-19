@@ -17,7 +17,7 @@ namespace DIPS.ViewModel
 
         readonly public static ViewExistingDatasetViewModel _ViewExistingDatasetViewModel = new ViewExistingDatasetViewModel();
         readonly public static LoadNewDsStep1ViewModel _LoadNewDsStep1ViewModel = new LoadNewDsStep1ViewModel();
-        readonly public static CreateAlgorithmViewModel _CreateAlgorithmViewModel = new CreateAlgorithmViewModel();
+        readonly public static AlgorithmBuilderViewModel _AlgorithmBuilderViewModel = new AlgorithmBuilderViewModel();
         readonly public static LoadNewDsStep2ViewModel _LoadNewDsStep2ViewModel = new LoadNewDsStep2ViewModel();
         readonly public static LoadNewDsStep3ViewModel _LoadNewDsStep3ViewModel = new LoadNewDsStep3ViewModel();
         readonly public static MainViewModel _MainViewModel = new MainViewModel(OverallFrame);

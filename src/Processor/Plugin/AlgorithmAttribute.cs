@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DIPS.Util.Extensions;
 
 namespace DIPS.Processor.Plugin
 {
@@ -49,8 +51,23 @@ namespace DIPS.Processor.Plugin
         /// </summary>
         public Type ParameterObjectType
         {
-            get;
-            set;
+            get
+            {
+                return _paramObjType;
+            }
+            set
+            {
+                if( value.Implements<ICloneable>() )
+                {
+                    _paramObjType = value;
+                }
+                else
+                {
+                    throw new ArgumentException( "Parameter object classes must implement ICloneable" );
+                }
+            }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private Type _paramObjType;
     }
 }

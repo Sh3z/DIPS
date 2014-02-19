@@ -49,6 +49,7 @@
     <Compile Include="BatchProcessor.cs" />
     <Compile Include="Executor\TicketWorker.cs" />
     <Compile Include="Executor\QueueExecutor.cs" />
+    <Compile Include="PipelineEntry.cs" />
     <Compile Include="Pipeline\IPipelineRepository.cs" />
     <Compile Include="JobBuilder.cs" />
     <Compile Include="JobDefinition.cs" />

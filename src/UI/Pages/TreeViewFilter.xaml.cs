@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,9 +44,9 @@ namespace DIPS.UI.Pages
             set { _treeview = value; }
         }
 
-        private List<Patient> _allDatasets;
+        private ObservableCollection<Patient> _allDatasets;
 
-        public List<Patient> allDatasets
+        public ObservableCollection<Patient> allDatasets
         {
             get { return _allDatasets; }
             set { _allDatasets = value; }
@@ -93,7 +94,7 @@ namespace DIPS.UI.Pages
         private void btnApplyFilter_Click(object sender, RoutedEventArgs e)
         {
             PrepareParameters();
-            List<ImageDataset> dataset = new List<ImageDataset>();
+            ObservableCollection<ImageDataset> dataset = new ObservableCollection<ImageDataset>();
             ImageRepository repo = new ImageRepository();
             allDatasets = repo.generateCustomTreeView(Filter);
             setupTreeview();

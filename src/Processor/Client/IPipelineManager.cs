@@ -28,7 +28,7 @@ namespace DIPS.Processor.Client
         /// <param name="processes">The set of processes within the pipeline to
         /// persist into Xml.</param>
         /// <returns>An <see cref="XDocument"/> describing the pipeline.</returns>
-        XDocument SavePipeline( IEnumerable<AlgorithmDefinition> processes );
+        XDocument SavePipeline( PipelineDefinition processes );
 
         /// <summary>
         /// Restores the former state of a pipeline from Xml.
@@ -37,6 +37,6 @@ namespace DIPS.Processor.Client
         /// pipeline.</param>
         /// <returns>The set of processes within the pipeline as described in
         /// the Xml.</returns>
-        IEnumerable<AlgorithmDefinition> RestorePipeline( XDocument pipeline );
+        PipelineDefinition RestorePipeline( XDocument pipeline );
     }
 }

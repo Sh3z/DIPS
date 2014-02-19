@@ -2,38 +2,63 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using DIPS.Database.Objects;
 using DIPS.ViewModel.Commands;
+using System.Collections.Generic;
+using DIPS.Processor.Client;
+using System.Collections.Specialized;
+using DIPS.Unity;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
-    public class LoadNewDsStep3ViewModel : BaseViewModel
+    public class LoadNewDsStep3ViewModel : BaseViewModel, IJobSource
     {
-        private ObservableCollection<FileInfo> _listOfFiles;
-
         public ObservableCollection<FileInfo> ListOfFiles
         {
-            get { return _listOfFiles; }
+            get;
+            private set;
+        }
+
+        public string PipelineName
+        {
+            get
+            {
+                return _pipelineName;
+            }
             set
             {
-                _listOfFiles = value; 
+                _pipelineName = value;
                 OnPropertyChanged();
             }
         }
-        
-        
-        public ObservableCollection<Technique> ListOfTechniques { get; set; }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private string _pipelineName;
+
+        public ObservableCollection<AlgorithmViewModel> PipelineAlgorithms
+        {
+            get;
+            private set;
+        }
+
+
         public ComboBoxItem PostProcessAction { get; set; }
 
-        public ICommand ProcessFilesCommand { get; set; }
+        public UnityCommand ProcessFilesCommand { get; private set; }
 
         public LoadNewDsStep3ViewModel()
         {
+            PipelineAlgorithms = new ObservableCollection<AlgorithmViewModel>();
+            ListOfFiles = new ObservableCollection<FileInfo>();
+            PipelineAlgorithms.CollectionChanged += _jobDetailsChanged;
+            ListOfFiles.CollectionChanged += _jobDetailsChanged;
             SetupCommands();
         }
+
+        
 
         private void ProcessFiles(object obj)
         {
@@ -70,8 +95,28 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void SetupCommands()
         {
-            ProcessFilesCommand = new RelayCommand(new Action<object>(ProcessFiles));
+            ProcessFilesCommand = new EnqueueJobCommand( this );
+            ProcessFilesCommand.Container = GlobalContainer.Instance.Container;
         }
 
+        private void _jobDetailsChanged( object sender, NotifyCollectionChangedEventArgs e )
+        {
+            ProcessFilesCommand.ExecutableStateChanged();
+        }
+
+
+        IEnumerable<FileInfo> IJobSource.Files
+        {
+            get { return ListOfFiles; }
+        }
+
+        PipelineDefinition IJobSource.Pipeline
+        {
+            get
+            {
+                return new PipelineDefinition(
+                    from process in PipelineAlgorithms select process.Definition );
+            }
+        }
     }
 }

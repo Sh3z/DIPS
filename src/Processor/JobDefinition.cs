@@ -22,7 +22,7 @@ namespace DIPS.Processor
         /// <param name="persister">The persister to use when saving the results of
         /// the job.</param>
         /// <exception cref="ArgumentNullException">processes or persister are null.</exception>
-        public JobDefinition( Guid jobID, IEnumerable<AlgorithmPlugin> processes, IJobPersister persister )
+        public JobDefinition( Guid jobID, IEnumerable<PipelineEntry> processes, IJobPersister persister )
         {
             if( processes == null )
             {
@@ -52,7 +52,7 @@ namespace DIPS.Processor
         /// <summary>
         /// Gets the set of processes to run as part of the job.
         /// </summary>
-        public IEnumerable<AlgorithmPlugin> Processes
+        public IEnumerable<PipelineEntry> Processes
         {
             get;
             private set;

@@ -9,7 +9,7 @@ namespace DIPS.Processor.Client.JobDeployment
 {
     public interface IJobDefinition
     {
-        IEnumerable<AlgorithmDefinition> GetAlgorithms();
+        PipelineDefinition GetAlgorithms();
 
         IEnumerable<JobInput> GetInputs();
     }

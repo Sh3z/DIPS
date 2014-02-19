@@ -28,7 +28,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.patientID as 'Patient ID', n.patientName as 'Name', iv.seriesDescription as 'Series', i.fileID as 'File ID'
+	select p.patientID as 'Patient ID', n.patientName as 'Patient Name', iv.seriesDescription as 'Series', i.fileID as 'File ID'
 	from patient p join name n on p.tableID = n.patientID
 	join imageProperties iv on p.tableID = iv.patientID 
 	join images i on iv.seriesID = i.seriesID 

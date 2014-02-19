@@ -43,7 +43,7 @@ namespace DIPS.Tests.Processor
         [ExpectedException( typeof( ArgumentNullException ) )]
         public void TestConstructor_NullPersister()
         {
-            JobDefinition d = new JobDefinition( Guid.Empty, new AlgorithmPlugin[] { }, null );
+            JobDefinition d = new JobDefinition( Guid.Empty, new PipelineEntry[] { }, null );
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestConstructor_ValidArgs()
         {
-            IEnumerable<AlgorithmPlugin> plugins = new AlgorithmPlugin[] { };
+            IEnumerable<PipelineEntry> plugins = new PipelineEntry[] { };
             IJobPersister persister = new DudPersister();
             JobDefinition d = new JobDefinition( Guid.Empty, plugins, persister );
 

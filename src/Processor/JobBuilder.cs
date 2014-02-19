@@ -149,7 +149,7 @@ namespace DIPS.Processor
                 return false;
             }
 
-            ICollection<AlgorithmPlugin> plugins = _createPlugins();
+            ICollection<PipelineEntry> plugins = _createPlugins();
             if( plugins.Any() == false )
             {
                 return false;
@@ -171,7 +171,7 @@ namespace DIPS.Processor
         /// </summary>
         /// <param name="plugins">The set of plugins to supply</param>
         /// <returns>A JobDefinition for use by a Job</returns>
-        private JobDefinition _createJobDefinition( ICollection<AlgorithmPlugin> plugins )
+        private JobDefinition _createJobDefinition( ICollection<PipelineEntry> plugins )
         {
             JobDefinition d = new JobDefinition( JobID, plugins, Persister );
             foreach( JobInput input in _inputs )
@@ -187,15 +187,17 @@ namespace DIPS.Processor
         /// </summary>
         /// <returns>A collection of algorithm plugin objects representing
         /// the provided definitions</returns>
-        private ICollection<AlgorithmPlugin> _createPlugins()
+        private ICollection<PipelineEntry> _createPlugins()
         {
-            ICollection<AlgorithmPlugin> plugins = new List<AlgorithmPlugin>();
+            ICollection<PipelineEntry> plugins = new List<PipelineEntry>();
             foreach( AlgorithmDefinition algorithm in _algorithms )
             {
                 AlgorithmPlugin p = _factory.Manufacture( algorithm );
                 if( p != null )
                 {
-                    plugins.Add( p );
+                    PipelineEntry e = new PipelineEntry( p );
+                    e.ProcessInput = algorithm.ParameterObject;
+                    plugins.Add( e );
                 }
             }
 

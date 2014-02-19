@@ -64,7 +64,8 @@ namespace DIPS.Tests.Processor
         public void TestWork_OneJob()
         {
             ObjectJobDefinition d = new ObjectJobDefinition(
-                new AlgorithmDefinition[] { },
+                new PipelineDefinition(
+                    new AlgorithmDefinition[] { } ),
                 new JobInput[] { } );
             JobRequest r = new JobRequest( d );
             JobTicket ticket = new JobTicket( r, new DudCancellationHandler() );

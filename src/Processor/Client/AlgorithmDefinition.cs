@@ -10,6 +10,7 @@ namespace DIPS.Processor.Client
     /// Represents the definition of an <see cref="AlgorithmPlugin"/> through
     /// metadata.
     /// </summary>
+    [Serializable]
     public class AlgorithmDefinition : IEquatable<AlgorithmDefinition>, ICloneable
     {
         /// <summary>

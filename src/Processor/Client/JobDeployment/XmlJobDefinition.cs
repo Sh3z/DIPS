@@ -17,7 +17,7 @@ namespace DIPS.Processor.Client.JobDeployment
             }
         }
 
-        public IEnumerable<AlgorithmDefinition> GetAlgorithms()
+        public PipelineDefinition GetAlgorithms()
         {
             throw new NotImplementedException();
         }

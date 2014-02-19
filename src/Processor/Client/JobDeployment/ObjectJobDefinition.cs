@@ -8,7 +8,7 @@ namespace DIPS.Processor.Client.JobDeployment
 {
     public class ObjectJobDefinition : IJobDefinition
     {
-        public ObjectJobDefinition( IEnumerable<AlgorithmDefinition> algorithms, IEnumerable<JobInput> inputs )
+        public ObjectJobDefinition( PipelineDefinition algorithms, IEnumerable<JobInput> inputs )
         {
             if( algorithms == null )
             {
@@ -24,7 +24,7 @@ namespace DIPS.Processor.Client.JobDeployment
             _inputs = inputs;
         }
 
-        public IEnumerable<AlgorithmDefinition> GetAlgorithms()
+        public PipelineDefinition GetAlgorithms()
         {
             return _algorithms;
         }
@@ -35,7 +35,7 @@ namespace DIPS.Processor.Client.JobDeployment
         }
 
 
-        private IEnumerable<AlgorithmDefinition> _algorithms;
+        private PipelineDefinition _algorithms;
 
         private IEnumerable<JobInput> _inputs;
     }

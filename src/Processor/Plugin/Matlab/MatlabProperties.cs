@@ -20,7 +20,7 @@ namespace DIPS.Processor.Plugin.Matlab
     /// </summary>
     [Serializable]
     [DisplayName( "Matlab Properties" )]
-    public class MatlabProperties
+    public class MatlabProperties : ICloneable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MatlabProperties"/>
@@ -93,6 +93,21 @@ namespace DIPS.Processor.Plugin.Matlab
         {
             get;
             private set;
+        }
+
+
+        /// <summary>
+        /// Creates a copy of this <see cref="MatlabProperties"/> object.
+        /// </summary>
+        /// <returns>A new instance of the <see cref="MatlabProperties"/>
+        /// class with the same values as the current instance.</returns>
+        public object Clone()
+        {
+            MatlabProperties p = new MatlabProperties();
+            p.ScriptFile = ScriptFile;
+            p.SerializedFile = SerializedFile;
+            p.Parameters = Parameters;
+            return p;
         }
     }
 }

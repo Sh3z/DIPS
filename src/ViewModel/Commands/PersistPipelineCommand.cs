@@ -77,7 +77,9 @@ namespace DIPS.ViewModel.Commands
         private void _saveFile( string path )
         {
             IPipelineManager pipeManager = Container.Resolve<IPipelineManager>();
-            XDocument xml = pipeManager.SavePipeline( _info.SelectedProcesses.Select( x => x.Definition ) );
+            var processes = _info.SelectedProcesses.Select( x => x.Definition );
+            PipelineDefinition p = new PipelineDefinition( processes );
+            XDocument xml = pipeManager.SavePipeline( p );
             xml.Save( path );
         }
         

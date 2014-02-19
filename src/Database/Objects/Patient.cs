@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,15 +26,15 @@ namespace DIPS.Database.Objects
         }
         
 
-        private List<ImageDataset> _dataSet;
+        private ObservableCollection<ImageDataset> _dataSet;
 
-        public List<ImageDataset> dataSet
+        public ObservableCollection<ImageDataset> dataSet
         {
             get { return _dataSet; }
             set { _dataSet = value; }
         }
 
-        public Patient(String patientID, String patientName, List<ImageDataset> dataSet)
+        public Patient(String patientID, String patientName, ObservableCollection<ImageDataset> dataSet)
         {
             this.patientID = patientID;
             this.patientName = patientName;

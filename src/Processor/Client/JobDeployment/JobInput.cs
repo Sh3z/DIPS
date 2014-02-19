@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DIPS.Processor.Client.JobDeployment
 {
+    [Serializable]
     public sealed class JobInput
     {
         public JobInput( Image input )

@@ -79,6 +79,7 @@
     <Compile Include="AlgorithmBuilderViewModel.cs" />
     <Compile Include="AlgorithmViewModel.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\EnqueueJobCommand.cs" />
     <Compile Include="Commands\ImageCommands.cs" />
     <None Include="Commands\ProcessImageCommand.cs" />
     <Compile Include="Commands\LoadPipelineCommand.cs" />
@@ -94,7 +95,13 @@
     <Compile Include="UserInterfaceVM\LoadNewDsStep3ViewModel.cs" />
     <Compile Include="UserInterfaceVM\MainNaviViewModel.cs" />
     <Compile Include="UserInterfaceVM\MainViewModel.cs" />
+    <Compile Include="UserInterfaceVM\QueueViewModel.cs" />
     <Compile Include="UserInterfaceVM\TreeViewFilterViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewGroupPatientsViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewImageDatasetViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewImageViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewItemViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewPatientViewModel.cs" />
     <Compile Include="UserInterfaceVM\ViewAlgorithmViewModel.cs" />
     <Compile Include="UserInterfaceVM\ViewExistingDatasetViewModel.cs" />
     <Compile Include="UserInterfaceVM\ViewModelLocator.cs" />
@@ -105,6 +112,10 @@
     <None Include="PrototypeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Compression\DIPS.Util.csproj">
+      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
+      <Name>DIPS.Util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Database\DIPS.Database.csproj">
       <Project>{A200FC0F-F24E-4F28-B34E-88B1EBD4773C}</Project>
       <Name>DIPS.Database</Name>
@@ -118,7 +129,6 @@
       <Name>DIPS.Unity</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
