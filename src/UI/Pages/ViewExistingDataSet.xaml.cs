@@ -29,8 +29,11 @@ namespace DIPS.UI.Pages
     /// Interaction logic for ViewExistingDataSet.xaml
     /// </summary>
     public partial class ViewExistingDataSet : UserControl
-    {       
-        
+    {
+        public ViewExistingDataSet()
+        {
+            InitializeComponent();
+        }
 
     }
 
