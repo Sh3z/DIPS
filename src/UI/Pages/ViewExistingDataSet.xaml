@@ -22,11 +22,7 @@
 
 
     <Grid Margin="10,0">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="0*"/>
-        </Grid.RowDefinitions>
-        <Border x:Name="brdUnprocessed" 
+       <Border x:Name="brdUnprocessed" 
     		BorderThickness="2"
     		BorderBrush="#FF000000"
     		VerticalAlignment="Top"
@@ -54,9 +50,9 @@
     			Content="{Binding ProcessedSource}" Margin="-114,180,114,-180" />
         </Border>
 
-        <Label x:Name="lblToProcess" Content="----&gt;" HorizontalAlignment="Left" Margin="504,80,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
+        <Label Content="----&gt;" HorizontalAlignment="Left" Margin="504,80,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
         
-        <TreeView ItemsSource="{Binding Patients}" HorizontalAlignment="Left" Height="358" Margin="26,56,0,0" VerticalAlignment="Top" Width="196">
+        <TreeView ItemsSource="{Binding TopLevelViewModel.Patients}" HorizontalAlignment="Left" Height="358" Margin="26,56,0,0" VerticalAlignment="Top" Width="196">
             <TreeView.ItemContainerStyle>
                 <!-- 
         This Style binds a TreeViewItem to a TreeViewItemViewModel. 
@@ -79,8 +75,8 @@
           ItemsSource="{Binding Children}"
           >
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="16" Height="16" Margin="3,0" Source="/DIPS;component/Images/Patient.png" />
-                        <TextBlock Text="{Binding PatientName}" />
+                        <Image Width="16" Height="16" Margin="3,0" Source="pack://application:,,,/DIPS.UI;component/Images/Patient.png" />
+                        <TextBlock Text="{Binding PatientID}" />
                     </StackPanel>
                 </HierarchicalDataTemplate>
 
@@ -89,14 +85,14 @@
           ItemsSource="{Binding Children}"
           >
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="16" Height="16" Margin="3,0" Source="/DIPS;component/Images/Dataset.png" />
+                        <Image Width="16" Height="16" Margin="3,0" Source="pack://application:,,,/DIPS.UI;component/Images/Dataset.png" />
                         <TextBlock Text="{Binding ImgDatasetName}" />
                     </StackPanel>
                 </HierarchicalDataTemplate>
 
                 <DataTemplate DataType="{x:Type vm:TreeViewImageViewModel}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="16" Height="16" Margin="3,0" Source="/DIPS.UI/Images/Image.png" />
+                        <Image Width="16" Height="16" Margin="3,0" Source="pack://application:,,,/DIPS.UI;component/Images/Image.png" />
                         <TextBlock Text="{Binding ImageName}" />
                     </StackPanel>
                 </DataTemplate>
