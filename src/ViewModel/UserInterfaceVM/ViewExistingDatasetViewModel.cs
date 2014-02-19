@@ -32,15 +32,26 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set { _propertiesList = value; }
         }
 
+        public TreeViewGroupPatientsViewModel TopLevelViewModel { get { return _topLevel; }
+            set
+            {
+                _topLevel = value;
+                OnPropertyChanged();
+            } }
+        private TreeViewGroupPatientsViewModel _topLevel;
+
         public ViewExistingDatasetViewModel()
         {
-            
+            GetPatientsForTreeview();
         }
 
         public void GetPatientsForTreeview()
         {
             ImageRepository repo = new ImageRepository();
             PatientsList = repo.generateTreeView();
+            TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(PatientsList);
+
+            TopLevelViewModel = tvpv;
         }
 
     }

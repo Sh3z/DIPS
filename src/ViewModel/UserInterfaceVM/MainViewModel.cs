@@ -66,9 +66,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private static void ShowExistingDataSet(object obj)
         {
             ImageRepository imgRepository = new ImageRepository();
-            ObservableCollection<Patient> listofPatients = imgRepository.generateTreeView();
             
-            TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(listofPatients);
             OverallFrame.Content = _ViewExistingDatasetViewModel;
         }
 
