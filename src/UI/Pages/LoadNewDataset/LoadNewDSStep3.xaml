@@ -3,31 +3,65 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d"
-	Width="540.299" Height="326.866">
+      mc:Ignorable="d">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/DIPS.UI.CustomControls;component/Resources/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
-    <Grid>
-        <Label Content="Click to confirm that you want to forward with processing the following files and techniques:" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Width="520"/>
-        <ListBox ItemsSource="{Binding ListOfFiles}" HorizontalAlignment="Left" Height="97" Margin="43,72,0,0" VerticalAlignment="Top" Width="195">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name}"/>
+    <DockPanel  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                LastChildFill="True" Margin="3">
+        <TextBlock  DockPanel.Dock="Top" TextWrapping="Wrap"
+                    Text="Click to confirm that you want to forward with processing the following files and techniques:" />
+        <Button DockPanel.Dock="Bottom" MaxWidth="100"
+                Command="{Binding ProcessFilesCommand}" Content="Process"/>
+        <Grid Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <UniformGrid Grid.Row="0" Rows="1" Columns="2">
+                <DockPanel Margin="3">
+                    <TextBlock DockPanel.Dock="Top" Text="Selected Files" />
+                    <ListBox DockPanel.Dock="Bottom"
+                             ItemsSource="{Binding ListOfFiles}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+                <DockPanel Margin="3">
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <TextBlock DockPanel.Dock="Top" Text="Processing Plan: " />
+                        <TextBlock Text="{Binding Path=PipelineName}" />
                     </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <TextBlock HorizontalAlignment="Left" Margin="125,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="297"><Run Language="en-gb" Text="Processing these files will take xx hours and xx minutes."/></TextBlock>
-        <Button Command="{Binding ProcessFilesCommand}" Content="Process" HorizontalAlignment="Left" Margin="240,295,0,0" VerticalAlignment="Top" Width="75" />
-        <ComboBox SelectedItem="{Binding PostProcessAction}" HorizontalAlignment="Left" Margin="283,236,0,0" VerticalAlignment="Top" Width="124">
-            <ComboBoxItem Content="Nothing" IsSelected="True"/>
-            <ComboBoxItem Content="Sleep"/>
-            <ComboBoxItem Content="Shut down"/>
-        </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="140,228,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="38" Width="138"><Run Language="en-gb" Text="What do I do when the processing is complete?"/></TextBlock>
-        <Label Content="Files:" HorizontalAlignment="Left" Margin="123,46,0,0" VerticalAlignment="Top"/>
-        <Label Content="Techniques:" HorizontalAlignment="Left" Margin="358,46,0,0" VerticalAlignment="Top"/>
-        <ListBox ItemsSource="{Binding ListOfTechniques}" Height="100" Margin="317,72,63,0" VerticalAlignment="Top"/>
-
-    </Grid>
+                    
+                    <ListView DockPanel.Dock="Bottom"
+                              ItemsSource="{Binding Path=PipelineAlgorithms}"
+                              ItemContainerStyle="{StaticResource AlgorithmItemStyle}"/>
+                </DockPanel>
+            </UniformGrid>
+            
+            <TextBlock Grid.Row="1" TextWrapping="Wrap" HorizontalAlignment="Center"
+                       Text="Processing these files will take xx hours and xx minutes."/>
+            
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="What do I do when the processing is complete?" VerticalAlignment="Center" />
+                <ComboBox SelectedItem="{Binding PostProcessAction}" Margin="10,0,0,0">
+                    <ComboBoxItem Content="Nothing" IsSelected="True"/>
+                    <ComboBoxItem Content="Sleep"/>
+                    <ComboBoxItem Content="Shut down"/>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
 </UserControl>

@@ -7,6 +7,7 @@ using DIPS.Database.Objects;
 using DIPS.Processor.Client;
 using DIPS.Unity;
 using DIPS.ViewModel.Commands;
+using DIPS.Util.Extensions;
 using Microsoft.Practices.Unity;
 using System.Diagnostics;
 
@@ -105,7 +106,9 @@ namespace DIPS.ViewModel.UserInterfaceVM
             OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
 
             BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles= this.ListOfFiles;
-            BaseViewModel._LoadNewDsStep3ViewModel.SelectedPipeline = this;
+            BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Clear();
+            TechniqueAlgorithms.ForEach( BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Add );
+            BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = ( this as IPipelineInfo ).PipelineName;
         }
 
 

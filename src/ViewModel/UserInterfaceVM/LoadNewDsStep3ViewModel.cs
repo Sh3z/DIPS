@@ -40,12 +40,35 @@ namespace DIPS.ViewModel.UserInterfaceVM
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private IPipelineInfo _selectedPipeline;
 
+        public string PipelineName
+        {
+            get
+            {
+                return _pipelineName;
+            }
+            set
+            {
+                _pipelineName = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private string _pipelineName;
+
+        public ObservableCollection<AlgorithmViewModel> PipelineAlgorithms
+        {
+            get;
+            private set;
+        }
+
+
         public ComboBoxItem PostProcessAction { get; set; }
 
         public ICommand ProcessFilesCommand { get; set; }
 
         public LoadNewDsStep3ViewModel()
         {
+            PipelineAlgorithms = new ObservableCollection<AlgorithmViewModel>();
             SetupCommands();
         }
 
