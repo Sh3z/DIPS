@@ -67,35 +67,17 @@ RESTORE DATABASE medicalImaging
 FROM DISK = 'C:\Users\Yeh\Desktop\localbackup\Test2.BAK'
 WITH STATS = 1
 
-select Sum(datalength(imageBlob)) from images;
-insert into patient values ('AB12124567','12124567',NULL,'F',NULL);
-delete from images where seriesID in (select seriesID from imageProperties where patientID = (select tableID from patient where patientID = 'KJ15168546'));
-delete from imageProperties where patientID in (select tableID from patient where patientID = 'KJ15168546');
-delete from name where patientID = (select tableID from patient where patientID = 'KJ15168546');
-delete from patient where patientID = 'KJ15168546'
-select top(1) beginTime from timeLog;
+insert into patient (patientID) VALUES ('TEST2');
+insert into imageProperties (patientID,modality,sliceThickness) VALUES (12,'HEHE',3);
 
-select COUNT(distinct patientID) from imageProperties where modality = NULL;
-select (MAX(tableID) + 1) from patient;
-select MAX(RIGHT(patientID,LEN(patientID)-CHARINDEX('_',patientID)) + 1) from patient where patientID like 'NULL%'
-
-select * from patient where birthdate = '';
-
-select * from imageProperties where CAST(imageAcquisitionDate as DATE) > DATEADD(year,-3,CAST(current_timestamp as DATE));
-select * from imageProperties where importToDatabaseDate > DATEADD(month,-3,current_timestamp);
-select * from imageProperties where CAST(importToDatabaseDate as DATE) >= DATEADD(DAY,(-7*2),CAST(current_timestamp as DATE));
-select * from imageProperties where imageAcquisitionDate between '2013-01-01' and '2005-01-01';
-select * from imageProperties where imageAcquisitionDate between '1801-01-01' and '3000-01-01';
-
-select CAST(importToDatabaseDate as DATE) from imageProperties;
-select CAST(current_timestamp as DATE) from imageProperties;
+select avg(CONVERT(FLOAT,sliceThickness)),IP.patientID from patient P join imageProperties IP on P.tableID = IP.patientID 
+group by IP.patientID order by avg(CONVERT(FLOAT,sliceThickness)) desc;
 
 
-select P.patientID, I.fileID from patient P inner join imageProperties IP on P.tableID = IP.patientID join images I on IP.seriesID = I.seriesID;
+SELECT distinct IP.patientID, IP.lastModifiedDate
+FROM patient P join imageProperties IP on P.tableID = IP.patientID
+order by IP.lastModifiedDate desc
 
-select * from patient where sex in (select distinct sex from patient);
-select * from imageProperties where imageAcquisitionDate > DATEADD(year,-3,current_timestamp);
-select * from imageProperties where modality in (select distinct modality from imageProperties);
-select distinct top(3) sliceThickness from imageProperties order by sliceThickness desc;
-select * from images where processed = 0;
-
+order by avg(CONVERT(FLOAT,IP.sliceThickness)) desc
+order by IP.lastModifiedDate desc
+order by P.seriesAvailable desc

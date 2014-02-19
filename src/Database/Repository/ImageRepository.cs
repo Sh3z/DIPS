@@ -56,7 +56,7 @@ namespace Database
                     SqlCommand cmd = new SqlCommand("spr_CustomList_v001", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     if (!String.IsNullOrEmpty(filter.PatientID))
-                        cmd.Parameters.Add("@IDEquals", SqlDbType.VarChar).Value = filter.PatientID;
+                        cmd.Parameters.Add("@IDContains", SqlDbType.VarChar).Value = filter.PatientID;
                     if (filter.AcquisitionDateFrom != null && dateCompareResultFrom != 0)
                         cmd.Parameters.Add("@AcquireBetweenFrom", SqlDbType.Date).Value = filter.AcquisitionDateFrom;
                     if (filter.AcquisitionDateTo != null && dateCompareResultTo != 0)
