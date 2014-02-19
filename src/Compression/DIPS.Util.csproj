@@ -53,6 +53,7 @@
     <Compile Include="Compression\GZipCompressor.cs" />
     <Compile Include="Compression\ICompressor.cs" />
     <Compile Include="Extensions\Enumerable.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

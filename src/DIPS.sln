@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.ViewModel", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Unity", "Unity\DIPS.Unity.csproj", "{58BEA286-5BCF-41B1-AAF0-D06C4663D4FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Tests.Util", "..\Tests\Compression\DIPS.Tests.Util.csproj", "{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -274,6 +276,18 @@ Global
 		{58BEA286-5BCF-41B1-AAF0-D06C4663D4FD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{58BEA286-5BCF-41B1-AAF0-D06C4663D4FD}.Release|x64.ActiveCfg = Release|Any CPU
 		{58BEA286-5BCF-41B1-AAF0-D06C4663D4FD}.Release|x86.ActiveCfg = Release|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Release|x64.ActiveCfg = Release|Any CPU
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -289,5 +303,6 @@ Global
 		{FA243B9A-1563-4681-B66F-86399C8D9769} = {7CD7226D-7C95-400E-B6D5-4D6BD654E718}
 		{58BEA286-5BCF-41B1-AAF0-D06C4663D4FD} = {7CD7226D-7C95-400E-B6D5-4D6BD654E718}
 		{00CCC284-4E0D-408F-BDD4-B56C02E35332} = {51472989-ABE6-4B6A-ABE2-C485DA11F6BC}
+		{F536C6C8-9FDC-4968-B6C3-4A82A3825DBF} = {51472989-ABE6-4B6A-ABE2-C485DA11F6BC}
 	EndGlobalSection
 EndGlobal

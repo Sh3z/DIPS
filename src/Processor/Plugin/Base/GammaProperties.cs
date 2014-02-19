@@ -13,7 +13,7 @@ namespace DIPS.Processor.Plugin.Base
     /// <see cref="GammaCorrection"/> plugin.
     /// </summary>
     [DisplayName( "Gamma Correction" )]
-    public class GammaProperties
+    public class GammaProperties : ICloneable
     {
         /// <summary>
         /// Gets the default <see cref="GammaProperties"/> instance.
@@ -38,6 +38,17 @@ namespace DIPS.Processor.Plugin.Base
         {
             get;
             set;
+        }
+
+
+        /// <summary>
+        /// Creates a copy of this <see cref="GammaProperties"/> object.
+        /// </summary>
+        /// <returns>A new instance of the <see cref="GammaProperties"/>
+        /// class with the same values as the current instance.</returns>
+        public object Clone()
+        {
+            return new GammaProperties() { Gamma = this.Gamma };
         }
     }
 }
