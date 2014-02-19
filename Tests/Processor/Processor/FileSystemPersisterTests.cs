@@ -213,10 +213,10 @@ namespace DIPS.Tests.Processor
 
         class TestDefinition : IJobDefinition
         {
-            public IEnumerable<AlgorithmDefinition> GetAlgorithms()
+            public PipelineDefinition GetAlgorithms()
             {
-                return new AlgorithmDefinition[] {
-                    new AlgorithmDefinition("Test", null ) };
+                return new PipelineDefinition( new AlgorithmDefinition[] {
+                    new AlgorithmDefinition("Test", null ) } );
             }
 
             public IEnumerable<JobInput> GetInputs()

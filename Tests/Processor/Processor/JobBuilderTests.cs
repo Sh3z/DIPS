@@ -125,7 +125,8 @@ namespace DIPS.Tests.Processor
         public void TestApplyDefinition_ValidDefinition()
         {
             ObjectJobDefinition d = new ObjectJobDefinition(
-                new[] { new AlgorithmDefinition( "Test", new Property[] { } ) },
+                new PipelineDefinition(
+                    new[] { new AlgorithmDefinition( "Test", new Property[] { } ) } ),
                 new[] { new JobInput( Image.FromFile( "img.bmp" ) ) } );
             IPluginFactory factory = new DudFactory();
             JobBuilder b = new JobBuilder( factory );
@@ -142,7 +143,8 @@ namespace DIPS.Tests.Processor
         public void TestBuild_NoPersister()
         {
             ObjectJobDefinition d = new ObjectJobDefinition(
-                new[] { new AlgorithmDefinition( "Test", new Property[] { } ) },
+                new PipelineDefinition(
+                    new[] { new AlgorithmDefinition( "Test", new Property[] { } ) } ),
                 new[] { new JobInput( Image.FromFile( "img.bmp" ) ) } );
             IPluginFactory factory = new DudFactory();
             JobBuilder b = new JobBuilder( factory );
@@ -160,7 +162,8 @@ namespace DIPS.Tests.Processor
         {
             IJobPersister p = new DudPersister();
             ObjectJobDefinition d = new ObjectJobDefinition(
-                new AlgorithmDefinition[] {},
+                new PipelineDefinition(
+                    new AlgorithmDefinition[] {} ),
                 new[] { new JobInput( Image.FromFile( "img.bmp" ) ) } );
             IPluginFactory factory = new DudFactory();
             JobBuilder b = new JobBuilder( factory );
@@ -179,7 +182,8 @@ namespace DIPS.Tests.Processor
         {
             IJobPersister p = new DudPersister();
             ObjectJobDefinition d = new ObjectJobDefinition(
-                new[] { new AlgorithmDefinition( "Test", new Property[] { } ) },
+                new PipelineDefinition(
+                    new[] { new AlgorithmDefinition( "Test", new Property[] { } ) } ),
                 new[] { new JobInput( Image.FromFile( "img.bmp" ) ) } );
             IPluginFactory factory = new DudFactory();
             JobBuilder b = new JobBuilder( factory );

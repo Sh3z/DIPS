@@ -60,7 +60,8 @@ namespace DIPS.Tests.Processor
         public void TestWork_InvalidJob()
         {
             ObjectJobDefinition d = new ObjectJobDefinition(
-                new AlgorithmDefinition[] { },
+                new PipelineDefinition(
+                    new AlgorithmDefinition[] { } ),
                 new JobInput[] { } );
             JobRequest r = new JobRequest( d );
             JobTicket ticket = new JobTicket( r, new DudCancellationHandler() );
@@ -89,7 +90,8 @@ namespace DIPS.Tests.Processor
         public void TestWork_PluginException()
         {
             ObjectJobDefinition d = new ObjectJobDefinition(
-                new[] { new AlgorithmDefinition( "Test", new Property[] { } ) },
+                new PipelineDefinition(
+                    new[] { new AlgorithmDefinition( "Test", new Property[] { } ) } ),
                 new[] { new JobInput( Image.FromFile( "img.bmp" ) ) } );
             JobRequest r = new JobRequest( d );
             JobTicket ticket = new JobTicket( r, new DudCancellationHandler() );

@@ -163,7 +163,7 @@ namespace DIPS.Tests.Processor
 
         class DudDefinition : IJobDefinition
         {
-            public IEnumerable<AlgorithmDefinition> GetAlgorithms()
+            public PipelineDefinition GetAlgorithms()
             {
                 throw new NotImplementedException();
             }

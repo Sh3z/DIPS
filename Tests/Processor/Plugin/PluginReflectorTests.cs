@@ -172,6 +172,13 @@ namespace DIPS.Tests.Processor.Plugin
         }
 
         [TestMethod]
+        [ExpectedException( typeof( ArgumentException ) )]
+        public void TestCreateDefinition_NonCloneableParameterObjectType()
+        {
+            PluginReflector.CreateDefinition( typeof( AnnotatedPluginWithNonCloneableParameterObjectType ) );
+        }
+
+        [TestMethod]
         [ExpectedException( typeof( PluginReflectionException ) )]
         public void TestCreateDefinition_PluginWithParameterObject_ActivationError()
         {
@@ -304,16 +311,38 @@ namespace DIPS.Tests.Processor.Plugin
             }
         }
 
-        class PropertiesObj
+        [Algorithm( "Test", ParameterObjectType = typeof( NotCloneableProperties ) )]
+        class AnnotatedPluginWithNonCloneableParameterObjectType : AlgorithmPlugin
         {
+            public override void Run( object parameterObject )
+            {
+                throw new NotImplementedException();
+            }
         }
 
-        class BadPropertiesObj
+        class PropertiesObj : ICloneable
+        {
+            public object Clone()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        class BadPropertiesObj : ICloneable
         {
             public BadPropertiesObj()
             {
                 throw new Exception();
             }
+
+            public object Clone()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        class NotCloneableProperties
+        {
         }
 
 

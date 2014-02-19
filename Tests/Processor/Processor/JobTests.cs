@@ -43,7 +43,7 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestConstructor_ValidDefinition()
         {
-            JobDefinition d = new JobDefinition( Guid.Empty, new AlgorithmPlugin[] { }, new DudPersister() );
+            JobDefinition d = new JobDefinition( Guid.Empty, new PipelineEntry[] { }, new DudPersister() );
             Job j = new Job( d );
         }
 
@@ -56,7 +56,7 @@ namespace DIPS.Tests.Processor
             JobInput i = new JobInput( Image.FromFile( "img.bmp" ) );
             DudPersister p = new DudPersister();
             JobDefinition d = new JobDefinition( Guid.Empty,
-                new AlgorithmPlugin[] { new GoodPlugin() }, p );
+                new PipelineEntry[] { new PipelineEntry( new GoodPlugin() ) }, p );
             d.Inputs.Add( i );
             Job j = new Job( d );
             bool didComplete = j.Run();
@@ -74,7 +74,7 @@ namespace DIPS.Tests.Processor
         {
             JobInput i = new JobInput( Image.FromFile( "img.bmp" ) );
             JobDefinition d = new JobDefinition( Guid.Empty,
-                new AlgorithmPlugin[] { new BadPlugin() }, new DudPersister() );
+                new PipelineEntry[] { new PipelineEntry( new BadPlugin() ) }, new DudPersister() );
             d.Inputs.Add( i );
             Job j = new Job( d );
             bool didComplete = j.Run();
