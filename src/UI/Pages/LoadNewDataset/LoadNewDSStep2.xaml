@@ -15,7 +15,7 @@
         <ListBox ItemsSource="{Binding ListofTechniques, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedItem="{Binding AvailableTechSelectedItem,Mode=TwoWay}"  HorizontalAlignment="Left" Height="135" Margin="272,115,0,0" VerticalAlignment="Top" Width="125" ScrollViewer.CanContentScroll="True" />
         <Label Content="Algorithm Plan" HorizontalAlignment="Left" Margin="288,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="94"/>
         <Button Command="{Binding ProgressToStep3Command}" Content="Make Selection" HorizontalAlignment="Left" Margin="788,213,0,0" VerticalAlignment="Top" Width="123" Height="62" />
-        <ListBox ItemsSource="{Binding ListofSelectedTechniques, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedItem="{Binding SelectedTechSelectedItem,Mode=TwoWay}" HorizontalAlignment="Left" Height="135" Margin="426,115,0,0" VerticalAlignment="Top" Width="125" ScrollViewer.CanContentScroll="True" />
+        <ListBox ItemsSource="{Binding TechniqueAlgorithms}" SelectedItem="{Binding SelectedTechSelectedItem,Mode=TwoWay}" HorizontalAlignment="Left" Height="135" Margin="426,115,0,0" VerticalAlignment="Top" Width="125" ScrollViewer.CanContentScroll="True" />
         <Label Content="Plan Composition
                " HorizontalAlignment="Left" Margin="434,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="111"/>
         <Button Command="{Binding BuildAlgorithmCommand}" Content="Build Technique" HorizontalAlignment="Left" Margin="788,68,0,0" VerticalAlignment="Top" Width="123" RenderTransformOrigin="0.533,-0.6" Height="42" />
@@ -30,8 +30,9 @@
         </ListBox>
         <Label Content="Selected Files" HorizontalAlignment="Left" Margin="68,84,0,0" VerticalAlignment="Top"/>
 
-        <Controls:infoBell x:Name="selectedFileInfo" HorizontalAlignment="Left" Margin="200,163,0,0" VerticalAlignment="Top" Height="42" Width="44" />
+        <!--<Controls:infoBell x:Name="selectedFileInfo" HorizontalAlignment="Left" Margin="200,163,0,0" VerticalAlignment="Top" Height="42" Width="44" />-->
         <Label Content="Properties" HorizontalAlignment="Left" Margin="640,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="64"/>
+        <Button Content="Load from File" HorizontalAlignment="Left" Margin="788,115,0,0" VerticalAlignment="Top" Width="123" Height="38" Command="{Binding LoadFromFile}"/>
 
     </Grid>
 </UserControl>

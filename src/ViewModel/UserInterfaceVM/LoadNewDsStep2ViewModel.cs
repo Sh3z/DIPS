@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using DIPS.Database.Objects;
 using DIPS.Processor.Client;
 using DIPS.Unity;
 using DIPS.ViewModel.Commands;
 using Microsoft.Practices.Unity;
+using System.Diagnostics;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
-    public class LoadNewDsStep2ViewModel : BaseViewModel
+    public class LoadNewDsStep2ViewModel : BaseViewModel, IPipelineInfo
     {
         private ObservableCollection<FileInfo> _listOfFiles;
 
@@ -38,55 +40,74 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
         }
 
-        private ObservableCollection<Technique> _listofSelectedTechniques;
-
-        public ObservableCollection<Technique> ListofSelectedTechniques
+        public Technique ChosenTechnique
         {
-            get { return _listofSelectedTechniques; }
+            get
+            {
+                return _chosenTechnique;
+            }
             set
             {
-                _listofSelectedTechniques = value; 
+                _chosenTechnique = value;
+                _updateAlgorithmsInTechnique( value );
                 OnPropertyChanged();
             }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private Technique _chosenTechnique;
+
+        public ObservableCollection<AlgorithmViewModel> TechniqueAlgorithms
+        {
+            get;
+            private set;
+        }
+
+        public AlgorithmViewModel SelectedAlgorithm
+        {
+            get
+            {
+                return _selectedAlgorithm;
+            }
+            set
+            {
+                _selectedAlgorithm = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private AlgorithmViewModel _selectedAlgorithm;
          
         public Technique AvailableTechSelectedItem { get; set; }
         public Technique SelectedTechSelectedItem { get; set; }
 
-        public ICommand ProgressToStep3Command { get; set; }
-        public ICommand AddTechToSelectedCommand { get; set; }
-        public ICommand DeSelectTechCommand { get; set; }
+        public RelayCommand ProgressToStep3Command { get; set; }
         public ICommand BuildAlgorithmCommand { get; set; }
+        public UnityCommand LoadFromFile
+        {
+            get;
+            set;
+        }
 
         public LoadNewDsStep2ViewModel()
         {
             ListofTechniques = new ObservableCollection<Technique>();
-            ListofSelectedTechniques = new ObservableCollection<Technique>();
-            
+            TechniqueAlgorithms = new ObservableCollection<AlgorithmViewModel>();
             SetupCommands();
         }
 
-         private void ProgressToStep3(object obj)
-         {
-             OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
-
-             BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles= this.ListOfFiles;
-             BaseViewModel._LoadNewDsStep3ViewModel.ListOfTechniques = this.ListofSelectedTechniques;
-         }
-
-        
-        private void DeSelectTech(object obj)
+        private bool _canProgressToStep3( object obj )
         {
-            if (ListofSelectedTechniques.Count > 0 && SelectedTechSelectedItem != null)
-            {
-                Technique tempTech = new Technique();
-
-                tempTech = (Technique)SelectedTechSelectedItem;
-
-                ListofSelectedTechniques.Remove((Technique)tempTech);
-                ListofTechniques.Add(tempTech);
-            }
+            return TechniqueAlgorithms.Any();
         }
+
+        private void ProgressToStep3(object obj)
+        {
+            OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
+
+            BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles= this.ListOfFiles;
+            BaseViewModel._LoadNewDsStep3ViewModel.SelectedPipeline = this;
+        }
+
 
         private bool _canBuildAlgorithm( object obj )
         {
@@ -109,28 +130,35 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
         }
 
-        private void PassToSelectedTech(object obj)
-        {
-            if (ListofTechniques.Count > 0 && AvailableTechSelectedItem != null)
-            {
-                Technique tempTech = new Technique();
-
-                tempTech = (Technique)AvailableTechSelectedItem;
-
-                ListofTechniques.Remove((Technique)tempTech);
-                ListofSelectedTechniques.Add(tempTech);
-            }
-
-        }
-
         private void SetupCommands()
         {
-            ProgressToStep3Command = new RelayCommand(new Action<object>(ProgressToStep3));
-            AddTechToSelectedCommand = new RelayCommand(new Action<object>(PassToSelectedTech));
-            DeSelectTechCommand = new RelayCommand(new Action<object>(DeSelectTech));
+            ProgressToStep3Command = new RelayCommand(new Action<object>(ProgressToStep3), _canProgressToStep3);
             BuildAlgorithmCommand = new RelayCommand(new Action<object>(BuildAlgorithm), _canBuildAlgorithm);
+            LoadFromFile = new LoadPipelineCommand( this );
+            LoadFromFile.Container = GlobalContainer.Instance.Container;
+
+            TechniqueAlgorithms.CollectionChanged += ( s, e ) => ProgressToStep3Command.ExecutableStateChanged();
         }
 
-        
+        private void _updateAlgorithmsInTechnique( Technique value )
+        {
+            TechniqueAlgorithms.Clear();
+            if( value != null )
+            {
+                // To-do when database side is complete
+            }
+        }
+
+
+        string IPipelineInfo.PipelineName
+        {
+            get;
+            set;
+        }
+
+        ObservableCollection<AlgorithmViewModel> IPipelineInfo.SelectedProcesses
+        {
+            get { return TechniqueAlgorithms; }
+        }
     }
 }

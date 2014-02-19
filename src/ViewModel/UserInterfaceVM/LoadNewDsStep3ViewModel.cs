@@ -23,9 +23,23 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 OnPropertyChanged();
             }
         }
-        
-        
-        public ObservableCollection<Technique> ListOfTechniques { get; set; }
+
+
+        public IPipelineInfo SelectedPipeline
+        {
+            get
+            {
+                return _selectedPipeline;
+            }
+            set
+            {
+                _selectedPipeline = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private IPipelineInfo _selectedPipeline;
+
         public ComboBoxItem PostProcessAction { get; set; }
 
         public ICommand ProcessFilesCommand { get; set; }

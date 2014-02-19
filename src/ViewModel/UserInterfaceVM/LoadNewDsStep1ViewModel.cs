@@ -66,7 +66,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
                 if (_LoadNewDsStep2ViewModel != null)
                 {
-                    _LoadNewDsStep2ViewModel.ListofSelectedTechniques.Clear();
                     _LoadNewDsStep2ViewModel.ListofTechniques.Clear();
                     _LoadNewDsStep2ViewModel.ListofTechniques = new ObservableCollection<Technique>();
 
