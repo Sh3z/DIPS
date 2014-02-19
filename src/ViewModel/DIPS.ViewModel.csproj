@@ -79,6 +79,7 @@
     <Compile Include="AlgorithmBuilderViewModel.cs" />
     <Compile Include="AlgorithmViewModel.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\EnqueueJobCommand.cs" />
     <Compile Include="Commands\ImageCommands.cs" />
     <None Include="Commands\ProcessImageCommand.cs" />
     <Compile Include="Commands\LoadPipelineCommand.cs" />
@@ -128,7 +129,6 @@
       <Name>DIPS.Unity</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

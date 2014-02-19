@@ -85,10 +85,11 @@ namespace DIPS.Processor
         private void _runJob( JobInput input )
         {
             Image jobInput = input.Input;
-            foreach( AlgorithmPlugin plugin in _definition.Processes )
+            foreach( PipelineEntry process in _definition.Processes )
             {
+                AlgorithmPlugin plugin = process.Process;
                 plugin.Input = jobInput;
-                plugin.Run();
+                plugin.Run( process.ProcessInput );
                 jobInput = plugin.Output ?? jobInput;
             }
 

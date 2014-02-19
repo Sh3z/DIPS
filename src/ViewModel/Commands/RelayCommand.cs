@@ -74,14 +74,6 @@ namespace DIPS.ViewModel.Commands
             _execute( parameter );
         }
 
-        /// <summary>
-        /// Notifies this <see cref="RelayCommand"/> that the view-model managing
-        /// its commanding logic may have changed executable states.
-        /// </summary>
-        public void ExecutableStateChanged()
-        {
-            OnCanExecuteChanged();
-        }
 
 
         /// <summary>

@@ -40,6 +40,15 @@ namespace DIPS.ViewModel.Commands
 
 
         /// <summary>
+        /// Notifies this <see cref="Command"/> that the view-model managing
+        /// its commanding logic may have changed executable states.
+        /// </summary>
+        public void ExecutableStateChanged()
+        {
+            OnCanExecuteChanged();
+        }
+
+        /// <summary>
         /// Notifies the base class the state of the current commands
         /// CanExecute value has changed.
         /// </summary>

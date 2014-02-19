@@ -13,6 +13,7 @@ namespace DIPS.Processor.Client
     /// to construct informal pipelines.
     /// </summary>
     [DebuggerDisplay( "Count = {Count}" )]
+    [Serializable]
     public class PipelineDefinition : IList<AlgorithmDefinition>
     {
         /// <summary>

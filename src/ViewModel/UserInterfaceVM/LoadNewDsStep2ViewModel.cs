@@ -105,7 +105,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
 
-            BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles= this.ListOfFiles;
+            BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Clear();
+            this.ListOfFiles.ForEach( BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Add );
             BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Clear();
             TechniqueAlgorithms.ForEach( BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Add );
             BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = ( this as IPipelineInfo ).PipelineName;
