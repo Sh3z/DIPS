@@ -23,6 +23,7 @@ ALTER PROCEDURE spr_CustomList_v001
 	@Sex varchar(1) = NULL,
 	@IDcontains varchar(20) = NULL,
 	@IDEquals varchar(15) = NULL,
+	@Batch int = NULL,
 	@AcquireDays int = NULL,
 	@AcquireWeeks int = NULL,
 	@AcquireMonths int = NULL,
@@ -32,12 +33,23 @@ ALTER PROCEDURE spr_CustomList_v001
 AS
 BEGIN
 	
+	DECLARE @BatchTime datetime = cast('1753-1-1' as datetime)
 	DECLARE @AcquireWithinDays date = DATEADD(YEAR,-1000,CAST(current_timestamp as DATE))
 	DECLARE @AcquireWithinWeeks date = DATEADD(YEAR,-1000,CAST(current_timestamp as DATE))
 	DECLARE @AcquireWithinMonths date = DATEADD(YEAR,-1000,CAST(current_timestamp as DATE))
 	DECLARE @AcquireWithinYears date = DATEADD(YEAR,-1000,CAST(current_timestamp as DATE))
 
 	SET NOCOUNT ON;
+	IF @Batch IS NOT NULL
+	BEGIN
+		DECLARE @BatchAvailable int
+		SET @BatchAvailable = (select count(*) from timeLog)
+		IF @BatchAvailable < @Batch
+			SET @Batch = @BatchAvailable
+		ELSE IF @Batch > 0 
+			SET @BatchTime = (select beginTime from (select ROW_NUMBER() over(order by logID desc) as 'Row', * from timeLog) sorty where Row = @Batch)
+	END
+
 	IF @AcquireDays IS NOT NULL
 		SET @AcquireWithinDays = DATEADD(DAY,-@AcquireDays,CAST(current_timestamp as DATE))
 
@@ -69,6 +81,7 @@ BEGIN
 	and CAST(imageAcquisitionDate as DATE) >= @AcquireWithinMonths
 	and CAST(imageAcquisitionDate as DATE) >= @AcquireWithinYears
 	and imageAcquisitionDate between @AcquireBetweenFrom and @AcquireBetweenTo
+	and lastModifiedDate between @BatchTime and current_timestamp
 	order by 'Patient ID' desc, 'Series', 'File ID'
 
 END

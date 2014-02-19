@@ -48,7 +48,7 @@ namespace DIPS.Database
             DicomInfo.sex = dff.Dataset.GetValueString(DicomTags.PatientsSex);
             DicomInfo.pBday = dff.Dataset.GetValueString(DicomTags.PatientsBirthDate);
             DicomInfo.age = dff.Dataset.GetValueString(DicomTags.PatientsAge);
-            DicomInfo.imgNumber = dff.Dataset.GetValueString(DicomTags.InstanceNumber).PadLeft(2, '0');
+            DicomInfo.imgNumber = dff.Dataset.GetValueString(DicomTags.InstanceNumber);
             DicomInfo.modality = dff.Dataset.GetValueString(DicomTags.Modality);
             DicomInfo.bodyPart = dff.Dataset.GetValueString(DicomTags.BodyPartExamined);
             DicomInfo.studyDesc = dff.Dataset.GetValueString(DicomTags.StudyDescription);
@@ -92,6 +92,7 @@ namespace DIPS.Database
 
             if (DicomInfo.sex == null || (DicomInfo.sex[0] != 'M' && DicomInfo.sex[0] != 'F')) DicomInfo.sex = String.Empty;
             else DicomInfo.sex = DicomInfo.sex.Substring(0, 1);
+            if (!String.IsNullOrEmpty(DicomInfo.imgNumber)) DicomInfo.imgNumber = DicomInfo.imgNumber.PadLeft(2, '0');
             if (DicomInfo.pBday == null) DicomInfo.pBday = String.Empty;
             if (DicomInfo.age == null) DicomInfo.age = String.Empty;
             if (DicomInfo.imgNumber == null) DicomInfo.imgNumber = String.Empty;

@@ -15,7 +15,7 @@ seriesID int identity PRIMARY KEY,
 patientID int FOREIGN KEY REFERENCES patient(tableID),
 modality varchar(15),
 imageAcquisitionDate datetime,
-importToDatabaseDate datetime default current_timestamp,
+lastModifiedDate datetime default current_timestamp,
 bodyPart varchar(20),
 studyDescription varchar(50),
 seriesDescription varchar(50),
@@ -28,29 +28,29 @@ imageNumber varchar(5),
 imageBlob varbinary(MAX),
 processed bit,
 );
+create table timeLog(
+logID int identity PRIMARY KEY,
+beginTime datetime default current_timestamp
+);
 create table imageProcessing(
 ID int identity PRIMARY KEY,
 name varchar(100) NOT NULL,
 technique xml
-);
-create table timeLog(
-logID int identity PRIMARY KEY,
-beginTime datetime default current_timestamp
 );
 
 select * from patient;
 select * from name;
 select * from imageProperties;
 select * from images;
+select * from timeLog;
 
+drop table timeLog;
 drop table images;
 drop table imageProperties;
 drop table name;
 drop table patient;
 
 select * from imageProcessing;
-select * from timeLog;
-drop table timeLog;
 drop table imageProcessing;
 
 SELECT @@SERVERNAME AS 'Server Name';
@@ -73,6 +73,7 @@ delete from images where seriesID in (select seriesID from imageProperties where
 delete from imageProperties where patientID in (select tableID from patient where patientID = 'KJ15168546');
 delete from name where patientID = (select tableID from patient where patientID = 'KJ15168546');
 delete from patient where patientID = 'KJ15168546'
+select top(1) beginTime from timeLog;
 
 select COUNT(distinct patientID) from imageProperties where modality = NULL;
 select (MAX(tableID) + 1) from patient;
