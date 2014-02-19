@@ -1,4 +1,5 @@
-﻿using DIPS.Database;
+﻿using Database.Connection;
+using DIPS.Database;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,10 +20,16 @@ namespace Database.Repository
 
                 Process task = new Process();
                 DicomInfo.logCreated = false;
+                DicomInfo.logNeedUpdate = false;
                 foreach (String s in files)
                 {
                     DicomInfo.readFile = s;
                     task.processDicom();
+                }
+                if (DicomInfo.logNeedUpdate == true)
+                {
+                    DAOLog log = new DAOLog();
+                    log.update();
                 }
             }
             catch (Exception e) { Console.WriteLine(e); }

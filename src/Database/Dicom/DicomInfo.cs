@@ -14,6 +14,7 @@ namespace DIPS.Database
         private static Boolean _fileReadable;
         private static Boolean _codecRegistration = false;
         private static Boolean _logCreated = false;
+        private static Boolean _logNeedUpdate = false;
         private static Boolean _patientExist = false;
         private static Boolean _sameSeries = false;
         private static Boolean _imageExist = false;
@@ -59,6 +60,12 @@ namespace DIPS.Database
         {
             get { return _logCreated; }
             set { _logCreated = value; }
+        }
+
+        public static Boolean logNeedUpdate
+        {
+            get { return _logNeedUpdate; }
+            set { _logNeedUpdate = value; }
         }
         
         public static Boolean patientExist

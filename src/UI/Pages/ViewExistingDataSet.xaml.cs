@@ -21,6 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using DIPS.UI.Controls;
 using Database.DicomHelper;
+using Database.Repository;
 
 namespace DIPS.UI.Pages
 {

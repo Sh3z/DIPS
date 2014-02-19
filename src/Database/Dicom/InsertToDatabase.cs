@@ -12,11 +12,12 @@ namespace Database.Connection
         public void insert()
         {
             DAOInsertPatient dao = new DAOInsertPatient();
-            DAOGeneral dao2 = new DAOGeneral();
+            DAOLog log = new DAOLog();
 
             if (DicomInfo.patientExist == false)
             {
-                if (DicomInfo.logCreated == false) dao2.createLog(); 
+                if (DicomInfo.logCreated == false) log.create();
+                if (DicomInfo.logNeedUpdate == true) log.update();
                 dao.insertPatient();
                 dao.insertName();
                 dao.insertImageInfo();
@@ -24,13 +25,14 @@ namespace Database.Connection
             }
             else if (DicomInfo.sameSeries == false)
             {
-                if (DicomInfo.logCreated == false) dao2.createLog(); 
+                if (DicomInfo.logCreated == false) log.create();
+                if (DicomInfo.logNeedUpdate == true) log.update();
                 dao.insertImageInfo();
                 dao.insertImageFile();
             }
             else if (DicomInfo.imageExist == false)
             {
-                if (DicomInfo.logCreated == false) dao2.createLog(); 
+                if (DicomInfo.logCreated == false) log.create();
                 dao.insertImageFile();
             }
 

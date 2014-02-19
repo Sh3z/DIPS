@@ -15,12 +15,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <23/11/2013>
--- Description:	<Retrieve id, image number to produce treeview>
+-- Create date: <19/02/2014>
+-- Description:	<Update modified datetime for specific series>
 -- =============================================
-CREATE PROCEDURE spr_TreeView_v001
+CREATE PROCEDURE spr_UpdateModifiedDate_v001
 	-- Add the parameters for the stored procedure here
-
+	@id int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -28,10 +28,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.patientID as 'Patient ID', n.patientName as 'Name', iv.seriesDescription as 'Series', i.fileID as 'File ID'
-	from patient p join name n on p.tableID = n.patientID
-	join imageProperties iv on p.tableID = iv.patientID 
-	join images i on iv.seriesID = i.seriesID 
-	order by iv.lastModifiedDate desc
+	update imageProperties set lastModifiedDate = current_timestamp where seriesID = @id
 END
 GO

@@ -13,22 +13,6 @@ namespace DIPS.Database
     public class DAOGeneral
     {
 
-        public void createLog()
-        {
-            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("spr_CreateLog_v001", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.ExecuteNonQuery();
-
-                SqlCommand cmd2 = new SqlCommand("spr_DeleteExcessLog_v001", conn);
-                cmd2.CommandType = CommandType.StoredProcedure;
-                cmd2.ExecuteNonQuery();
-            }
-            DicomInfo.logCreated = true;
-        }
-
         public void patientExist()
         {
             DicomInfo.patientExist = false;
@@ -52,6 +36,7 @@ namespace DIPS.Database
                     if (allMatched(dataReader))
                     {
                         DicomInfo.sameSeries = true;
+                        DicomInfo.logNeedUpdate = true;
                         DicomInfo.databaseID = dataReader.GetInt32(dataReader.GetOrdinal("Patient ID"));
                         DicomInfo.seriesID = dataReader.GetInt32(dataReader.GetOrdinal("Series ID"));
                         break;
