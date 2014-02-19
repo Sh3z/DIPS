@@ -6,6 +6,7 @@ using DIPS.Database.Objects;
 using DIPS.Processor.Client;
 using DIPS.Unity;
 using DIPS.ViewModel.Commands;
+using Microsoft.Practices.Unity;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -87,13 +88,21 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
         }
 
+        private bool _canBuildAlgorithm( object obj )
+        {
+            return GlobalContainer.Instance.Container.Contains<IPipelineManager>();
+        }
+
         private void BuildAlgorithm(object obj)
         {
             OverallFrame.Content = BaseViewModel._AlgorithmBuilderViewModel;
 
             _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
 
-            foreach (var algorithm in Service.PipelineManager.AvailableProcesses)
+            IPipelineManager manager = GlobalContainer.Instance.Container.Resolve<IPipelineManager>();
+            _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
+
+            foreach (var algorithm in manager.AvailableProcesses)
             {
                 AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
                 _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
@@ -119,7 +128,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             ProgressToStep3Command = new RelayCommand(new Action<object>(ProgressToStep3));
             AddTechToSelectedCommand = new RelayCommand(new Action<object>(PassToSelectedTech));
             DeSelectTechCommand = new RelayCommand(new Action<object>(DeSelectTech));
-            BuildAlgorithmCommand = new RelayCommand(new Action<object>(BuildAlgorithm));
+            BuildAlgorithmCommand = new RelayCommand(new Action<object>(BuildAlgorithm), _canBuildAlgorithm);
         }
 
         
