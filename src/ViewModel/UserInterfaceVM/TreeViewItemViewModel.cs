@@ -43,7 +43,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             get { return this.Children.Count == 1 && this.Children[0] == DummyChild; }
         }
 
-        public bool isExpanded
+        public bool IsExpanded
         {
             get { return _isExpanded; }
             set
@@ -56,13 +56,13 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
                 if (_isExpanded && _parent != null)
                 {
-                    _parent.isExpanded = true;
+                    _parent.IsExpanded = true;
                 }
 
                 if (this.HasDummyChild)
                 {
                     this.Children.Remove(DummyChild);
-                    //this.LoadChildren();
+                    this.LoadChildren();
                 }
             }
         }

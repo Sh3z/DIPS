@@ -1,27 +1,4 @@
-﻿using DIPS.UI.Pages;
-using DIPS.ViewModel;
-using Microsoft.Win32;
-using System.Diagnostics;
-using System.Drawing;
-using System.Windows;
-using System.Windows.Controls;
-using Xceed.Wpf.Toolkit;
-using DIPS.Database.Objects;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using Xceed.Wpf.Toolkit.PropertyGrid;
-using Database;
-using DIPS.Database;
-using System.IO;
-using System;
-using System.Data.SqlClient;
-using System.Data;
-using System.ComponentModel;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using DIPS.UI.Controls;
-using Database.DicomHelper;
-using Database.Repository;
+﻿using System.Windows.Controls;
 
 namespace DIPS.UI.Pages
 {
