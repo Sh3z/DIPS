@@ -58,7 +58,7 @@ namespace DIPS.Tests.Processor
             RegistryCache.Cache.Initialize( pipeRepo );
             RegistryCache.Cache.Initialize( algRepo );
             PipelineManager m = new PipelineManager( pipeRepo, algRepo );
-            var xml = m.SavePipeline( new AlgorithmDefinition[] { def } );
+            var xml = m.SavePipeline( new PipelineDefinition( new AlgorithmDefinition[] { def } ) );
 
             // Todo - additional test logic beyond not expecting exceptions
         }
@@ -94,7 +94,7 @@ namespace DIPS.Tests.Processor
             RegistryCache.Cache.Initialize( pipeRepo );
             RegistryCache.Cache.Initialize( algRepo );
             PipelineManager m = new PipelineManager( pipeRepo, algRepo );
-            var xml = m.SavePipeline( new AlgorithmDefinition[] { def } );
+            var xml = m.SavePipeline( new PipelineDefinition( new AlgorithmDefinition[] { def } ) );
             var pipes = m.RestorePipeline( xml );
 
             Assert.AreEqual( 1, pipes.Count() );

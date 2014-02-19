@@ -58,7 +58,7 @@ namespace DIPS.Processor.Pipeline
         /// <param name="processes">The set of processes within the pipeline to
         /// persist into Xml.</param>
         /// <returns>An <see cref="XDocument"/> describing the pipeline.</returns>
-        public XDocument SavePipeline( IEnumerable<AlgorithmDefinition> processes )
+        public XDocument SavePipeline( Client.PipelineDefinition processes )
         {
             if( processes == null )
             {
@@ -83,11 +83,11 @@ namespace DIPS.Processor.Pipeline
         /// pipeline.</param>
         /// <returns>The set of processes within the pipeline as described in
         /// the Xml.</returns>
-        public IEnumerable<AlgorithmDefinition> RestorePipeline( XDocument pipeline )
+        public Client.PipelineDefinition RestorePipeline( XDocument pipeline )
         {
             if( pipeline == null )
             {
-                return new AlgorithmDefinition[] { };
+                return new Client.PipelineDefinition();
             }
 
             var factories = _repo.ToDictionary();
@@ -100,7 +100,7 @@ namespace DIPS.Processor.Pipeline
             try
             {
                 traverser.Traverse( pipeline );
-                return visitor.Algorithms;
+                return new Client.PipelineDefinition( visitor.Algorithms );
             }
             catch( Exception e )
             {
