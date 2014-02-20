@@ -1,6 +1,7 @@
 ﻿using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Unity;
+using DIPS.ViewModel.Tracking;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
