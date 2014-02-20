@@ -23,21 +23,15 @@ ALTER PROCEDURE spr_CustomList_v001
 	@Sex varchar(1) = NULL,
 	@IDContains varchar(20) = NULL,
 	@Batch int = NULL,
-	@ModifyDays int = NULL,
-	@ModifyWeeks int = NULL,
-	@ModifyMonths int = NULL,
-	@ModifyYears int = NULL,
+	@modality varchar(15) = NULL,
 	@AcquireBetweenFrom date = NULL,
-	@AcquireBetweenTo date = NULL
+	@AcquireBetweenTo date = NULL,
+	@OrderBy varchar(25) = NULL
 	
 AS
 BEGIN
 	
 	DECLARE @BatchTime datetime = cast('1753-1-1' as datetime)
-	DECLARE @ModifyWithinDays date = DATEADD(YEAR,-1000,CAST(current_timestamp as DATE))
-	DECLARE @ModifyWithinWeeks date = DATEADD(YEAR,-1000,CAST(current_timestamp as DATE))
-	DECLARE @ModifyWithinMonths date = DATEADD(YEAR,-1000,CAST(current_timestamp as DATE))
-	DECLARE @ModifyWithinYears date = DATEADD(YEAR,-1000,CAST(current_timestamp as DATE))
 
 	SET NOCOUNT ON;
 	IF @Batch IS NOT NULL
@@ -50,39 +44,32 @@ BEGIN
 			SET @BatchTime = (select beginTime from (select ROW_NUMBER() over(order by logID desc) as 'Row', * from timeLog) sorty where Row = @Batch)
 	END
 
-	IF @ModifyDays IS NOT NULL
-		SET @ModifyWithinDays = DATEADD(DAY,-@ModifyDays,CAST(current_timestamp as DATE))
-
-	IF @ModifyWeeks IS NOT NULL
-		SET @ModifyWithinWeeks = DATEADD(WEEK,-@ModifyWeeks,CAST(current_timestamp as DATE))
-
-	IF @ModifyMonths IS NOT NULL
-		SET @ModifyWithinMonths = DATEADD(MONTH,-@ModifyMonths,CAST(current_timestamp as DATE))
-
-	IF @ModifyYears IS NOT NULL
-		SET @ModifyWithinYears = DATEADD(YEAR,-@ModifyYears,CAST(current_timestamp as DATE))
-
 	IF @AcquireBetweenFrom IS NULL
 		SET @AcquireBetweenFrom = DATEADD(YEAR,-1000,CAST(current_timestamp as DATE))
 
 	IF @AcquireBetweenTo IS NULL
 		SET @AcquireBetweenTo = DATEADD(YEAR,1000,CAST(current_timestamp as DATE))
 
-	
+	IF @OrderBy IS NULL
+		SET @OrderBy = 'Modified DESC'
 
 	SELECT P.patientID as 'Patient ID', N.patientName as 'Patient Name', 
-	IP.seriesDescription as 'Series', I.fileID as 'File ID'
+		IP.seriesDescription as 'Series', I.fileID as 'File ID'
 	FROM patient P join name N on P.tableID = N.patientID join
-	imageProperties IP on P.tableID = IP.patientID join 
-	images I on IP.seriesID = I.seriesID
+		imageProperties IP on P.tableID = IP.patientID join 
+		images I on IP.seriesID = I.seriesID
 	WHERE (sex = @Sex OR @Sex IS NULL)
-	and (@IDContains IS NULL OR P.patientID like CONCAT('%',@IDContains,'%'))
-	and CAST(lastModifiedDate as DATE) >= @ModifyWithinDays
-	and CAST(lastModifiedDate as DATE) >= @ModifyWithinWeeks
-	and CAST(lastModifiedDate as DATE) >= @ModifyWithinMonths
-	and CAST(lastModifiedDate as DATE) >= @ModifyWithinYears
-	and imageAcquisitionDate between @AcquireBetweenFrom and @AcquireBetweenTo
-	and lastModifiedDate between @BatchTime and current_timestamp
-	ORDER BY P.patientID desc
+		and (@IDContains IS NULL OR P.patientID like CONCAT('%',@IDContains,'%'))
+		and (modality = @modality OR @modality IS NULL)
+		and imageAcquisitionDate between @AcquireBetweenFrom and @AcquireBetweenTo
+		and lastModifiedDate between @BatchTime and current_timestamp
+	ORDER BY 
+		CASE WHEN @OrderBy = 'PatientID ASC' THEN P.patientID END,
+		CASE WHEN @OrderBy = 'PatientID DESC' THEN P.patientID END DESC,
+		CASE WHEN @OrderBy = 'Modified ASC' THEN IP.lastModifiedDate END,
+		CASE WHEN @OrderBy = 'Modified DESC' THEN IP.lastModifiedDate END DESC,
+		CASE WHEN @OrderBy = 'Series ASC' THEN P.seriesAvailable END,
+		CASE WHEN @OrderBy = 'Series DESC' THEN P.seriesAvailable END DESC
+
 END
 GO

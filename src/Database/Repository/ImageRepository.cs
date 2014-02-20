@@ -84,6 +84,7 @@ namespace Database
             PatientImage img = null;
             Patient patient = null;
 
+            Boolean patientExist = false;
             string patientName;
             string currentID;
             string prevID = "null";
@@ -101,9 +102,22 @@ namespace Database
 
                 if (!currentID.Equals(prevID))
                 {
-                    dataSets = new ObservableCollection<ImageDataset>();
-                    patient = new Patient(currentID, patientName, dataSets);
-                    patientList.Add(patient);
+                    foreach (Patient p in patientList)
+                    {
+                        if (p.patientID.Equals(currentID))
+                        {
+                            dataSets = p.dataSet;
+                            patientExist = true;
+                        }
+                    }
+
+                    if (patientExist == false)
+                    {
+                        dataSets = new ObservableCollection<ImageDataset>();
+                        patient = new Patient(currentID, patientName, dataSets);
+                        patientList.Add(patient);
+                    }
+                    else patientExist = false;
 
                     imageCollectionDS = new ObservableCollection<PatientImage>();
                     imgDS = new ImageDataset(currentSeries, imageCollectionDS);
