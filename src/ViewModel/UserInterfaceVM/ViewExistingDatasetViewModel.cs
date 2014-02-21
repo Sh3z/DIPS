@@ -101,8 +101,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     TreeViewPatientViewModel tvpv = new TreeViewPatientViewModel(null);
                    _isSelected = value;
                     OnPropertyChanged();
+                    Boolean transform = true;
                     AdminRepository admin = new AdminRepository();
-                    if (admin.verified("admin123")) GetPatientsForTreeview();
+                    if (_isSelected == true) transform = admin.verified();
+
+                    if (transform) GetPatientsForTreeview();
                     else
                     {
                         _isSelected = false;
