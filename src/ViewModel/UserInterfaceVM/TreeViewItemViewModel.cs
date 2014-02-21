@@ -106,10 +106,10 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void GetImageInfo(String fileID)
         {
             ImageRepository imgRepository = new ImageRepository();
+            BaseImageInfo = string.Empty;
 
             ObservableCollection < String > listOfInfo = new ObservableCollection<String>(); 
             listOfInfo = imgRepository.retrieveImageProperties(fileID);
-
 
             foreach (String str in listOfInfo)
             {
