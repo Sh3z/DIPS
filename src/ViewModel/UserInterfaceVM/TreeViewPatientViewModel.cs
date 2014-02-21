@@ -33,14 +33,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
             ImageRepository imgRepository = new ImageRepository();
             ObservableCollection<Patient> listofPatients = imgRepository.generateTreeView();
             
-            foreach (Patient patient in listofPatients)
-            {
-                foreach (ImageDataset imgDs in patient.dataSet)
+                foreach (ImageDataset imgDs in _patient.dataSet)
                 {
                     base.Children.Add(new TreeViewImageDatasetViewModel(imgDs, this));
                 }
                
-            }
         }
     }
 }
