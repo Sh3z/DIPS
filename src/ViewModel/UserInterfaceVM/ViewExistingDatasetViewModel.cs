@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Database;
 using DIPS.Database.Objects;
+using DIPS.ViewModel.Commands;
 using Microsoft.Practices.Unity;
 
 namespace DIPS.ViewModel.UserInterfaceVM
@@ -89,9 +90,23 @@ namespace DIPS.ViewModel.UserInterfaceVM
         }
         private IUnityContainer _container;
 
+        private Boolean _isSelected;
+
+        public Boolean IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                    TreeViewPatientViewModel tvpv = new TreeViewPatientViewModel(null);
+                   _isSelected = value;
+                    OnPropertyChanged();
+            }
+        }
+        
+
         private void SetupCommands()
         {
-            
+            OpenFilterDialogCommand = new RelayCommand(new Action<object>(OpenFilterDialog));
         }
 
         private void OpenFilterDialog(object obj)
@@ -107,8 +122,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             TopLevelViewModel = tvpv;
         }
-
-        
 
 
     }
