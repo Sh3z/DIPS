@@ -14,7 +14,7 @@ namespace Database
 {
     public class ImageRepository
     {
-        public ObservableCollection<Patient> generateTreeView()
+        public ObservableCollection<Patient> generateTreeView(Boolean showName)
         {
             Technique t = new Technique();
             ObservableCollection<Patient> allDatasetsActive = null;
@@ -28,7 +28,7 @@ namespace Database
                     cmd.CommandType = CommandType.StoredProcedure;
                     SqlDataReader data = cmd.ExecuteReader();
 
-                    allDatasetsActive = DatabaseToList(data);
+                    allDatasetsActive = DatabaseToList(data,showName);
 
                     data.Close();
                 }
@@ -38,7 +38,7 @@ namespace Database
             return allDatasetsActive;
         }
 
-        public ObservableCollection<Patient> generateCustomTreeView(Filter filter)
+        public ObservableCollection<Patient> generateCustomTreeView(Filter filter, Boolean showName)
         {
             Technique t = new Technique();
             ObservableCollection<Patient> allDatasetsActive = null;
@@ -64,7 +64,7 @@ namespace Database
                     cmd.Parameters.Add("@Sex", SqlDbType.VarChar).Value = filter.Gender;
                     SqlDataReader data = cmd.ExecuteReader();
 
-                    allDatasetsActive = DatabaseToList(data);
+                    allDatasetsActive = DatabaseToList(data,showName);
 
                     data.Close();
                 }
@@ -75,7 +75,7 @@ namespace Database
 
         }
 
-        private ObservableCollection<Patient> DatabaseToList(SqlDataReader data)
+        private ObservableCollection<Patient> DatabaseToList(SqlDataReader data, Boolean showName)
         {
             ObservableCollection<Patient> patientList = null;
             ObservableCollection<ImageDataset> dataSets = null;
@@ -114,7 +114,8 @@ namespace Database
                     if (patientExist == false)
                     {
                         dataSets = new ObservableCollection<ImageDataset>();
-                        patient = new Patient(currentID, patientName, dataSets);
+                        if(showName==true) patient = new Patient(currentID, patientName, dataSets);
+                        else patient = new Patient(currentID, currentID, dataSets);
                         patientList.Add(patient);
                     }
                     else patientExist = false;

@@ -114,7 +114,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             ObservableCollection<Patient> dataset = new ObservableCollection<Patient>();
             ImageRepository repo = new ImageRepository();
-            dataset = repo.generateCustomTreeView(TheFilter);
+            dataset = repo.generateCustomTreeView(TheFilter,true);
 
             if (dataset != null)
             {

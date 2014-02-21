@@ -117,7 +117,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public void GetPatientsForTreeview()
         {
             ImageRepository repo = new ImageRepository();
-            PatientsList = repo.generateTreeView();
+            PatientsList = repo.generateTreeView(true);
             TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(PatientsList);
 
             TopLevelViewModel = tvpv;
