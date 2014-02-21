@@ -9,6 +9,7 @@ using System.Data;
 using System.Collections.ObjectModel;
 using DIPS.Database;
 using Database.Objects;
+using Database.DicomHelper;
 
 namespace Database
 {
@@ -92,6 +93,7 @@ namespace Database
             string prevSeries = "null";
 
             patientList = new ObservableCollection<Patient>();
+            SimpleEncryption encryptedName = new SimpleEncryption();
 
             while (data.Read())
             {
@@ -114,7 +116,7 @@ namespace Database
                     if (patientExist == false)
                     {
                         dataSets = new ObservableCollection<ImageDataset>();
-                        if(showName==true) patient = new Patient(currentID, patientName, dataSets);
+                        if(showName==true) patient = new Patient(currentID, encryptedName.Decrypt(patientName), dataSets);
                         else patient = new Patient(currentID, currentID, dataSets);
                         patientList.Add(patient);
                     }
