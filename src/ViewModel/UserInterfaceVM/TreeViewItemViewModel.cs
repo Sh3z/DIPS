@@ -109,13 +109,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             BaseImageInfo = string.Empty;
 
             ObservableCollection < String > listOfInfo = new ObservableCollection<String>(); 
-            listOfInfo = imgRepository.retrieveImageProperties(fileID);
-
-            foreach (String str in listOfInfo)
-            {
-                BaseImageInfo += str;
-                BaseImageInfo += System.Environment.NewLine;
-            }
+            BaseImageInfo = imgRepository.retrieveImageProperties(fileID);
         }
 
         public void setImage(String fileID)
