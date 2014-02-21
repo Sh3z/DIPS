@@ -6,9 +6,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Database;
 using DIPS.Database.Objects;
+using Microsoft.Practices.Unity;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -67,10 +69,34 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
         }
         
+        public ICommand OpenFilterDialogCommand { get; set; }
 
         public ViewExistingDatasetViewModel()
         {
             GetPatientsForTreeview();
+        }
+
+        public IUnityContainer Container
+        {
+            get
+            {
+                return _container;
+            }
+            set
+            {
+                _container = value;
+            }
+        }
+        private IUnityContainer _container;
+
+        private void SetupCommands()
+        {
+            
+        }
+
+        private void OpenFilterDialog(object obj)
+        {
+            Container = new UnityContainer();
         }
 
         public void GetPatientsForTreeview()
