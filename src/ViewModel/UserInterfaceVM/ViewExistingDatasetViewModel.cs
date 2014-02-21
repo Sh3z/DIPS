@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using Database;
 using DIPS.Database.Objects;
 
@@ -40,6 +43,31 @@ namespace DIPS.ViewModel.UserInterfaceVM
             } }
         private TreeViewGroupPatientsViewModel _topLevel;
 
+        private BitmapImage _imgUnprocessed;
+
+        public BitmapImage ImgUnprocessed
+        {
+            get { return _imgUnprocessed;  }
+            set
+            {
+                _imgUnprocessed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private String _imageInfo;
+
+        public String ImageInfo
+        {
+            get { return _imageInfo; }
+            set
+            {
+                _imageInfo = value;
+                OnPropertyChanged();
+            }
+        }
+        
+
         public ViewExistingDatasetViewModel()
         {
             GetPatientsForTreeview();
@@ -53,6 +81,9 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             TopLevelViewModel = tvpv;
         }
+
+        
+
 
     }
 }

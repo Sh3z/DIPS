@@ -20,5 +20,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             get { return _image.imgID; }
         }
+
     }
 }

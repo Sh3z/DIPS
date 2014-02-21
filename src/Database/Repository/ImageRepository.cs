@@ -142,9 +142,9 @@ namespace Database
         }
 
 
-        public List<String> retrieveImageProperties(String fileID)
+        public ObservableCollection<String> retrieveImageProperties(String fileID)
         {
-            List<String> properties = new List<String>();
+            ObservableCollection<String> properties = new ObservableCollection<String>();
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();
