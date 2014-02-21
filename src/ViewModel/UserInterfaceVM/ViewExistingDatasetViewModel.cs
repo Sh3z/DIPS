@@ -12,6 +12,7 @@ using Database;
 using DIPS.Database.Objects;
 using DIPS.ViewModel.Commands;
 using Microsoft.Practices.Unity;
+using Database.Repository;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -100,6 +101,13 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     TreeViewPatientViewModel tvpv = new TreeViewPatientViewModel(null);
                    _isSelected = value;
                     OnPropertyChanged();
+                    AdminRepository admin = new AdminRepository();
+                    if (admin.verified("admin123")) GetPatientsForTreeview();
+                    else
+                    {
+                        _isSelected = false;
+                        OnPropertyChanged();
+                    }
             }
         }
         
@@ -117,7 +125,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public void GetPatientsForTreeview()
         {
             ImageRepository repo = new ImageRepository();
-            PatientsList = repo.generateTreeView(true);
+            PatientsList = repo.generateTreeView(_isSelected);
             TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(PatientsList);
 
             TopLevelViewModel = tvpv;
