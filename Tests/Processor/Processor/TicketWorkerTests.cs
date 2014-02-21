@@ -141,6 +141,17 @@ namespace DIPS.Tests.Processor
             {
                 return null;
             }
+
+
+            public bool Delete( Guid jobID )
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Delete( Guid jobID, object identifier )
+            {
+                throw new NotImplementedException();
+            }
         }
 
         class DudPluginFactory : IPluginFactory

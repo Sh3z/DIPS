@@ -12,12 +12,12 @@ namespace DIPS.Processor
 {
     public class BatchProcessor
     {
-        public BatchProcessor( IPluginFactory factory )
+        public BatchProcessor( IPluginFactory factory, IJobPersister persister )
         {
             _queue = new JobQueue();
-            _executor = new QueueExecutor(
-                _queue, new TicketWorker( factory, new FileSystemPersister( FileSystemPersister.OutputDataPath ) ) );
+            _executor = new QueueExecutor( _queue, new TicketWorker( factory, persister ) );
         }
+
 
         public bool IsProcessing
         {
@@ -52,6 +52,7 @@ namespace DIPS.Processor
         {
             _executor.Stop();
         }
+
 
         private JobQueue _queue;
         private QueueExecutor _executor;

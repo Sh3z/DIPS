@@ -135,6 +135,51 @@ namespace DIPS.Processor.Persistence
             return results;
         }
 
+        /// <summary>
+        /// Deletes all the results from a particular job from the storage.
+        /// </summary>
+        /// <param name="jobID">The unique identifier of the job to delete
+        /// the results for.</param>
+        /// <returns><c>true</c> if the results from the job were deleted
+        /// successfully; <c>false</c> otherwise.</returns>
+        public bool Delete( Guid jobID )
+        {
+            string dir = string.Format( @"{0}/{{{1}}}", TargetDirectory, jobID );
+            if( Directory.Exists( dir ) )
+            {
+                Directory.Delete( dir, true );
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a result from a particular job with the associated identifier
+        /// from the storage.
+        /// </summary>
+        /// <param name="jobID">The unique identifier of the job to delete
+        /// the results for.</param>
+        /// <param name="identifier">The identifier given to the input to be
+        /// deleted.</param>
+        /// <returns><c>true</c> if the result from the job was deleted
+        /// successfully; <c>false</c> otherwise.</returns>
+        public bool Delete( Guid jobID, object identifier )
+        {
+            string path = string.Format( @"{0}/{{{1}}}/{2}.png", TargetDirectory, jobID, identifier );
+            if( File.Exists( path ) )
+            {
+                File.Delete( path );
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         /// <summary>
         /// Loads all previous results from a given directory.

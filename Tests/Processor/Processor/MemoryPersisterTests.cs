@@ -138,5 +138,35 @@ namespace DIPS.Tests.Processor
             Assert.IsNotNull( r );
             Assert.AreEqual( id, r.Identifier );
         }
+
+        /// <summary>
+        /// Tests deleting all results from an unknown job.
+        /// </summary>
+        [TestMethod]
+        public void TestDeleteAll_UnknownJob()
+        {
+            MemoryPersister persister = new MemoryPersister();
+            bool deleted = persister.Delete( Guid.NewGuid() );
+
+            Assert.IsFalse( deleted );
+        }
+
+        /// <summary>
+        /// Tests deleting all the results from a valid job.
+        /// </summary>
+        [TestMethod]
+        public void TestDeleteAll_ValidJob()
+        {
+            string id = "id";
+            Image img = Image.FromFile( "img.bmp" );
+            MemoryPersister persister = new MemoryPersister();
+            persister.Persist( Guid.Empty, img, id );
+
+            Assert.IsTrue( persister.Load( Guid.Empty ).Any() );
+
+            bool deleted = persister.Delete( Guid.Empty );
+            Assert.IsTrue( deleted );
+            Assert.IsFalse( persister.Load( Guid.Empty ).Any() );
+        }
     }
 }

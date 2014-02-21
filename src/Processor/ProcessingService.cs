@@ -31,7 +31,8 @@ namespace DIPS.Processor
             RegistryCache.Cache.Initialize( pipeRepo );
             RegistryCache.Cache.Initialize( algRepo );
             _pluginFactory = new RegistryFactory( algRepo );
-            JobManager = new JobManager( _pluginFactory );
+            _persister = new FileSystemPersister( FileSystemPersister.OutputDataPath );
+            JobManager = new JobManager( _pluginFactory, _persister );
             PipelineManager = new PipelineManager( pipeRepo, algRepo );
         }
 
@@ -82,6 +83,7 @@ namespace DIPS.Processor
         }
 
 
+        private IJobPersister _persister;
         private IPluginFactory _pluginFactory;
     }
 }

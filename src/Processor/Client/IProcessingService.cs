@@ -37,14 +37,5 @@ namespace DIPS.Processor.Client
         /// <returns>An <see cref="ISynchronousProcessor"/> instance for running
         /// jobs within the client.</returns>
         ISynchronousProcessor CreateSynchronousProcessor();
-
-        /// <summary>
-        /// Resolves the <see cref="JobResult"/> for a previously executed job.
-        /// </summary>
-        /// <param name="ticket">The <see cref="IJobTicket"/> representing the
-        /// job.</param>
-        /// <returns>The <see cref="JobResult"/> created through the execution of
-        /// the job represented by the <see cref="IJobTicket"/>.</returns>
-        JobResult GetResult( IJobTicket ticket );
     }
 }

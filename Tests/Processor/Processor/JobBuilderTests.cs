@@ -227,6 +227,17 @@ namespace DIPS.Tests.Processor
             {
                 throw new NotImplementedException();
             }
+
+
+            public bool Delete( Guid jobID )
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Delete( Guid jobID, object identifier )
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
