@@ -67,6 +67,14 @@ namespace DIPS.Processor
         /// </summary>
         public event EventHandler JobError;
 
+        /// <summary>
+        /// Gets the current <see cref="JobState"/> this job is in.
+        /// </summary>
+        public JobState State
+        {
+            get;
+            internal set;
+        }
 
         /// <summary>
         /// Gets a value indicating whether this job was cancelled by the client.

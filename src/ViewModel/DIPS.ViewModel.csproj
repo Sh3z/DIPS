@@ -91,6 +91,14 @@
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Objects\ImageHandler.cs" />
     <Compile Include="UserInterfaceVM\CreateAlgorithmViewModel.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\CancelJobCommand.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\JobViewModel.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\OngoingJobsViewModel.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\StatusStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StatusStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="UserInterfaceVM\LoadNewDsStep1ViewModel.cs" />
     <Compile Include="UserInterfaceVM\LoadNewDsStep2ViewModel.cs" />
     <Compile Include="UserInterfaceVM\LoadNewDsStep3ViewModel.cs" />
@@ -129,6 +137,12 @@
       <Project>{58bea286-5bcf-41b1-aaf0-d06c4663d4fd}</Project>
       <Name>DIPS.Unity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UserInterfaceVM\JobTracking\StatusStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StatusStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,6 +12,16 @@ namespace DIPS.Processor.Client
     public enum JobState
     {
         /// <summary>
+        /// The job is currently within the queue
+        /// </summary>
+        InQueue,
+
+        /// <summary>
+        /// The job is in progress
+        /// </summary>
+        Running,
+
+        /// <summary>
         /// The job was cancelled before it could complete.
         /// </summary>
         Cancelled,

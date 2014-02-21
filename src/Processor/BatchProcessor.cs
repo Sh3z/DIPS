@@ -40,6 +40,7 @@ namespace DIPS.Processor
         {
             JobTicket ticket = new JobTicket( req, _queue );
             _queue.Enqueue( ticket );
+            ticket.State = JobState.InQueue;
             return ticket;
         }
 

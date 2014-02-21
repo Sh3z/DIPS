@@ -28,6 +28,14 @@ namespace DIPS.Processor.Client
         event EventHandler JobStarted;
 
         /// <summary>
+        /// Gets the current <see cref="JobState"/> this job is in.
+        /// </summary>
+        JobState State
+        {
+            get;
+        }
+
+        /// <summary>
         /// Gets the original <see cref="JobRequest"/> provided by the client.
         /// </summary>
         JobRequest Request
