@@ -89,6 +89,7 @@
     <Compile Include="Commands\UnityCommand.cs" />
     <Compile Include="IPipelineInfo.cs" />
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Objects\ImageHandler.cs" />
     <Compile Include="UserInterfaceVM\CreateAlgorithmViewModel.cs" />
     <Compile Include="UserInterfaceVM\LoadNewDsStep1ViewModel.cs" />
     <Compile Include="UserInterfaceVM\LoadNewDsStep2ViewModel.cs" />
