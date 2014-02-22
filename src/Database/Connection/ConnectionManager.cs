@@ -8,22 +8,45 @@ namespace Database
 {
     public static class ConnectionManager
     {
-        public static void changeDataSource(String newValue)
+
+        public static String DataSource
         {
-            DIPSConnection.Default.DataSource = newValue;
-            rebuildConnection();
+            get { return DIPSConnection.Default.DataSource; }
+            set 
+            { 
+                DIPSConnection.Default.DataSource = value;
+                rebuildConnection(); 
+            }
         }
 
-        public static void changeCatalog(String newValue)
+        public static String Catalog
         {
-            DIPSConnection.Default.Catalog = newValue;
-            rebuildConnection();
+            get { return DIPSConnection.Default.Catalog; }
+            set 
+            { 
+                DIPSConnection.Default.Catalog = value;
+                rebuildConnection(); 
+            }
         }
 
-        public static void changeSecurity(String newValue)
+        public static String Security
         {
-            DIPSConnection.Default.Security = newValue;
-            rebuildConnection();
+            get { return DIPSConnection.Default.Security; }
+            set
+            {
+                DIPSConnection.Default.Security = value;
+                rebuildConnection();
+            }
+        }
+
+        public static String Extra
+        {
+            get { return DIPSConnection.Default.Extra; }
+            set
+            {
+                DIPSConnection.Default.Extra = value;
+                rebuildConnection();
+            }
         }
 
         public static String getConnection
@@ -39,11 +62,12 @@ namespace Database
         private static void rebuildConnection()
         {
             DIPSConnection.Default.Connection = "Data Source = " + DIPSConnection.Default.DataSource + "; Initial Catalog = " +
-                            DIPSConnection.Default.Catalog + "; Integrated Security = " + DIPSConnection.Default.Security;
+                            DIPSConnection.Default.Catalog + "; Integrated Security = " + DIPSConnection.Default.Security
+                            + "; " + DIPSConnection.Default.Extra;
 
             DIPSConnection.Default.MasterConnection = "Data Source = " + DIPSConnection.Default.DataSource +
                                 "; Initial Catalog = master; Integrated Security = " +
-                                DIPSConnection.Default.Security;
+                                DIPSConnection.Default.Security + "; " + DIPSConnection.Default.Extra;
             DIPSConnection.Default.Save();
         }
     }

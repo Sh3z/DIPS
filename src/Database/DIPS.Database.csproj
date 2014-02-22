@@ -77,6 +77,8 @@
     <Compile Include="Dicom\InsertToDatabase.cs" />
     <Compile Include="DicomHelper\PatientID.cs" />
     <Compile Include="Dicom\Process.cs" />
+    <Compile Include="Repository\AdminRepository.cs" />
+    <Compile Include="Repository\ConnectionRepository.cs" />
     <Compile Include="Repository\DeleteRepository.cs" />
     <Compile Include="DIPSConnection.Designer.cs">
       <AutoGen>True</AutoGen>

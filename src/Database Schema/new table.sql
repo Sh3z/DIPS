@@ -54,15 +54,16 @@ select * from imageProcessing;
 drop table imageProcessing;
 
 SELECT @@SERVERNAME AS 'Server Name';
+SELECT count(name) FROM master.dbo.sysdatabases where name = 'medicalImaging';
 
 select backup_size from msdb..backupset;
 select compressed_backup_size from msdb..backupset;
 
 BACKUP DATABASE medicalImaging
-TO DISK = 'C:\Users\Yeh\Desktop\localbackup\Test4.BAK'
+TO DISK = 'C:\Users\Joseph\Documents\Backup\Test.BAK'
 
 DROP DATABASE medicalImaging;
 
 RESTORE DATABASE medicalImaging
-FROM DISK = 'C:\Users\Yeh\Desktop\localbackup\Test2.BAK'
+FROM DISK = 'C:\Users\Joseph\Documents\Backup\Test.BAK'
 WITH STATS = 1
