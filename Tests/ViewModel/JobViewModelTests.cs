@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using DIPS.Processor.Client;
+using DIPS.Util.Remoting;
+using DIPS.Processor.Client.Sinks;
 
 namespace DIPS.Tests.ViewModel
 {
@@ -92,13 +94,10 @@ namespace DIPS.Tests.ViewModel
 
         class Ticket : IJobTicket
         {
-            public event EventHandler JobCancelled;
-
-            public event EventHandler JobCompleted;
-
-            public event EventHandler JobError;
-
-            public event EventHandler JobStarted;
+            public Ticket()
+            {
+                _sinks = new EventSinkContainer<TicketSink>();
+            }
 
             public JobState State
             {
@@ -134,27 +133,33 @@ namespace DIPS.Tests.ViewModel
             public void FireCancel()
             {
                 State = JobState.Cancelled;
-                JobCancelled( this, EventArgs.Empty );
+                _sinks.FireSync( "JobCancelled", EventArgs.Empty );
             }
 
             public void FireComplete()
             {
                 State = JobState.Complete;
-                JobCompleted( this, EventArgs.Empty );
+                _sinks.FireSync( "JobCompleted", EventArgs.Empty );
             }
 
             public void FireError()
             {
                 State = JobState.Error;
                 Result = new JobResult( new Exception() );
-                JobError( this, EventArgs.Empty );
+                _sinks.FireSync( "JobError", EventArgs.Empty );
             }
 
             public void FireStarted()
             {
                 State = JobState.Running;
-                JobStarted( this, EventArgs.Empty );
+                _sinks.FireSync( "JobStarted", EventArgs.Empty );
             }
+
+            public ISinkContainer<TicketSink> Sinks
+            {
+                get { return _sinks; }
+            }
+            private EventSinkContainer<TicketSink> _sinks;
         }
     }
 }

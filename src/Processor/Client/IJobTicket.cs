@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DIPS.Processor.Client.Sinks;
+using DIPS.Util.Remoting;
+using System;
 
 namespace DIPS.Processor.Client
 {
@@ -8,24 +10,13 @@ namespace DIPS.Processor.Client
     public interface IJobTicket
     {
         /// <summary>
-        /// Occurs when the job is cancelled.
+        /// Gets the <see cref="ISinkContainer"/> used to dispatch events
+        /// pertaining to this <see cref="IJobTicket"/>.
         /// </summary>
-        event EventHandler JobCancelled;
-
-        /// <summary>
-        /// Occurs when the job is complete.
-        /// </summary>
-        event EventHandler JobCompleted;
-
-        /// <summary>
-        /// Occurs when the job encounters an error.
-        /// </summary>
-        event EventHandler JobError;
-
-        /// <summary>
-        /// Occurs when the job has begun.
-        /// </summary>
-        event EventHandler JobStarted;
+        ISinkContainer<TicketSink> Sinks
+        {
+            get;
+        }
 
         /// <summary>
         /// Gets the current <see cref="JobState"/> this job is in.

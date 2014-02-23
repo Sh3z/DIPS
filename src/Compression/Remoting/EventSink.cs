@@ -12,6 +12,7 @@ namespace DIPS.Util.Remoting
     /// Represents a container for events to be fired by an
     /// <see cref="EventSinkContainer"/>. This class is abstract.
     /// </summary>
+    [Serializable]
     public abstract class EventSink
     {
         /// <summary>
@@ -205,16 +206,8 @@ namespace DIPS.Util.Remoting
         /// <param name="e">The event information</param>
         private void _invokeDelegate( Delegate method, object sender, EventArgs e )
         {
-            if( method is MulticastDelegate )
-            {
-                Delegate[] methods = ( (MulticastDelegate)method ).GetInvocationList();
-                methods.ForEach( x => _invoke( x, sender, e ) );
-            }
-            else
-            {
-                object[] parameters = new[] { sender, e };
-                method.Method.Invoke( method.Target, parameters );
-            }
+            object[] parameters = new[] { sender, e };
+            method.Method.Invoke( method.Target, parameters );
         }
     }
 }

@@ -10,6 +10,8 @@ using DIPS.Processor.Plugin;
 using DIPS.Processor.Persistence;
 using System.Drawing;
 using DIPS.Processor.Registry;
+using DIPS.Processor.Client.Sinks;
+using System.Threading;
 
 namespace DIPS.Tests.Processor
 {
@@ -72,9 +74,14 @@ namespace DIPS.Tests.Processor
 
             bool didError = false;
             bool didFinish = false;
-            ticket.JobError += ( s, e ) => didError = true;
-            ticket.JobCompleted += ( s, e ) => didFinish = true;
+            TicketSink s = new TicketSink();
+            ticket.Sinks.Add( s );
+            s.JobError += ( se, e ) => didError = true;
+            s.JobCompleted += ( se, e ) => didFinish = true;
             w.Work( ticket );
+
+            // Events are dispatched on a seperate thread, so let it run.
+            Thread.Sleep( 5 );
 
             Assert.IsTrue( didError );
             Assert.IsFalse( didFinish );
@@ -99,9 +106,14 @@ namespace DIPS.Tests.Processor
 
             bool didError = false;
             bool didFinish = false;
-            ticket.JobError += ( s, e ) => didError = true;
-            ticket.JobCompleted += ( s, e ) => didFinish = true;
+            TicketSink s = new TicketSink();
+            ticket.Sinks.Add( s );
+            s.JobError += ( se, e ) => didError = true;
+            s.JobCompleted += ( se, e ) => didFinish = true;
             w.Work( ticket );
+
+            // Events are dispatched on a seperate thread, so let it run.
+            Thread.Sleep( 5 );
 
             Assert.IsTrue( didError );
             Assert.IsFalse( didFinish );

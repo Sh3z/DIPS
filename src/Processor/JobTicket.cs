@@ -1,6 +1,9 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Client.Sinks;
+using DIPS.Util.Remoting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +13,7 @@ namespace DIPS.Processor
     /// <summary>
     /// Represents an entry into the queueing system for a single job.
     /// </summary>
+    [Serializable]
     public class JobTicket : IJobTicket
     {
         /// <summary>
@@ -35,6 +39,7 @@ namespace DIPS.Processor
             Request = req;
             Cancelled = false;
             JobID = Guid.NewGuid();
+            _sink = new EventSinkContainer<TicketSink>();
         }
 
 
@@ -48,24 +53,18 @@ namespace DIPS.Processor
         }
 
         /// <summary>
-        /// Occurs when the job is cancelled.
+        /// Gets the <see cref="ISinkContainer"/> used to dispatch events
+        /// pertaining to this <see cref="IJobTicket"/>.
         /// </summary>
-        public event EventHandler JobCancelled;
-
-        /// <summary>
-        /// Occurs when the job has begun.
-        /// </summary>
-        public event EventHandler JobStarted;
-
-        /// <summary>
-        /// Occurs when the job is complete.
-        /// </summary>
-        public event EventHandler JobCompleted;
-
-        /// <summary>
-        /// Occurs when the job encounters an error.
-        /// </summary>
-        public event EventHandler JobError;
+        public ISinkContainer<TicketSink> Sinks
+        {
+            get
+            {
+                return _sink;
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private EventSinkContainer<TicketSink> _sink;
 
         /// <summary>
         /// Gets the current <see cref="JobState"/> this job is in.
@@ -119,34 +118,22 @@ namespace DIPS.Processor
 
         internal void OnJobStarted()
         {
-            if( JobStarted != null )
-            {
-                JobStarted( this, EventArgs.Empty );
-            }
+            _sink.FireAsync( "JobStarted", EventArgs.Empty );
         }
 
         internal void OnJobCompleted()
         {
-            if( JobCompleted != null )
-            {
-                JobCompleted( this, EventArgs.Empty );
-            }
+            _sink.FireAsync( "JobCompleted", EventArgs.Empty );
         }
 
         internal void OnJobError()
         {
-            if( JobError != null )
-            {
-                JobError( this, EventArgs.Empty );
-            }
+            _sink.FireAsync( "JobError", EventArgs.Empty );
         }
 
         private void _onJobCancelled()
         {
-            if( JobCancelled != null )
-            {
-                JobCancelled( this, EventArgs.Empty );
-            }
+            _sink.FireAsync( "JobCancelled", EventArgs.Empty );
         }
 
 

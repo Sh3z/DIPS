@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Client.Sinks;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,22 +30,30 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             _status = string.Empty;
             _longStatus = string.Empty;
             _isRunning = false;
+            _sink = new TicketSink();
+            _sink.JobCancelled += _onJobCancelled;
+            _sink.JobCompleted += _onJobComplete;
+            _sink.JobError += _onJobError;
+            _sink.JobStarted += _onJobStarted;
             Ticket = job;
-            Ticket.JobCancelled += _onJobCancelled;
-            Ticket.JobCompleted += _onJobComplete;
-            Ticket.JobError += _onJobError;
-            Ticket.JobStarted += _onJobStarted;
+            Ticket.Sinks.Add( _sink );
             _updateFromState();
         }
 
 
         void IDisposable.Dispose()
         {
-            Ticket.JobCancelled -= _onJobCancelled;
-            Ticket.JobCompleted -= _onJobComplete;
-            Ticket.JobError -= _onJobError;
-            Ticket.JobStarted -= _onJobStarted;
-            Ticket = null;
+            if( Ticket != null )
+            {
+                Ticket.Sinks.Remove( _sink );
+                Ticket = null;
+            }
+
+            _sink.JobCancelled -= _onJobCancelled;
+            _sink.JobCompleted -= _onJobComplete;
+            _sink.JobError -= _onJobError;
+            _sink.JobStarted -= _onJobStarted;
+            _sink = null;
         }
 
 
@@ -213,5 +222,11 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                     break;
             }
         }
+
+
+        /// <summary>
+        /// Contains the event sink used by the ticket.
+        /// </summary>
+        private TicketSink _sink;
     }
 }
