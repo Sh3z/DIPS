@@ -44,7 +44,7 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestConstructor_ValidDefinition()
         {
-            JobDefinition d = new JobDefinition( Guid.Empty, new PipelineEntry[] { }, new DudPersister() );
+            JobDefinition d = new JobDefinition( Guid.Empty, new Pipeline(), new DudPersister() );
             Job j = new Job( d );
         }
 
@@ -54,10 +54,11 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestRun_NoException()
         {
+            Pipeline pipe = new Pipeline();
+            pipe.Add( new PipelineEntry( new GoodPlugin() ) );
             JobInput i = new JobInput( Image.FromFile( "img.bmp" ) );
             DudPersister p = new DudPersister();
-            JobDefinition d = new JobDefinition( Guid.Empty,
-                new PipelineEntry[] { new PipelineEntry( new GoodPlugin() ) }, p );
+            JobDefinition d = new JobDefinition( Guid.Empty, pipe, p );
             d.Inputs.Add( i );
             Job j = new Job( d );
             bool didComplete = j.Run();
@@ -73,9 +74,10 @@ namespace DIPS.Tests.Processor
         [TestMethod]
         public void TestRun_JobException()
         {
+            Pipeline pipe = new Pipeline();
+            pipe.Add( new PipelineEntry( new BadPlugin() ) );
             JobInput i = new JobInput( Image.FromFile( "img.bmp" ) );
-            JobDefinition d = new JobDefinition( Guid.Empty,
-                new PipelineEntry[] { new PipelineEntry( new BadPlugin() ) }, new DudPersister() );
+            JobDefinition d = new JobDefinition( Guid.Empty, pipe, new DudPersister() );
             d.Inputs.Add( i );
             Job j = new Job( d );
             bool didComplete = j.Run();

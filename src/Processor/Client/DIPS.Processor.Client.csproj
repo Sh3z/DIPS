@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmDefinition.cs" />
+    <Compile Include="Eventing\JobErrorArgs.cs" />
     <Compile Include="IJobManager.cs" />
     <Compile Include="IJobTicket.cs" />
     <Compile Include="IPipelineManager.cs" />

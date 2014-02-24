@@ -1,4 +1,7 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Persistence;
+using DIPS.Processor.Pipeline;
+using DIPS.Processor.Worker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,30 +11,49 @@ using System.Threading.Tasks;
 
 namespace DIPS.Processor.Executor
 {
-    public class QueueExecutor
+    public class QueueExecutor : IDisposable
     {
-        public QueueExecutor( IJobQueue queue, IWorker worker )
+        public QueueExecutor( IJobQueue queue )
         {
             if( queue == null )
             {
                 throw new ArgumentNullException( "queue" );
             }
 
-            if( worker == null )
-            {
-                throw new ArgumentNullException( "worker" );
-            }
-
             AutoStart = false;
             _stop = false;
             _queue = queue;
-            _worker = worker;
             _queue.JobAdded += job_added;
         }
+
+
+        void IDisposable.Dispose()
+        {
+            Stop();
+        }
+
 
         public event EventHandler ExhaustedQueue;
 
         public bool AutoStart
+        {
+            get;
+            set;
+        }
+
+        public IJobPersister Persister
+        {
+            get;
+            set;
+        }
+
+        public IPluginFactory PluginFactory
+        {
+            get;
+            set;
+        }
+
+        public IWorker Worker
         {
             get;
             set;
@@ -54,6 +76,21 @@ namespace DIPS.Processor.Executor
             {
                 if( IsRunning == false )
                 {
+                    if( Worker == null )
+                    {
+                        throw new InvalidOperationException( "No worker provided" );
+                    }
+
+                    if( PluginFactory == null )
+                    {
+                        throw new InvalidOperationException( "No plugin factory provided" );
+                    }
+
+                    if( Persister == null )
+                    {
+                        throw new InvalidOperationException( "No persister provided" );
+                    }
+
                     _jobThread = new Thread( run );
                     _jobThread.Start();
                 }
@@ -112,7 +149,9 @@ namespace DIPS.Processor.Executor
         {
             if( ticket.Cancelled == false )
             {
-                _worker.Work( ticket );
+                WorkerArgs args = new WorkerArgs( Persister, new PluginPipelineFactory( PluginFactory ) );
+                args.Ticket = ticket;
+                Worker.Work( args );
             }
         }
 

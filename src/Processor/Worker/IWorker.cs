@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor
+namespace DIPS.Processor.Worker
 {
-    public interface IWorker
+    public interface IWorker : ITicketCancellationHandler
     {
-        void Work( IJobTicket job );
+        void Work( WorkerArgs args );
     }
 }

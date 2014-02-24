@@ -3,6 +3,7 @@ using DIPS.Processor.Executor;
 using DIPS.Processor.Persistence;
 using DIPS.Processor.Pipeline;
 using DIPS.Processor.Registry;
+using DIPS.Processor.Worker;
 using DIPS.Processor.XML;
 using DIPS.Processor.XML.Compilation;
 using System;
@@ -66,8 +67,10 @@ namespace DIPS.Processor
         public ISynchronousProcessor CreateSynchronousProcessor()
         {
             IJobPersister persister = new MemoryPersister();
-            IWorker worker = new TicketWorker( _pluginFactory, persister );
-            return new SynchronousProcessor( worker );
+            IWorker worker = new TicketWorker();
+            var processor = new SynchronousProcessor( worker );
+            processor.Factory = new PluginPipelineFactory( _pluginFactory );
+            return processor;
         }
 
         /// <summary>

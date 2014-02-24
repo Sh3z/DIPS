@@ -1,4 +1,5 @@
-﻿using DIPS.Util.Remoting;
+﻿using DIPS.Processor.Client.Eventing;
+using DIPS.Util.Remoting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace DIPS.Processor.Client.Sinks
         /// <summary>
         /// Occurs when the job encounters an error.
         /// </summary>
-        public event EventHandler JobError;
+        public event EventHandler<JobErrorArgs> JobError;
 
         /// <summary>
         /// Occurs when the job has begun.

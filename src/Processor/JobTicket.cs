@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Client.Eventing;
 using DIPS.Processor.Client.Sinks;
 using DIPS.Util.Remoting;
 using System;
@@ -118,22 +119,22 @@ namespace DIPS.Processor
 
         internal void OnJobStarted()
         {
-            _sink.FireAsync( "JobStarted", EventArgs.Empty );
+            _sink.FireAsync( "JobStarted", this, EventArgs.Empty );
         }
 
         internal void OnJobCompleted()
         {
-            _sink.FireAsync( "JobCompleted", EventArgs.Empty );
+            _sink.FireAsync( "JobCompleted", this, EventArgs.Empty );
         }
 
-        internal void OnJobError()
+        internal void OnJobError( Exception e )
         {
-            _sink.FireAsync( "JobError", EventArgs.Empty );
+            _sink.FireAsync( "JobError", this, new JobErrorArgs( e ) );
         }
 
         private void _onJobCancelled()
         {
-            _sink.FireAsync( "JobCancelled", EventArgs.Empty );
+            _sink.FireAsync( "JobCancelled", this, EventArgs.Empty );
         }
 
 
