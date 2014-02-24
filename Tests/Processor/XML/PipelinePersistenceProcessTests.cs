@@ -49,7 +49,7 @@ namespace DIPS.Tests.Processor.XML
             factories.Add( "Unknown", new DudInterpreter() );
             PipelinePersistanceProcess p = new PipelinePersistanceProcess( factories );
             AlgorithmDefinition d = new AlgorithmDefinition( "Test", new Property[] { } );
-            d.ParameterObject = new object();
+            d.ParameterObject = new Cloneable();
             p.Build( d );
         }
 
@@ -82,7 +82,7 @@ namespace DIPS.Tests.Processor.XML
             factories.Add( "Test", interpreter );
             PipelinePersistanceProcess p = new PipelinePersistanceProcess( factories );
             AlgorithmDefinition d = new AlgorithmDefinition( "Test", new Property[] { } );
-            d.ParameterObject = new object();
+            d.ParameterObject = new Cloneable();
             XElement xml = p.Build( d );
 
             Assert.IsTrue( xml.Descendants( "properties" ).Any() );
@@ -104,16 +104,24 @@ namespace DIPS.Tests.Processor.XML
                 private set;
             }
 
-            public XElement CreateXml( object parameterObject )
+            public XElement CreateXml( ICloneable parameterObject )
             {
                 DidCallCreateXml = true;
                 return new XElement( "properties" );
             }
 
-            public object CreateObject( XElement parameterXml )
+            public ICloneable CreateObject( XElement parameterXml )
             {
                 DidCallCreateObject = true;
-                return new object();
+                return new Cloneable();
+            }
+        }
+
+        class Cloneable : ICloneable
+        {
+            public object Clone()
+            {
+                return new Cloneable();
             }
         }
     }

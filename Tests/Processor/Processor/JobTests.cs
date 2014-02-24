@@ -7,6 +7,7 @@ using DIPS.Processor.Persistence;
 using System.Drawing;
 using DIPS.Processor.Plugin;
 using DIPS.Processor.Client.JobDeployment;
+using DIPS.Processor.Pipeline;
 
 namespace DIPS.Tests.Processor
 {

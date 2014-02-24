@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor
+namespace DIPS.Processor.Pipeline
 {
     /// <summary>
     /// Represents a single pending process within a pipeline.
@@ -42,7 +42,7 @@ namespace DIPS.Processor
         /// <summary>
         /// Gets or sets the input to the process.
         /// </summary>
-        public object ProcessInput
+        public ICloneable ProcessInput
         {
             get;
             set;

@@ -126,16 +126,24 @@ namespace DIPS.Tests.Processor.XML
                 private set;
             }
 
-            public XElement CreateXml( object parameterObject )
+            public XElement CreateXml( ICloneable parameterObject )
             {
                 DidCallCreateXml = true;
                 return new XElement( "" );
             }
 
-            public object CreateObject( XElement parameterXml )
+            public ICloneable CreateObject( XElement parameterXml )
             {
                 DidCallCreateObject = true;
-                return new object();
+                return new Cloneable();
+            }
+        }
+
+        class Cloneable : ICloneable
+        {
+            public object Clone()
+            {
+                return new Cloneable();
             }
         }
     }

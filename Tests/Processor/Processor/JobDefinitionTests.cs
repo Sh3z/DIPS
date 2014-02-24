@@ -6,6 +6,7 @@ using DIPS.Processor.Persistence;
 using DIPS.Processor;
 using DIPS.Processor.Plugin;
 using System.Drawing;
+using DIPS.Processor.Pipeline;
 
 namespace DIPS.Tests.Processor
 {
