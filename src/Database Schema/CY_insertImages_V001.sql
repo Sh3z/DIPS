@@ -21,8 +21,8 @@ GO
 -- =============================================
 CREATE PROCEDURE spr_InsertImages_v001
 	-- Add the parameters for the stored procedure here
-	@imgID int,
-	@imgNum varchar(5),
+	@imgID int = NULL,
+	@imgNum varchar(5) = NULL,
 	@imgBlob varbinary(Max) = NULL,
 	@process bit = NULL
 AS
