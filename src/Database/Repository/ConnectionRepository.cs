@@ -13,12 +13,7 @@ namespace Database.Repository
         Label current = new Label();
         TextBox textBox, textBox2, textBox3, textBox4;
 
-        public void change()
-        {
-            String temp = dialog();
-        }
-
-        public String dialog()
+        public void dialog()
         {
             Size size = new Size(600, 280);
             Form inputBox = new Form();
@@ -130,7 +125,6 @@ namespace Database.Repository
             defaultValue();
 
             DialogResult result = inputBox.ShowDialog();
-            return textBox.Text;
         }
 
         private void defaultValue()

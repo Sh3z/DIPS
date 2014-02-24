@@ -58,15 +58,21 @@ namespace Database
                     cmd.CommandType = CommandType.StoredProcedure;
                     if (!String.IsNullOrEmpty(filter.PatientID))
                         cmd.Parameters.Add("@IDContains", SqlDbType.VarChar).Value = filter.PatientID;
+                    if (!String.IsNullOrEmpty(filter.Modality))
+                        cmd.Parameters.Add("@modality", SqlDbType.VarChar).Value = filter.Modality;
+                    if (!String.IsNullOrEmpty(filter.Gender))
+                        cmd.Parameters.Add("@Sex", SqlDbType.VarChar).Value = filter.Gender;
                     if (filter.AcquisitionDateFrom != null && dateCompareResultFrom != 0)
                         cmd.Parameters.Add("@AcquireBetweenFrom", SqlDbType.Date).Value = filter.AcquisitionDateFrom;
                     if (filter.AcquisitionDateTo != null && dateCompareResultTo != 0)
-                        cmd.Parameters.Add("@AcquireBetweenTo", SqlDbType.Date).Value = filter.AcquisitionDateTo;
-                    cmd.Parameters.Add("@Sex", SqlDbType.VarChar).Value = filter.Gender;
+                        cmd.Parameters.Add("@AcquireBetweenTo", SqlDbType.Date).Value = filter.AcquisitionDateTo;                 
+
+                    int batch = 0;
+                    Boolean batchNumerical = int.TryParse(filter.Batch, out batch);
+                    if (batchNumerical) cmd.Parameters.Add("@Batch", SqlDbType.Int).Value = batch;
+
                     SqlDataReader data = cmd.ExecuteReader();
-
                     allDatasetsActive = DatabaseToList(data,showName);
-
                     data.Close();
                 }
             }

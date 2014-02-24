@@ -39,6 +39,22 @@ namespace Database.Objects
             get { return _Gender; }
             set { _Gender = value; }
         }
+
+        private String _Modality;
+
+        public String Modality
+        {
+            get { return _Modality; }
+            set { _Modality = value; }
+        }
+
+        private String _Batch;
+
+        public String Batch
+        {
+            get { return _Batch; }
+            set { _Batch = value; }
+        }
         
     }
 }
