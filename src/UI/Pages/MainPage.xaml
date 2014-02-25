@@ -23,7 +23,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Command="{Binding ViewAboutCommand}" HorizontalAlignment="Left" Margin="409,147,0,0" VerticalAlignment="Top" Width="28" Height="27" ToolTip="About">
+        <Button Command="{Binding ViewExistingAlgorithmsCommand}" HorizontalAlignment="Left" Margin="409,147,0,0" VerticalAlignment="Top" Width="28" Height="27" ToolTip="About">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="../Resources/flag_blue.png"/>
