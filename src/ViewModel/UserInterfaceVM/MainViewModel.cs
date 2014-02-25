@@ -47,7 +47,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public ICommand ViewExistingDataSetCommand { get; set; }
         public ICommand ViewProcessDataSetCommand { get; set; }
         public ICommand ViewCreateAlgorithmCommand { get; set; }
-        public ICommand ViewAboutCommand { get; set; }
+        public ICommand ViewExistingAlgorithmsCommand { get; set; }
     
         public IProcessingService Service { get; set; }
 
@@ -66,7 +66,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             ViewExistingDataSetCommand = new RelayCommand(new Action<object>(ShowExistingDataSet));
             ViewProcessDataSetCommand = new RelayCommand(new Action<object>(ShowProcessDataSet));
             ViewCreateAlgorithmCommand = new RelayCommand(new Action<object>( ShowCreateAlgorithm));
-            ViewAboutCommand = new RelayCommand(new Action<object>(ShowAbout));
+            ViewExistingAlgorithmsCommand = new RelayCommand(new Action<object>(ShowViewExistingAlgorithms));
         }
 
         private static void ShowExistingDataSet(object obj)
@@ -99,9 +99,9 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
         }
 
-        private void ShowAbout(object obj)
+        private void ShowViewExistingAlgorithms(object obj)
         {
-            
+            OverallFrame.Content = _ViewAlgorithmViewModel;
         }
     }
 
