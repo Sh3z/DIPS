@@ -2,7 +2,6 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DIPS.Processor.Executor;
 using DIPS.Processor;
 using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
@@ -10,6 +9,10 @@ using DIPS.Processor.Plugin;
 using DIPS.Processor.Persistence;
 using System.Drawing;
 using DIPS.Processor.Registry;
+using DIPS.Processor.Client.Sinks;
+using System.Threading;
+using DIPS.Processor.Worker;
+using DIPS.Processor.Pipeline;
 
 namespace DIPS.Tests.Processor
 {
@@ -31,33 +34,10 @@ namespace DIPS.Tests.Processor
 
 
         /// <summary>
-        /// Tests constructing the worker with a null factory.
-        /// </summary>
-        [TestMethod]
-        [ExpectedException( typeof( ArgumentNullException ) )]
-        public void TestConstructor_NullFactory()
-        {
-            TicketWorker w = new TicketWorker( null, new DudPersister() );
-        }
-
-        /// <summary>
-        /// Tests creating a worker with a null persister
-        /// </summary>
-        [TestMethod]
-        [ExpectedException( typeof( ArgumentNullException ) )]
-        public void TestConstructor_NullPersister()
-        {
-            ProcessPluginRepository r = new ProcessPluginRepository();
-            RegistryCache.Cache.Initialize( r );
-            RegistryFactory factory = new RegistryFactory( r );
-            TicketWorker w = new TicketWorker( factory, null );
-        }
-
-        /// <summary>
         /// Tests running an invalid job.
         /// </summary>
         [TestMethod]
-        public void TestWork_InvalidJob()
+        public void TestWork_EmptyJob()
         {
             ObjectJobDefinition d = new ObjectJobDefinition(
                 new PipelineDefinition(
@@ -68,19 +48,24 @@ namespace DIPS.Tests.Processor
             ProcessPluginRepository re = new ProcessPluginRepository();
             RegistryCache.Cache.Initialize( re );
             RegistryFactory factory = new RegistryFactory( re );
-            TicketWorker w = new TicketWorker( factory, new DudPersister() );
+            TicketWorker w = new TicketWorker();
+            WorkerArgs args = new WorkerArgs( new DudPersister(), new BadPipelineFactory() );
+            args.Ticket = ticket;
 
             bool didError = false;
             bool didFinish = false;
-            ticket.JobError += ( s, e ) => didError = true;
-            ticket.JobCompleted += ( s, e ) => didFinish = true;
-            w.Work( ticket );
+            TicketSink s = new TicketSink();
+            ticket.Sinks.Add( s );
+            s.JobCompleted += ( se, e ) => didFinish = true;
+            w.Work( args );
 
-            Assert.IsTrue( didError );
-            Assert.IsFalse( didFinish );
+            // Events are dispatched on a seperate thread, so let it run.
+            Thread.Sleep( 15 );
+
+            Assert.IsTrue( didFinish );
 
             JobResult result = ticket.Result;
-            Assert.AreEqual( JobState.Error, result.Result );
+            Assert.AreEqual( JobState.Complete, result.Result );
         }
 
         /// <summary>
@@ -95,13 +80,20 @@ namespace DIPS.Tests.Processor
                 new[] { new JobInput( Image.FromFile( "img.bmp" ) ) } );
             JobRequest r = new JobRequest( d );
             JobTicket ticket = new JobTicket( r, new DudCancellationHandler() );
-            TicketWorker w = new TicketWorker( new DudPluginFactory(), new DudPersister() );
+            TicketWorker w = new TicketWorker();
+            WorkerArgs args = new WorkerArgs( new DudPersister(), new BadPipelineFactory() );
+            args.Ticket = ticket;
 
             bool didError = false;
             bool didFinish = false;
-            ticket.JobError += ( s, e ) => didError = true;
-            ticket.JobCompleted += ( s, e ) => didFinish = true;
-            w.Work( ticket );
+            TicketSink s = new TicketSink();
+            ticket.Sinks.Add( s );
+            s.JobError += ( se, e ) => didError = true;
+            s.JobCompleted += ( se, e ) => didFinish = true;
+            w.Work( args );
+
+            // Events are dispatched on a seperate thread, so let it run.
+            Thread.Sleep( 15 );
 
             Assert.IsTrue( didError );
             Assert.IsFalse( didFinish );
@@ -139,7 +131,18 @@ namespace DIPS.Tests.Processor
 
             public IEnumerable<PersistedResult> Load( Guid jobID )
             {
-                return null;
+                return new PersistedResult[] {};
+            }
+
+
+            public bool Delete( Guid jobID )
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Delete( Guid jobID, object identifier )
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -151,11 +154,30 @@ namespace DIPS.Tests.Processor
             }
         }
 
+        class BadPipelineFactory : IPipelineFactory
+        {
+            public Pipeline CreatePipeline( PipelineDefinition def )
+            {
+                Pipeline p = new Pipeline();
+                p.Add( new PipelineEntry( new BadPlugin() ) );
+                return p;
+            }
+        }
+
         class BadPlugin : AlgorithmPlugin
         {
             public override void Run( object obj )
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        class DudPipelineFactory : IPipelineFactory
+        {
+
+            public Pipeline CreatePipeline( PipelineDefinition def )
+            {
+                return new Pipeline();
             }
         }
     }

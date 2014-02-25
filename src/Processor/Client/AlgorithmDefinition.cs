@@ -84,7 +84,7 @@ namespace DIPS.Processor.Client
         /// Gets or sets the <see cref="object"/> describing the properties required
         /// for this Algorithm.
         /// </summary>
-        public object ParameterObject
+        public ICloneable ParameterObject
         {
             get;
             set;

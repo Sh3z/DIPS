@@ -210,6 +210,69 @@ namespace DIPS.Tests.Processor
             Assert.AreEqual( id, result.Identifier );
         }
 
+        /// <summary>
+        /// Tests deleting a result that has not been created
+        /// </summary>
+        [TestMethod]
+        public void TestDeleteAll_DirectoryDoesntExist()
+        {
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
+            Guid testGuid = Guid.NewGuid();
+            bool deleted = persister.Delete( testGuid );
+
+            Assert.IsFalse( deleted );
+        }
+
+        /// <summary>
+        /// Tests deleting all results within a directory
+        /// </summary>
+        [TestMethod]
+        public void TestDeleteAll_DirectoryExists()
+        {
+            string id = "test";
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
+            Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
+            persister.Persist( CurrentTicket.JobID, toPersist, id );
+            bool deleted = persister.Delete( CurrentTicket.JobID );
+
+            string path = string.Format( @"{0}/{{{1}}}", persister.TargetDirectory, CurrentTicket.JobID );
+            Assert.IsTrue( deleted );
+            Assert.IsFalse( Directory.Exists( path ) );
+        }
+
+        /// <summary>
+        /// Tests deleting a specific result that does not exist.
+        /// </summary>
+        [TestMethod]
+        public void TestDeleteByID_FileDoesntExist()
+        {
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
+            Guid testGuid = Guid.NewGuid();
+            bool deleted = persister.Delete( testGuid, "test" );
+
+            Assert.IsFalse( deleted );
+        }
+
+        /// <summary>
+        /// Tests deleting a specific result that exists
+        /// </summary>
+        [TestMethod]
+        public void TestDeleteByID_FileExists()
+        {
+            string id = "test";
+            FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
+            Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
+            persister.Persist( CurrentTicket.JobID, toPersist, id );
+
+            string dir = string.Format( @"{0}/{{{1}}}", persister.TargetDirectory, CurrentTicket.JobID );
+            string path = string.Format( @"{0}/{1}.png", dir, id );
+            Assert.IsTrue( File.Exists( path ) );
+
+            bool deleted = persister.Delete( CurrentTicket.JobID, id );
+            Assert.IsTrue( deleted );
+            Assert.IsFalse( File.Exists( path ) );
+        }
+
 
         class TestDefinition : IJobDefinition
         {

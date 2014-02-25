@@ -57,10 +57,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CancelJobCommandTests.cs" />
+    <Compile Include="JobViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelayCommandTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Compression\DIPS.Util.csproj">
+      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
+      <Name>DIPS.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Processor\Client\DIPS.Processor.Client.csproj">
+      <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
+      <Name>DIPS.Processor.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\ViewModel\DIPS.ViewModel.csproj">
       <Project>{aa521185-aa1a-4461-810c-b0bf60063136}</Project>
       <Name>DIPS.ViewModel</Name>

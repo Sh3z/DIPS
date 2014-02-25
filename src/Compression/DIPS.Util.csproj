@@ -55,6 +55,11 @@
     <Compile Include="Extensions\Enumerable.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Remoting\EventSignatureException.cs" />
+    <Compile Include="Remoting\EventSink.cs" />
+    <Compile Include="Remoting\EventSinkContainer.cs" />
+    <Compile Include="Remoting\ISinkContainer.cs" />
+    <Compile Include="Remoting\RemotingException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

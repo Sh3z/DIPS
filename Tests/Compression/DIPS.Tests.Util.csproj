@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="CompressorAttributeTests.cs" />
     <Compile Include="CompressorFactoryTests.cs" />
+    <Compile Include="EventSinkTests.cs" />
     <Compile Include="Extensions\TypeExtensionsTests.cs" />
     <Compile Include="GZipCompressorTests.cs" />
     <Compile Include="CompressionAssistantTests.cs" />

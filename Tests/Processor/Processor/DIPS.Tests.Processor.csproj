@@ -54,20 +54,23 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FileSystemPersisterTests.cs" />
-    <Compile Include="JobBuilderTests.cs" />
-    <Compile Include="JobDefinitionTests.cs" />
     <Compile Include="JobQueueTests.cs" />
-    <Compile Include="JobTests.cs" />
     <Compile Include="JobTicketTests.cs" />
     <Compile Include="MemoryPersisterTests.cs" />
     <Compile Include="PersistedResultTests.cs" />
     <Compile Include="PipelineManagerTests.cs" />
+    <Compile Include="PipelineTests.cs" />
+    <Compile Include="PluginPipelineFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueExecutorTests.cs" />
     <Compile Include="RegistryFactoryTests.cs" />
     <Compile Include="TicketWorkerTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Compression\DIPS.Util.csproj">
+      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
+      <Name>DIPS.Util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\Processor\Client\DIPS.Processor.Client.csproj">
       <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
       <Name>DIPS.Processor.Client</Name>

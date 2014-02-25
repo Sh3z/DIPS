@@ -28,109 +28,13 @@ namespace DIPS.UI.Pages
             InitializeComponent();
         }
 
-        private Filter _filter;
-
-        public Filter Filter
-        {
-            get { return _filter; }
-            set { _filter = value; }
-        }
-
-        private TreeView _treeview;
-
-        public TreeView TreeView
-        {
-            get { return _treeview; }
-            set { _treeview = value; }
-        }
-
-        private ObservableCollection<Patient> _allDatasets;
-
-        public ObservableCollection<Patient> allDatasets
-        {
-            get { return _allDatasets; }
-            set { _allDatasets = value; }
-        }
-
-        private CheckBox _chkFilterActive;
-
-        public CheckBox chkFilterActive
-        {
-            get { return _chkFilterActive; }
-            set { _chkFilterActive = value; }
-        }
         
-
-        private void PrepareParameters()
-        {
-          Filter = new Filter();
-
-            Filter.PatientID = txtPatientID.Text;
-            
-            if (dtpDateTo.SelectedDate != null)
-            {
-                Filter.AcquisitionDateFrom = dtpPickFrom.SelectedDate.Value;
-            }
-
-            if (dtpDateTo.SelectedDate != null)
-            {
-                Filter.AcquisitionDateTo = dtpDateTo.SelectedDate.Value;
-            }
-
-            if (radFemale.IsChecked == true)
-            {
-                Filter.Gender = "F";
-            } else if (radMale.IsChecked == true)
-            {
-                Filter.Gender = "M";
-            }
-        }
-
-        private void ValidateFields()
-        {
-            
-        }
-
-        private void btnApplyFilter_Click(object sender, RoutedEventArgs e)
-        {
-            PrepareParameters();
-            ObservableCollection<ImageDataset> dataset = new ObservableCollection<ImageDataset>();
-            ImageRepository repo = new ImageRepository();
-            allDatasets = repo.generateCustomTreeView(Filter);
-            setupTreeview();
-
-            chkFilterActive.IsChecked = true;
-
-            this.Hide();
-        }
-
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
         }
 
-        public void setupTreeview()
-        {
-            if (allDatasets != null)
-            {
-                TreeView.Items.Clear();
-                foreach (Patient patient in allDatasets)
-                {
-                    TreeViewItem mainTree = new TreeViewItem();
-                    mainTree.Header = patient.patientID;
-
-                    foreach (ImageDataset ds in patient.dataSet)
-                    {
-                        TreeViewItem subTree = new TreeViewItem();
-                        mainTree.Items.Add(subTree);
-                        subTree.Header = ds.series;
-                        subTree.ItemsSource = ds.relatedImages;
-                    }
-                    TreeView.Items.Add(mainTree);
-                }
-            }
-        }
-
+        
         private void windowFilter_Closed(object sender, EventArgs e)
         {
             this.Hide();

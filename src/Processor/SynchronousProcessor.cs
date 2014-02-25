@@ -1,5 +1,7 @@
 ﻿using DIPS.Processor.Client;
-using DIPS.Processor.Executor;
+using DIPS.Processor.Persistence;
+using DIPS.Processor.Pipeline;
+using DIPS.Processor.Worker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,13 @@ namespace DIPS.Processor
             }
 
             _worker = handler;
+        }
+
+
+        public IPipelineFactory Factory
+        {
+            get;
+            set;
         }
 
 
@@ -82,7 +91,9 @@ namespace DIPS.Processor
         private JobResult _runJob( JobRequest req )
         {
             JobTicket ticket = new JobTicket( req, this );
-            _worker.Work( ticket );
+            WorkerArgs args = new WorkerArgs( new MemoryPersister(), Factory );
+            args.Ticket = ticket;
+            _worker.Work( args );
             return ticket.Result;
         }
 

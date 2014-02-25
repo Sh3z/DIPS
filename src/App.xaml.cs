@@ -36,7 +36,16 @@ namespace DIPS
 
             MainNavi navWindow = new MainNavi();
             navWindow.Service = s;
-            navWindow.ShowDialog();
+            try
+            {
+                navWindow.ShowDialog();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+           
         }
     }
 }

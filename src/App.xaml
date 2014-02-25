@@ -6,11 +6,12 @@
              xmlns:v="clr-namespace:DIPS.UI.Pages;assembly=DIPS.UI"
              xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
              xmlns:vmr="clr-namespace:DIPS.ViewModel;assembly=DIPS.ViewModel"
-             StartupUri="UI/MainNavi.xaml"
+             xmlns:objects="clr-namespace:DIPS.ViewModel.Objects;assembly=DIPS.ViewModel"
              >
   
     <Application.Resources>
         <vm:ViewModelLocator x:Key="Locator"/>
+        <objects:ImageHandler x:Key="ImgHandler"/>
 
         <DataTemplate DataType="{x:Type vm:LoadNewDsStep1ViewModel}">
             <vd:LoadNewDSStep1 />

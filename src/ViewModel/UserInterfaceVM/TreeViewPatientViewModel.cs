@@ -18,29 +18,21 @@ namespace DIPS.ViewModel.UserInterfaceVM
             _patient = patient;
         }
 
-        public string PatientID
+        public string PatientIdentifier
         {
-            get { return _patient.patientID; }
-        }
-
-        public string PatientName
-        {
-            get { return _patient.patientName; }
+            get { return _patient.patientIdentifier; }
         }
 
         protected override void LoadChildren()
         {
             ImageRepository imgRepository = new ImageRepository();
-            ObservableCollection<Patient> listofPatients = imgRepository.generateTreeView();
+            ObservableCollection<Patient> listofPatients = imgRepository.generateTreeView(true);
             
-            foreach (Patient patient in listofPatients)
-            {
-                foreach (ImageDataset imgDs in patient.dataSet)
+                foreach (ImageDataset imgDs in _patient.dataSet)
                 {
                     base.Children.Add(new TreeViewImageDatasetViewModel(imgDs, this));
                 }
                
-            }
         }
     }
 }

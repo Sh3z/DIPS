@@ -22,7 +22,7 @@ namespace DIPS.Processor.Plugin
         /// parameter object</param>
         /// <returns>The <see cref="XElement"/> describing the properties
         /// within the object.</returns>
-        XElement CreateXml( object parameterObject );
+        XElement CreateXml( ICloneable parameterObject );
 
         /// <summary>
         /// Converts the provided Xml back into the appropriate parameter
@@ -32,6 +32,6 @@ namespace DIPS.Processor.Plugin
         /// within the object.</param>
         /// <returns>The appropriate object used to describe the parameters
         /// for the process.</returns>
-        object CreateObject( XElement parameterXml );
+        ICloneable CreateObject( XElement parameterXml );
     }
 }

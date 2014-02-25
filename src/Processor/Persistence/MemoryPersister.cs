@@ -92,6 +92,56 @@ namespace DIPS.Processor.Persistence
             }
         }
 
+        /// <summary>
+        /// Deletes all the results from a particular job from the storage.
+        /// </summary>
+        /// <param name="jobID">The unique identifier of the job to delete
+        /// the results for.</param>
+        /// <returns><c>true</c> if the results from the job were deleted
+        /// successfully; <c>false</c> otherwise.</returns>
+        public bool Delete( Guid jobID )
+        {
+            if( _resultsMap.ContainsKey( jobID ) )
+            {
+                _resultsMap.Remove( jobID );
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a result from a particular job with the associated identifier
+        /// from the storage.
+        /// </summary>
+        /// <param name="jobID">The unique identifier of the job to delete
+        /// the results for.</param>
+        /// <param name="identifier">The identifier given to the input to be
+        /// deleted.</param>
+        /// <returns><c>true</c> if the result from the job was deleted
+        /// successfully; <c>false</c> otherwise.</returns>
+        public bool Delete( Guid jobID, object identifier )
+        {
+            if( _resultsMap.ContainsKey( jobID ) == false )
+            {
+                return false;
+            }
+
+            ICollection<PersistedResult> results = _resultsMap[jobID];
+            PersistedResult result = results.Where( x => x.Identifier == identifier ).FirstOrDefault();
+            if( result != null )
+            {
+                results.Remove( result );
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         /// <summary>
         /// Saves the result to the provided job.

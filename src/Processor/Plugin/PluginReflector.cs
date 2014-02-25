@@ -110,11 +110,11 @@ namespace DIPS.Processor.Plugin
         /// </summary>
         /// <param name="propertiesType">The type of the plugins parameter object</param>
         /// <returns>The object returned from instantiating the type</returns>
-        private static object _activatePluginPropertiesObject( Type propertiesType )
+        private static ICloneable _activatePluginPropertiesObject( Type propertiesType )
         {
             try
             {
-                return Activator.CreateInstance( propertiesType );
+                return Activator.CreateInstance( propertiesType ) as ICloneable;
             }
             catch( Exception e )
             {

@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using Database;
 using DIPS.Database.Objects;
+using DIPS.ViewModel.Commands;
+using Microsoft.Practices.Unity;
+using Database.Repository;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -40,19 +47,93 @@ namespace DIPS.ViewModel.UserInterfaceVM
             } }
         private TreeViewGroupPatientsViewModel _topLevel;
 
+        private BitmapImage _imgUnprocessed;
+
+        public BitmapImage ImgUnprocessed
+        {
+            get { return _imgUnprocessed;  }
+            set
+            {
+                _imgUnprocessed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private String _imageInfo;
+
+        public String ImageInfo
+        {
+            get { return _imageInfo; }
+            set
+            {
+                _imageInfo = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public ICommand OpenFilterDialogCommand { get; set; }
+
         public ViewExistingDatasetViewModel()
         {
             GetPatientsForTreeview();
         }
 
+        public IUnityContainer Container
+        {
+            get
+            {
+                return _container;
+            }
+            set
+            {
+                _container = value;
+            }
+        }
+        private IUnityContainer _container;
+
+        private Boolean _isSelected;
+
+        public Boolean IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                    TreeViewPatientViewModel tvpv = new TreeViewPatientViewModel(null);
+                   _isSelected = value;
+                    OnPropertyChanged();
+                    Boolean transform = true;
+                    AdminRepository admin = new AdminRepository();
+                    if (_isSelected == true) transform = admin.verified();
+
+                    if (transform) GetPatientsForTreeview();
+                    else
+                    {
+                        _isSelected = false;
+                        OnPropertyChanged();
+                    }
+            }
+        }
+        
+
+        private void SetupCommands()
+        {
+            OpenFilterDialogCommand = new RelayCommand(new Action<object>(OpenFilterDialog));
+        }
+
+        private void OpenFilterDialog(object obj)
+        {
+            Container = new UnityContainer();
+        }
+
         public void GetPatientsForTreeview()
         {
             ImageRepository repo = new ImageRepository();
-            PatientsList = repo.generateTreeView();
+            PatientsList = repo.generateTreeView(_isSelected);
             TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(PatientsList);
 
             TopLevelViewModel = tvpv;
         }
+
 
     }
 }

@@ -9,12 +9,13 @@ using System.Data;
 using System.Collections.ObjectModel;
 using DIPS.Database;
 using Database.Objects;
+using Database.DicomHelper;
 
 namespace Database
 {
     public class ImageRepository
     {
-        public ObservableCollection<Patient> generateTreeView()
+        public ObservableCollection<Patient> generateTreeView(Boolean showName)
         {
             Technique t = new Technique();
             ObservableCollection<Patient> allDatasetsActive = null;
@@ -28,7 +29,7 @@ namespace Database
                     cmd.CommandType = CommandType.StoredProcedure;
                     SqlDataReader data = cmd.ExecuteReader();
 
-                    allDatasetsActive = DatabaseToList(data);
+                    allDatasetsActive = DatabaseToList(data,showName);
 
                     data.Close();
                 }
@@ -38,7 +39,7 @@ namespace Database
             return allDatasetsActive;
         }
 
-        public ObservableCollection<Patient> generateCustomTreeView(Filter filter)
+        public ObservableCollection<Patient> generateCustomTreeView(Filter filter, Boolean showName)
         {
             Technique t = new Technique();
             ObservableCollection<Patient> allDatasetsActive = null;
@@ -57,15 +58,21 @@ namespace Database
                     cmd.CommandType = CommandType.StoredProcedure;
                     if (!String.IsNullOrEmpty(filter.PatientID))
                         cmd.Parameters.Add("@IDContains", SqlDbType.VarChar).Value = filter.PatientID;
+                    if (!String.IsNullOrEmpty(filter.Modality))
+                        cmd.Parameters.Add("@modality", SqlDbType.VarChar).Value = filter.Modality;
+                    if (!String.IsNullOrEmpty(filter.Gender))
+                        cmd.Parameters.Add("@Sex", SqlDbType.VarChar).Value = filter.Gender;
                     if (filter.AcquisitionDateFrom != null && dateCompareResultFrom != 0)
                         cmd.Parameters.Add("@AcquireBetweenFrom", SqlDbType.Date).Value = filter.AcquisitionDateFrom;
                     if (filter.AcquisitionDateTo != null && dateCompareResultTo != 0)
-                        cmd.Parameters.Add("@AcquireBetweenTo", SqlDbType.Date).Value = filter.AcquisitionDateTo;
-                    cmd.Parameters.Add("@Sex", SqlDbType.VarChar).Value = filter.Gender;
+                        cmd.Parameters.Add("@AcquireBetweenTo", SqlDbType.Date).Value = filter.AcquisitionDateTo;                 
+
+                    int batch = 0;
+                    Boolean batchNumerical = int.TryParse(filter.Batch, out batch);
+                    if (batchNumerical) cmd.Parameters.Add("@Batch", SqlDbType.Int).Value = batch;
+
                     SqlDataReader data = cmd.ExecuteReader();
-
-                    allDatasetsActive = DatabaseToList(data);
-
+                    allDatasetsActive = DatabaseToList(data,showName);
                     data.Close();
                 }
             }
@@ -75,7 +82,7 @@ namespace Database
 
         }
 
-        private ObservableCollection<Patient> DatabaseToList(SqlDataReader data)
+        private ObservableCollection<Patient> DatabaseToList(SqlDataReader data, Boolean showName)
         {
             ObservableCollection<Patient> patientList = null;
             ObservableCollection<ImageDataset> dataSets = null;
@@ -84,6 +91,7 @@ namespace Database
             PatientImage img = null;
             Patient patient = null;
 
+            Boolean patientExist = false;
             string patientName;
             string currentID;
             string prevID = "null";
@@ -91,6 +99,7 @@ namespace Database
             string prevSeries = "null";
 
             patientList = new ObservableCollection<Patient>();
+            SimpleEncryption encryptedName = new SimpleEncryption();
 
             while (data.Read())
             {
@@ -101,9 +110,23 @@ namespace Database
 
                 if (!currentID.Equals(prevID))
                 {
-                    dataSets = new ObservableCollection<ImageDataset>();
-                    patient = new Patient(currentID, patientName, dataSets);
-                    patientList.Add(patient);
+                    foreach (Patient p in patientList)
+                    {
+                        if (p.patientID.Equals(currentID))
+                        {
+                            dataSets = p.dataSet;
+                            patientExist = true;
+                        }
+                    }
+
+                    if (patientExist == false)
+                    {
+                        dataSets = new ObservableCollection<ImageDataset>();
+                        if(showName==true) patient = new Patient(currentID, encryptedName.Decrypt(patientName), dataSets);
+                        else patient = new Patient(currentID, currentID, dataSets);
+                        patientList.Add(patient);
+                    }
+                    else patientExist = false;
 
                     imageCollectionDS = new ObservableCollection<PatientImage>();
                     imgDS = new ImageDataset(currentSeries, imageCollectionDS);
@@ -128,9 +151,9 @@ namespace Database
         }
 
 
-        public List<String> retrieveImageProperties(String fileID)
+        public String retrieveImageProperties(String fileID)
         {
-            List<String> properties = new List<String>();
+            String properties = "null";
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();
@@ -140,15 +163,24 @@ namespace Database
                 SqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    properties.Add("Patient ID : " + dataReader.GetString(dataReader.GetOrdinal("Patient ID")));
-                    properties.Add("Birthdate : " + dataReader.GetString(dataReader.GetOrdinal("Birthdate")));
-                    properties.Add("Age : " + dataReader.GetString(dataReader.GetOrdinal("Age")));
-                    properties.Add("Sex : " + dataReader.GetString(dataReader.GetOrdinal("Sex")));
-                    properties.Add("Image Date Time : " + dataReader.GetDateTime(dataReader.GetOrdinal("Image Date Time")).ToString());
-                    properties.Add("Body Part : " + dataReader.GetString(dataReader.GetOrdinal("Body Part")));
-                    properties.Add("Study Description : " + dataReader.GetString(dataReader.GetOrdinal("Study Description")));
-                    properties.Add("Series Description : " + dataReader.GetString(dataReader.GetOrdinal("Series Description")));
-                    properties.Add("Slice Thickness : " + dataReader.GetString(dataReader.GetOrdinal("Slice Thickness")));
+                    properties = "Patient ID : " + dataReader.GetString(dataReader.GetOrdinal("Patient ID"));
+                    properties += System.Environment.NewLine;
+                     properties += "Birthdate : " + dataReader.GetString(dataReader.GetOrdinal("Birthdate"));
+                     properties += System.Environment.NewLine;
+                     properties += "Age : " + dataReader.GetString(dataReader.GetOrdinal("Age"));
+                     properties += System.Environment.NewLine;
+                     properties += "Sex : " + dataReader.GetString(dataReader.GetOrdinal("Sex"));
+                     properties += System.Environment.NewLine;
+                    properties += "Image Date Time : " + dataReader.GetDateTime(dataReader.GetOrdinal("Image Date Time")).ToString();
+                    properties += System.Environment.NewLine;
+                    properties += "Body Part : " + dataReader.GetString(dataReader.GetOrdinal("Body Part"));
+                    properties += System.Environment.NewLine;
+                    properties += "Study Description : " + dataReader.GetString(dataReader.GetOrdinal("Study Description"));
+                    properties += System.Environment.NewLine;
+                    properties += "Series Description : " + dataReader.GetString(dataReader.GetOrdinal("Series Description"));
+                    properties += System.Environment.NewLine;
+                    properties += "Slice Thickness : " + dataReader.GetString(dataReader.GetOrdinal("Slice Thickness"));
+                    properties += System.Environment.NewLine;
 
                     //foreach(String s in properties) System.Diagnostics.Debug.WriteLine("hehe " + s);
                     break;

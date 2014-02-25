@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmDefinition.cs" />
+    <Compile Include="Eventing\JobErrorArgs.cs" />
     <Compile Include="IJobManager.cs" />
     <Compile Include="IJobTicket.cs" />
     <Compile Include="IPipelineManager.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="PropertyBuilder.cs" />
     <Compile Include="PropertySet.cs" />
     <Compile Include="PropertyTypeException.cs" />
+    <Compile Include="Sinks\TicketSink.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Compression\DIPS.Util.csproj">

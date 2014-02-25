@@ -54,30 +54,16 @@ select * from imageProcessing;
 drop table imageProcessing;
 
 SELECT @@SERVERNAME AS 'Server Name';
+SELECT count(name) FROM master.dbo.sysdatabases where name = 'medicalImaging';
 
 select backup_size from msdb..backupset;
 select compressed_backup_size from msdb..backupset;
 
 BACKUP DATABASE medicalImaging
-TO DISK = 'C:\Users\Yeh\Desktop\localbackup\Test4.BAK'
+TO DISK = 'C:\Users\Joseph\Documents\Backup\Test.BAK'
 
 DROP DATABASE medicalImaging;
 
 RESTORE DATABASE medicalImaging
-FROM DISK = 'C:\Users\Yeh\Desktop\localbackup\Test2.BAK'
+FROM DISK = 'C:\Users\Joseph\Documents\Backup\Test.BAK'
 WITH STATS = 1
-
-insert into patient (patientID) VALUES ('TEST2');
-insert into imageProperties (patientID,modality,sliceThickness) VALUES (12,'HEHE',3);
-
-select avg(CONVERT(FLOAT,sliceThickness)),IP.patientID from patient P join imageProperties IP on P.tableID = IP.patientID 
-group by IP.patientID order by avg(CONVERT(FLOAT,sliceThickness)) desc;
-
-
-SELECT distinct IP.patientID, IP.lastModifiedDate
-FROM patient P join imageProperties IP on P.tableID = IP.patientID
-order by IP.lastModifiedDate desc
-
-order by avg(CONVERT(FLOAT,IP.sliceThickness)) desc
-order by IP.lastModifiedDate desc
-order by P.seriesAvailable desc

@@ -22,7 +22,7 @@ namespace DIPS.Processor.Plugin.Matlab
         /// parameter object</param>
         /// <returns>The <see cref="XElement"/> describing the properties
         /// within the object.</returns>
-        public XElement CreateXml( object parameterObject )
+        public XElement CreateXml( ICloneable parameterObject )
         {
             if( parameterObject == null )
             {
@@ -54,7 +54,7 @@ namespace DIPS.Processor.Plugin.Matlab
         /// within the object.</param>
         /// <returns>The appropriate object used to describe the parameters
         /// for the process.</returns>
-        public object CreateObject( XElement parameterXml )
+        public ICloneable CreateObject( XElement parameterXml )
         {
             MatlabProperties p = new MatlabProperties();
             if( parameterXml == null )

@@ -1,8 +1,8 @@
 ﻿using DIPS.Processor.Client;
-using DIPS.Processor.Executor;
 using DIPS.Processor.Persistence;
 using DIPS.Processor.Pipeline;
 using DIPS.Processor.Registry;
+using DIPS.Processor.Worker;
 using DIPS.Processor.XML;
 using DIPS.Processor.XML.Compilation;
 using System;
@@ -31,7 +31,8 @@ namespace DIPS.Processor
             RegistryCache.Cache.Initialize( pipeRepo );
             RegistryCache.Cache.Initialize( algRepo );
             _pluginFactory = new RegistryFactory( algRepo );
-            JobManager = new JobManager( _pluginFactory );
+            _persister = new FileSystemPersister( FileSystemPersister.OutputDataPath );
+            JobManager = new JobManager( _pluginFactory, _persister );
             PipelineManager = new PipelineManager( pipeRepo, algRepo );
         }
 
@@ -65,8 +66,10 @@ namespace DIPS.Processor
         public ISynchronousProcessor CreateSynchronousProcessor()
         {
             IJobPersister persister = new MemoryPersister();
-            IWorker worker = new TicketWorker( _pluginFactory, persister );
-            return new SynchronousProcessor( worker );
+            IWorker worker = new TicketWorker();
+            var processor = new SynchronousProcessor( worker );
+            processor.Factory = new PluginPipelineFactory( _pluginFactory );
+            return processor;
         }
 
         /// <summary>
@@ -82,6 +85,14 @@ namespace DIPS.Processor
         }
 
 
+        /// <summary>
+        /// Maintains the current persister for saving and loading job results
+        /// </summary>
+        private IJobPersister _persister;
+
+        /// <summary>
+        /// Maintains the current pipeline factory component
+        /// </summary>
         private IPluginFactory _pluginFactory;
     }
 }
