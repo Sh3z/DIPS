@@ -14,6 +14,12 @@ namespace DIPS.Database
 {
     public class readImage
     {
+        public byte[] blob( string path )
+        {
+            DicomInfo.readFile = path;
+            return blob();
+        }
+
         public byte[] blob()
         {
             byte[] blob = null;
