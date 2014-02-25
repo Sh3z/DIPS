@@ -13,8 +13,27 @@ namespace DIPS.Processor
     /// </summary>
     public class JobManager : IJobManager
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobManager"/> class.
+        /// </summary>
+        /// <param name="pluginFactory">The <see cref="IPluginFactory"/> used
+        /// in pipeline construction</param>
+        /// <param name="persister">The current <see cref="IJobPersister"/> for
+        /// use in pipeline execution.</param>
+        /// <exception cref="ArgumentNullException">pluginFactory or persister
+        /// are null</exception>
         public JobManager( IPluginFactory pluginFactory, IJobPersister persister )
         {
+            if( pluginFactory == null )
+            {
+                throw new ArgumentNullException( "pluginFactory" );
+            }
+
+            if( persister == null )
+            {
+                throw new ArgumentNullException( "persister" );
+            }
+
             _factory = pluginFactory;
             _persister = persister;
             _processor = new BatchProcessor( pluginFactory, _persister );

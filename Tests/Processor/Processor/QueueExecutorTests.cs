@@ -1,7 +1,6 @@
 ﻿using DIPS.Processor;
 using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
-using DIPS.Processor.Executor;
 using DIPS.Processor.Persistence;
 using DIPS.Processor.Queue;
 using DIPS.Processor.Worker;

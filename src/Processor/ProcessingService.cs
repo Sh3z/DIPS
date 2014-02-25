@@ -1,5 +1,4 @@
 ﻿using DIPS.Processor.Client;
-using DIPS.Processor.Executor;
 using DIPS.Processor.Persistence;
 using DIPS.Processor.Pipeline;
 using DIPS.Processor.Registry;
@@ -86,7 +85,14 @@ namespace DIPS.Processor
         }
 
 
+        /// <summary>
+        /// Maintains the current persister for saving and loading job results
+        /// </summary>
         private IJobPersister _persister;
+
+        /// <summary>
+        /// Maintains the current pipeline factory component
+        /// </summary>
         private IPluginFactory _pluginFactory;
     }
 }

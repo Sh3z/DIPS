@@ -47,13 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BatchProcessor.cs" />
-    <Compile Include="Worker\TicketPipelineRunner.cs" />
     <Compile Include="Worker\TicketWorker.cs" />
-    <Compile Include="Executor\QueueExecutor.cs" />
+    <Compile Include="Queue\QueueExecutor.cs" />
     <Compile Include="Pipeline\IPipelineFactory.cs" />
     <Compile Include="Pipeline\PipelineEntry.cs" />
     <Compile Include="Pipeline\IPipelineRepository.cs" />
-    <Compile Include="JobDefinition.cs" />
     <Compile Include="JobManager.cs" />
     <Compile Include="Persistence\FileSystemPersister.cs" />
     <Compile Include="Persistence\IJobPersister.cs" />
@@ -61,7 +59,6 @@
     <Compile Include="IPluginFactory.cs" />
     <Compile Include="Worker\IWorker.cs" />
     <Compile Include="ITicketCancellationHandler.cs" />
-    <Compile Include="Job.cs" />
     <Compile Include="JobTicket.cs" />
     <Compile Include="Persistence\MemoryPersister.cs" />
     <Compile Include="Persistence\PersistedResult.cs" />
@@ -70,7 +67,6 @@
     <Compile Include="Pipeline\PipelineXmlRepository.cs" />
     <Compile Include="Pipeline\PluginPipelineFactory.cs" />
     <Compile Include="ProcessingService.cs" />
-    <Compile Include="ProcessInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\JobQueue.cs" />
     <Compile Include="RegistryFactory.cs" />

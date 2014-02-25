@@ -2,6 +2,7 @@
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Processor.Persistence;
 using DIPS.Processor.Pipeline;
+using DIPS.Processor.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,8 +12,15 @@ using System.Threading.Tasks;
 
 namespace DIPS.Processor.Worker
 {
+    /// <summary>
+    /// Represents the basic <see cref="IWorker"/> used to run jobs.
+    /// </summary>
     public class TicketWorker : IWorker
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TicketWorker"/>
+        /// class.
+        /// </summary>
         public TicketWorker()
         {
             _cancelPadlock = new object();
@@ -44,32 +52,43 @@ namespace DIPS.Processor.Worker
         {
             lock( _cancelPadlock )
             {
-                _cancel = _runner.Handle( ticket );
+                if( _ticket != null )
+                {
+                    _cancel = true;
+                }
             }
 
             return _cancel;
         }
 
-
+        /// <summary>
+        /// Performs the job work procedure.
+        /// </summary>
+        /// <param name="args">The information required to complete the
+        /// job.</param>
         public void Work( WorkerArgs args )
         {
             _currentArgs = args;
             _ticket = _currentArgs.Ticket as JobTicket;
             _ticket.OnJobStarted();
-
-            _runner = new TicketPipelineRunner( _ticket, args.PipelineFactory );
             _runJob( _ticket.Request.Job );
 
             _currentArgs = null;
             _ticket = null;
-            _runner = null;
         }
 
+
+        /// <summary>
+        /// Runs the job specified by the definition
+        /// </summary>
+        /// <param name="job">The definition of the job to run</param>
         private void _runJob( IJobDefinition job )
         {
+            PipelineDefinition d = job.GetAlgorithms();
+            Pipeline.Pipeline pipeline = _currentArgs.PipelineFactory.CreatePipeline( d );
             foreach( JobInput input in job.GetInputs() )
             {
-                if( _handleNextInput( input ) == false )
+                if( _handleNextInput( pipeline, input ) == false )
                 {
                     return;
                 }
@@ -81,7 +100,13 @@ namespace DIPS.Processor.Worker
             _ticket.OnJobCompleted();
         }
 
-        private bool _handleNextInput( JobInput input )
+        /// <summary>
+        /// Processes a single input from the job
+        /// </summary>
+        /// <param name="pipeline">The Pipeline to use in processing</param>
+        /// <param name="input">The input to be processed</param>
+        /// <returns>true if the process is completed successfully</returns>
+        private bool _handleNextInput( Pipeline.Pipeline pipeline, JobInput input )
         {
             lock( _cancelPadlock )
             {
@@ -94,14 +119,27 @@ namespace DIPS.Processor.Worker
                 }
             }
 
-            return _tryRunInput( input );
+            return _tryRunInput( pipeline, input );
         }
 
-        private bool _tryRunInput( JobInput input )
+        /// <summary>
+        /// Attempts to run an input
+        /// </summary>
+        /// <param name="pipeline">The pipeline to use in processing</param>
+        /// <param name="input">The input to process</param>
+        /// <returns>true if the input is processed without error;
+        /// false otherwise</returns>
+        private bool _tryRunInput( Pipeline.Pipeline pipeline, JobInput input )
         {
             try
             {
-                _runner.Run( _currentArgs.Persister, input );
+                Image theInput = _processInput( pipeline, input );
+                if( theInput != null )
+                {
+                    _currentArgs.Persister.Persist(
+                        _ticket.JobID, theInput, input.Identifier );
+                }
+
                 return true;
             }
             catch( Exception e )
@@ -114,11 +152,54 @@ namespace DIPS.Processor.Worker
             }
         }
 
+        /// <summary>
+        /// Performs the processing procedure against an input
+        /// </summary>
+        /// <param name="pipeline">The processing pipeline</param>
+        /// <param name="input">The input to be processed</param>
+        /// <returns>The output from the pipeline, or null if the process
+        /// is cancelled</returns>
+        private Image _processInput( Pipeline.Pipeline pipeline, JobInput input )
+        {
+            Image theInput = input.Input;
+            foreach( PipelineEntry entry in pipeline )
+            {
+                lock( _cancelPadlock )
+                {
+                    if( _cancel )
+                    {
+                        return null;
+                    }
+                }
 
-        private TicketPipelineRunner _runner;
+                AlgorithmPlugin plugin = entry.Process;
+                plugin.Input = theInput;
+                plugin.Run( entry.ProcessInput );
+                theInput = plugin.Output;
+            }
+
+            return theInput;
+        }
+
+
+        /// <summary>
+        /// Contains the current argument object
+        /// </summary>
         private WorkerArgs _currentArgs;
+
+        /// <summary>
+        /// Contains the current ticket object
+        /// </summary>
         private JobTicket _ticket;
+
+        /// <summary>
+        /// Contains a value indicating whether this worker should abort
+        /// </summary>
         private bool _cancel;
+
+        /// <summary>
+        /// Contains a thread-safe 
+        /// </summary>
         private object _cancelPadlock;
     }
 }

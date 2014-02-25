@@ -173,7 +173,7 @@ namespace DIPS.Util.Remoting
             {
                 sink.InvokeEvent( eventName, sender, e );
             }
-            catch
+            catch( Exception ex )
             {
                 // Todo logging
             }

@@ -2,7 +2,6 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DIPS.Processor.Executor;
 using DIPS.Processor;
 using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
@@ -61,7 +60,7 @@ namespace DIPS.Tests.Processor
             w.Work( args );
 
             // Events are dispatched on a seperate thread, so let it run.
-            Thread.Sleep( 5 );
+            Thread.Sleep( 15 );
 
             Assert.IsTrue( didFinish );
 
@@ -94,7 +93,7 @@ namespace DIPS.Tests.Processor
             w.Work( args );
 
             // Events are dispatched on a seperate thread, so let it run.
-            Thread.Sleep( 5 );
+            Thread.Sleep( 15 );
 
             Assert.IsTrue( didError );
             Assert.IsFalse( didFinish );
