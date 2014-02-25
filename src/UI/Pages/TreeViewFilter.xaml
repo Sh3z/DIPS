@@ -2,11 +2,18 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
-        Title="Filter by..." Height="332.836" Width="300" Closed="windowFilter_Closed">
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        Title="Filter by..." Height="332.836" Width="300">
     <Window.DataContext>
         <vm:TreeViewFilterViewModel/>
     </Window.DataContext>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CancelFilterSelection}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
     <Grid>
         <RadioButton IsChecked="{Binding IsMale}" Content="Male" HorizontalAlignment="Left" Margin="21,154,0,0" VerticalAlignment="Top" Height="20" Width="62"/>
         <RadioButton IsChecked="{Binding IsFemale}" Content="Female" HorizontalAlignment="Left" Margin="106,154,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.667,0.5"/>

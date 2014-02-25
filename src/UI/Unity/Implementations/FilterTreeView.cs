@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Database;
 using Database.Objects;
 using Database.Unity;
@@ -31,8 +32,19 @@ namespace DIPS.UI.Unity.Implementations
         #region Methods
         public void OpenDialog()
         {
-            FilterWindow = new TreeViewFilter();
-            FilterWindow.ShowDialog();
+            if (FilterWindow == null || FilterWindow.IsActive == false)
+            {
+                FilterWindow = new TreeViewFilter();
+            }
+
+            if (FilterWindow.Visibility == Visibility.Hidden)
+            {
+                FilterWindow.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                FilterWindow.ShowDialog();
+            }
         }
 
         public ObservableCollection<Patient> ApplyFilter()

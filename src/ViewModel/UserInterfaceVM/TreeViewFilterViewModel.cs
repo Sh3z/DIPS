@@ -56,6 +56,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public TreeViewFilterViewModel()
         {
             ConfigureCommands();
+            SendParameters();
         }
 
         private Boolean _showName;
@@ -65,6 +66,19 @@ namespace DIPS.ViewModel.UserInterfaceVM
             get { return _showName; }
             set { _showName = value; }
         }
+
+        private object _hideWindow;
+
+        public object HideWindow
+        {
+            get { return _hideWindow; }
+            set
+            {
+                _hideWindow = value;
+                HideDialog(null);
+            }
+        }
+        
         #endregion
 
         #region Methods
@@ -74,32 +88,39 @@ namespace DIPS.ViewModel.UserInterfaceVM
             CancelFilterSelection = new RelayCommand(new Action<object>(HideDialog));
         }
 
-        private void HideDialog(object obj)
+        public void HideDialog(object obj)
         {
-            if (_ViewExistingDatasetViewModel.FilterTreeView != null)
+            if (FilterTreeView == null)
             {
-                _ViewExistingDatasetViewModel.FilterTreeView.HideDialog();
+                Container = GlobalContainer.Instance.Container;
+                FilterTreeView = Container.Resolve<IFilterTreeView>();
             }
+            
+            FilterTreeView.HideDialog();
         }
 
         private void SendParameters()
         {
-            FilterTreeView.PatientID = PatientID;
-            FilterTreeView.DateFrom = DateFrom;
-            FilterTreeView.DateTo = DateTo;
-            FilterTreeView.IsFemale = IsFemale;
-            FilterTreeView.IsMale = IsMale;
-            FilterTreeView.ShowNames = ShowName;
+            if (FilterTreeView != null)
+            {
+                FilterTreeView.PatientID = PatientID;
+                FilterTreeView.DateFrom = DateFrom;
+                FilterTreeView.DateTo = DateTo;
+                FilterTreeView.IsFemale = IsFemale;
+                FilterTreeView.IsMale = IsMale;
+                FilterTreeView.ShowNames = ShowName;
+            }
+            
         }
         
-
-
         private void AssignFilter(object obj)
         {
-            Container = GlobalContainer.Instance.Container;
-
-            FilterTreeView = Container.Resolve<IFilterTreeView>();
-
+            if (FilterTreeView == null)
+            {
+                 Container = GlobalContainer.Instance.Container;
+                 FilterTreeView = Container.Resolve<IFilterTreeView>();
+            }
+           
             if (FilterTreeView != null)
             {
                 SendParameters();
@@ -113,7 +134,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     _ViewExistingDatasetViewModel.ToggleFilter = true;
                 }
                 
-                FilterTreeView.HideDialog();
+                HideDialog(null);
             }
             
         } 

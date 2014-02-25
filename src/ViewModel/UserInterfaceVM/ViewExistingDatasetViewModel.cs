@@ -144,6 +144,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set
             {
                 _toggleFilter = value;
+                OnPropertyChanged();
+
                 if (_toggleFilter == true)
                 {
                     if (FilterTreeView != null)

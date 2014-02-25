@@ -43,11 +43,17 @@ namespace Database
         {
             Technique t = new Technique();
             ObservableCollection<Patient> allDatasetsActive = null;
+            int dateCompareResultFrom = 0;
+            int dateCompareResultTo = 0;
+
             DateTime invalidDate = new DateTime();
             invalidDate = DateTime.Parse("01/01/0001 00:00:00");
-
-            int dateCompareResultFrom = DateTime.Compare(invalidDate, filter.AcquisitionDateFrom);
-            int dateCompareResultTo = DateTime.Compare(invalidDate, filter.AcquisitionDateTo);
+            
+            if (filter != null)
+            {
+                dateCompareResultFrom = DateTime.Compare(invalidDate, filter.AcquisitionDateFrom);
+                dateCompareResultTo = DateTime.Compare(invalidDate, filter.AcquisitionDateTo);
+            }
 
             try
             {
