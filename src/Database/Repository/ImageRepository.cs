@@ -18,7 +18,7 @@ namespace Database
         public ObservableCollection<Patient> generateTreeView(Boolean showName)
         {
             Technique t = new Technique();
-            ObservableCollection<Patient> allDatasetsActive = null;
+            ObservableCollection<Patient> allDatasetsActive = new ObservableCollection<Patient>();
 
             try
             {
