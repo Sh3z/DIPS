@@ -96,6 +96,7 @@
     <Compile Include="UserInterfaceVM\JobTracking\IJobTracker.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\JobViewModel.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\OngoingJobsViewModel.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\SaveResultsHandler.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\StatusStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

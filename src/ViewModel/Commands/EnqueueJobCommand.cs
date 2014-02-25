@@ -2,6 +2,7 @@
 using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Unity;
+using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,7 @@ namespace DIPS.ViewModel.Commands
         {
             return  Container != null &&
                     Container.Contains<IProcessingService>() &&
-                    //Container.Contains<IJobTracker>() &&
+                    Container.Contains<IJobTracker>() &&
                     _source.Files != null && _source.Files.Any() &&
                     _source.Pipeline != null && _source.Pipeline.Any();
         }
@@ -89,6 +90,8 @@ namespace DIPS.ViewModel.Commands
             ObjectJobDefinition d = new ObjectJobDefinition( _source.Pipeline, _filesToInputs() );
             JobRequest r = new JobRequest( d );
             IJobTicket t = service.JobManager.EnqueueJob( r );
+            IJobTracker tracker = Container.Resolve<IJobTracker>();
+            tracker.Add( t );
         }
 
 
@@ -105,6 +108,7 @@ namespace DIPS.ViewModel.Commands
                 {
                     Image img = _extractImage( file );
                     JobInput i = new JobInput( img );
+                    i.Identifier = file;
                     jobs.Add( i );
                 }
                 catch
