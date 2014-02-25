@@ -92,6 +92,8 @@
     <Compile Include="Objects\ImageHandler.cs" />
     <Compile Include="UserInterfaceVM\CreateAlgorithmViewModel.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\CancelJobCommand.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\IJobResultsHandler.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\IJobTracker.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\JobViewModel.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\OngoingJobsViewModel.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\StatusStrings.Designer.cs">
