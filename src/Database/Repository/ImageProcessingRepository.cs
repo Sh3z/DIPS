@@ -77,7 +77,7 @@ namespace Database.Repository
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
                 cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
-                cmd.Parameters.Add("@technique", SqlDbType.VarChar).Value = technique;
+                cmd.Parameters.Add("@technique", SqlDbType.Xml).Value = technique.ToString();
                 cmd.ExecuteNonQuery();
             }
         }
