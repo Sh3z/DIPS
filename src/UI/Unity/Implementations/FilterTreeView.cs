@@ -22,6 +22,7 @@ namespace DIPS.UI.Unity.Implementations
         public bool IsMale { set; private get; }
         public bool IsFemale { set; private get; }
         public Filter OverallFilter { set; private get; }
+        public Boolean ShowNames { set; private get; }
 
         private TreeViewFilter FilterWindow { set; get; }
    
@@ -39,7 +40,7 @@ namespace DIPS.UI.Unity.Implementations
             ObservableCollection<Patient> dataset = new ObservableCollection<Patient>();
             ImageRepository repo = new ImageRepository();
             
-            dataset = repo.generateCustomTreeView(OverallFilter, true);
+            dataset = repo.generateCustomTreeView(OverallFilter, ShowNames);
 
             if (dataset != null)
             {

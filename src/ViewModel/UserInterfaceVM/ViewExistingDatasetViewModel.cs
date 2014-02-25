@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Database;
+using Database.Objects;
 using Database.Unity;
 using DIPS.Database.Objects;
 using DIPS.Unity;
@@ -115,13 +116,49 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
         }
 
+        private Boolean _nameFilterSelected;
+
+        public Boolean NameFilterSelected
+        {
+            get { return _nameFilterSelected; }
+            set
+            {
+                _nameFilterSelected = value;
+                
+            }
+        }
+        
         private IFilterTreeView _filterImageView;
 
         public IFilterTreeView FilterTreeView
         {
             get { return _filterImageView; }
             set { _filterImageView = value; }
-        } 
+        }
+
+        private Boolean _toggleFilter;
+
+        public Boolean ToggleFilter
+        {
+            get { return _toggleFilter; }
+            set
+            {
+                _toggleFilter = value;
+                if (_toggleFilter == true)
+                {
+                    if (FilterTreeView != null)
+                    {
+                        GetPatientsFiltered();
+                    }
+                }
+                else
+                {
+                    GetPatientsForTreeview();
+                }
+            }
+        }
+        
+        
         #endregion
 
         #region Constructor
@@ -140,21 +177,34 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void OpenFilterDialog(object obj)
         {
-            Container = GlobalContainer.Instance.Container;
 
-            FilterTreeView = Container.Resolve<IFilterTreeView>();
-
+            if (FilterTreeView == null)
+            {
+                Container = GlobalContainer.Instance.Container;
+                FilterTreeView = Container.Resolve<IFilterTreeView>();
+            }
+           
             FilterTreeView.OpenDialog();
         }
 
-        public void GetPatientsForTreeview()
+        private void GetPatientsForTreeview()
         {
             ImageRepository repo = new ImageRepository();
             PatientsList = repo.generateTreeView(_isSelected);
             TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(PatientsList);
 
             TopLevelViewModel = tvpv;
-        } 
+        }
+
+        private void GetPatientsFiltered()
+        {
+            ImageRepository repo = new ImageRepository();
+            PatientsList = FilterTreeView.ApplyFilter();
+            TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(PatientsList);
+
+            TopLevelViewModel = tvpv;
+        }
+        
         #endregion
 
 

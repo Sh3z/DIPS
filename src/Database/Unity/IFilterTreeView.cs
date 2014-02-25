@@ -12,6 +12,7 @@ namespace Database.Unity
         DateTime DateTo { set; }
         Boolean IsMale { set; }
         Boolean IsFemale { set; }
+        Boolean ShowNames { set; }
         Filter OverallFilter { set; }
 
         void OpenDialog();

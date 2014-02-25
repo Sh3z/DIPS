@@ -28,6 +28,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public Filter OverallFilter { set;get; }
 
         public ICommand ApplyFilterCommand { get; set; }
+        public ICommand CancelFilterSelection { get; set; }
 
         private IFilterTreeView _filterImageView;
 
@@ -55,13 +56,30 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public TreeViewFilterViewModel()
         {
             ConfigureCommands();
-        } 
+        }
+
+        private Boolean _showName;
+
+        public Boolean ShowName
+        {
+            get { return _showName; }
+            set { _showName = value; }
+        }
         #endregion
 
         #region Methods
         private void ConfigureCommands()
         {
             ApplyFilterCommand = new RelayCommand(new Action<object>(AssignFilter));
+            CancelFilterSelection = new RelayCommand(new Action<object>(HideDialog));
+        }
+
+        private void HideDialog(object obj)
+        {
+            if (_ViewExistingDatasetViewModel.FilterTreeView != null)
+            {
+                _ViewExistingDatasetViewModel.FilterTreeView.HideDialog();
+            }
         }
 
         private void SendParameters()
@@ -71,7 +89,10 @@ namespace DIPS.ViewModel.UserInterfaceVM
             FilterTreeView.DateTo = DateTo;
             FilterTreeView.IsFemale = IsFemale;
             FilterTreeView.IsMale = IsMale;
+            FilterTreeView.ShowNames = ShowName;
         }
+        
+
 
         private void AssignFilter(object obj)
         {
@@ -89,6 +110,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 if (dataset != null)
                 {
                     _ViewExistingDatasetViewModel.TopLevelViewModel = new TreeViewGroupPatientsViewModel(dataset);
+                    _ViewExistingDatasetViewModel.ToggleFilter = true;
                 }
                 
                 FilterTreeView.HideDialog();

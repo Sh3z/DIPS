@@ -2,11 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
-        Title="Filter by..." Height="300" Width="300" Closed="windowFilter_Closed">
+        Title="Filter by..." Height="332.836" Width="300" Closed="windowFilter_Closed">
     <Window.DataContext>
         <vm:TreeViewFilterViewModel/>
     </Window.DataContext>
-    
+
     <Grid>
         <RadioButton IsChecked="{Binding IsMale}" Content="Male" HorizontalAlignment="Left" Margin="21,154,0,0" VerticalAlignment="Top" Height="20" Width="62"/>
         <RadioButton IsChecked="{Binding IsFemale}" Content="Female" HorizontalAlignment="Left" Margin="106,154,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.667,0.5"/>
@@ -15,11 +15,12 @@
         <Label Content="Date From:" HorizontalAlignment="Left" Margin="55,53,0,0" VerticalAlignment="Top" Height="25" Width="72"/>
         <GroupBox x:Name="grpSex" Header="Sex" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Height="64" Width="272"/>
         <Label Content="Date To:" HorizontalAlignment="Left" Margin="68,85,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.537,1.577"/>
-        <Button Command="{Binding ApplyFilterCommand}" Content="Apply" HorizontalAlignment="Left" Margin="169,218,0,0" VerticalAlignment="Top" Width="74" />
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="46,218,0,0" VerticalAlignment="Top" Width="74"/>
+        <Button Command="{Binding ApplyFilterCommand}" Content="Apply" HorizontalAlignment="Left" Margin="171,255,0,0" VerticalAlignment="Top" Width="74" />
+        <Button Command="{Binding CancelFilterSelection}" Content="Cancel" HorizontalAlignment="Left" Margin="48,255,0,0" VerticalAlignment="Top" Width="74"/>
         <DatePicker SelectedDate="{Binding DateFrom}"  HorizontalAlignment="Left" Margin="127,54,0,0" VerticalAlignment="Top" Width="139"/>
         <DatePicker SelectedDate="{Binding DateTo}" x:Name="dtpDateTo" HorizontalAlignment="Left" Margin="127,85,0,0" VerticalAlignment="Top" Width="139"/>
         <RadioButton x:Name="radNotSelected" Content="Not Selected" HorizontalAlignment="Left" Margin="194,154,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <CheckBox IsChecked="{Binding ShowName}" Content="Display Names?" HorizontalAlignment="Left" Margin="104,212,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

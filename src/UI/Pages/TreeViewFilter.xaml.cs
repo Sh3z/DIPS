@@ -28,13 +28,6 @@ namespace DIPS.UI.Pages
             InitializeComponent();
         }
 
-        
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
-        }
-
-        
         private void windowFilter_Closed(object sender, EventArgs e)
         {
             this.Hide();
