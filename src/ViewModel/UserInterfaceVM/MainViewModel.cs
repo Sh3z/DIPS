@@ -14,6 +14,8 @@ using DIPS.Processor.Client;
 using DIPS.Unity;
 using DIPS.ViewModel.Commands;
 using Microsoft.Expression.Interactivity.Core;
+using Microsoft.Practices.Unity;
+using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -53,6 +55,10 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             SetupCommands();
             OverallFrame = theFrame;
+
+            OngoingJobsViewModel vm = new OngoingJobsViewModel();
+            vm.Handler = new SaveResultsHandler();
+            GlobalContainer.Instance.Container.RegisterInstance<IJobTracker>( vm );
         }
 
         private void SetupCommands()

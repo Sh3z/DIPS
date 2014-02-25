@@ -58,6 +58,20 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
 
 
         /// <summary>
+        /// Occurs when the job represented by this <see cref="JobViewModel"/>
+        /// has begun.
+        /// </summary>
+        public event EventHandler JobStarted;
+
+
+        /// <summary>
+        /// Occurs when the job represented by this <see cref="JobViewModel"/>
+        /// has finished in full.
+        /// </summary>
+        public event EventHandler JobFinished;
+
+
+        /// <summary>
         /// Gets the ticket representing the job within this view-model.
         /// </summary>
         public IJobTicket Ticket
@@ -151,6 +165,10 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         {
             IsRunning = true;
             _updateFromState();
+            if( JobStarted != null )
+            {
+                JobStarted( this, EventArgs.Empty );
+            }
         }
 
         /// <summary>
@@ -162,6 +180,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         {
             IsRunning = false;
             _updateFromState();
+            _fireIfComplete();
         }
 
         /// <summary>
@@ -173,6 +192,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         {
             IsRunning = false;
             _updateFromState();
+            _fireIfComplete();
         }
 
         /// <summary>
@@ -185,6 +205,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             IsRunning = false;
             IsCancelled = true;
             _updateFromState();
+            _fireIfComplete();
         }
 
         /// <summary>
@@ -220,6 +241,17 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                     string details = string.Format( StatusStrings.ErrorDesc, err.Message );
                     LongStatus = details;
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Fires the JobFinished event if the job has produced a result
+        /// </summary>
+        private void _fireIfComplete()
+        {
+            if( Ticket.Result != null && JobFinished != null )
+            {
+                JobFinished( this, EventArgs.Empty );
             }
         }
 
