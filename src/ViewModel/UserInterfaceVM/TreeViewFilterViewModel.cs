@@ -17,8 +17,25 @@ namespace DIPS.ViewModel.UserInterfaceVM
 {
     public class TreeViewFilterViewModel:BaseViewModel
     {
-        
+
+        #region Properties
+
+        public string PatientID { set; get; }
+        public DateTime DateFrom { set; get; }
+        public DateTime DateTo { set; get; }
+        public bool IsMale { set; get; }
+        public bool IsFemale { set;get; }
+        public Filter OverallFilter { set;get; }
+
         public ICommand ApplyFilterCommand { get; set; }
+
+        private IFilterTreeView _filterImageView;
+
+        public IFilterTreeView FilterTreeView
+        {
+            get { return _filterImageView; }
+            set { _filterImageView = value; }
+        }
 
         public IUnityContainer Container
         {
@@ -31,66 +48,53 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 _container = value;
             }
         }
-        private IUnityContainer _container;
+        private IUnityContainer _container; 
+        #endregion
 
+        #region Constructor
         public TreeViewFilterViewModel()
         {
             ConfigureCommands();
+        } 
+        #endregion
 
-        }
-
+        #region Methods
         private void ConfigureCommands()
         {
-            ApplyFilterCommand = new RelayCommand(new Action<object>(ApplyFilter));
+            ApplyFilterCommand = new RelayCommand(new Action<object>(AssignFilter));
         }
 
-        private void ApplyFilter(object obj)
+        private void SendParameters()
         {
-            //PrepareParameters();
-            AssignFilter();
+            FilterTreeView.PatientID = PatientID;
+            FilterTreeView.DateFrom = DateFrom;
+            FilterTreeView.DateTo = DateTo;
+            FilterTreeView.IsFemale = IsFemale;
+            FilterTreeView.IsMale = IsMale;
         }
 
-        //private void PrepareParameters()
-        //{
-        //    TheFilter = new Filter();
-
-        //    TheFilter.PatientID = PatientID;
-
-        //    if (DateFrom != DateTime.MinValue)
-        //    {
-        //        TheFilter.AcquisitionDateFrom = DateFrom;
-        //    }
-
-        //    if (DateTo != DateTime.MinValue)
-        //    {
-        //        TheFilter.AcquisitionDateTo = DateTo;
-        //    }
-
-        //    if (IsFemale == true)
-        //    {
-        //        TheFilter.Gender = "F";
-        //    } else if (IsMale == true)
-        //    {
-        //        TheFilter.Gender = "M";
-        //    }
-        //    else
-        //    {
-        //        TheFilter.Gender = String.Empty;
-        //    }
-            
-            
-        //}
-
-        private void AssignFilter()
+        private void AssignFilter(object obj)
         {
-            //ObservableCollection<Patient> dataset = new ObservableCollection<Patient>();
-            //ImageRepository repo = new ImageRepository();
-            //dataset = repo.generateCustomTreeView(TheFilter,true);
+            Container = GlobalContainer.Instance.Container;
 
-            //if (dataset != null)
-            //{
-            //    _ViewExistingDatasetViewModel.TopLevelViewModel = new TreeViewGroupPatientsViewModel(dataset);
-            //}
-        }
+            FilterTreeView = Container.Resolve<IFilterTreeView>();
+
+            if (FilterTreeView != null)
+            {
+                SendParameters();
+                FilterTreeView.PrepareParameters();
+
+                ObservableCollection<Patient> dataset = FilterTreeView.ApplyFilter();
+
+                if (dataset != null)
+                {
+                    _ViewExistingDatasetViewModel.TopLevelViewModel = new TreeViewGroupPatientsViewModel(dataset);
+                }
+                
+                FilterTreeView.HideDialog();
+            }
+            
+        } 
+        #endregion
     }
 }
