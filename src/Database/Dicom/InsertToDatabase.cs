@@ -1,4 +1,5 @@
-﻿using DIPS.Database;
+﻿using Database.Objects;
+using DIPS.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,37 +10,37 @@ namespace Database.Connection
 {
     public class InsertToDatabase
     {
-        public void insert()
+        public void insert(DicomInfo dicom, String filePath)
         {
             DAOInsertPatient dao = new DAOInsertPatient();
             DAOLog log = new DAOLog();
 
-            if (DicomInfo.patientExist == false)
+            if (dicom.patientExist == false)
             {
-                if (DicomInfo.logCreated == false) log.create();
-                if (DicomInfo.logNeedUpdate == true) log.update();
-                dao.insertPatient();
-                dao.insertName();
-                dao.insertImageInfo();
-                dao.insertImageFile();
+                if (Log.Created == false) log.create();
+                if (Log.NeedUpdate == true) log.update(dicom.seriesID);
+                dao.insertPatient(dicom);
+                dao.insertName(dicom);
+                dao.insertImageInfo(dicom);
+                dao.insertImageFile(dicom,filePath);
             }
-            else if (DicomInfo.sameSeries == false)
+            else if (dicom.sameSeries == false)
             {
-                if (DicomInfo.logCreated == false) log.create();
-                if (DicomInfo.logNeedUpdate == true) log.update();
-                dao.insertImageInfo();
-                dao.insertImageFile();
+                if (Log.Created == false) log.create();
+                if (Log.NeedUpdate == true) log.update(dicom.seriesID);
+                dao.insertImageInfo(dicom);
+                dao.insertImageFile(dicom,filePath);
             }
-            else if (DicomInfo.imageExist == false)
+            else if (dicom.imageExist == false)
             {
-                if (DicomInfo.logCreated == false) log.create();
-                dao.insertImageFile();
+                if (Log.Created == false) log.create();
+                dao.insertImageFile(dicom,filePath);
             }
 
-            DicomInfo.seriesID = 0;
-            DicomInfo.patientExist = false;
-            DicomInfo.imageExist = false;
-            DicomInfo.sameSeries = false;
+            dicom.seriesID = 0;
+            dicom.patientExist = false;
+            dicom.imageExist = false;
+            dicom.sameSeries = false;
         }
     }
 }

@@ -25,8 +25,9 @@ create table images(
 fileID int identity PRIMARY KEY,
 seriesID int FOREIGN KEY REFERENCES imageProperties(seriesID),
 imageNumber varchar(5),
+imageUID varchar(70),
 imageBlob varbinary(MAX),
-processed bit,
+processed bit
 );
 create table timeLog(
 logID int identity PRIMARY KEY,

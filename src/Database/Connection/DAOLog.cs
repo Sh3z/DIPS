@@ -1,4 +1,5 @@
-﻿using DIPS.Database;
+﻿using Database.Objects;
+using DIPS.Database;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,17 +25,17 @@ namespace Database.Connection
                 cmd2.CommandType = CommandType.StoredProcedure;
                 cmd2.ExecuteNonQuery();
             }
-            DicomInfo.logCreated = true;
+            Log.Created = true;
         }
 
-        public void update()
+        public void update(int series)
         {
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spr_UpdateModifiedDate_v001", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = DicomInfo.seriesID;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = series;
                 cmd.ExecuteNonQuery();
             }
         }

@@ -19,41 +19,41 @@ namespace DIPS.Database
         DcmDate date = null;
         DcmTime time = null;
 
-        public void read()
+        public void read(DicomInfo dicom)
         {
             FileStream fs = null;
             try
             {
-                fs = new FileStream(DicomInfo.readFile, FileMode.Open);
-                ExtractMetaData(fs);
-                nullCheck();
+                fs = new FileStream(dicom.readFile, FileMode.Open);
+                ExtractMetaData(fs,dicom);
+                nullCheck(dicom);
                 fs.Close();
             }
             catch (Exception e)
             {
                 fs.Close();
-                DicomInfo.fileReadable = false;
+                dicom.fileReadable = false;
                 Console.WriteLine("unable to read");
                 Console.WriteLine(e);
             }
         }
 
-        private void ExtractMetaData(FileStream fs)
+        private void ExtractMetaData(FileStream fs,DicomInfo dicom)
         {
             DicomFileFormat dff = new DicomFileFormat();
 
             dff.Load(fs, DicomReadOptions.Default);
             pName = dff.Dataset.GetValueString(DicomTags.PatientsName);
-
-            DicomInfo.sex = dff.Dataset.GetValueString(DicomTags.PatientsSex);
-            DicomInfo.pBday = dff.Dataset.GetValueString(DicomTags.PatientsBirthDate);
-            DicomInfo.age = dff.Dataset.GetValueString(DicomTags.PatientsAge);
-            DicomInfo.imgNumber = dff.Dataset.GetValueString(DicomTags.InstanceNumber);
-            DicomInfo.modality = dff.Dataset.GetValueString(DicomTags.Modality);
-            DicomInfo.bodyPart = dff.Dataset.GetValueString(DicomTags.BodyPartExamined);
-            DicomInfo.studyDesc = dff.Dataset.GetValueString(DicomTags.StudyDescription);
-            DicomInfo.seriesDesc = dff.Dataset.GetValueString(DicomTags.SeriesDescription);
-            DicomInfo.sliceThickness = dff.Dataset.GetValueString(DicomTags.SliceThickness);
+            dicom.imageUID = dff.Dataset.GetValueString(DicomTags.SOPInstanceUID);
+            dicom.sex = dff.Dataset.GetValueString(DicomTags.PatientsSex);
+            dicom.pBday = dff.Dataset.GetValueString(DicomTags.PatientsBirthDate);
+            dicom.age = dff.Dataset.GetValueString(DicomTags.PatientsAge);
+            dicom.imgNumber = dff.Dataset.GetValueString(DicomTags.InstanceNumber);
+            dicom.modality = dff.Dataset.GetValueString(DicomTags.Modality);
+            dicom.bodyPart = dff.Dataset.GetValueString(DicomTags.BodyPartExamined);
+            dicom.studyDesc = dff.Dataset.GetValueString(DicomTags.StudyDescription);
+            dicom.seriesDesc = dff.Dataset.GetValueString(DicomTags.SeriesDescription);
+            dicom.sliceThickness = dff.Dataset.GetValueString(DicomTags.SliceThickness);
 
             if (dff.Dataset.GetValueString(DicomTags.AcquisitionDate) == "") dateNull = true;
             if (dff.Dataset.GetValueString(DicomTags.AcquisitionTime) == "") timeNull = true;
@@ -61,46 +61,47 @@ namespace DIPS.Database
             time = dff.Dataset.GetTM(DicomTags.AcquisitionTime);
         }
 
-        private void nullCheck()
+        private void nullCheck(DicomInfo dicom)
         {
-            if (pName == null) DicomInfo.patientName = String.Empty;
+            if (pName == null) dicom.patientName = String.Empty;
             else
             {
                 try
                 {
                     var splitName = new StringBuilder(pName);
                     splitName.Replace('^', ' ');
-                    DicomInfo.patientName = splitName.ToString();
+                    dicom.patientName = splitName.ToString();
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    DicomInfo.patientName = pName;
+                    dicom.patientName = pName;
                 }
             }
 
             if (dateNull == true && timeNull == true)
             {
                 DateTime dt = DateTime.MinValue;
-                DicomInfo.imgDateTime = dt.ToString("yyyy-MM-dd HH:mm:ss");
+                dicom.imgDateTime = dt.ToString("yyyy-MM-dd HH:mm:ss");
             }
             else
             {
                 System.DateTime imgDateTime = date.GetDateTime().Date + time.GetDateTime().TimeOfDay;
-                DicomInfo.imgDateTime = imgDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                dicom.imgDateTime = imgDateTime.ToString("yyyy-MM-dd HH:mm:ss");
             }
 
-            if (DicomInfo.sex == null || (DicomInfo.sex[0] != 'M' && DicomInfo.sex[0] != 'F')) DicomInfo.sex = String.Empty;
-            else DicomInfo.sex = DicomInfo.sex.Substring(0, 1);
-            if (!String.IsNullOrEmpty(DicomInfo.imgNumber)) DicomInfo.imgNumber = DicomInfo.imgNumber.PadLeft(2, '0');
-            if (DicomInfo.pBday == null) DicomInfo.pBday = String.Empty;
-            if (DicomInfo.age == null) DicomInfo.age = String.Empty;
-            if (DicomInfo.imgNumber == null) DicomInfo.imgNumber = String.Empty;
-            if (DicomInfo.modality == null) DicomInfo.modality = String.Empty;
-            if (DicomInfo.bodyPart == null) DicomInfo.bodyPart = String.Empty;
-            if (DicomInfo.studyDesc == null) DicomInfo.studyDesc = String.Empty;
-            if (DicomInfo.seriesDesc == null) DicomInfo.seriesDesc = String.Empty;
-            if (DicomInfo.sliceThickness == null) DicomInfo.sliceThickness = String.Empty;
+            if (dicom.imageUID == null) dicom.imageUID = String.Empty;
+            if (dicom.sex == null || (dicom.sex[0] != 'M' && dicom.sex[0] != 'F')) dicom.sex = String.Empty;
+            else dicom.sex = dicom.sex.Substring(0, 1);
+            if (!String.IsNullOrEmpty(dicom.imgNumber)) dicom.imgNumber = dicom.imgNumber.PadLeft(2, '0');
+            if (dicom.pBday == null) dicom.pBday = String.Empty;
+            if (dicom.age == null) dicom.age = String.Empty;
+            if (dicom.imgNumber == null) dicom.imgNumber = String.Empty;
+            if (dicom.modality == null) dicom.modality = String.Empty;
+            if (dicom.bodyPart == null) dicom.bodyPart = String.Empty;
+            if (dicom.studyDesc == null) dicom.studyDesc = String.Empty;
+            if (dicom.seriesDesc == null) dicom.seriesDesc = String.Empty;
+            if (dicom.sliceThickness == null) dicom.sliceThickness = String.Empty;
         }
     }
 }

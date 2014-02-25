@@ -12,7 +12,7 @@ namespace DIPS.Database
     public class DAOInsertPatient
     {
 
-        public void insertPatient()
+        public void insertPatient(DicomInfo dicom)
         {
             try
             {
@@ -21,14 +21,14 @@ namespace DIPS.Database
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("spr_InsertPatient_v001", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@id", SqlDbType.VarChar).Value = DicomInfo.pID;
+                    cmd.Parameters.Add("@id", SqlDbType.VarChar).Value = dicom.pID;
 
-                    cmd.Parameters.Add("@birthday", SqlDbType.VarChar).Value = DicomInfo.pBday;
-                    cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = DicomInfo.age;
-                    cmd.Parameters.Add("@sex", SqlDbType.Char, 1).Value = DicomInfo.sex;
-
+                    cmd.Parameters.Add("@birthday", SqlDbType.VarChar).Value = dicom.pBday;
+                    cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = dicom.age;
+                    cmd.Parameters.Add("@sex", SqlDbType.Char, 1).Value = dicom.sex;
                     cmd.Parameters.Add("@series", SqlDbType.Int).Value = 1;
-                    DicomInfo.databaseID = (Int32)cmd.ExecuteScalar();
+
+                    dicom.databaseID = (Int32)cmd.ExecuteScalar();
                     Console.WriteLine("Patient Success");
                 }
             }
@@ -39,7 +39,7 @@ namespace DIPS.Database
             }
         }
 
-        public void insertName()
+        public void insertName(DicomInfo dicom)
         {
             try
             {
@@ -48,9 +48,9 @@ namespace DIPS.Database
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("spr_InsertName_v001", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@id", SqlDbType.Int).Value = DicomInfo.databaseID;
+                    cmd.Parameters.Add("@id", SqlDbType.Int).Value = dicom.databaseID;
 
-                    cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = DicomInfo.patientName;
+                    cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = dicom.patientName;
                     cmd.ExecuteNonQuery();
                     Console.WriteLine("Name Success");
                 }
@@ -62,7 +62,7 @@ namespace DIPS.Database
             }
         }
 
-        public void insertImageInfo()
+        public void insertImageInfo(DicomInfo dicom)
         {
             try
             {
@@ -72,16 +72,16 @@ namespace DIPS.Database
                     SqlCommand cmd = new SqlCommand("spr_InsertImageProperties_v001", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add("@id", SqlDbType.Int).Value = DicomInfo.databaseID;
+                    cmd.Parameters.Add("@id", SqlDbType.Int).Value = dicom.databaseID;
 
-                    cmd.Parameters.Add("@modality", SqlDbType.VarChar).Value = DicomInfo.modality;
-                    cmd.Parameters.Add("@imgDateTime", SqlDbType.DateTime).Value = DicomInfo.imgDateTime;
-                    cmd.Parameters.Add("@bodyPart", SqlDbType.VarChar).Value = DicomInfo.bodyPart;
-                    cmd.Parameters.Add("@studyDesc", SqlDbType.VarChar).Value = DicomInfo.studyDesc;
-                    cmd.Parameters.Add("@seriesDesc", SqlDbType.VarChar).Value = DicomInfo.seriesDesc;
-                    cmd.Parameters.Add("@sliceThick", SqlDbType.VarChar).Value = DicomInfo.sliceThickness;
+                    cmd.Parameters.Add("@modality", SqlDbType.VarChar).Value = dicom.modality;
+                    cmd.Parameters.Add("@imgDateTime", SqlDbType.DateTime).Value = dicom.imgDateTime;
+                    cmd.Parameters.Add("@bodyPart", SqlDbType.VarChar).Value = dicom.bodyPart;
+                    cmd.Parameters.Add("@studyDesc", SqlDbType.VarChar).Value = dicom.studyDesc;
+                    cmd.Parameters.Add("@seriesDesc", SqlDbType.VarChar).Value = dicom.seriesDesc;
+                    cmd.Parameters.Add("@sliceThick", SqlDbType.VarChar).Value = dicom.sliceThickness;
 
-                    DicomInfo.seriesID = (Int32)cmd.ExecuteScalar();
+                    dicom.seriesID = (Int32)cmd.ExecuteScalar();
                     Console.WriteLine("Images Success");
                 }
             }
@@ -92,7 +92,7 @@ namespace DIPS.Database
             }
         }
 
-        public void insertImageFile()
+        public void insertImageFile(DicomInfo dicom ,String filePath)
         {
             try
             {
@@ -103,14 +103,15 @@ namespace DIPS.Database
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     readImage image = new readImage();
-                    byte[] blob = image.blob();
+                    byte[] blob = image.blob(filePath);
 
-                    cmd.Parameters.Add("@imgID", SqlDbType.Int).Value = DicomInfo.seriesID;
-
-                    cmd.Parameters.Add("@imgNum", SqlDbType.VarChar).Value = DicomInfo.imgNumber;
+                    cmd.Parameters.Add("@imgID", SqlDbType.Int).Value = dicom.seriesID;
+                    cmd.Parameters.Add("@imgUID", SqlDbType.VarChar).Value = dicom.imageUID;
+                    cmd.Parameters.Add("@imgNum", SqlDbType.VarChar).Value = dicom.imgNumber;
                     if (blob != null) cmd.Parameters.Add("@imgBlob", SqlDbType.VarBinary, blob.Length).Value = blob;
 
                     cmd.Parameters.Add("@process", SqlDbType.Bit).Value = 0;
+                    
                     cmd.ExecuteNonQuery();
                     Console.WriteLine("Image File Success");
                 }
