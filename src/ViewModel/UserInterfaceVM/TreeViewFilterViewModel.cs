@@ -7,65 +7,36 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Database;
 using Database.Objects;
+using Database.Unity;
 using DIPS.Database.Objects;
+using DIPS.Unity;
 using DIPS.ViewModel.Commands;
+using Microsoft.Practices.Unity;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
     public class TreeViewFilterViewModel:BaseViewModel
     {
-        private String _patientID;
-
-        public String PatientID
-        {
-            get { return _patientID; }
-            set
-            {
-                _patientID = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DateTime _dateFrom;
-
-        public DateTime DateFrom
-        {
-            get { return _dateFrom; }
-            set { _dateFrom = value; }
-        }
-
-        private DateTime _dateTo;
-
-        public DateTime DateTo
-        {
-            get { return _dateTo; }
-            set { _dateTo = value; }
-        }
-
-        private Boolean _isMale;
-
-        public Boolean IsMale
-        {
-            get { return _isMale; }
-            set { _isMale = value; }
-        }
-
-        private Boolean _isFemale;
-
-        public Boolean IsFemale
-        {
-            get { return _isFemale; }
-            set { _isFemale = value; }
-        }
         
         public ICommand ApplyFilterCommand { get; set; }
 
-        private Filter TheFilter { get; set; }
-    
+        public IUnityContainer Container
+        {
+            get
+            {
+                return _container;
+            }
+            set
+            {
+                _container = value;
+            }
+        }
+        private IUnityContainer _container;
 
         public TreeViewFilterViewModel()
         {
             ConfigureCommands();
+
         }
 
         private void ConfigureCommands()
@@ -75,51 +46,51 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void ApplyFilter(object obj)
         {
-            PrepareParameters();
+            //PrepareParameters();
             AssignFilter();
         }
 
-        private void PrepareParameters()
-        {
-            TheFilter = new Filter();
+        //private void PrepareParameters()
+        //{
+        //    TheFilter = new Filter();
 
-            TheFilter.PatientID = PatientID;
+        //    TheFilter.PatientID = PatientID;
 
-            if (DateFrom != DateTime.MinValue)
-            {
-                TheFilter.AcquisitionDateFrom = DateFrom;
-            }
+        //    if (DateFrom != DateTime.MinValue)
+        //    {
+        //        TheFilter.AcquisitionDateFrom = DateFrom;
+        //    }
 
-            if (DateTo != DateTime.MinValue)
-            {
-                TheFilter.AcquisitionDateTo = DateTo;
-            }
+        //    if (DateTo != DateTime.MinValue)
+        //    {
+        //        TheFilter.AcquisitionDateTo = DateTo;
+        //    }
 
-            if (IsFemale == true)
-            {
-                TheFilter.Gender = "F";
-            } else if (IsMale == true)
-            {
-                TheFilter.Gender = "M";
-            }
-            else
-            {
-                TheFilter.Gender = String.Empty;
-            }
+        //    if (IsFemale == true)
+        //    {
+        //        TheFilter.Gender = "F";
+        //    } else if (IsMale == true)
+        //    {
+        //        TheFilter.Gender = "M";
+        //    }
+        //    else
+        //    {
+        //        TheFilter.Gender = String.Empty;
+        //    }
             
             
-        }
+        //}
 
         private void AssignFilter()
         {
-            ObservableCollection<Patient> dataset = new ObservableCollection<Patient>();
-            ImageRepository repo = new ImageRepository();
-            dataset = repo.generateCustomTreeView(TheFilter,true);
+            //ObservableCollection<Patient> dataset = new ObservableCollection<Patient>();
+            //ImageRepository repo = new ImageRepository();
+            //dataset = repo.generateCustomTreeView(TheFilter,true);
 
-            if (dataset != null)
-            {
-                _ViewExistingDatasetViewModel.TopLevelViewModel = new TreeViewGroupPatientsViewModel(dataset);
-            }
+            //if (dataset != null)
+            //{
+            //    _ViewExistingDatasetViewModel.TopLevelViewModel = new TreeViewGroupPatientsViewModel(dataset);
+            //}
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using DIPS.Processor;
+﻿using Database.Unity;
+using DIPS.Processor;
 using DIPS.Processor.Client;
 using DIPS.UI;
+using DIPS.UI.Unity.Implementations;
 using DIPS.Unity;
 using DIPS.ViewModel;
 using Microsoft.Practices.Unity;
@@ -33,6 +35,10 @@ namespace DIPS
             IUnityContainer c = GlobalContainer.Instance.Container;
             c.RegisterInstance<IProcessingService>( s );
             c.RegisterInstance<IPipelineManager>( s.PipelineManager );
+
+            FilterTreeView ftv = new FilterTreeView();
+
+            c.RegisterInstance<IFilterTreeView>(ftv);
 
             MainNavi navWindow = new MainNavi();
             navWindow.Service = s;

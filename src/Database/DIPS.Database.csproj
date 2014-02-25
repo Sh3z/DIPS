@@ -117,6 +117,7 @@
     <Compile Include="Connection\DAOInsertPatient.cs" />
     <Compile Include="DicomHelper\verifyDicom.cs" />
     <Compile Include="Repository\ProcessRepository.cs" />
+    <Compile Include="Unity\IFilterTreeView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="External Library\Database.dll">
@@ -133,6 +134,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="DIPSConnection.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>DIPSConnection.Designer.cs</LastGenOutput>

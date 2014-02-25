@@ -100,7 +100,7 @@
         </TreeView>
         <Image Source="{Binding ImgUnprocessed, Mode=TwoWay}" HorizontalAlignment="Left" Height="128" Margin="318,22,0,0" VerticalAlignment="Top" Width="128"/>
         <TextBox Text="{Binding ImageInfo, Mode=TwoWay}"  HorizontalAlignment="Left" Height="220" Margin="280,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" IsEnabled="False"/>
-        <Button x:Name="btnSelectFilter" Content="Filter Options" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Width="84" />
+        <Button Content="Filter Options" Command="{Binding OpenFilterDialogCommand}" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Width="84" />
         <CheckBox x:Name="chkActiveFilter" Content="Active Filter?" HorizontalAlignment="Left" Margin="128,25,0,0" VerticalAlignment="Top" />
         <CheckBox IsChecked="{Binding IsSelected}"  Content="Show Patient Names instead of IDs" HorizontalAlignment="Left" Margin="26,419,0,0" VerticalAlignment="Top"/>
 
