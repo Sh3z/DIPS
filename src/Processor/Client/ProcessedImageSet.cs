@@ -271,7 +271,7 @@ namespace DIPS.Processor.Client
         /// to enumerate through the collection.</returns>
         public IEnumerator<IProcessedImage> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _set.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()

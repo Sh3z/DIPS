@@ -134,11 +134,8 @@ namespace DIPS.Processor.Worker
             try
             {
                 Image theInput = _processInput( pipeline, input );
-                if( theInput != null )
-                {
-                    _currentArgs.Persister.Persist(
+                _currentArgs.Persister.Persist(
                         _ticket.JobID, theInput, input.Identifier );
-                }
 
                 return true;
             }
@@ -175,7 +172,7 @@ namespace DIPS.Processor.Worker
                 AlgorithmPlugin plugin = entry.Process;
                 plugin.Input = theInput;
                 plugin.Run( entry.ProcessInput );
-                theInput = plugin.Output;
+                theInput = plugin.Output ?? plugin.Input;
             }
 
             return theInput;
