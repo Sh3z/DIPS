@@ -1,4 +1,5 @@
-﻿using DIPS.Processor.Client;
+﻿using DIPS.Database;
+using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Unity;
 using Microsoft.Practices.Unity;
@@ -102,8 +103,7 @@ namespace DIPS.ViewModel.Commands
             {
                 try
                 {
-                    string path = string.Format( @"{0}/{1}", file.Directory, file.Name );
-                    Image img = Image.FromFile( path );
+                    Image img = _extractImage( file );
                     JobInput i = new JobInput( img );
                     jobs.Add( i );
                 }
@@ -114,6 +114,34 @@ namespace DIPS.ViewModel.Commands
             }
 
             return jobs;
+        }
+
+        /// <summary>
+        /// Extracts the image from the file
+        /// </summary>
+        /// <param name="file">The file to extract the image from</param>
+        /// <returns>The image contained within the file</returns>
+        private Image _extractImage( FileInfo file )
+        {
+            Image theImg = null;
+            string path = string.Format( @"{0}/{1}", file.Directory, file.Name );
+            string ext = file.Extension.ToLower();
+            if( ext == ".dicom" )
+            {
+                readImage reader = new readImage();
+                byte[] bytes = reader.blob( path );
+                using( Stream stream = new MemoryStream( bytes ) )
+                {
+                    Image tmp = Image.FromStream( stream );
+                    theImg = new Bitmap( tmp );
+                }
+            }
+            else
+            {
+                theImg = Image.FromFile( path );
+            }
+
+            return theImg;
         }
 
 

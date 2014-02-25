@@ -83,7 +83,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             ;
             //Setup properties for open file dialog
             dialogOpen.InitialDirectory = "C:\\";
-            dialogOpen.Filter = @"Bitmaps|*.bmp|Jpgs|*.jpg";
+            dialogOpen.Filter = @"Image Files (*.bmp;*.jpg;*.gif)|*.bmp;*.jpg;*.gif|DICOM Files|*.dicom";
             dialogOpen.FilterIndex = 1;
             dialogOpen.Multiselect = true;
             dialogOpen.Title = "Please select image files which are going to be part of this dataset";
