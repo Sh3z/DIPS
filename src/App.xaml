@@ -52,5 +52,6 @@
         <DataTemplate DataType="{x:Type vm:QueueViewModel}">
            
         </DataTemplate>
+
     </Application.Resources>
 </Application>

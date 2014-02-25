@@ -1,6 +1,8 @@
-﻿using DIPS.Processor.Client;
+﻿using DIPS.Database;
+using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Unity;
+using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -71,7 +73,7 @@ namespace DIPS.ViewModel.Commands
         {
             return  Container != null &&
                     Container.Contains<IProcessingService>() &&
-                    //Container.Contains<IJobTracker>() &&
+                    Container.Contains<IJobTracker>() &&
                     _source.Files != null && _source.Files.Any() &&
                     _source.Pipeline != null && _source.Pipeline.Any();
         }
@@ -88,6 +90,8 @@ namespace DIPS.ViewModel.Commands
             ObjectJobDefinition d = new ObjectJobDefinition( _source.Pipeline, _filesToInputs() );
             JobRequest r = new JobRequest( d );
             IJobTicket t = service.JobManager.EnqueueJob( r );
+            IJobTracker tracker = Container.Resolve<IJobTracker>();
+            tracker.Add( t );
         }
 
 
@@ -102,9 +106,9 @@ namespace DIPS.ViewModel.Commands
             {
                 try
                 {
-                    string path = string.Format( @"{0}/{1}", file.Directory, file.Name );
-                    Image img = Image.FromFile( path );
+                    Image img = _extractImage( file );
                     JobInput i = new JobInput( img );
+                    i.Identifier = file;
                     jobs.Add( i );
                 }
                 catch
@@ -114,6 +118,34 @@ namespace DIPS.ViewModel.Commands
             }
 
             return jobs;
+        }
+
+        /// <summary>
+        /// Extracts the image from the file
+        /// </summary>
+        /// <param name="file">The file to extract the image from</param>
+        /// <returns>The image contained within the file</returns>
+        private Image _extractImage( FileInfo file )
+        {
+            Image theImg = null;
+            string path = string.Format( @"{0}/{1}", file.Directory, file.Name );
+            string ext = file.Extension.ToLower();
+            if( ext == ".dicom" )
+            {
+                readImage reader = new readImage();
+                byte[] bytes = reader.blob( path );
+                using( Stream stream = new MemoryStream( bytes ) )
+                {
+                    Image tmp = Image.FromStream( stream );
+                    theImg = new Bitmap( tmp );
+                }
+            }
+            else
+            {
+                theImg = Image.FromFile( path );
+            }
+
+            return theImg;
         }
 
 

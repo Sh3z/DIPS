@@ -15,6 +15,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 {
     public class LoadNewDsStep2ViewModel : BaseViewModel, IPipelineInfo
     {
+        #region Properties
         private ObservableCollection<FileInfo> _listOfFiles;
 
         public ObservableCollection<FileInfo> ListOfFiles
@@ -22,7 +23,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             get { return _listOfFiles; }
             set
             {
-                _listOfFiles = value; 
+                _listOfFiles = value;
                 OnPropertyChanged();
             }
         }
@@ -36,7 +37,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             get { return _listOfTechniques; }
             set
             {
-                _listOfTechniques = value; 
+                _listOfTechniques = value;
                 OnPropertyChanged();
             }
         }
@@ -50,11 +51,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set
             {
                 _chosenTechnique = value;
-                _updateAlgorithmsInTechnique( value );
+                _updateAlgorithmsInTechnique(value);
                 OnPropertyChanged();
             }
         }
-        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Technique _chosenTechnique;
 
         public ObservableCollection<AlgorithmViewModel> TechniqueAlgorithms
@@ -75,9 +76,9 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 OnPropertyChanged();
             }
         }
-        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AlgorithmViewModel _selectedAlgorithm;
-         
+
         public Technique AvailableTechSelectedItem { get; set; }
         public Technique SelectedTechSelectedItem { get; set; }
 
@@ -89,14 +90,29 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set;
         }
 
+        string IPipelineInfo.PipelineName
+        {
+            get;
+            set;
+        }
+
+        ObservableCollection<AlgorithmViewModel> IPipelineInfo.SelectedProcesses
+        {
+            get { return TechniqueAlgorithms; }
+        }
+        #endregion
+
+        #region Constructor
         public LoadNewDsStep2ViewModel()
         {
             ListofTechniques = new ObservableCollection<Technique>();
             TechniqueAlgorithms = new ObservableCollection<AlgorithmViewModel>();
             SetupCommands();
-        }
+        } 
+        #endregion
 
-        private bool _canProgressToStep3( object obj )
+        #region Methods
+        private bool _canProgressToStep3(object obj)
         {
             return TechniqueAlgorithms.Any();
         }
@@ -106,14 +122,14 @@ namespace DIPS.ViewModel.UserInterfaceVM
             OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
 
             BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Clear();
-            this.ListOfFiles.ForEach( BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Add );
+            this.ListOfFiles.ForEach(BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Add);
             BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Clear();
-            TechniqueAlgorithms.ForEach( BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Add );
-            BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = ( this as IPipelineInfo ).PipelineName;
+            TechniqueAlgorithms.ForEach(BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Add);
+            BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = (this as IPipelineInfo).PipelineName;
         }
 
 
-        private bool _canBuildAlgorithm( object obj )
+        private bool _canBuildAlgorithm(object obj)
         {
             return GlobalContainer.Instance.Container.Contains<IPipelineManager>();
         }
@@ -138,31 +154,23 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             ProgressToStep3Command = new RelayCommand(new Action<object>(ProgressToStep3), _canProgressToStep3);
             BuildAlgorithmCommand = new RelayCommand(new Action<object>(BuildAlgorithm), _canBuildAlgorithm);
-            LoadFromFile = new LoadPipelineCommand( this );
+            LoadFromFile = new LoadPipelineCommand(this);
             LoadFromFile.Container = GlobalContainer.Instance.Container;
 
-            TechniqueAlgorithms.CollectionChanged += ( s, e ) => ProgressToStep3Command.ExecutableStateChanged();
+            TechniqueAlgorithms.CollectionChanged += (s, e) => ProgressToStep3Command.ExecutableStateChanged();
         }
 
-        private void _updateAlgorithmsInTechnique( Technique value )
+        private void _updateAlgorithmsInTechnique(Technique value)
         {
             TechniqueAlgorithms.Clear();
-            if( value != null )
+            if (value != null)
             {
                 // To-do when database side is complete
             }
-        }
+        } 
+        #endregion
 
 
-        string IPipelineInfo.PipelineName
-        {
-            get;
-            set;
-        }
-
-        ObservableCollection<AlgorithmViewModel> IPipelineInfo.SelectedProcesses
-        {
-            get { return TechniqueAlgorithms; }
-        }
+        
     }
 }

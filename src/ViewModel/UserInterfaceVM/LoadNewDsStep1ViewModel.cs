@@ -11,6 +11,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 {
     public class LoadNewDsStep1ViewModel : BaseViewModel
     {
+        #region Properties
         public ICommand ProgressToStep2Command { get; set; }
         public ICommand OpenFileDialogCommand { get; set; }
         public ICommand ClearFieldsCommand { get; set; }
@@ -34,17 +35,21 @@ namespace DIPS.ViewModel.UserInterfaceVM
             get { return _listofFiles; }
             set
             {
-                _listofFiles = value; 
+                _listofFiles = value;
                 OnPropertyChanged();
             }
-        }
+        } 
+        #endregion
 
+        #region Constructor
         public LoadNewDsStep1ViewModel()
         {
             SetupCommands();
             LoadTechniqueObjects();
-        }
+        } 
+        #endregion
 
+        #region Methods
         private void SetupCommands()
         {
             ProgressToStep2Command = new RelayCommand(new Action<object>(ConfirmAndMoveToStep2));
@@ -73,7 +78,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     _LoadNewDsStep2ViewModel.ListofTechniques = ListofTechniques;
                 }
             }
-            
+
         }
 
         private void SelectFilesForDataset(object obj)
@@ -83,7 +88,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             ;
             //Setup properties for open file dialog
             dialogOpen.InitialDirectory = "C:\\";
-            dialogOpen.Filter = @"Bitmaps|*.bmp|Jpgs|*.jpg";
+            dialogOpen.Filter = @"Image Files (*.bmp;*.jpg;*.gif)|*.bmp;*.jpg;*.gif|DICOM Files|*.dicom";
             dialogOpen.FilterIndex = 1;
             dialogOpen.Multiselect = true;
             dialogOpen.Title = "Please select image files which are going to be part of this dataset";
@@ -137,6 +142,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             ListofTechniques.Add(tech2);
             ListofTechniques.Add(tech3);
             ListofTechniques.Add(tech4);
-        }
+        } 
+        #endregion
     }
 }

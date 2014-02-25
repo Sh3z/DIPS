@@ -34,6 +34,7 @@ namespace DIPS.Processor
                 throw new ArgumentNullException( "persister" );
             }
 
+            _tickets = new List<IJobTicket>();
             _factory = pluginFactory;
             _persister = persister;
             _processor = new BatchProcessor( pluginFactory, _persister );

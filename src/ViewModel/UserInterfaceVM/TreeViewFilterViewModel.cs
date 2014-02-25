@@ -7,119 +7,116 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Database;
 using Database.Objects;
+using Database.Unity;
 using DIPS.Database.Objects;
+using DIPS.Unity;
 using DIPS.ViewModel.Commands;
+using Microsoft.Practices.Unity;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
     public class TreeViewFilterViewModel:BaseViewModel
     {
-        private String _patientID;
 
-        public String PatientID
+        #region Properties
+
+        public string PatientID { set; get; }
+        public DateTime DateFrom { set; get; }
+        public DateTime DateTo { set; get; }
+        public bool IsMale { set; get; }
+        public bool IsFemale { set;get; }
+        public Filter OverallFilter { set;get; }
+
+        public ICommand ApplyFilterCommand { get; set; }
+        public ICommand CancelFilterSelection { get; set; }
+
+        private IFilterTreeView _filterImageView;
+
+        public IFilterTreeView FilterTreeView
         {
-            get { return _patientID; }
+            get { return _filterImageView; }
+            set { _filterImageView = value; }
+        }
+
+        public IUnityContainer Container
+        {
+            get
+            {
+                return _container;
+            }
             set
             {
-                _patientID = value;
-                OnPropertyChanged();
+                _container = value;
             }
         }
+        private IUnityContainer _container; 
+        #endregion
 
-        private DateTime _dateFrom;
-
-        public DateTime DateFrom
-        {
-            get { return _dateFrom; }
-            set { _dateFrom = value; }
-        }
-
-        private DateTime _dateTo;
-
-        public DateTime DateTo
-        {
-            get { return _dateTo; }
-            set { _dateTo = value; }
-        }
-
-        private Boolean _isMale;
-
-        public Boolean IsMale
-        {
-            get { return _isMale; }
-            set { _isMale = value; }
-        }
-
-        private Boolean _isFemale;
-
-        public Boolean IsFemale
-        {
-            get { return _isFemale; }
-            set { _isFemale = value; }
-        }
-        
-        public ICommand ApplyFilterCommand { get; set; }
-
-        private Filter TheFilter { get; set; }
-    
-
+        #region Constructor
         public TreeViewFilterViewModel()
         {
             ConfigureCommands();
         }
 
+        private Boolean _showName;
+
+        public Boolean ShowName
+        {
+            get { return _showName; }
+            set { _showName = value; }
+        }
+        #endregion
+
+        #region Methods
         private void ConfigureCommands()
         {
-            ApplyFilterCommand = new RelayCommand(new Action<object>(ApplyFilter));
+            ApplyFilterCommand = new RelayCommand(new Action<object>(AssignFilter));
+            CancelFilterSelection = new RelayCommand(new Action<object>(HideDialog));
         }
 
-        private void ApplyFilter(object obj)
+        private void HideDialog(object obj)
         {
-            PrepareParameters();
-            AssignFilter();
+            if (_ViewExistingDatasetViewModel.FilterTreeView != null)
+            {
+                _ViewExistingDatasetViewModel.FilterTreeView.HideDialog();
+            }
         }
 
-        private void PrepareParameters()
+        private void SendParameters()
         {
-            TheFilter = new Filter();
+            FilterTreeView.PatientID = PatientID;
+            FilterTreeView.DateFrom = DateFrom;
+            FilterTreeView.DateTo = DateTo;
+            FilterTreeView.IsFemale = IsFemale;
+            FilterTreeView.IsMale = IsMale;
+            FilterTreeView.ShowNames = ShowName;
+        }
+        
 
-            TheFilter.PatientID = PatientID;
 
-            if (DateFrom != DateTime.MinValue)
-            {
-                TheFilter.AcquisitionDateFrom = DateFrom;
-            }
+        private void AssignFilter(object obj)
+        {
+            Container = GlobalContainer.Instance.Container;
 
-            if (DateTo != DateTime.MinValue)
-            {
-                TheFilter.AcquisitionDateTo = DateTo;
-            }
+            FilterTreeView = Container.Resolve<IFilterTreeView>();
 
-            if (IsFemale == true)
+            if (FilterTreeView != null)
             {
-                TheFilter.Gender = "F";
-            } else if (IsMale == true)
-            {
-                TheFilter.Gender = "M";
-            }
-            else
-            {
-                TheFilter.Gender = String.Empty;
+                SendParameters();
+                FilterTreeView.PrepareParameters();
+
+                ObservableCollection<Patient> dataset = FilterTreeView.ApplyFilter();
+
+                if (dataset != null)
+                {
+                    _ViewExistingDatasetViewModel.TopLevelViewModel = new TreeViewGroupPatientsViewModel(dataset);
+                    _ViewExistingDatasetViewModel.ToggleFilter = true;
+                }
+                
+                FilterTreeView.HideDialog();
             }
             
-            
-        }
-
-        private void AssignFilter()
-        {
-            ObservableCollection<Patient> dataset = new ObservableCollection<Patient>();
-            ImageRepository repo = new ImageRepository();
-            dataset = repo.generateCustomTreeView(TheFilter,true);
-
-            if (dataset != null)
-            {
-                _ViewExistingDatasetViewModel.TopLevelViewModel = new TreeViewGroupPatientsViewModel(dataset);
-            }
-        }
+        } 
+        #endregion
     }
 }

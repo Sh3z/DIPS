@@ -178,7 +178,7 @@ namespace DIPS.Processor.Queue
             while( _stop == false )
             {
                 _threadLoop();
-                if( _queue.HasPendingJobs )
+                if( _queue.HasPendingJobs == false )
                 {
                     break;
                 }

@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Database;
+using Database.Objects;
+using Database.Unity;
 using DIPS.Database.Objects;
+using DIPS.Unity;
 using DIPS.ViewModel.Commands;
 using Microsoft.Practices.Unity;
 using Database.Repository;
@@ -19,6 +22,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
     public class ViewExistingDatasetViewModel :BaseViewModel
     {
 
+        #region Properties
         private ObservableCollection<Patient> _PatientsList;
 
         public ObservableCollection<Patient> PatientsList
@@ -26,7 +30,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             get { return _PatientsList; }
             set
             {
-                _PatientsList = value; 
+                _PatientsList = value;
                 OnPropertyChanged();
             }
         }
@@ -39,19 +43,22 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set { _propertiesList = value; }
         }
 
-        public TreeViewGroupPatientsViewModel TopLevelViewModel { get { return _topLevel; }
+        public TreeViewGroupPatientsViewModel TopLevelViewModel
+        {
+            get { return _topLevel; }
             set
             {
                 _topLevel = value;
                 OnPropertyChanged();
-            } }
+            }
+        }
         private TreeViewGroupPatientsViewModel _topLevel;
 
         private BitmapImage _imgUnprocessed;
 
         public BitmapImage ImgUnprocessed
         {
-            get { return _imgUnprocessed;  }
+            get { return _imgUnprocessed; }
             set
             {
                 _imgUnprocessed = value;
@@ -70,13 +77,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 OnPropertyChanged();
             }
         }
-        
-        public ICommand OpenFilterDialogCommand { get; set; }
 
-        public ViewExistingDatasetViewModel()
-        {
-            GetPatientsForTreeview();
-        }
+        public ICommand OpenFilterDialogCommand { get; set; }
 
         public IUnityContainer Container
         {
@@ -98,23 +100,76 @@ namespace DIPS.ViewModel.UserInterfaceVM
             get { return _isSelected; }
             set
             {
-                    TreeViewPatientViewModel tvpv = new TreeViewPatientViewModel(null);
-                   _isSelected = value;
-                    OnPropertyChanged();
-                    Boolean transform = true;
-                    AdminRepository admin = new AdminRepository();
-                    if (_isSelected == true) transform = admin.verified();
+                TreeViewPatientViewModel tvpv = new TreeViewPatientViewModel(null);
+                _isSelected = value;
+                OnPropertyChanged();
+                Boolean transform = true;
+                AdminRepository admin = new AdminRepository();
+                if (_isSelected == true) transform = admin.verified();
 
-                    if (transform) GetPatientsForTreeview();
-                    else
-                    {
-                        _isSelected = false;
-                        OnPropertyChanged();
-                    }
+                if (transform) GetPatientsForTreeview();
+                else
+                {
+                    _isSelected = false;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private Boolean _nameFilterSelected;
+
+        public Boolean NameFilterSelected
+        {
+            get { return _nameFilterSelected; }
+            set
+            {
+                _nameFilterSelected = value;
+                
             }
         }
         
+        private IFilterTreeView _filterImageView;
 
+        public IFilterTreeView FilterTreeView
+        {
+            get { return _filterImageView; }
+            set { _filterImageView = value; }
+        }
+
+        private Boolean _toggleFilter;
+
+        public Boolean ToggleFilter
+        {
+            get { return _toggleFilter; }
+            set
+            {
+                _toggleFilter = value;
+                if (_toggleFilter == true)
+                {
+                    if (FilterTreeView != null)
+                    {
+                        GetPatientsFiltered();
+                    }
+                }
+                else
+                {
+                    GetPatientsForTreeview();
+                }
+            }
+        }
+        
+        
+        #endregion
+
+        #region Constructor
+        public ViewExistingDatasetViewModel()
+        {
+            SetupCommands();
+            GetPatientsForTreeview();
+        } 
+        #endregion
+
+        #region Methods
         private void SetupCommands()
         {
             OpenFilterDialogCommand = new RelayCommand(new Action<object>(OpenFilterDialog));
@@ -122,10 +177,17 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void OpenFilterDialog(object obj)
         {
-            Container = new UnityContainer();
+
+            if (FilterTreeView == null)
+            {
+                Container = GlobalContainer.Instance.Container;
+                FilterTreeView = Container.Resolve<IFilterTreeView>();
+            }
+           
+            FilterTreeView.OpenDialog();
         }
 
-        public void GetPatientsForTreeview()
+        private void GetPatientsForTreeview()
         {
             ImageRepository repo = new ImageRepository();
             PatientsList = repo.generateTreeView(_isSelected);
@@ -133,6 +195,17 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             TopLevelViewModel = tvpv;
         }
+
+        private void GetPatientsFiltered()
+        {
+            ImageRepository repo = new ImageRepository();
+            PatientsList = FilterTreeView.ApplyFilter();
+            TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(PatientsList);
+
+            TopLevelViewModel = tvpv;
+        }
+        
+        #endregion
 
 
     }
