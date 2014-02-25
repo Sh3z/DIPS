@@ -1,4 +1,6 @@
-﻿using DIPS.Processor.Client;
+﻿using Database.Repository;
+using DIPS.Database;
+using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using System;
 using System.Collections.Generic;
@@ -61,6 +63,13 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         private void _saveWithoutIdentifier( IProcessedImage image )
         {
             // Todo for Joe
+            ProcessedImageRepository processed = new ProcessedImageRepository();
+            readImage reader = new readImage();
+
+            String identifier = image.Identifier;
+            byte[] blob = reader.ImageToByteArray(image.Output);
+
+            processed.withoutIdentifier(identifier, blob);
         }
 
         /// <summary>
@@ -71,6 +80,13 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         private void _saveWithIdentifier( IProcessedImage image, JobInput input )
         {
             // Todo for Joe
+            ProcessedImageRepository processed = new ProcessedImageRepository();
+            readImage reader = new readImage();
+
+            String identifier = image.Identifier;
+            byte[] blob = reader.ImageToByteArray(image.Output);
+
+            processed.withIdentifier(identifier,blob);
         }
     }
 }

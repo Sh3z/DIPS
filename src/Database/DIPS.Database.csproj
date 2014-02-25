@@ -77,6 +77,7 @@
     <Compile Include="Dicom\InsertToDatabase.cs" />
     <Compile Include="DicomHelper\PatientID.cs" />
     <Compile Include="Dicom\Process.cs" />
+    <Compile Include="Objects\Log.cs" />
     <Compile Include="Repository\AdminRepository.cs" />
     <Compile Include="Repository\ConnectionRepository.cs" />
     <Compile Include="Repository\DeleteRepository.cs" />
@@ -113,9 +114,10 @@
     <Compile Include="Dicom\readDicom.cs" />
     <Compile Include="DicomHelper\readImage.cs" />
     <Compile Include="Connection\ConnectionManager.cs" />
-    <Compile Include="Dicom\DicomInfo.cs" />
+    <Compile Include="Objects\DicomInfo.cs" />
     <Compile Include="Connection\DAOInsertPatient.cs" />
     <Compile Include="DicomHelper\verifyDicom.cs" />
+    <Compile Include="Repository\ProcessedImageRepository.cs" />
     <Compile Include="Repository\ProcessRepository.cs" />
     <Compile Include="Unity\IFilterTreeView.cs" />
   </ItemGroup>

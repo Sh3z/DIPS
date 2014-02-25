@@ -1,4 +1,5 @@
 ﻿using Database.Connection;
+using Database.Objects;
 using DIPS.Database;
 using System;
 using System.Collections.Generic;
@@ -19,17 +20,19 @@ namespace Database.Repository
                 Console.WriteLine(files.Length + " Files to Process");
 
                 Process task = new Process();
-                DicomInfo.logCreated = false;
-                DicomInfo.logNeedUpdate = false;
-                foreach (String s in files)
+                Log.Created = false;
+                Log.NeedUpdate = false;
+                foreach (String filePath in files)
                 {
-                    DicomInfo.readFile = s;
-                    task.processDicom();
+                    DicomInfo dicom = new DicomInfo();
+                    dicom.readFile = filePath;
+                    task.processDicom(dicom,filePath);
+                    Log.Series = dicom.seriesID;
                 }
-                if (DicomInfo.logNeedUpdate == true)
+                if (Log.NeedUpdate == true)
                 {
                     DAOLog log = new DAOLog();
-                    log.update();
+                    log.update(Log.Series);
                 }
             }
             catch (Exception e) { Console.WriteLine(e); }

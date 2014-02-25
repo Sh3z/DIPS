@@ -1,5 +1,6 @@
 ﻿using Database;
 using Database.Dicom;
+using Database.Objects;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,32 +14,32 @@ namespace DIPS.Database
     public class DAOGeneral
     {
 
-        public void patientExist()
+        public void patientExist(DicomInfo dicom)
         {
-            DicomInfo.patientExist = false;
+            dicom.patientExist = false;
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spr_CheckPatientExist_v001", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = DicomInfo.pBday;
-                cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = DicomInfo.age;
-                cmd.Parameters.Add("@sex", SqlDbType.Char).Value = DicomInfo.sex;
-                cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = DicomInfo.patientName;
+                cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = dicom.pBday;
+                cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = dicom.age;
+                cmd.Parameters.Add("@sex", SqlDbType.Char).Value = dicom.sex;
+                cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = dicom.patientName;
 
                 SqlDataReader dataReader = cmd.ExecuteReader();
 
                 while (dataReader.Read())
                 {
-                    DicomInfo.patientExist = true;
+                    dicom.patientExist = true;
+                    dicom.databaseID = dataReader.GetInt32(dataReader.GetOrdinal("Patient ID"));
 
-                    if (allMatched(dataReader))
+                    if (allMatched(dicom, dataReader))
                     {
-                        DicomInfo.sameSeries = true;
-                        DicomInfo.logNeedUpdate = true;
-                        DicomInfo.databaseID = dataReader.GetInt32(dataReader.GetOrdinal("Patient ID"));
-                        DicomInfo.seriesID = dataReader.GetInt32(dataReader.GetOrdinal("Series ID"));
+                        dicom.sameSeries = true;
+                        Log.NeedUpdate = true;
+                        dicom.seriesID = dataReader.GetInt32(dataReader.GetOrdinal("Series ID"));
                         break;
                     }
                 }
@@ -46,40 +47,40 @@ namespace DIPS.Database
             }
         }
 
-        private Boolean allMatched(SqlDataReader dataReader)
+        private Boolean allMatched(DicomInfo dicom, SqlDataReader dataReader)
         {
-            if (!DicomInfo.modality.Equals(dataReader.GetString(dataReader.GetOrdinal("Modality")))) return false;
-            if (!DicomInfo.bodyPart.Equals(dataReader.GetString(dataReader.GetOrdinal("Body Parts")))) return false;
-            if (!DicomInfo.studyDesc.Equals(dataReader.GetString(dataReader.GetOrdinal("Study Description")))) return false;
-            if (!DicomInfo.seriesDesc.Equals(dataReader.GetString(dataReader.GetOrdinal("Series Description")))) return false;
+            if (!dicom.modality.Equals(dataReader.GetString(dataReader.GetOrdinal("Modality")))) return false;
+            if (!dicom.bodyPart.Equals(dataReader.GetString(dataReader.GetOrdinal("Body Parts")))) return false;
+            if (!dicom.studyDesc.Equals(dataReader.GetString(dataReader.GetOrdinal("Study Description")))) return false;
+            if (!dicom.seriesDesc.Equals(dataReader.GetString(dataReader.GetOrdinal("Series Description")))) return false;
             return true;
         }
 
-        public void updatePatientSeries()
+        public void updatePatientSeries(DicomInfo dicom)
         {
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();
                 SqlCommand cmd3 = new SqlCommand("spr_UpdateSeriesAvailable_v001", conn);
                 cmd3.CommandType = CommandType.StoredProcedure;
-                cmd3.Parameters.Add("@databaseID", SqlDbType.Int).Value = DicomInfo.databaseID;
+                cmd3.Parameters.Add("@databaseID", SqlDbType.Int).Value = dicom.databaseID;
                 cmd3.ExecuteNonQuery();
             }
         }
 
-        public void retrieveImageNumber()
+        public void retrieveImageNumber(DicomInfo dicom)
         {
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();
                 SqlCommand cmd2 = new SqlCommand("spr_RetrieveImageNumber_v001", conn);
                 cmd2.CommandType = CommandType.StoredProcedure;
-                cmd2.Parameters.Add("@databaseID", SqlDbType.VarChar).Value = DicomInfo.databaseID;
-                cmd2.Parameters.Add("@classID", SqlDbType.VarChar).Value = DicomInfo.seriesID;
-                cmd2.Parameters.Add("@number", SqlDbType.VarChar).Value = DicomInfo.imgNumber;
+                cmd2.Parameters.Add("@databaseID", SqlDbType.VarChar).Value = dicom.databaseID;
+                cmd2.Parameters.Add("@classID", SqlDbType.VarChar).Value = dicom.seriesID;
+                cmd2.Parameters.Add("@number", SqlDbType.VarChar).Value = dicom.imgNumber;
                 int count = (Int32)cmd2.ExecuteScalar();
 
-                if(count!=0) DicomInfo.imageExist = true;
+                if(count!=0) dicom.imageExist = true;
             }
         }
     }

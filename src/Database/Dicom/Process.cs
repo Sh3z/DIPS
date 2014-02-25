@@ -1,6 +1,7 @@
 ﻿using Database.Connection;
 using Database.Dicom;
 using Database.DicomHelper;
+using Database.Objects;
 using DIPS.Database;
 using System;
 using System.Collections.Generic;
@@ -12,28 +13,31 @@ namespace DIPS.Database
 {
     public class Process
     {
-        public void processDicom()
+        public void processDicom(DicomInfo dicom,String filePath)
         {
-            if (DicomInfo.codecRegistration == false) registerCodec();
-            Console.WriteLine(DicomInfo.readFile);
+            if (Log.CodecRegistration == false)
+            {
+                registerCodec();
+                Log.CodecRegistration = true;
+            }
 
             verifyDicom verify = new verifyDicom();
-            Boolean validDicom = verify.verify();
+            Boolean validDicom = verify.verify(filePath);
 
             if (validDicom == true)
             {
-                DicomInfo.fileReadable = true;
-                readDicom dicom = new readDicom();
-                dicom.read();
+                dicom.fileReadable = true;
+                readDicom reader = new readDicom();
+                reader.read(dicom);
 
-                if (DicomInfo.fileReadable == true)
+                if (dicom.fileReadable == true)
                 {
                     SimpleEncryption AES = new SimpleEncryption();
-                    DicomInfo.patientName = AES.Encrypt(DicomInfo.patientName);
+                    dicom.patientName = AES.Encrypt(dicom.patientName);
 
-                    CheckIfPatientExist();
+                    CheckIfPatientExist(dicom);
                     InsertToDatabase database = new InsertToDatabase();
-                    database.insert();
+                    database.insert(dicom,filePath);
                 }
             }
             else Console.WriteLine("Not a Valid DICOM file");
@@ -45,26 +49,25 @@ namespace DIPS.Database
             Dicom.Codec.Jpeg.DcmJpegCodec.Register();
             Dicom.Codec.Jpeg2000.DcmJpeg2000Codec.Register();
             Dicom.Codec.JpegLs.DcmJpegLsCodec.Register();
-            DicomInfo.codecRegistration = true;
         }
 
-        private void CheckIfPatientExist()
+        private void CheckIfPatientExist(DicomInfo dicom)
         {
             DAOGeneral dao = new DAOGeneral();
-            dao.patientExist();
+            dao.patientExist(dicom);
 
-            if (DicomInfo.patientExist == false)
+            if (dicom.patientExist == false)
             {
                 PatientID id = new PatientID();
-                DicomInfo.pID = id.generate();
+                dicom.pID = id.generate();
             }
-            else if (DicomInfo.sameSeries == false)
+            else if (dicom.sameSeries == false)
             {
-                dao.updatePatientSeries();
+                dao.updatePatientSeries(dicom);
             }
-            else if (DicomInfo.sameSeries == true)
+            else if (dicom.sameSeries == true)
             {
-                dao.retrieveImageNumber();
+                dao.retrieveImageNumber(dicom);
             }
         }
     }

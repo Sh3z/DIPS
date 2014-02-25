@@ -14,19 +14,18 @@ namespace DIPS.Database
 {
     public class readImage
     {
-        public byte[] blob( string path )
+        public byte[] blob(string path)
         {
-            DicomInfo.readFile = path;
-            return blob();
+            DicomImage img = new DicomImage(path);
+            Image im = img.RenderImage();
+            return ImageToByteArray(im);
         }
 
-        public byte[] blob()
+        public byte[] ImageToByteArray(Image im)
         {
             byte[] blob = null;
             try
             {
-                DicomImage img = new DicomImage(DicomInfo.readFile);
-                Image im = img.RenderImage();
                 MemoryStream ms = new MemoryStream();
                 im.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                 blob = ms.ToArray();
