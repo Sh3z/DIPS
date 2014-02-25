@@ -105,7 +105,7 @@ namespace DIPS.Database
                     readImage image = new readImage();
                     byte[] blob = image.blob();
 
-                    cmd.Parameters.Add("@imgID", SqlDbType.VarChar).Value = DicomInfo.seriesID;
+                    cmd.Parameters.Add("@imgID", SqlDbType.Int).Value = DicomInfo.seriesID;
 
                     cmd.Parameters.Add("@imgNum", SqlDbType.VarChar).Value = DicomInfo.imgNumber;
                     if (blob != null) cmd.Parameters.Add("@imgBlob", SqlDbType.VarBinary, blob.Length).Value = blob;

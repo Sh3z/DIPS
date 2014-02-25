@@ -67,5 +67,19 @@ namespace Database.Repository
             if (data != null) xml = XDocument.Parse(data);
             return xml;
         }
+
+        public void updateTechnique(int id, String name, XDocument technique)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spr_UpdateXmlTechnique_v001", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
+                cmd.Parameters.Add("@technique", SqlDbType.VarChar).Value = technique;
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

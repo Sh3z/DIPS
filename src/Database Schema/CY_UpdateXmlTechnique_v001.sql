@@ -14,27 +14,22 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <01/11/2013>
--- Description:	<Insert Image File>
+-- Create date: <25/02/2014>
+-- Description:	<Update Selected Image Processing Technique (name and xml)>
 -- =============================================
-CREATE PROCEDURE spr_InsertImages_v001
+CREATE PROCEDURE spr_UpdateXmlTechnique_v001
 	-- Add the parameters for the stored procedure here
-	@imgID int = NULL,
-	@imgNum varchar(5) = NULL,
-	@imgBlob varbinary(Max) = NULL,
-	@process bit = NULL
+	@id int,
+	@name varchar(100),
+	@technique xml
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	IF @imgNum = ''
-		SET @imgNum = NULL
-
     -- Insert statements for procedure here
-	INSERT INTO images (seriesID,imageNumber,imageBlob,processed) VALUES (@imgID,@imgNum,@imgBlob, @process)
+	update imageProcessing set name = @name, technique = @technique where ID = @id; 
 END
 GO
