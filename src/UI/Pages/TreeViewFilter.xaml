@@ -1,7 +1,12 @@
 ﻿<Window x:Name="windowFilter" x:Class="DIPS.UI.Pages.TreeViewFilter"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
         Title="Filter by..." Height="300" Width="300" Closed="windowFilter_Closed">
+    <Window.DataContext>
+        <vm:TreeViewFilterViewModel/>
+    </Window.DataContext>
+    
     <Grid>
         <RadioButton IsChecked="{Binding IsMale}" Content="Male" HorizontalAlignment="Left" Margin="21,154,0,0" VerticalAlignment="Top" Height="20" Width="62"/>
         <RadioButton IsChecked="{Binding IsFemale}" Content="Female" HorizontalAlignment="Left" Margin="106,154,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.667,0.5"/>
