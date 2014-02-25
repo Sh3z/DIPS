@@ -68,27 +68,17 @@ namespace Database.Repository
             return xml;
         }
 
-        public void storeProcessedImage(int series, String imgNum, byte[] image)
+        public void updateTechnique(int id, String name, XDocument technique)
         {
-            try
+            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
-                {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand("spr_InsertImages_v001", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.Add("@imgID", SqlDbType.Int).Value = series;
-                    if (!String.IsNullOrEmpty(imgNum)) cmd.Parameters.Add("@imgNum", SqlDbType.VarChar).Value = imgNum;
-                    if (image != null) cmd.Parameters.Add("@imgBlob", SqlDbType.VarBinary, image.Length).Value = image;
-                    cmd.Parameters.Add("@process", SqlDbType.Bit).Value = 1;
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch (SqlException e)
-            {
-                if (e.Number == 2627) Console.WriteLine("image existed");
-                else Console.WriteLine(e);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spr_UpdateXmlTechnique_v001", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
+                cmd.Parameters.Add("@technique", SqlDbType.VarChar).Value = technique;
+                cmd.ExecuteNonQuery();
             }
         }
     }
