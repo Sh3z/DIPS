@@ -109,8 +109,6 @@ namespace DIPS.Database
                     cmd.Parameters.Add("@imgUID", SqlDbType.VarChar).Value = dicom.imageUID;
                     cmd.Parameters.Add("@imgNum", SqlDbType.VarChar).Value = dicom.imgNumber;
                     if (blob != null) cmd.Parameters.Add("@imgBlob", SqlDbType.VarBinary, blob.Length).Value = blob;
-
-                    cmd.Parameters.Add("@process", SqlDbType.Bit).Value = 0;
                     
                     cmd.ExecuteNonQuery();
                     Console.WriteLine("Image File Success");

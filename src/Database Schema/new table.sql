@@ -27,7 +27,11 @@ seriesID int FOREIGN KEY REFERENCES imageProperties(seriesID),
 imageNumber varchar(5),
 imageUID varchar(70),
 imageBlob varbinary(MAX),
-processed bit
+);
+create table processedImages(
+fileID int identity PRIMARY KEY,
+imageUID varchar(70),
+imageBlob varbinary(MAX)
 );
 create table timeLog(
 logID int identity PRIMARY KEY,
@@ -43,9 +47,11 @@ select * from patient;
 select * from name;
 select * from imageProperties;
 select * from images;
+select * from processedImages;
 select * from timeLog;
 
 drop table timeLog;
+drop table processedImages;
 drop table images;
 drop table imageProperties;
 drop table name;

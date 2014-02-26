@@ -120,10 +120,26 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 SqlCommand cmd = new SqlCommand("spr_RetrieveImage_v001", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@fID", SqlDbType.VarChar).Value = fileID;
-                byte[] image = (byte[])cmd.ExecuteScalar();
+                SqlDataReader dataReader = cmd.ExecuteReader();
+
+                dataReader.Read();
+                byte[] image = (byte[])dataReader.GetValue(dataReader.GetOrdinal("imageBlob"));
+                String UID = dataReader.GetString(dataReader.GetOrdinal("imageUID"));
+                dataReader.Close();
 
                 BitmapImage theBmp = ToImage(image);
                 BaseUnProcessedImage = theBmp;
+
+
+                SqlCommand cmd2 = new SqlCommand("spr_RetrieveProcessedImage_v001", conn);
+                cmd2.CommandType = CommandType.StoredProcedure;
+                cmd2.Parameters.Add("@imageUID", SqlDbType.VarChar).Value = UID;
+                byte[] processed = (byte[]) cmd2.ExecuteScalar();
+
+                if (processed != null)
+                {
+                    BitmapImage processedBmp = ToImage(processed);
+                }
             }
         }
 

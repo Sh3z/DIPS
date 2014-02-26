@@ -149,6 +149,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Deployment\DIPS.reg" />
     <None Include="packages.config" />
     <Content Include="packages\Extended.Wpf.Toolkit.2.0.0\Extended.Wpf.Toolkit.2.0.0.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
