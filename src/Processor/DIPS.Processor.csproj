@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BatchProcessor.cs" />
+    <Compile Include="Persistence\PersistedJobIdentifiers.cs" />
     <Compile Include="Worker\TicketWorker.cs" />
     <Compile Include="Queue\QueueExecutor.cs" />
     <Compile Include="Pipeline\IPipelineFactory.cs" />

@@ -36,50 +36,6 @@ namespace DIPS.Tests.Processor
         }
 
         /// <summary>
-        /// Tests constructing a Persisted result with a null image and valid
-        /// integer id.
-        /// </summary>
-        [TestMethod]
-        [ExpectedException( typeof( ArgumentNullException ) )]
-        public void TestConstructor_NullImage_ValidNumber()
-        {
-            PersistedResult r = new PersistedResult( null, 1 );
-        }
-
-        /// <summary>
-        /// Tests constructing a Persisted result with a valid image and
-        /// a null string.
-        /// </summary>
-        [TestMethod]
-        [ExpectedException( typeof( ArgumentException ) )]
-        public void TestConstructor_ValidImage_NullString()
-        {
-            PersistedResult r = new PersistedResult( Image.FromFile( "img.bmp" ), null );
-        }
-
-        /// <summary>
-        /// Tests constructing a Persisted result with a valid image and
-        /// an empty string
-        /// </summary>
-        [TestMethod]
-        [ExpectedException( typeof( ArgumentException ) )]
-        public void TestConstructor_ValidImage_EmptyString()
-        {
-            PersistedResult r = new PersistedResult( Image.FromFile( "img.bmp" ), string.Empty );
-        }
-
-        /// <summary>
-        /// Tests constructing a Persisted result with a valid image and
-        /// a negative numeric identifier.
-        /// </summary>
-        [TestMethod]
-        [ExpectedException( typeof( ArgumentOutOfRangeException ) )]
-        public void TestConstructor_ValidImage_NegativeNumber()
-        {
-            PersistedResult r = new PersistedResult( Image.FromFile( "img.bmp" ), -1 );
-        }
-
-        /// <summary>
         /// Tests constructing a Persisted result with a valid image and string
         /// </summary>
         [TestMethod]
@@ -91,7 +47,6 @@ namespace DIPS.Tests.Processor
 
             Assert.AreEqual( id, r.Identifier );
             Assert.AreEqual( img, r.Output );
-            Assert.IsFalse( r.PersisterGeneratedIdentifier );
         }
 
         /// <summary>
@@ -104,9 +59,8 @@ namespace DIPS.Tests.Processor
             Image img = Image.FromFile( "img.bmp" );
             PersistedResult r = new PersistedResult( img, id );
 
-            Assert.AreEqual( id, int.Parse( r.Identifier ) );
+            Assert.AreEqual( id, r.Identifier );
             Assert.AreEqual( img, r.Output );
-            Assert.IsTrue( r.PersisterGeneratedIdentifier );
         }
     }
 }

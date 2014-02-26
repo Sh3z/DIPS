@@ -25,7 +25,7 @@ namespace DIPS.Processor.Client
         /// Gets the identifier of the input provided to the processor to generate
         /// the associated output.
         /// </summary>
-        string Identifier
+        object Identifier
         {
             get;
         }

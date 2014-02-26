@@ -105,16 +105,15 @@ namespace DIPS.Tests.Processor
             object identifier = null;
             persister.Persist( CurrentTicket.JobID, toPersist, identifier );
 
-            // File should be called 0.png
-            string path = string.Format( @"{0}/{{{1}}}/0.png", CurrentDirectory, CurrentTicket.JobID );
-            bool fileExists = File.Exists( path );
+            // A file should exist within this path.
+            string path = string.Format( @"{0}/{{{1}}}", CurrentDirectory, CurrentTicket.JobID );
+            bool fileExists = Directory.GetFiles( path ).Count() == 1;
             Assert.IsTrue( fileExists );
 
-            // Persist again, should be 1.png
+            // Persist again, should have 2 files
             persister.Persist( CurrentTicket.JobID, toPersist, identifier );
 
-            path = string.Format( @"{0}/{{{1}}}/1.png", CurrentDirectory, CurrentTicket.JobID );
-            fileExists = File.Exists( path );
+            fileExists = Directory.GetFiles( path ).Count() == 2;
             Assert.IsTrue( fileExists );
         }
 
@@ -129,8 +128,8 @@ namespace DIPS.Tests.Processor
             Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
             persister.Persist( CurrentTicket.JobID, toPersist, id );
 
-            // File should be called output_0.png
-            string path = string.Format( @"{0}/{{{1}}}/{2}.png", CurrentDirectory, CurrentTicket.JobID, id );
+            Guid theID = persister.GetPersistedIdentifier( CurrentTicket.JobID, id );
+            string path = string.Format( @"{0}/{{{1}}}/{2}.png", CurrentDirectory, CurrentTicket.JobID, theID );
             bool fileExists = File.Exists( path );
             Assert.IsTrue( fileExists );
         }
@@ -159,6 +158,7 @@ namespace DIPS.Tests.Processor
             Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
             persister.Persist( CurrentTicket.JobID, toPersist, id );
             var results = persister.Load( CurrentTicket.JobID );
+            Guid persistedID = persister.GetPersistedIdentifier( CurrentTicket.JobID, id );
 
             Assert.IsTrue( results.Any() );
             Assert.AreEqual( 1, results.Count() );
@@ -263,9 +263,10 @@ namespace DIPS.Tests.Processor
             FileSystemPersister persister = new FileSystemPersister( CurrentDirectory );
             Image toPersist = CurrentTicket.Request.Job.GetInputs().First().Input;
             persister.Persist( CurrentTicket.JobID, toPersist, id );
+            Guid providedID = persister.GetPersistedIdentifier( CurrentTicket.JobID, id );
 
             string dir = string.Format( @"{0}/{{{1}}}", persister.TargetDirectory, CurrentTicket.JobID );
-            string path = string.Format( @"{0}/{1}.png", dir, id );
+            string path = string.Format( @"{0}/{1}.png", dir, persister.GetPersistedIdentifier( CurrentTicket.JobID, id ) );
             Assert.IsTrue( File.Exists( path ) );
 
             bool deleted = persister.Delete( CurrentTicket.JobID, id );

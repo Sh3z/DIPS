@@ -35,6 +35,7 @@ namespace DIPS.Processor.Persistence
                 _createDirectory( dir );
             }
 
+            _identifiers = new List<PersistedJobIdentifiers>();
             TargetDirectory = dir;
         }
 
@@ -74,6 +75,28 @@ namespace DIPS.Processor.Persistence
 
 
         /// <summary>
+        /// Gets the generated identifier for the input.
+        /// </summary>
+        /// <param name="jobID">The identifier of the job the input was saved
+        /// against.</param>
+        /// <param name="originalIdentifier">The original identifier given to the
+        /// input.</param>
+        /// <returns>The unique identifier for the input provided by the
+        /// persister.</returns>
+        public Guid GetPersistedIdentifier( Guid jobID, object originalIdentifier )
+        {
+            PersistedJobIdentifiers id = _getOrCreateIDSet( jobID );
+            Guid? theID = id.GetIdentifier( originalIdentifier );
+            if( theID.HasValue == false )
+            {
+                throw new ArgumentException( "Result not persisted with identifier" );
+            }
+
+            return theID.Value;
+        }
+
+
+        /// <summary>
         /// Persits the output of a job.
         /// </summary>
         /// <param name="jobID">The unique identifier of the job to save
@@ -84,12 +107,17 @@ namespace DIPS.Processor.Persistence
         /// by the client.</param>
         public void Persist( Guid jobID, Image output, object identifier )
         {
-            string fullPath = _resolvePath( identifier, jobID );
+            PersistedJobIdentifiers id = _getOrCreateIDSet( jobID );
+            Guid inputID = _createIdentifier( identifier, id );
+            string idAsString = inputID.ToString();
+            string fullPath = _resolvePath( idAsString, jobID );
             using( Stream stream = File.Create( fullPath ) )
             {
                 output.Save( stream, ImageFormat.Png );
             }
         }
+
+        
 
         /// <summary>
         /// Loads a particular object back from the storage this
@@ -129,7 +157,7 @@ namespace DIPS.Processor.Persistence
             string dir = string.Format( @"{0}/{{{1}}}", TargetDirectory, jobID );
             if( Directory.Exists( dir ) )
             {
-                results = _loadFromDir( dir );
+                results = _loadFromDir( jobID, dir );
             }
 
             return results;
@@ -148,6 +176,8 @@ namespace DIPS.Processor.Persistence
             if( Directory.Exists( dir ) )
             {
                 Directory.Delete( dir, true );
+                PersistedJobIdentifiers id = _getOrCreateIDSet( jobID );
+                _identifiers.Remove( id );
                 return true;
             }
             else
@@ -168,10 +198,18 @@ namespace DIPS.Processor.Persistence
         /// successfully; <c>false</c> otherwise.</returns>
         public bool Delete( Guid jobID, object identifier )
         {
-            string path = string.Format( @"{0}/{{{1}}}/{2}.png", TargetDirectory, jobID, identifier );
+            PersistedJobIdentifiers id = _getOrCreateIDSet( jobID );
+            Guid? theID = id.GetIdentifier( identifier );
+            if( theID.HasValue == false )
+            {
+                return false;
+            }
+
+            string path = string.Format( @"{0}/{{{1}}}/{2}.png", TargetDirectory, jobID, theID.Value.ToString() );
             if( File.Exists( path ) )
             {
                 File.Delete( path );
+                id.RemoveOriginalIdentifier( identifier );
                 return true;
             }
             else
@@ -182,17 +220,55 @@ namespace DIPS.Processor.Persistence
 
 
         /// <summary>
+        /// Gets or creates the id set object for the job
+        /// </summary>
+        /// <param name="jobGuid">The job to retrieve the set for</param>
+        /// <returns>The job ID set object</returns>
+        private PersistedJobIdentifiers _getOrCreateIDSet( Guid jobGuid )
+        {
+            PersistedJobIdentifiers id = _identifiers.FirstOrDefault( x => x.JobID == jobGuid );
+            if( id == null )
+            {
+                id = new PersistedJobIdentifiers( jobGuid );
+                _identifiers.Add( id );
+            }
+
+            return id;
+        }
+
+        /// <summary>
+        /// Creates an identifier in the set and returns it for the given
+        /// raw id
+        /// </summary>
+        /// <param name="identifier">The identifier provided by the client</param>
+        /// <param name="id">The id set to add to</param>
+        /// <returns>The created id for the provided identifier</returns>
+        private Guid _createIdentifier( object identifier, PersistedJobIdentifiers id )
+        {
+            if( identifier == null )
+            {
+                return id.CreateIdentifier();
+            }
+            else
+            {
+                return id.CreateIdentifier( identifier );
+            }
+        }
+
+        /// <summary>
         /// Loads all previous results from a given directory.
         /// </summary>
+        /// <param name="jobID">The identifier of the job represented by
+        /// the directory</param>
         /// <param name="dir">The directory to load from</param>
         /// <returns>An enumerable set of previous results.</returns>
-        private ICollection<PersistedResult> _loadFromDir( string dir )
+        private ICollection<PersistedResult> _loadFromDir( Guid jobID, string dir )
         {
             ICollection<PersistedResult> results = new List<PersistedResult>();
             var files = Directory.EnumerateFiles( dir, "*.png" );
             foreach( string fileName in files )
             {
-                PersistedResult result = _createResult( fileName );
+                PersistedResult result = _createResult( jobID, fileName );
                 if( result != null )
                 {
                     results.Add( result );
@@ -205,25 +281,20 @@ namespace DIPS.Processor.Persistence
         /// <summary>
         /// Attempts to create a result for the given file.
         /// </summary>
+        /// <param name="jobID">The id of the job the result came from</param>
         /// <param name="fileName">The path to the file</param>
         /// <returns>A PersistedResult instance, or null if the file
         /// cannot be converted.</returns>
-        private PersistedResult _createResult( string fileName )
+        private PersistedResult _createResult( Guid jobID, string fileName )
         {
             try
             {
                 Image img = _loadImage( fileName );
                 string id = Path.GetFileNameWithoutExtension( fileName );
-                int idAsInt = 0;
-                bool parsed = int.TryParse( id, out idAsInt );
-                if( parsed )
-                {
-                    return new PersistedResult( img, idAsInt );
-                }
-                else
-                {
-                    return new PersistedResult( img, id );
-                }
+                Guid idAsGuid = Guid.Parse( id );
+                PersistedJobIdentifiers ids = _getOrCreateIDSet( jobID );
+                object theID = ids.GetOriginalIdentifier( idAsGuid );
+                return new PersistedResult( img, theID );
             }
             catch
             {
@@ -291,5 +362,10 @@ namespace DIPS.Processor.Persistence
         /// Retains the current id for jobs with no identifiers.
         /// </summary>
         private int _id;
+
+        /// <summary>
+        /// Maintains the set of identifiers for each job.
+        /// </summary>
+        private ICollection<PersistedJobIdentifiers> _identifiers;
     }
 }

@@ -39,7 +39,7 @@ namespace DIPS.Tests.Processor
             Assert.IsTrue( images.Any() );
 
             PersistedResult r = images.First();
-            Assert.AreEqual( "0", r.Identifier );
+            Assert.AreEqual( 0, r.Identifier );
         }
 
         /// <summary>
