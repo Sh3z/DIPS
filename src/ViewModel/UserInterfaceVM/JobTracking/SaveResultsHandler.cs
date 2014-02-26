@@ -62,14 +62,12 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// <param name="image">The processed image to save</param>
         private void _saveWithoutIdentifier( IProcessedImage image )
         {
-            // Todo for Joe
-            ProcessedImageRepository processed = new ProcessedImageRepository();
+            // Todo for Joe 
             readImage reader = new readImage();
-
-            String identifier = image.Identifier;
             byte[] blob = reader.ImageToByteArray(image.Output);
 
-            processed.withoutIdentifier(identifier, blob);
+            ProcessedImageRepository processed = new ProcessedImageRepository();
+            processed.saveImage(String.Empty, blob);
         }
 
         /// <summary>
@@ -80,13 +78,12 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         private void _saveWithIdentifier( IProcessedImage image, JobInput input )
         {
             // Todo for Joe
-            ProcessedImageRepository processed = new ProcessedImageRepository();
-            readImage reader = new readImage();
-
             String identifier = image.Identifier;
+            readImage reader = new readImage();
             byte[] blob = reader.ImageToByteArray(image.Output);
 
-            processed.withIdentifier(identifier,blob);
+            ProcessedImageRepository processed = new ProcessedImageRepository();
+            processed.saveImage(identifier,blob);
         }
     }
 }
