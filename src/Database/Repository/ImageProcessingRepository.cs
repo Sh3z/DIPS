@@ -27,25 +27,29 @@ namespace Database.Repository
 
         public List<Technique> getAllTechnique()
         {
-            List<Technique> list = null;
+            List<Technique> list = new List<Technique>();
 
-            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            try
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("spr_RetrieveAllTechnique_v001", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataReader data = cmd.ExecuteReader();
-
-                while (data.Read())
+                using( SqlConnection conn = new SqlConnection( ConnectionManager.getConnection ) )
                 {
-                    if (list == null) list = new List<Technique>();
-                    Technique technique = new Technique();
-                    technique.ID = data.GetInt32(data.GetOrdinal("ID"));
-                    technique.Name = data.GetString(data.GetOrdinal("name"));
-                    list.Add(technique);
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand( "spr_RetrieveAllTechnique_v001", conn );
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader data = cmd.ExecuteReader();
+
+                    while( data.Read() )
+                    {
+                        if( list == null ) list = new List<Technique>();
+                        Technique technique = new Technique();
+                        technique.ID = data.GetInt32( data.GetOrdinal( "ID" ) );
+                        technique.Name = data.GetString( data.GetOrdinal( "name" ) );
+                        list.Add( technique );
+                    }
+                    data.Close();
                 }
-                data.Close();
             }
+            catch { }
 
             return list;
         }
