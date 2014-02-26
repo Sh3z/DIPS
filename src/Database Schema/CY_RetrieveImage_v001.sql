@@ -28,6 +28,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select imageBlob from images where fileID = @fID
+	select imageBlob,imageUID from images where fileID = @fID
 END
 GO
