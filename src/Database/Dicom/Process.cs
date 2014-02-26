@@ -15,12 +15,6 @@ namespace DIPS.Database
     {
         public void processDicom(DicomInfo dicom,String filePath)
         {
-            if (Log.CodecRegistration == false)
-            {
-                registerCodec();
-                Log.CodecRegistration = true;
-            }
-
             verifyDicom verify = new verifyDicom();
             Boolean validDicom = verify.verify(filePath);
 
@@ -41,15 +35,7 @@ namespace DIPS.Database
                 }
             }
             else Console.WriteLine("Not a Valid DICOM file");
-        }
-
-        private void registerCodec()
-        {
-            Dicom.Codec.DcmRleCodec.Register();
-            Dicom.Codec.Jpeg.DcmJpegCodec.Register();
-            Dicom.Codec.Jpeg2000.DcmJpeg2000Codec.Register();
-            Dicom.Codec.JpegLs.DcmJpegLsCodec.Register();
-        }
+        }        
 
         private void CheckIfPatientExist(DicomInfo dicom)
         {
