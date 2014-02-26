@@ -137,9 +137,15 @@ namespace DIPS.Tests.Processor
 
             executor.Start();
 
+            int totalTime = 0;
             while( didComplete == false )
             {
                 Thread.Sleep( 1 );
+                totalTime += 1;
+                if( totalTime > 10000 )
+                {
+                    Assert.Fail( "Did not complete job in less than 10s" );
+                }
             }
 
             Assert.IsTrue( worker.DidWork );

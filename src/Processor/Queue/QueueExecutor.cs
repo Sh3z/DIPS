@@ -180,6 +180,7 @@ namespace DIPS.Processor.Queue
                 _threadLoop();
                 if( _queue.HasPendingJobs == false )
                 {
+                    notify_exhausted();
                     break;
                 }
             }
