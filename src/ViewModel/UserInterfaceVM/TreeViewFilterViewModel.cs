@@ -49,15 +49,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 _container = value;
             }
         }
-        private IUnityContainer _container; 
-        #endregion
-
-        #region Constructor
-        public TreeViewFilterViewModel()
-        {
-            ConfigureCommands();
-            SendParameters();
-        }
+        private IUnityContainer _container;
 
         private Boolean _showName;
 
@@ -78,7 +70,14 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 HideDialog(null);
             }
         }
-        
+        #endregion
+
+        #region Constructor
+        public TreeViewFilterViewModel()
+        {
+            ConfigureCommands();
+            SendParameters();
+        }
         #endregion
 
         #region Methods

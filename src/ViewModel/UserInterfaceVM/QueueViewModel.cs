@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DIPS.Unity;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using Microsoft.Practices.Unity;
 
@@ -24,6 +25,14 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
         }
 
+        private IQueueDialog _queueDialog;
+
+        public IQueueDialog QueueDialog
+        {
+            get { return _queueDialog; }
+            set { _queueDialog = value; }
+        }
+        
         private ObservableCollection<JobViewModel> _pending;
 
         public ObservableCollection<JobViewModel> Pending

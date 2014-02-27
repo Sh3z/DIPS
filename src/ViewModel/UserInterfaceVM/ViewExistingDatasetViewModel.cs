@@ -79,6 +79,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         }
 
         public ICommand OpenFilterDialogCommand { get; set; }
+        public ICommand OpenQueueCommand { get; set; }
 
         public IUnityContainer Container
         {
@@ -136,6 +137,15 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set { _filterImageView = value; }
         }
 
+        private IQueueDialog _queueDialog;
+
+        public IQueueDialog QueueDialog
+        {
+            get { return _queueDialog; }
+            set { _queueDialog = value; }
+        }
+        
+
         private Boolean _toggleFilter;
 
         public Boolean ToggleFilter
@@ -175,6 +185,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void SetupCommands()
         {
             OpenFilterDialogCommand = new RelayCommand(new Action<object>(OpenFilterDialog));
+            OpenQueueCommand = new RelayCommand(new Action<object>(OpenQueueDialog));
         }
 
         private void OpenFilterDialog(object obj)
@@ -187,6 +198,17 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
            
             FilterTreeView.OpenDialog();
+        }
+
+        private void OpenQueueDialog(object obj)
+        {
+            if (QueueDialog == null)
+            {
+                Container = GlobalContainer.Instance.Container;
+                QueueDialog = Container.Resolve<IQueueDialog>();
+            }
+
+            QueueDialog.ShowDialog();
         }
 
         private void GetPatientsForTreeview()

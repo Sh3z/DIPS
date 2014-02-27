@@ -37,8 +37,10 @@ namespace DIPS
             c.RegisterInstance<IPipelineManager>( s.PipelineManager );
 
             FilterTreeView ftv = new FilterTreeView();
+            QueueDialog qd = new QueueDialog();
 
             c.RegisterInstance<IFilterTreeView>(ftv);
+            c.RegisterInstance<IQueueDialog>(qd);
 
             MainNavi navWindow = new MainNavi();
             navWindow.Service = s;
