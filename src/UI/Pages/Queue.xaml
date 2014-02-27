@@ -3,7 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Queue" Height="300" Width="300">
     <Grid>
-        <ListBox HorizontalAlignment="Left" Height="250" Margin="10,10,0,0" VerticalAlignment="Top" Width="272"/>
+        <ListBox ItemsSource="{Binding Pending}" HorizontalAlignment="Left" Height="130" Margin="10,49,0,0" VerticalAlignment="Top" Width="128"/>
+        <ListBox ItemsSource="{Binding Complete}" HorizontalAlignment="Left" Height="130" Margin="157,49,0,0" VerticalAlignment="Top" Width="125"/>
+        <ListBox ItemsSource="{Binding Current}" HorizontalAlignment="Left" Height="52" Margin="10,208,0,0" VerticalAlignment="Top" Width="272"/>
+        <Label Content="Pending
+               " HorizontalAlignment="Left" Margin="45,18,0,0" VerticalAlignment="Top" Width="57"/>
+        <Label Content="Finished" HorizontalAlignment="Left" Margin="196,18,0,0" VerticalAlignment="Top"/>
+        <Label Content="Current" HorizontalAlignment="Left" Margin="121,184,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

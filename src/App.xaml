@@ -50,7 +50,7 @@
            
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:QueueViewModel}">
-           
+           <v:Queue/>
         </DataTemplate>
 
     </Application.Resources>

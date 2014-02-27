@@ -78,12 +78,12 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         private void _saveWithIdentifier( IProcessedImage image, JobInput input )
         {
             // Todo for Joe
-            String identifier = image.Identifier;
+            //String identifier = image.Identifier;
             readImage reader = new readImage();
             byte[] blob = reader.ImageToByteArray(image.Output);
 
             ProcessedImageRepository processed = new ProcessedImageRepository();
-            processed.saveImage(identifier,blob);
+            //processed.saveImage(identifier,blob);
         }
     }
 }
