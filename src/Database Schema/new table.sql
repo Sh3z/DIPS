@@ -1,6 +1,8 @@
 create table patient(
 tableID int identity PRIMARY KEY,
 patientID varchar(30) UNIQUE,
+patientName varchar(50),
+studyUID varchar(70),
 birthdate varchar(10),
 age varchar(10),
 sex char(1),
@@ -8,11 +10,12 @@ seriesAvailable int
 );
 create table name(
 patientID int FOREIGN KEY REFERENCES patient(tableID),
-patientName varchar(50)
+patientName varchar(100)
 );
 create table imageProperties(
 seriesID int identity PRIMARY KEY,
 patientID int FOREIGN KEY REFERENCES patient(tableID),
+seriesUID varchar(70),
 modality varchar(15),
 imageAcquisitionDate datetime,
 lastModifiedDate datetime default current_timestamp,

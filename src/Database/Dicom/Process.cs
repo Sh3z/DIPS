@@ -26,9 +26,6 @@ namespace DIPS.Database
 
                 if (dicom.fileReadable == true)
                 {
-                    SimpleEncryption AES = new SimpleEncryption();
-                    dicom.patientName = AES.Encrypt(dicom.patientName);
-
                     CheckIfPatientExist(dicom);
                     InsertToDatabase database = new InsertToDatabase();
                     database.insert(dicom,filePath);
@@ -40,7 +37,12 @@ namespace DIPS.Database
         private void CheckIfPatientExist(DicomInfo dicom)
         {
             DAOGeneral dao = new DAOGeneral();
-            dao.patientExist(dicom);
+            if (dicom.studyUID.Length != 0 && dicom.seriesUID.Length != 0)
+            {
+                dao.patientExist(dicom);
+                if (dicom.patientExist == true) dao.seriesExist(dicom);
+            }
+            else dao.patientExistBackup(dicom);
 
             if (dicom.patientExist == false)
             {

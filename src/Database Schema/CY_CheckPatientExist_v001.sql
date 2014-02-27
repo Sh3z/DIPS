@@ -22,8 +22,8 @@ CREATE PROCEDURE spr_CheckPatientExist_v001
 	-- Add the parameters for the stored procedure here
 	@birthdate varchar(10),
 	@age varchar(10),
-	@sex char(1),
-	@pName varchar(50)
+	@sex char(1)
+
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -35,17 +35,14 @@ BEGIN
 		SET @age = NULL
 	IF @sex = ''
 		SET @sex = NULL
-	IF @pName = ''
-		SET @pName = NULL
 
     -- Insert statements for procedure here
 	select ISNULL(p.tableID,'') as 'Patient ID', ISNULL(ip.modality,'') as 'Modality',
 	ISNULL(ip.bodyPart,'') as 'Body Parts', ISNULL(ip.studyDescription,'') as 'Study Description',
 	ISNULL(ip.seriesDescription,'') as 'Series Description', ISNULL(ip.seriesID,'') as 'Series ID'
-	from patient p inner join name n on p.tableID = n.patientID join imageProperties ip on p.tableID = ip.patientID 
+	from patient p inner join imageProperties ip on p.tableID = ip.patientID 
 	where (p.birthdate IS NULL OR p.birthdate = @birthdate) 
 	and (p.age IS NULL OR p.age = @age)
 	and (p.sex IS NULL OR p.sex = @sex)
-	and (n.patientName IS NULL OR n.patientName = @pName)
 END
 GO

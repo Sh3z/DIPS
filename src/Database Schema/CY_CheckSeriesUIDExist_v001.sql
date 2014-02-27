@@ -15,12 +15,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <23/11/2013>
--- Description:	<Retrieve id, image number to produce treeview>
+-- Create date: <26/02/2013>
+-- Description:	<Check Series Exist By Matching DICOM Series Instance UID>
 -- =============================================
-CREATE PROCEDURE spr_TreeView_v001
+CREATE PROCEDURE spr_CheckSeriesUIDExist_v001
 	-- Add the parameters for the stored procedure here
-
+	@seriesUID varchar(70)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -28,11 +28,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select p.patientID as 'Patient ID', n.patientName as 'Patient Name', 
-	n.patientID as 'Table ID', iv.seriesDescription as 'Series', i.fileID as 'File ID'
-	from patient p join name n on p.tableID = n.patientID
-	join imageProperties iv on p.tableID = iv.patientID 
-	join images i on iv.seriesID = i.seriesID 
-	order by iv.lastModifiedDate desc
+	SELECT seriesID from imageProperties where seriesUID = @seriesUID
 END
 GO

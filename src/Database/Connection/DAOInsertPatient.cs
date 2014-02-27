@@ -1,4 +1,5 @@
 ﻿using Database;
+using Database.DicomHelper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,7 +23,7 @@ namespace DIPS.Database
                     SqlCommand cmd = new SqlCommand("spr_InsertPatient_v001", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@id", SqlDbType.VarChar).Value = dicom.pID;
-
+                    cmd.Parameters.Add("@studyUID", SqlDbType.VarChar).Value = dicom.studyUID;
                     cmd.Parameters.Add("@birthday", SqlDbType.VarChar).Value = dicom.pBday;
                     cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = dicom.age;
                     cmd.Parameters.Add("@sex", SqlDbType.Char, 1).Value = dicom.sex;
@@ -43,14 +44,16 @@ namespace DIPS.Database
         {
             try
             {
+                Encryption name = new Encryption();
+                String encrypyted = name.Encrypt(dicom.patientName, dicom.databaseID);
+
                 using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("spr_InsertName_v001", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@id", SqlDbType.Int).Value = dicom.databaseID;
-
-                    cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = dicom.patientName;
+                    cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = encrypyted;
                     cmd.ExecuteNonQuery();
                     Console.WriteLine("Name Success");
                 }
@@ -73,7 +76,7 @@ namespace DIPS.Database
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@id", SqlDbType.Int).Value = dicom.databaseID;
-
+                    cmd.Parameters.Add("@seriesUID", SqlDbType.VarChar).Value = dicom.seriesUID;
                     cmd.Parameters.Add("@modality", SqlDbType.VarChar).Value = dicom.modality;
                     cmd.Parameters.Add("@imgDateTime", SqlDbType.DateTime).Value = dicom.imgDateTime;
                     cmd.Parameters.Add("@bodyPart", SqlDbType.VarChar).Value = dicom.bodyPart;

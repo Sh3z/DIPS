@@ -21,6 +21,7 @@ GO
 CREATE PROCEDURE spr_InsertPatient_v001
 	-- Add the parameters for the stored procedure here
 	@id varchar(30),
+	@studyUID varchar(70),
 	@birthday varchar(10),
 	@age varchar(10),
 	@sex char,
@@ -31,6 +32,8 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 	
+	IF @studyUID = ''
+		SET @studyUID = NULL
 	IF @birthday = ''
 		SET @birthday = NULL
 	IF @age = ''
@@ -39,7 +42,9 @@ BEGIN
 		SET @sex = NULL
 
     -- Insert statements for procedure here
-	INSERT INTO patient (patientID,birthdate,age,sex,seriesAvailable) OUTPUT INSERTED.tableID VALUES (@id,@birthday,@age,@sex,@series)
+	INSERT INTO patient (patientID,studyUID,birthdate,age,sex,seriesAvailable) 
+	OUTPUT INSERTED.tableID 
+	VALUES (@id,@studyUID,@birthday,@age,@sex,@series)
 
 END
 GO

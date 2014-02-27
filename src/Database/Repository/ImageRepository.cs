@@ -105,7 +105,7 @@ namespace Database
             string prevSeries = "null";
 
             patientList = new ObservableCollection<Patient>();
-            SimpleEncryption encryptedName = new SimpleEncryption();
+            Encryption encryptedName = new Encryption();
 
             while (data.Read())
             {
@@ -128,7 +128,8 @@ namespace Database
                     if (patientExist == false)
                     {
                         dataSets = new ObservableCollection<ImageDataset>();
-                        if(showName==true) patient = new Patient(currentID, encryptedName.Decrypt(patientName), dataSets);
+                        int tableID = data.GetInt32(data.GetOrdinal("Table ID"));
+                        if(showName==true) patient = new Patient(currentID, encryptedName.Decrypt(patientName,tableID), dataSets);
                         else patient = new Patient(currentID, currentID, dataSets);
                         patientList.Add(patient);
                     }
@@ -167,30 +168,34 @@ namespace Database
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@fileID", SqlDbType.VarChar).Value = fileID;
                 SqlDataReader dataReader = cmd.ExecuteReader();
-                while (dataReader.Read())
-                {
-                    properties = "Patient ID : " + dataReader.GetString(dataReader.GetOrdinal("Patient ID"));
-                    properties += System.Environment.NewLine;
-                     properties += "Birthdate : " + dataReader.GetString(dataReader.GetOrdinal("Birthdate"));
-                     properties += System.Environment.NewLine;
-                     properties += "Age : " + dataReader.GetString(dataReader.GetOrdinal("Age"));
-                     properties += System.Environment.NewLine;
-                     properties += "Sex : " + dataReader.GetString(dataReader.GetOrdinal("Sex"));
-                     properties += System.Environment.NewLine;
-                    properties += "Image Date Time : " + dataReader.GetDateTime(dataReader.GetOrdinal("Image Date Time")).ToString();
-                    properties += System.Environment.NewLine;
-                    properties += "Body Part : " + dataReader.GetString(dataReader.GetOrdinal("Body Part"));
-                    properties += System.Environment.NewLine;
-                    properties += "Study Description : " + dataReader.GetString(dataReader.GetOrdinal("Study Description"));
-                    properties += System.Environment.NewLine;
-                    properties += "Series Description : " + dataReader.GetString(dataReader.GetOrdinal("Series Description"));
-                    properties += System.Environment.NewLine;
-                    properties += "Slice Thickness : " + dataReader.GetString(dataReader.GetOrdinal("Slice Thickness"));
-                    properties += System.Environment.NewLine;
+                dataReader.Read();
 
-                    //foreach(String s in properties) System.Diagnostics.Debug.WriteLine("hehe " + s);
-                    break;
-                }
+                properties = "Patient ID : " + dataReader.GetString(dataReader.GetOrdinal("Patient ID"));
+                properties += System.Environment.NewLine;
+                properties += "Birthdate : " + dataReader.GetString(dataReader.GetOrdinal("Birthdate"));
+                properties += System.Environment.NewLine;
+                properties += "Age : " + dataReader.GetString(dataReader.GetOrdinal("Age"));
+                properties += System.Environment.NewLine;
+                properties += "Sex : " + dataReader.GetString(dataReader.GetOrdinal("Sex"));
+                properties += System.Environment.NewLine;
+                properties += "DICOM Acquisition Date : " + dataReader.GetDateTime(dataReader.GetOrdinal("Image Date Time")).ToString();
+                properties += System.Environment.NewLine;
+                properties += "Last Modified Date : " + dataReader.GetDateTime(dataReader.GetOrdinal("Modified Date")).ToString();
+                properties += System.Environment.NewLine;
+                properties += "Body Part : " + dataReader.GetString(dataReader.GetOrdinal("Body Part"));
+                properties += System.Environment.NewLine;
+                properties += "Slice Thickness : " + dataReader.GetString(dataReader.GetOrdinal("Slice Thickness"));
+                properties += System.Environment.NewLine;
+                properties += "Study Description : " + dataReader.GetString(dataReader.GetOrdinal("Study Description"));
+                properties += System.Environment.NewLine;
+                properties += "Series Description : " + dataReader.GetString(dataReader.GetOrdinal("Series Description"));
+                properties += System.Environment.NewLine; 
+                properties += "Study Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Study UID"));
+                properties += System.Environment.NewLine;
+                properties += "Series Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Series UID"));
+                properties += System.Environment.NewLine;
+                properties += "SOP Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Image UID"));
+                properties += System.Environment.NewLine;
                 dataReader.Close();
             }
             return properties;

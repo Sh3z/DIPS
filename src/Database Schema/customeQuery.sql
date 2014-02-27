@@ -54,7 +54,7 @@ BEGIN
 		SET @OrderBy = 'Modified DESC'
 
 	SELECT P.patientID as 'Patient ID', N.patientName as 'Patient Name', 
-		IP.seriesDescription as 'Series', I.fileID as 'File ID'
+		N.patientID as 'Table ID', IP.seriesDescription as 'Series', I.fileID as 'File ID'
 	FROM patient P join name N on P.tableID = N.patientID join
 		imageProperties IP on P.tableID = IP.patientID join 
 		images I on IP.seriesID = I.seriesID

@@ -73,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\DAOLog.cs" />
-    <Compile Include="DicomHelper\SimpleEncryption.cs" />
+    <Compile Include="DicomHelper\Encryption.cs" />
     <Compile Include="Dicom\InsertToDatabase.cs" />
     <Compile Include="DicomHelper\PatientID.cs" />
     <Compile Include="Dicom\Process.cs" />

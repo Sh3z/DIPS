@@ -16,7 +16,43 @@ namespace DIPS.Database
 
         public void patientExist(DicomInfo dicom)
         {
-            dicom.patientExist = false;
+            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spr_CheckStudyUIDExist_v001", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@studyUID", SqlDbType.VarChar).Value = dicom.studyUID;
+                SqlDataReader dataReader = cmd.ExecuteReader();
+                if (dataReader.Read())
+                {
+                    dicom.patientExist = true;
+                    dicom.databaseID = dataReader.GetInt32(0);
+                }
+                dataReader.Close();
+            }
+        }
+
+        public void seriesExist(DicomInfo dicom)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spr_CheckSeriesUIDExist_v001", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@seriesUID", SqlDbType.VarChar).Value = dicom.seriesUID;
+                SqlDataReader dataReader = cmd.ExecuteReader();
+                if (dataReader.Read())
+                {
+                    dicom.sameSeries = true;
+                    dicom.seriesID = dataReader.GetInt32(0);
+                    Log.NeedUpdate = true;
+                }
+                dataReader.Close();
+            }
+        }
+
+        public void patientExistBackup(DicomInfo dicom)
+        {
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();
@@ -26,7 +62,6 @@ namespace DIPS.Database
                 cmd.Parameters.Add("@birthdate", SqlDbType.VarChar).Value = dicom.pBday;
                 cmd.Parameters.Add("@age", SqlDbType.VarChar).Value = dicom.age;
                 cmd.Parameters.Add("@sex", SqlDbType.Char).Value = dicom.sex;
-                cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = dicom.patientName;
 
                 SqlDataReader dataReader = cmd.ExecuteReader();
 

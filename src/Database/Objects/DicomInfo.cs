@@ -15,6 +15,8 @@ namespace DIPS.Database
         private Boolean _patientExist = false;
         private Boolean _sameSeries = false;
         private Boolean _imageExist = false;
+        private String _studyUID = "";
+        private String _seriesUID = "";
         private String _imageUID = "";
         private String _patientID = "";
         private String _patientName = "";
@@ -42,7 +44,6 @@ namespace DIPS.Database
             set { _seriesID = value; }
         }
 
-
         public Boolean fileReadable
         {
             get { return _fileReadable; }
@@ -65,6 +66,18 @@ namespace DIPS.Database
         {
             get { return _imageExist; }
             set { _imageExist = value; }
+        }
+
+        public String studyUID
+        {
+            get { return _studyUID; }
+            set { _studyUID = value; }
+        }
+
+        public String seriesUID
+        {
+            get { return _seriesUID; }
+            set { _seriesUID = value; }
         }
 
         public String imageUID

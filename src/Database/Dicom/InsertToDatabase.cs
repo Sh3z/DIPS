@@ -36,11 +36,6 @@ namespace Database.Connection
                 if (Log.Created == false) log.create();
                 dao.insertImageFile(dicom,filePath);
             }
-
-            dicom.seriesID = 0;
-            dicom.patientExist = false;
-            dicom.imageExist = false;
-            dicom.sameSeries = false;
         }
     }
 }

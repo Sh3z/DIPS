@@ -44,6 +44,8 @@ namespace DIPS.Database
 
             dff.Load(fs, DicomReadOptions.Default);
             pName = dff.Dataset.GetValueString(DicomTags.PatientsName);
+            dicom.studyUID = dff.Dataset.GetValueString(DicomTags.StudyInstanceUID);
+            dicom.seriesUID = dff.Dataset.GetValueString(DicomTags.SeriesInstanceUID);
             dicom.imageUID = dff.Dataset.GetValueString(DicomTags.SOPInstanceUID);
             dicom.sex = dff.Dataset.GetValueString(DicomTags.PatientsSex);
             dicom.pBday = dff.Dataset.GetValueString(DicomTags.PatientsBirthDate);
@@ -90,6 +92,8 @@ namespace DIPS.Database
                 dicom.imgDateTime = imgDateTime.ToString("yyyy-MM-dd HH:mm:ss");
             }
 
+            if (dicom.studyUID == null) dicom.studyUID = String.Empty;
+            if (dicom.seriesUID == null) dicom.seriesUID = String.Empty;
             if (dicom.imageUID == null) dicom.imageUID = String.Empty;
             if (dicom.sex == null || (dicom.sex[0] != 'M' && dicom.sex[0] != 'F')) dicom.sex = String.Empty;
             else dicom.sex = dicom.sex.Substring(0, 1);

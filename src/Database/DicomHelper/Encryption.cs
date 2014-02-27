@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Database.DicomHelper
 {
-    public class SimpleEncryption
+    public class Encryption
     {
         //AES 256 bits
         private static byte[] key = { 210, 187, 19, 110, 57, 216, 115, 54, 14, 148, 207, 116, 27, 152, 242, 200, 142, 12, 185, 177, 184, 53, 196, 122, 24, 86, 117, 218, 131, 236, 77, 209 };
@@ -17,7 +17,7 @@ namespace Database.DicomHelper
         private ICryptoTransform encryptor;
         private ICryptoTransform decryptor;
 
-        public SimpleEncryption()
+        public Encryption()
         {
             RijndaelManaged rijndael = new RijndaelManaged();
             encryptor = rijndael.CreateEncryptor(key, vector);
@@ -41,16 +41,19 @@ namespace Database.DicomHelper
             return newValue;
         }
 
-        public String Encrypt(String value)
+        public String Encrypt(String value, int id)
         {
+            value = value + id;
             byte[] newValue = Transform(encoder.GetBytes(value), encryptor);
             return Convert.ToBase64String(newValue);
         }
 
-        public String Decrypt(String value)
+        public String Decrypt(String value, int id)
         {
             byte[] newValue = Transform(Convert.FromBase64String(value), decryptor);
-            return encoder.GetString(newValue);
+            String decrypted = encoder.GetString(newValue);
+            decrypted = decrypted.Substring(0, decrypted.Length - (id.ToString().Length));
+            return decrypted;
         }
     }
 }
