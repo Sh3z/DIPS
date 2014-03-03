@@ -52,10 +52,13 @@
             </ScrollViewer>
 
         </GroupBox>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="488,20,0,0" VerticalAlignment="Top" Width="75" Command="{Binding SavePipeline}"/>
+        <Button Content="Save as XML file
+                " HorizontalAlignment="Left" Margin="488,20,0,0" VerticalAlignment="Top" Width="93" Command="{Binding SavePipeline}"/>
         <xctk:PropertyGrid Margin="766,63,10,10" IsManipulationEnabled="True"
                            SelectedObject="{Binding Path=SelectedAlgorithm.ParameterObject}"/>
-        <Button Content="Load" HorizontalAlignment="Left" Margin="568,20,0,0" VerticalAlignment="Top" Width="75"
+        <Button Content="Load from XML file
+                " HorizontalAlignment="Left" Margin="839,20,0,0" VerticalAlignment="Top" Width="112"
                 Command="{Binding LoadPipeline}"/>
+        <Button Command="{Binding SavePipelineDatabase}"  Content="Save to Database" HorizontalAlignment="Left" Margin="597,20,0,0" VerticalAlignment="Top" Width="101"/>
     </Grid>
 </UserControl>
