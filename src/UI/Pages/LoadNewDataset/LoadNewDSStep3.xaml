@@ -16,9 +16,9 @@
     <DockPanel  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                 LastChildFill="True" Margin="3">
         <TextBlock  DockPanel.Dock="Top" TextWrapping="Wrap"
-                    Text="Click to confirm that you want to forward with processing the following files and techniques:" />
+                    Text="Click to confirm that you want to forward with processing the following files and techniques:" FontSize="16" />
         <Button DockPanel.Dock="Bottom" MaxWidth="100"
-                Command="{Binding ProcessFilesCommand}" Content="Process"/>
+                Command="{Binding ProcessFilesCommand}" Content="Process" FontSize="16"/>
         <Grid Margin="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -28,9 +28,9 @@
             </Grid.RowDefinitions>
             <UniformGrid Grid.Row="0" Rows="1" Columns="2">
                 <DockPanel Margin="3">
-                    <TextBlock DockPanel.Dock="Top" Text="Selected Files" />
+                    <TextBlock DockPanel.Dock="Top" Text="Selected Files" FontSize="16" />
                     <ListBox DockPanel.Dock="Bottom"
-                             ItemsSource="{Binding ListOfFiles}">
+                             ItemsSource="{Binding ListOfFiles}" FontSize="14">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -42,13 +42,13 @@
                 </DockPanel>
                 <DockPanel Margin="3">
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                        <TextBlock DockPanel.Dock="Top" Text="Processing Plan: " />
+                        <TextBlock DockPanel.Dock="Top" Text="Processing Plan: " FontSize="16" />
                         <TextBlock Text="{Binding Path=PipelineName}" />
                     </StackPanel>
                     
                     <ListView DockPanel.Dock="Bottom"
                               ItemsSource="{Binding Path=PipelineAlgorithms}"
-                              ItemContainerStyle="{StaticResource AlgorithmItemStyle}"/>
+                              ItemContainerStyle="{StaticResource AlgorithmItemStyle}" FontSize="14"/>
                 </DockPanel>
             </UniformGrid>
             
@@ -58,6 +58,12 @@
             <StackPanel Grid.Row="2" Margin="0,3" Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="What do I do when the processing is complete?" VerticalAlignment="Center" />
                 <ComboBox SelectedItem="{Binding PostProcessAction}" Margin="10,0,0,0">
+            <TextBlock Grid.Row="1" TextWrapping="Wrap" HorizontalAlignment="Center"
+                       Text="Processing these files will take xx hours and xx minutes." FontSize="16"/>
+            
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="What do I do when the processing is complete?" VerticalAlignment="Center" FontSize="16" />
+                <ComboBox SelectedItem="{Binding PostProcessAction}" Margin="10,0,0,0" FontSize="16">
                     <ComboBoxItem Content="Nothing" IsSelected="True"/>
                     <ComboBoxItem Content="Sleep"/>
                     <ComboBoxItem Content="Shut down"/>
