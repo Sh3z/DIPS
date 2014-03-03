@@ -33,5 +33,10 @@ namespace DIPS.Processor.Client.Sinks
         /// Occurs when the job has begun.
         /// </summary>
         public event EventHandler JobStarted;
+
+        /// <summary>
+        /// Occurs when an input has been processed.
+        /// </summary>
+        public event EventHandler<InputProcessedArgs> InputProcessed;
     }
 }

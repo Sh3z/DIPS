@@ -13,6 +13,7 @@ using DIPS.Processor.Client.Sinks;
 using System.Threading;
 using DIPS.Processor.Worker;
 using DIPS.Processor.Pipeline;
+using DIPS.Processor.Client.Eventing;
 
 namespace DIPS.Tests.Processor
 {
@@ -101,6 +102,37 @@ namespace DIPS.Tests.Processor
             JobResult result = ticket.Result;
             Assert.AreEqual( JobState.Error, result.Result );
             Assert.AreEqual( typeof( NotImplementedException ), result.Exception.GetType() );
+        }
+
+        /// <summary>
+        /// Tests the input processed event is fired correctly
+        /// </summary>
+        [TestMethod]
+        public void TestWork_InputProcessedFired()
+        {
+            ObjectJobDefinition d = new ObjectJobDefinition(
+                new PipelineDefinition(
+                    new[] { new AlgorithmDefinition( "Test", new Property[] { } ) } ),
+                new[] { new JobInput( Image.FromFile( "img.bmp" ) ) { Identifier = "Test" } } );
+            JobRequest r = new JobRequest( d );
+            JobTicket ticket = new JobTicket( r, new DudCancellationHandler() );
+            TicketWorker w = new TicketWorker();
+            WorkerArgs args = new WorkerArgs( new DudPersister(), new DudPipelineFactory() );
+            args.Ticket = ticket;
+
+            bool didProcess = false;
+            InputProcessedArgs ie = null;
+            TicketSink s = new TicketSink();
+            ticket.Sinks.Add( s );
+            s.InputProcessed += ( se, e ) => { didProcess = true; ie = e; };
+
+            w.Work( args );
+
+            Thread.Sleep( 5 );
+
+            Assert.IsTrue( didProcess );
+            Assert.IsNotNull( ie );
+            Assert.AreEqual( "Test", ie.Identifier );
         }
 
 

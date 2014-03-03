@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Client.Eventing;
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Processor.Persistence;
 using DIPS.Processor.Pipeline;
@@ -136,7 +137,6 @@ namespace DIPS.Processor.Worker
                 Image theInput = _processInput( pipeline, input );
                 _currentArgs.Persister.Persist(
                         _ticket.JobID, theInput, input.Identifier );
-
                 return true;
             }
             catch( Exception e )
@@ -175,6 +175,8 @@ namespace DIPS.Processor.Worker
                 theInput = plugin.Output ?? plugin.Input;
             }
 
+            InputProcessedArgs e = new InputProcessedArgs( input.Identifier, theInput );
+            _ticket.OnInputProcessed( e );
             return theInput;
         }
 

@@ -62,7 +62,8 @@
     <Compile Include="Implementations\DialogService.cs" />
     <Compile Include="Implementations\FilePickerService.cs" />
     <Compile Include="IFilePickerService.cs" />
-    <Compile Include="IQueueDialog.cs" />
+    <Compile Include="Implementations\UIContext.cs" />
+    <Compile Include="IUIContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

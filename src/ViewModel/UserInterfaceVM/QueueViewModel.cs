@@ -1,85 +1,149 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DIPS.Unity;
+﻿using DIPS.Util.Extensions;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
-using Microsoft.Practices.Unity;
+using System;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Linq;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
+    /// <summary>
+    /// Represents the view-model of the queueing component.
+    /// </summary>
     public class QueueViewModel : BaseViewModel
     {
-        #region Properties
-        private IUnityContainer _container;
-
-        public IUnityContainer Container
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueViewModel"/>
+        /// class.
+        /// </summary>
+        /// <param name="tracker">The <see cref="IJobTracker"/> to
+        /// present within the queue.</param>
+        /// <exception cref="ArgumentNullException">tracker is
+        /// null.</exception>
+        public QueueViewModel( IJobTracker tracker )
         {
-            get { return _container; }
+            if( tracker == null )
+            {
+                throw new ArgumentNullException( "tracker" );
+            }
+
+            _tracker = tracker;
+            _tracker.Pending.CollectionChanged += _pendingChanged;
+            _tracker.Finished.CollectionChanged += _finishedChanged;
+            Entries = new ObservableCollection<JobViewModel>();
+            IsPresentingQueued = false;
+        }
+
+
+        /// <summary>
+        /// Gets or sets whether the currently queued elements are
+        /// being displayed.
+        /// </summary>
+        public bool IsPresentingQueued
+        {
+            get
+            {
+                return _isPresentingQueued;
+            }
             set
             {
-                _container = value; 
+                _isPresentingQueued = value;
+                _updateDisplayedEntries();
                 OnPropertyChanged();
             }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private bool _isPresentingQueued;
 
-        private IQueueDialog _queueDialog;
-
-        public IQueueDialog QueueDialog
+        /// <summary>
+        /// Gets the set of currently displayed entries.
+        /// </summary>
+        public ObservableCollection<JobViewModel> Entries
         {
-            get { return _queueDialog; }
-            set { _queueDialog = value; }
+            get;
+            private set;
         }
-        
-        private ObservableCollection<JobViewModel> _pending;
 
-        public ObservableCollection<JobViewModel> Pending
+        /// <summary>
+        /// Gets or sets the selected job.
+        /// </summary>
+        public JobViewModel SelectedJob
         {
-            get { return _pending; }
+            get
+            {
+                return _selectedJob;
+            }
             set
             {
-                _pending = value;
+                _selectedJob = value;
                 OnPropertyChanged();
             }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private JobViewModel _selectedJob;
 
-        private JobViewModel _inProgress;
 
-        public JobViewModel InProgress
+        /// <summary>
+        /// Updates the elements of the Entries collection based on
+        /// the type of entries we are currently displaying.
+        /// </summary>
+        private void _updateDisplayedEntries()
         {
-            get { return _inProgress; }
-            set
+            Entries.Clear();
+            if( IsPresentingQueued )
             {
-                _inProgress = value;
-                OnPropertyChanged();
+                _tracker.Pending.ForEach( Entries.Add );
+            }
+            else
+            {
+                _tracker.Finished.ForEach( Entries.Add );
             }
         }
 
-        private ObservableCollection<JobViewModel> _complete;
-
-        public ObservableCollection<JobViewModel> Complete
+        private void _pendingChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
-            get { return _complete; }
-            set
+            if( IsPresentingQueued )
             {
-                _complete = value;
-                OnPropertyChanged();
+                _updateEntries( e );
             }
-        } 
-        #endregion
+        }
 
-
-        #region Constructor
-        public QueueViewModel()
+        private void _finishedChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
-            IJobTracker tracker = Container.Resolve<IJobTracker>();
-            Complete = tracker.Finished;
-            InProgress = tracker.Current;
-            Pending = tracker.Pending;
-        } 
-        #endregion
+            if( IsPresentingQueued == false )
+            {
+                _updateEntries( e );
+            }
+        }
 
+        private void _updateEntries( NotifyCollectionChangedEventArgs e )
+        {
+            Action<JobViewModel> theAction = null;
+            IList items = null;
+            if( e.Action == NotifyCollectionChangedAction.Add )
+            {
+                items = e.NewItems;
+                theAction = Entries.Add;
+            }
+            else
+            {
+                items = e.OldItems;
+                theAction = x => Entries.Remove( x );
+            }
+
+            foreach( object item in items )
+            {
+                theAction( (JobViewModel)item );
+            }
+        }
+
+
+        /// <summary>
+        /// Contains the tracking instance we provide presentation logic
+        /// against.
+        /// </summary>
+        private IJobTracker _tracker;
     }
 }

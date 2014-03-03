@@ -17,9 +17,9 @@ namespace DIPS.UI.Pages
     /// <summary>
     /// Interaction logic for Queue.xaml
     /// </summary>
-    public partial class Queue : Window
+    public partial class QueueWindow : Window
     {
-        public Queue()
+        public QueueWindow()
         {
             InitializeComponent();
         }

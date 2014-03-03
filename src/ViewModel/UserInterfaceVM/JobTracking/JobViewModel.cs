@@ -1,7 +1,10 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Processor.Client.Eventing;
 using DIPS.Processor.Client.Sinks;
+using DIPS.Util.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -27,6 +30,10 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                 throw new ArgumentNullException( "job" );
             }
 
+            Inputs = new ObservableCollection<InputViewModel>();
+            job.Request.Job
+                .GetInputs()
+                .ForEach( x => Inputs.Add( new InputViewModel( x ) ) );
             _status = string.Empty;
             _longStatus = string.Empty;
             _isRunning = false;
@@ -35,6 +42,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             _sink.JobCompleted += _onJobComplete;
             _sink.JobError += _onJobError;
             _sink.JobStarted += _onJobStarted;
+            _sink.InputProcessed += _inputProcessed;
             Ticket = job;
             Ticket.Sinks.Add( _sink );
             _updateFromState();
@@ -79,6 +87,34 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             get;
             private set;
         }
+
+        /// <summary>
+        /// Gets the collection of <see cref="InputViewModel"/>s associated
+        /// with the current job.
+        /// </summary>
+        public ObservableCollection<InputViewModel> Inputs
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets or sets the selected <see cref="InputViewModel"/>.
+        /// </summary>
+        public InputViewModel SelectedInput
+        {
+            get
+            {
+                return _selectedInput;
+            }
+            set
+            {
+                _selectedInput = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private InputViewModel _selectedInput;
 
         /// <summary>
         /// Gets the current status of this job represented by this
@@ -206,6 +242,24 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             IsCancelled = true;
             _updateFromState();
             _fireIfComplete();
+        }
+
+        /// <summary>
+        /// Occurs when an input has been processed
+        /// </summary>
+        /// <param name="sender">N/A</param>
+        /// <param name="e">Event information</param>
+        private void _inputProcessed( object sender, InputProcessedArgs e )
+        {
+            // Provide the info to the relevant input
+            var inputWithID = ( from input in Inputs
+                                where input.Identifier == e.Identifier
+                                select input ).FirstOrDefault();
+            if( inputWithID != null )
+            {
+                inputWithID.Output = e.Image;
+                inputWithID.IsProcessed = true;
+            }
         }
 
         /// <summary>
