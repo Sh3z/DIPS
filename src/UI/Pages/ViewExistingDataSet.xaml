@@ -22,17 +22,17 @@
 
 
     <Grid Margin="10,0">
-       <Border x:Name="brdUnprocessed" 
+        <Border x:Name="brdUnprocessed" 
     		BorderThickness="2"
     		BorderBrush="#FF000000"
     		VerticalAlignment="Top"
     		HorizontalAlignment="Left"
-    		Margin="318,22,0,0"
+    		Margin="314,60,0,0"
     		Height="128" 
     		Width="128">
 
             <Button Style="{StaticResource ButtonImage}"
-    			Content="{Binding ToProcessSource}" Margin="267,3,-267,-3" />
+    			Content="{Binding ToProcessSource}" Margin="267,42,-267,-42" />
 
 
         </Border>
@@ -43,16 +43,16 @@
     		BorderBrush="#FF000000"
     		VerticalAlignment="Top"
     		HorizontalAlignment="Left"
-    		Margin="582,22,0,0"
+    		Margin="582,61,0,0"
     		Height="128" 
     		Width="128">
             <Button Style="{StaticResource ButtonImage}"
     			Content="{Binding ProcessedSource}" Margin="-114,180,114,-180" />
         </Border>
 
-        <Label Content="----&gt;" HorizontalAlignment="Left" Margin="504,80,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
-        
-        <TreeView ItemsSource="{Binding TopLevelViewModel.Patients}" HorizontalAlignment="Left" Height="358" Margin="26,56,0,0" VerticalAlignment="Top" Width="196">
+        <Label Content="----&gt;" HorizontalAlignment="Left" Margin="495,111,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
+
+        <TreeView ItemsSource="{Binding TopLevelViewModel.Patients}" HorizontalAlignment="Left" Height="358" Margin="26,56,0,0" VerticalAlignment="Top" Width="237">
             <TreeView.ItemContainerStyle>
                 <!-- 
         This Style binds a TreeViewItem to a TreeViewItemViewModel. 
@@ -98,10 +98,11 @@
                 </DataTemplate>
             </TreeView.Resources>
         </TreeView>
-        <Image Source="{Binding ImgUnprocessed, Mode=TwoWay}" HorizontalAlignment="Left" Height="128" Margin="318,22,0,0" VerticalAlignment="Top" Width="128"/>
-        <TextBox Text="{Binding ImageInfo, Mode=TwoWay}"  HorizontalAlignment="Left" Height="220" Margin="280,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" IsEnabled="False"/>
-        <Button Content="Filter Options" Command="{Binding OpenFilterDialogCommand}" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Width="84" />
-        <CheckBox IsChecked="{Binding ToggleFilter}" Content="Active Filter?" HorizontalAlignment="Left" Margin="128,25,0,0" VerticalAlignment="Top" />
+        <Image Source="{Binding ImgUnprocessed, Mode=TwoWay}" HorizontalAlignment="Left" Height="128" Margin="314,60,0,0" VerticalAlignment="Top" Width="128"/>
+        <TextBox Text="{Binding ImageInfo, Mode=TwoWay}"  HorizontalAlignment="Left" Height="198" Margin="314,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" IsEnabled="False"/>
+        <Button Content="Filter Options" Command="{Binding OpenFilterDialogCommand}" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Width="109" FontSize="16" />
+        <CheckBox IsChecked="{Binding ToggleFilter}" Content="Active Filter?" HorizontalAlignment="Left" Margin="156,25,0,0" VerticalAlignment="Top" FontSize="16" />
         <Button Command="{Binding OpenQueueCommand}" Content="Queue" HorizontalAlignment="Left" Margin="822,19,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="View Existing Dataset" HorizontalAlignment="Left" Margin="401,10,0,0" VerticalAlignment="Top" FontSize="22"/>
     </Grid>
 </UserControl>
