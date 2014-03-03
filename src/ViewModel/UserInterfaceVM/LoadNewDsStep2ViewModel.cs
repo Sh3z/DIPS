@@ -59,10 +59,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Technique _chosenTechnique;
 
+        private ObservableCollection<AlgorithmViewModel> _techniqueAlgorithms;
+
         public ObservableCollection<AlgorithmViewModel> TechniqueAlgorithms
         {
-            get;
-            private set;
+            get { return _techniqueAlgorithms; }
+            set
+            {
+                _techniqueAlgorithms = value;
+                OnPropertyChanged();
+            }
         }
 
         public AlgorithmViewModel SelectedAlgorithm
@@ -173,7 +179,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 IUnityContainer c = GlobalContainer.Instance.Container;
                 IPipelineManager manager = c.Resolve<IPipelineManager>();
 
-                var restoredPipeline = manager.RestorePipeline(null);
+                var restoredPipeline = manager.RestorePipeline(value.xml);
                 TechniqueAlgorithms.Clear();
                 
                 foreach (var process in restoredPipeline)
