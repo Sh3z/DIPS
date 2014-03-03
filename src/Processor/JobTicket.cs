@@ -132,6 +132,11 @@ namespace DIPS.Processor
             _sink.FireAsync( "JobError", this, new JobErrorArgs( e ) );
         }
 
+        internal void OnInputProcessed( InputProcessedArgs e )
+        {
+            _sink.FireAsync( "InputProcessed", this, e );
+        }
+
         private void _onJobCancelled()
         {
             _sink.FireAsync( "JobCancelled", this, EventArgs.Empty );
