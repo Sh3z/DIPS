@@ -57,7 +57,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CancelJobCommandTests.cs" />
     <Compile Include="JobViewModelTests.cs" />
     <Compile Include="OngoingJobsViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
