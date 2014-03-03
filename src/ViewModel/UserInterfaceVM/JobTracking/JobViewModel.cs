@@ -31,6 +31,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             }
 
             TimeEnqueued = DateTime.Now;
+            Identifier = job.Request.Identifier;
             Inputs = new ObservableCollection<InputViewModel>();
             job.Request.Job
                 .GetInputs()
@@ -84,6 +85,15 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// Gets the ticket representing the job within this view-model.
         /// </summary>
         public IJobTicket Ticket
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the identifier given to the job.
+        /// </summary>
+        public object Identifier
         {
             get;
             private set;

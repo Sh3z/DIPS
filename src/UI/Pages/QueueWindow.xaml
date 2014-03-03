@@ -7,6 +7,7 @@
         Title="Queue" Height="317" Width="706" Margin="3">
     <Window.Resources>
         <Converters:BooleanNotConverter x:Key="BoolNotConverter" />
+        <Converters:ImageToImageSourceConverter x:Key="ImageToImageSource" />
         <Style TargetType="RadioButton">
             <Setter Property="Margin" Value="3" />
         </Style>
@@ -32,9 +33,20 @@
             </StackPanel>
             <ListView ItemsSource="{Binding Path=Entries}"
                       SelectedItem="{Binding Path=SelectedJob, Mode=TwoWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="ToolTip">
+                            <Setter.Value>
+                                <TextBlock Text="{Binding Path=LongStatus}" />
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
+                            <GridViewColumn Header="Identifier"
+                                            DisplayMemberBinding="{Binding Path=Identifier}" />
                             <GridViewColumn Header="Time Enqueued"
                                             DisplayMemberBinding="{Binding Path=TimeEnqueued}" />
                             <GridViewColumn Header="Time Finished"
@@ -59,7 +71,7 @@
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0" LastChildFill="False">
                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" MinHeight="20">
-                    <!-- Job identifier placeholder -->
+                    <ContentPresenter Content="{Binding Path=Identifier}" />
                 </StackPanel>
                 <Button DockPanel.Dock="Right" Content="Cancel" MinWidth="66"
                         Command="{Binding ElementName=Window, Path=DataContext.CancelCommand}"
@@ -73,6 +85,14 @@
                         <GridView.Columns>
                             <GridViewColumn Header="Identifier"
                                             DisplayMemberBinding="{Binding Path=Identifier}" />
+                            <GridViewColumn Header="Processed">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Path=IsProcessed, Mode=OneWay}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
@@ -82,18 +102,32 @@
                 <ContentPresenter Content="{Binding Path=Identifier}"
                                   DockPanel.Dock="Top" MinHeight="20" Margin="6,0" />
                 <Grid Margin="5">
+                    <Grid.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="BorderThickness" Value="0.33" />
+                            <Setter Property="BorderBrush" Value="Black" />
+                            <Setter Property="DockPanel.Dock" Value="Bottom" />
+                        </Style>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".45*" />
-                        <ColumnDefinition Width=".10*" />
-                        <ColumnDefinition Width=".45*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Border BorderBrush="Black" Grid.Column="0" BorderThickness="1">
-                        <Image Source="{Binding Path=Input}" />
-                    </Border>
-                    <Border BorderBrush="Black" Grid.Column="2" BorderThickness="1">
-                        <Image Source="{Binding Path=Output}" />
-                    </Border>
+                    <DockPanel Grid.Column="0">
+                        <TextBlock DockPanel.Dock="Top" Text="Input" />
+                        <Border>
+                            <Image Source="{Binding Path=Input, Converter={StaticResource ImageToImageSource}}" />
+                        </Border>
+                    </DockPanel>
+
+                    <DockPanel Grid.Column="1">
+                        <TextBlock DockPanel.Dock="Top" Text="Output" />
+                        <Border>
+                            <Image Source="{Binding Path=Output, Converter={StaticResource ImageToImageSource}}" />
+                        </Border>
+                    </DockPanel>
                 </Grid>
             </DockPanel>
         </Grid>

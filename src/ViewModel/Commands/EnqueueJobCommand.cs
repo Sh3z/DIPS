@@ -6,6 +6,7 @@ using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -18,12 +19,20 @@ namespace DIPS.ViewModel.Commands
     /// Represents the source of job information used by the
     /// <see cref="EnqueueJobCommand"/>.
     /// </summary>
-    public interface IJobSource
+    public interface IJobSource : INotifyPropertyChanged
     {
         /// <summary>
         /// Gets the set of files to be input into the processor.
         /// </summary>
         IEnumerable<FileInfo> Files
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the identifier for the job.
+        /// </summary>
+        string Identifier
         {
             get;
         }
@@ -57,7 +66,10 @@ namespace DIPS.ViewModel.Commands
             }
 
             _source = source;
+            _source.PropertyChanged += _sourcePropertyChanged;
         }
+
+        
 
 
         /// <summary>
@@ -75,6 +87,7 @@ namespace DIPS.ViewModel.Commands
                     Container.Contains<IProcessingService>() &&
                     Container.Contains<IJobTracker>() &&
                     _source.Files != null && _source.Files.Any() &&
+                    string.IsNullOrEmpty( _source.Identifier ) == false &&
                     _source.Pipeline != null && _source.Pipeline.Any();
         }
 
@@ -89,12 +102,23 @@ namespace DIPS.ViewModel.Commands
             IProcessingService service = Container.Resolve<IProcessingService>();
             ObjectJobDefinition d = new ObjectJobDefinition( _source.Pipeline, _filesToInputs() );
             JobRequest r = new JobRequest( d );
+            r.Identifier = _source.Identifier;
             IJobTicket t = service.JobManager.EnqueueJob( r );
             IJobTracker tracker = Container.Resolve<IJobTracker>();
             tracker.Add( t );
             _openQueueUI();
         }
 
+
+        /// <summary>
+        /// Occurs when a property within the job source has changed
+        /// </summary>
+        /// <param name="sender">N/A</param>
+        /// <param name="e">Event information</param>
+        private void _sourcePropertyChanged( object sender, PropertyChangedEventArgs e )
+        {
+            OnCanExecuteChanged();
+        }
 
         /// <summary>
         /// Converts the files in the current job source in job inputs

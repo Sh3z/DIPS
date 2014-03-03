@@ -8,6 +8,7 @@ namespace DIPS.Processor.Client
     /// <summary>
     /// Represents a process request from the client. This class cannot be inherited.
     /// </summary>
+    [Serializable]
     public sealed class JobRequest
     {
         /// <summary>
@@ -26,6 +27,15 @@ namespace DIPS.Processor.Client
             Job = job;
         }
 
+
+        /// <summary>
+        /// Gets or sets a client-side identifier to identify this job.
+        /// </summary>
+        public object Identifier
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets the definition of the job to run.

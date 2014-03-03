@@ -10,12 +10,12 @@ namespace DIPS.ViewModel.Converters
     /// <summary>
     /// Represents the converter used to transform a <see cref="Bitmap"/> into an <see cref="ImageSource"/>.
     /// </summary>
-    public class BitmapToImageSourceConverter : IValueConverter
+    public class ImageToImageSourceConverter : IValueConverter
     {
         /// <summary>
-        /// Converts a <see cref="Bitmap"/> into an <see cref="ImageSource"/> for use in Bindings.
+        /// Converts a <see cref="Image"/> into an <see cref="ImageSource"/> for use in Bindings.
         /// </summary>
-        /// <param name="value">The <see cref="Bitmap"/></param>
+        /// <param name="value">The <see cref="Image"/></param>
         /// <param name="targetType">Must be typeof(ImageSource).</param>
         /// <param name="parameter">N/A</param>
         /// <param name="culture">N/A</param>
@@ -23,13 +23,13 @@ namespace DIPS.ViewModel.Converters
         /// <see cref="Bitmap"/>.</returns>
         public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            if( value is Bitmap == false )
+            if( value is Image == false )
             {
                 return Binding.DoNothing;
             }
 
             MemoryStream ms = new MemoryStream();
-            ( (System.Drawing.Bitmap)value ).Save( ms, System.Drawing.Imaging.ImageFormat.Bmp );
+            ( (System.Drawing.Image)value ).Save( ms, System.Drawing.Imaging.ImageFormat.Bmp );
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             ms.Seek( 0, SeekOrigin.Begin );

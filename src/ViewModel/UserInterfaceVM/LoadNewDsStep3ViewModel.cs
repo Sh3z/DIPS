@@ -38,6 +38,21 @@ namespace DIPS.ViewModel.UserInterfaceVM
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private string _pipelineName;
 
+        public string Identifier
+        {
+            get
+            {
+                return _identifier;
+            }
+            set
+            {
+                _identifier = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private string _identifier;
+
         public ObservableCollection<AlgorithmViewModel> PipelineAlgorithms
         {
             get;
