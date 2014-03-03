@@ -92,6 +92,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
 
+            _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
             foreach (var algorithm in Service.PipelineManager.AvailableProcesses)
             {
                 AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
