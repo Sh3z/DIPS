@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
 using System.Threading;
+using DIPS.ViewModel.Commands;
 
 namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
 {
@@ -28,7 +29,6 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         {
             Pending = new ObservableCollection<JobViewModel>();
             Finished = new ObservableCollection<JobViewModel>();
-            CancelJob = new CancelJobCommand();
             _context = GlobalContainer.Instance.Container.Resolve<IUIContext>();
         }
 
@@ -105,15 +105,6 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                     _safeViewModelAction( Finished.Add, vm );
                     break;
             }
-        }
-
-        /// <summary>
-        /// Gets an <see cref="ICommand"/> used to cancel <see cref="JobViewModel"/>s.
-        /// </summary>
-        public ICommand CancelJob
-        {
-            get;
-            private set;
         }
 
         /// <summary>

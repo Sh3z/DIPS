@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="AlgorithmBuilderViewModel.cs" />
     <Compile Include="AlgorithmViewModel.cs" />
+    <Compile Include="Commands\CancelJobCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\EnqueueJobCommand.cs" />
     <Compile Include="Commands\ImageCommands.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="Unity\IQueueDialog.cs" />
     <Compile Include="Objects\ImageHandler.cs" />
     <Compile Include="UserInterfaceVM\CreateAlgorithmViewModel.cs" />
-    <Compile Include="UserInterfaceVM\JobTracking\CancelJobCommand.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\IJobResultsHandler.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\IJobTracker.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\InputViewModel.cs" />

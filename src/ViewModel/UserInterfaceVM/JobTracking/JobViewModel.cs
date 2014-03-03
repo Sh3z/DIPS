@@ -30,6 +30,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                 throw new ArgumentNullException( "job" );
             }
 
+            TimeEnqueued = DateTime.Now;
             Inputs = new ObservableCollection<InputViewModel>();
             job.Request.Job
                 .GetInputs()
@@ -87,6 +88,35 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             get;
             private set;
         }
+
+        /// <summary>
+        /// Gets the <see cref="DateTime"/> when this <see cref="JobViewModel"/>
+        /// was enqueued.
+        /// </summary>
+        public DateTime TimeEnqueued
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="DateTime"/> when this <see cref="JobViewModel"/>
+        /// finished processing.
+        /// </summary>
+        public DateTime TimeFinished
+        {
+            get
+            {
+                return _timeFinished;
+            }
+            set
+            {
+                _timeFinished = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private DateTime _timeFinished;
 
         /// <summary>
         /// Gets the collection of <see cref="InputViewModel"/>s associated
@@ -282,11 +312,13 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                 case JobState.Cancelled:
                     Status = StatusStrings.Cancelled;
                     LongStatus = StatusStrings.CancelleDesc;
+                    TimeFinished = DateTime.Now;
                     break;
 
                 case JobState.Complete:
                     Status = StatusStrings.Complete;
                     LongStatus = StatusStrings.CompleteDesc;
+                    TimeFinished = DateTime.Now;
                     break;
 
                 case JobState.Error:
@@ -294,6 +326,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                     Exception err = Ticket.Result.Exception;
                     string details = string.Format( StatusStrings.ErrorDesc, err.Message );
                     LongStatus = details;
+                    TimeFinished = DateTime.Now;
                     break;
             }
         }

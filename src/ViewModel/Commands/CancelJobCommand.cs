@@ -1,15 +1,14 @@
 ﻿using DIPS.Processor.Client;
-using DIPS.ViewModel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
+namespace DIPS.ViewModel.Commands
 {
     /// <summary>
-    /// Represents an <see cref="ICommand"/> used to cancel jobs.
+    /// Represents the command used to cancel jobs.
     /// </summary>
     public class CancelJobCommand : Command
     {
@@ -24,13 +23,9 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// false.</returns>
         public override bool CanExecute( object parameter )
         {
-            if( parameter is JobViewModel == false )
-            {
-                return false;
-            }
-
-            JobViewModel job = parameter as JobViewModel;
-            return job.IsCancelled == false;
+            return  parameter is IJobTicket && (
+                    ((IJobTicket)parameter).State == JobState.InQueue ||
+                    ((IJobTicket)parameter).State == JobState.Running );
         }
 
         /// <summary>
@@ -41,8 +36,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// null.</param>
         public override void Execute( object parameter )
         {
-            JobViewModel vm = parameter as JobViewModel;
-            IJobTicket ticket = vm.Ticket;
+            IJobTicket ticket = parameter as IJobTicket;
             ticket.Cancel();
         }
     }

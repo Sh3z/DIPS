@@ -2,20 +2,28 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Converters="clr-namespace:DIPS.ViewModel.Converters;assembly=DIPS.ViewModel"
-        Title="Queue" Height="317" Width="474" Margin="3">
+        xmlns:Custom="clr-namespace:DIPS.UI.CustomControls;assembly=DIPS.UI.CustomControls"
+        x:Name="Window"
+        Title="Queue" Height="317" Width="706" Margin="3">
     <Window.Resources>
         <Converters:BooleanNotConverter x:Key="BoolNotConverter" />
         <Style TargetType="RadioButton">
             <Setter Property="Margin" Value="3" />
-            <Setter Property="MinHeight" Value="20" />
         </Style>
         <Style TargetType="ListView">
             <Setter Property="Margin" Value="3" />
         </Style>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Padding" Value="5,0" />
+        </Style>
     </Window.Resources>
-    <DockPanel LastChildFill="True" Margin="3">
-        <DockPanel DockPanel.Dock="Left">
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" MinHeight="20">
+    <Grid Margin="3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                 <RadioButton x:Name="QueuedRadioButton"
                              Content="Queued"
                              IsChecked="{Binding Path=IsPresentingQueued}" />
@@ -23,34 +31,71 @@
                              IsChecked="{Binding Path=IsPresentingQueued, Converter={StaticResource BoolNotConverter}}" />
             </StackPanel>
             <ListView ItemsSource="{Binding Path=Entries}"
-                      SelectedItem="{Binding Path=SelectedJob, Mode=TwoWay}" />
+                      SelectedItem="{Binding Path=SelectedJob, Mode=TwoWay}">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="Time Enqueued"
+                                            DisplayMemberBinding="{Binding Path=TimeEnqueued}" />
+                            <GridViewColumn Header="Time Finished"
+                                            Custom:GridViewColumnVisibility.IsVisible="{Binding ElementName=QueuedRadioButton, Path=IsChecked, Converter={StaticResource BoolNotConverter}}"
+                                            DisplayMemberBinding="{Binding Path=TimeFinished}" />
+                            <GridViewColumn Header="Number of Inputs"
+                                            DisplayMemberBinding="{Binding Path=Inputs.Count}"
+                                            Custom:GridViewColumnVisibility.IsVisible="{Binding ElementName=QueuedRadioButton, Path=IsChecked}" />
+                            <GridViewColumn Header="Status"
+                                            DisplayMemberBinding="{Binding Path=Status}"
+                                            Custom:GridViewColumnVisibility.IsVisible="{Binding ElementName=QueuedRadioButton, Path=IsChecked, Converter={StaticResource BoolNotConverter}}" />
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </DockPanel>
-        <Grid DataContext="{Binding Path=SelectedJob}">
+        <Grid Grid.Column="1" DataContext="{Binding Path=SelectedJob}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="20">
-                <Button Content="Cancel" Margin="3" MinWidth="66" />
-            </StackPanel>
+            <DockPanel Grid.Row="0" LastChildFill="False">
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" MinHeight="20">
+                    <!-- Job identifier placeholder -->
+                </StackPanel>
+                <Button DockPanel.Dock="Right" Content="Cancel" MinWidth="66"
+                        Command="{Binding ElementName=Window, Path=DataContext.CancelCommand}"
+                        CommandParameter="{Binding Path=Ticket}"/>
+            </DockPanel>
             <ListView Grid.Row="1"
                       ItemsSource="{Binding Path=Inputs}"
-                      SelectedItem="{Binding Path=SelectedInput, Mode=TwoWay}" />
+                      SelectedItem="{Binding Path=SelectedInput, Mode=TwoWay}">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="Identifier"
+                                            DisplayMemberBinding="{Binding Path=Identifier}" />
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
             <DockPanel  Grid.Row="2"
                         DataContext="{Binding Path=SelectedInput}">
                 <ContentPresenter Content="{Binding Path=Identifier}"
-                                  DockPanel.Dock="Top" MinHeight="20" />
+                                  DockPanel.Dock="Top" MinHeight="20" Margin="6,0" />
                 <Grid Margin="5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width=".45*" />
+                        <ColumnDefinition Width=".10*" />
+                        <ColumnDefinition Width=".45*" />
                     </Grid.ColumnDefinitions>
-                    
-                    <Image Grid.Column="0" Source="{Binding Path=Input}" />
-                    <Image Grid.Column="1" Source="{Binding Path=Output}" />
+
+                    <Border BorderBrush="Black" Grid.Column="0" BorderThickness="1">
+                        <Image Source="{Binding Path=Input}" />
+                    </Border>
+                    <Border BorderBrush="Black" Grid.Column="2" BorderThickness="1">
+                        <Image Source="{Binding Path=Output}" />
+                    </Border>
                 </Grid>
             </DockPanel>
         </Grid>
-    </DockPanel>
+    </Grid>
 </Window>

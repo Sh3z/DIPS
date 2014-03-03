@@ -1,4 +1,5 @@
 ﻿using DIPS.Util.Extensions;
+using DIPS.ViewModel.Commands;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using System;
 using System.Collections;
@@ -6,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Input;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -29,6 +31,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 throw new ArgumentNullException( "tracker" );
             }
 
+            CancelCommand = new CancelJobCommand();
             _tracker = tracker;
             _tracker.Pending.CollectionChanged += _pendingChanged;
             _tracker.Finished.CollectionChanged += _finishedChanged;
@@ -36,6 +39,15 @@ namespace DIPS.ViewModel.UserInterfaceVM
             IsPresentingQueued = false;
         }
 
+
+        /// <summary>
+        /// Gets the <see cref="ICommand"/> used to cancel queued jobs.
+        /// </summary>
+        public Command CancelCommand
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Gets or sets whether the currently queued elements are
@@ -78,6 +90,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set
             {
                 _selectedJob = value;
+                CancelCommand.ExecutableStateChanged();
                 OnPropertyChanged();
             }
         }

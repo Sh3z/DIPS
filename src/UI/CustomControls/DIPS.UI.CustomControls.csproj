@@ -63,6 +63,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GridViewColumnVisibility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
