@@ -1,7 +1,6 @@
 create table patient(
 tableID int identity PRIMARY KEY,
 patientID varchar(30) UNIQUE,
-patientName varchar(50),
 studyUID varchar(70),
 birthdate varchar(10),
 age varchar(10),

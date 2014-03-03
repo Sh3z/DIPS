@@ -14,7 +14,7 @@ namespace Database.Repository
     public class ProcessedImageRepository
     {
         //extract identifier(UID) from file
-        public String getIdentifier(FileStream fs)
+        private String getIdentifier(FileStream fs)
         {
             String identifier = String.Empty;
             try
@@ -29,8 +29,11 @@ namespace Database.Repository
         }
 
         //Saves the processed image to the database
-        public void saveImage(String identifier, byte[] blob)
+        public void saveImage(FileInfo file, byte[] blob)
         {
+            String identifier = String.Empty;
+            if (file != null) identifier = getIdentifier(file.Create());
+
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();
