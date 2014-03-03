@@ -4,6 +4,7 @@ using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,7 +68,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             byte[] blob = reader.ImageToByteArray(image.Output);
 
             ProcessedImageRepository processed = new ProcessedImageRepository();
-            processed.saveImage(String.Empty, blob);
+            processed.saveImage(null, blob);
         }
 
         /// <summary>
@@ -78,12 +79,12 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         private void _saveWithIdentifier( IProcessedImage image, JobInput input )
         {
             // Todo for Joe
-            //String identifier = image.Identifier;
+            FileInfo file = (FileInfo)image.Identifier;
             readImage reader = new readImage();
             byte[] blob = reader.ImageToByteArray(image.Output);
 
             ProcessedImageRepository processed = new ProcessedImageRepository();
-            //processed.saveImage(identifier,blob);
+            processed.saveImage(file,blob);
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using DIPS.Database.Objects;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,9 +27,9 @@ namespace Database.Repository
             }
         }
 
-        public List<Technique> getAllTechnique()
+        public ObservableCollection <Technique> getAllTechnique()
         {
-            List<Technique> list = new List<Technique>();
+            ObservableCollection<Technique> list = new ObservableCollection<Technique>();
 
             try
             {
@@ -40,10 +42,13 @@ namespace Database.Repository
 
                     while( data.Read() )
                     {
-                        if( list == null ) list = new List<Technique>();
+                        if (list == null) list = new ObservableCollection<Technique>();
                         Technique technique = new Technique();
                         technique.ID = data.GetInt32( data.GetOrdinal( "ID" ) );
                         technique.Name = data.GetString( data.GetOrdinal( "name" ) );
+                        SqlXml xmlTech = data.GetSqlXml(data.GetOrdinal("technique"));
+                        technique.xml = XDocument.Load(xmlTech.CreateReader());
+
                         list.Add( technique );
                     }
                     data.Close();

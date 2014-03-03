@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using Database.Repository;
 using DIPS.Database.Objects;
 using DIPS.Processor.Client;
 using DIPS.Unity;
@@ -58,10 +59,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Technique _chosenTechnique;
 
+        private ObservableCollection<AlgorithmViewModel> _techniqueAlgorithms;
+
         public ObservableCollection<AlgorithmViewModel> TechniqueAlgorithms
         {
-            get;
-            private set;
+            get { return _techniqueAlgorithms; }
+            set
+            {
+                _techniqueAlgorithms = value;
+                OnPropertyChanged();
+            }
         }
 
         public AlgorithmViewModel SelectedAlgorithm
@@ -106,6 +113,10 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public LoadNewDsStep2ViewModel()
         {
             ListofTechniques = new ObservableCollection<Technique>();
+            ImageProcessingRepository imgProRep = new ImageProcessingRepository();
+
+            ListofTechniques = imgProRep.getAllTechnique();
+
             TechniqueAlgorithms = new ObservableCollection<AlgorithmViewModel>();
             SetupCommands();
         } 
@@ -165,7 +176,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
             TechniqueAlgorithms.Clear();
             if (value != null)
             {
-                // To-do when database side is complete
+                IUnityContainer c = GlobalContainer.Instance.Container;
+                IPipelineManager manager = c.Resolve<IPipelineManager>();
+
+                var restoredPipeline = manager.RestorePipeline(value.xml);
+                TechniqueAlgorithms.Clear();
+                
+                foreach (var process in restoredPipeline)
+                {
+                    TechniqueAlgorithms.Add(new AlgorithmViewModel(process));
+                }
             }
         } 
         #endregion

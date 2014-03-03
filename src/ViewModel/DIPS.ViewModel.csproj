@@ -85,6 +85,7 @@
     <Compile Include="Commands\LoadPipelineCommand.cs" />
     <Compile Include="Commands\PersistPipelineCommand.cs" />
     <Compile Include="Commands\PresentQueueCommand.cs" />
+    <Compile Include="Commands\PersistPipelineDatabaseCommand.cs" />
     <Compile Include="Converters\BitmapToImageSourceConverter.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\UnityCommand.cs" />

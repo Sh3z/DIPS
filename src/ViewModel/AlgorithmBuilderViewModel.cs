@@ -27,6 +27,7 @@ namespace DIPS.ViewModel
             SelectedProcesses = new ObservableCollection<AlgorithmViewModel>();
             SavePipeline = new PersistPipelineCommand( this );
             LoadPipeline = new LoadPipelineCommand( this );
+            SavePipelineDatabase = new PersistPipelineDatabaseCommand(this);
         }
 
 
@@ -45,6 +46,7 @@ namespace DIPS.ViewModel
                 _container = value;
                 SavePipeline.Container = value;
                 LoadPipeline.Container = value;
+                SavePipelineDatabase.Container = value;
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
@@ -123,5 +125,12 @@ namespace DIPS.ViewModel
             get;
             private set;
         }
+
+        public UnityCommand SavePipelineDatabase
+        {
+            get;
+            private set;
+        }
+        
     }
 }

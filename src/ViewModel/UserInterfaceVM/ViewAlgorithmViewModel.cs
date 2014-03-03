@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -26,9 +27,9 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private IPipelineInfo _info;
 
-        private List<Technique> _allTechniques;
+        private ObservableCollection<Technique> _allTechniques;
 
-        public List<Technique> AllTechniques
+        public ObservableCollection<Technique> AllTechniques
         {
             get { return _allTechniques; }
             set
@@ -65,7 +66,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void GetAllAlgorithmPlans()
         {
-            AllTechniques = new List<Technique>();
+            AllTechniques = new ObservableCollection<Technique>();
             ImageProcessingRepository imgProRep = new ImageProcessingRepository();
 
             AllTechniques = imgProRep.getAllTechnique();

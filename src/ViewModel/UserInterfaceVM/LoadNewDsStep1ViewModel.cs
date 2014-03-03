@@ -45,7 +45,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public LoadNewDsStep1ViewModel()
         {
             SetupCommands();
-            LoadTechniqueObjects();
         } 
         #endregion
 
@@ -69,14 +68,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 _LoadNewDsStep2ViewModel.ListOfFiles = ListOfFiles;
                 OverallFrame.Content = _LoadNewDsStep2ViewModel;
 
-                if (_LoadNewDsStep2ViewModel != null)
-                {
-                    _LoadNewDsStep2ViewModel.ListofTechniques.Clear();
-                    _LoadNewDsStep2ViewModel.ListofTechniques = new ObservableCollection<Technique>();
-
-                    LoadTechniqueObjects();
-                    _LoadNewDsStep2ViewModel.ListofTechniques = ListofTechniques;
-                }
+                //if (_LoadNewDsStep2ViewModel != null)
+                //{
+                //    _LoadNewDsStep2ViewModel.ListofTechniques.Clear();
+                //    _LoadNewDsStep2ViewModel.ListofTechniques = new ObservableCollection<Technique>();
+                //}
             }
 
         }
@@ -119,30 +115,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
             return true;
         }
 
-        private void LoadTechniqueObjects()
-        {
-            ListofTechniques = new ObservableCollection<Technique>();
-
-            Technique tech1 = new Technique();
-            Technique tech2 = new Technique();
-            Technique tech3 = new Technique();
-            Technique tech4 = new Technique();
-
-            tech1.ID = 1;
-            tech2.ID = 2;
-            tech3.ID = 3;
-            tech4.ID = 4;
-
-            tech1.Name = "Blurring";
-            tech2.Name = "Shading";
-            tech3.Name = "Fuzzy";
-            tech4.Name = "Whitening";
-
-            ListofTechniques.Add(tech1);
-            ListofTechniques.Add(tech2);
-            ListofTechniques.Add(tech3);
-            ListofTechniques.Add(tech4);
-        } 
         #endregion
     }
 }
