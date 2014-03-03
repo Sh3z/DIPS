@@ -1,4 +1,5 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Unity;
 using DIPS.Util.Extensions;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Practices.Unity;
+using System.Threading;
 
 namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
 {
@@ -26,6 +29,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             Pending = new ObservableCollection<JobViewModel>();
             Finished = new ObservableCollection<JobViewModel>();
             CancelJob = new CancelJobCommand();
+            _context = GlobalContainer.Instance.Container.Resolve<IUIContext>();
         }
 
 
@@ -88,18 +92,17 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                 case JobState.InQueue:
                     vm.JobStarted += _jobStarted;
                     vm.JobFinished += _jobFinished;
-                    Pending.Add( vm );
+                    _safeViewModelAction( Pending.Add, vm );
                     break;
 
                 case JobState.Running:
                     vm.JobStarted += _jobStarted;
                     vm.JobFinished += _jobFinished;
-                    Pending.Add( vm );
                     Current = vm;
                     break;
 
                 default:
-                    Finished.Add( vm );
+                    _safeViewModelAction( Finished.Add, vm );
                     break;
             }
         }
@@ -132,7 +135,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         private void _jobStarted( object sender, EventArgs e )
         {
             Current = (JobViewModel)sender;
-            Pending.Remove( Current );
+            _safeViewModelAction( x => Pending.Remove( x ), Current );
         }
 
         /// <summary>
@@ -143,7 +146,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         private void _jobFinished( object sender, EventArgs e )
         {
             Current = null;
-            Finished.Add( (JobViewModel)sender );
+            _safeViewModelAction( x => Pending.Remove( x ), (JobViewModel)sender );
             if( Handler != null )
             {
                 JobViewModel vm = (JobViewModel)sender;
@@ -163,5 +166,22 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                 ( (IDisposable)job ).Dispose();
             }
         }
+
+        /// <summary>
+        /// Performs an action with a view model on the UI thread
+        /// </summary>
+        /// <param name="action">The action to perform</param>
+        /// <param name="item">The view model to perform the action with</param>
+        private void _safeViewModelAction( Action<JobViewModel> action, JobViewModel item )
+        {
+            SendOrPostCallback c = x => action( item );
+            _context.Context.Send( c, null );
+        }
+
+
+        /// <summary>
+        /// Maintains a reference to the current UI context
+        /// </summary>
+        private IUIContext _context;
     }
 }

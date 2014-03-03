@@ -4,7 +4,9 @@ using DIPS.Processor.Client;
 using DIPS.UI;
 using DIPS.UI.Unity.Implementations;
 using DIPS.Unity;
+using DIPS.Unity.Implementations;
 using DIPS.ViewModel;
+using DIPS.ViewModel.Unity;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -38,7 +40,9 @@ namespace DIPS
 
             FilterTreeView ftv = new FilterTreeView();
             QueueDialog qd = new QueueDialog();
+            UIContext context = new UIContext();
 
+            c.RegisterInstance<IUIContext>( context );
             c.RegisterInstance<IFilterTreeView>(ftv);
             c.RegisterInstance<IQueueDialog>(qd);
 
