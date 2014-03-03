@@ -86,9 +86,18 @@ namespace DIPS.ViewModel.UserInterfaceVM
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AlgorithmViewModel _selectedAlgorithm;
 
-        public Technique AvailableTechSelectedItem { get; set; }
-        public Technique SelectedTechSelectedItem { get; set; }
+        private AlgorithmViewModel _selectedTechSelectedItem;
 
+        public AlgorithmViewModel SelectedTechSelectedItem
+        {
+            get { return _selectedTechSelectedItem; }
+            set
+            {
+                _selectedTechSelectedItem = value; 
+                OnPropertyChanged();
+            }
+        }
+        
         public RelayCommand ProgressToStep3Command { get; set; }
         public ICommand BuildAlgorithmCommand { get; set; }
         public UnityCommand LoadFromFile
