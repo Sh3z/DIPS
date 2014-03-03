@@ -131,8 +131,8 @@
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Queue.xaml.cs">
-      <DependentUpon>Queue.xaml</DependentUpon>
+    <Compile Include="Pages\QueueWindow.xaml.cs">
+      <DependentUpon>QueueWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TreeViewFilter.xaml.cs">
       <DependentUpon>TreeViewFilter.xaml</DependentUpon>
@@ -198,7 +198,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Queue.xaml">
+    <Page Include="Pages\QueueWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

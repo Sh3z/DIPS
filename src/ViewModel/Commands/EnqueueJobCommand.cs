@@ -92,6 +92,7 @@ namespace DIPS.ViewModel.Commands
             IJobTicket t = service.JobManager.EnqueueJob( r );
             IJobTracker tracker = Container.Resolve<IJobTracker>();
             tracker.Add( t );
+            _openQueueUI();
         }
 
 
@@ -146,6 +147,19 @@ namespace DIPS.ViewModel.Commands
             }
 
             return theImg;
+        }
+
+        /// <summary>
+        /// Opens the Queue window if registered within unity
+        /// </summary>
+        private void _openQueueUI()
+        {
+            PresentQueueCommand c = new PresentQueueCommand();
+            c.Container = this.Container;
+            if( c.CanExecute( null ) )
+            {
+                c.Execute( null );
+            }
         }
 
 

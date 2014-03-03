@@ -8,48 +8,18 @@ using System.Windows;
 using DIPS.UI.Pages;
 using DIPS.Unity;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
+using DIPS.ViewModel.Unity;
 
 namespace DIPS.UI.Unity.Implementations
 {
     public class QueueDialog : IQueueDialog
     {
-        private object _current;
-
-        public object Current
+        public void ShowDialog( IJobTracker jobs )
         {
-            private get { return _current; }
-            set {_current = value; }
-        }
-
-        public ObservableCollection<object> Pending { set; private get; }
-
-        public ObservableCollection<object> Finished { set; private get; }
-
-        private Queue QueueDialogProperty { set; get; }
-
-        public void ShowDialog()
-        {
-            if (QueueDialogProperty == null || QueueDialogProperty.IsActive == false)
-            {
-                QueueDialogProperty = new Queue();
-            }
-
-            if (QueueDialogProperty.Visibility == Visibility.Hidden)
-            {
-                QueueDialogProperty.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                QueueDialogProperty.ShowDialog();
-            }
-        }
-
-        public void HideDialog()
-        {
-            if (QueueDialogProperty != null)
-            {
-                QueueDialogProperty.Hide();
-            }
+            QueueWindow w = new QueueWindow();
+            w.DataContext = jobs;
+            w.ShowInTaskbar = true;
+            w.ShowDialog();
         }
     }
 }

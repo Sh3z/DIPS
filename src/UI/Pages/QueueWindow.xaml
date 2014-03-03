@@ -1,4 +1,4 @@
-﻿<Window x:Class="DIPS.UI.Pages.Queue"
+﻿<Window x:Class="DIPS.UI.Pages.QueueWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Queue" Height="300" Width="300">
