@@ -32,7 +32,7 @@ namespace Database.Repository
         public void saveImage(FileInfo file, byte[] blob)
         {
             String identifier = String.Empty;
-            if (file != null) identifier = getIdentifier(file.Create());
+            if (file != null) identifier = getIdentifier(file.OpenRead());
 
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
