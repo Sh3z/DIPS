@@ -5,6 +5,7 @@
              xmlns:vd="clr-namespace:DIPS.UI.Pages.LoadNewDataset;assembly=DIPS.UI"
              xmlns:v="clr-namespace:DIPS.UI.Pages;assembly=DIPS.UI"
              xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
+             xmlns:tracking="clr-namespace:DIPS.ViewModel.UserInterfaceVM.JobTracking;assembly=DIPS.ViewModel"
              xmlns:vmr="clr-namespace:DIPS.ViewModel;assembly=DIPS.ViewModel"
              xmlns:objects="clr-namespace:DIPS.ViewModel.Objects;assembly=DIPS.ViewModel"
              >
@@ -49,6 +50,5 @@
         <DataTemplate DataType="{x:Type vm:TreeViewPatientViewModel}">
            
         </DataTemplate>
-
     </Application.Resources>
 </Application>

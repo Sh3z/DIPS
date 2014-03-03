@@ -9,6 +9,7 @@ using DIPS.UI.Pages;
 using DIPS.Unity;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using DIPS.ViewModel.Unity;
+using DIPS.ViewModel.UserInterfaceVM;
 
 namespace DIPS.UI.Unity.Implementations
 {
@@ -17,7 +18,8 @@ namespace DIPS.UI.Unity.Implementations
         public void ShowDialog( IJobTracker jobs )
         {
             QueueWindow w = new QueueWindow();
-            w.DataContext = jobs;
+            QueueViewModel vm = new QueueViewModel( jobs );
+            w.DataContext = vm;
             w.ShowInTaskbar = true;
             w.ShowDialog();
         }

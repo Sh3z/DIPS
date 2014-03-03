@@ -147,6 +147,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         {
             Current = null;
             _safeViewModelAction( x => Pending.Remove( x ), (JobViewModel)sender );
+            _safeViewModelAction( Finished.Add, (JobViewModel)sender );
             if( Handler != null )
             {
                 JobViewModel vm = (JobViewModel)sender;
