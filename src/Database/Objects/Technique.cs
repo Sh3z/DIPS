@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace DIPS.Database.Objects
 {
@@ -23,6 +25,15 @@ namespace DIPS.Database.Objects
             get { return _Name; }
             set { _Name = value; }
         }
+
+        private XDocument _xml;
+
+        public XDocument xml
+        {
+            get { return _xml; }
+            set { _xml = value; }
+        }
+        
         
         public override string ToString()
         {
