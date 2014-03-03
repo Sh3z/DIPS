@@ -45,25 +45,19 @@
                         <TextBlock DockPanel.Dock="Top" Text="Processing Plan: " FontSize="16" />
                         <TextBlock Text="{Binding Path=PipelineName}" />
                     </StackPanel>
-                    
+
                     <ListView DockPanel.Dock="Bottom"
                               ItemsSource="{Binding Path=PipelineAlgorithms}"
                               ItemContainerStyle="{StaticResource AlgorithmItemStyle}" FontSize="14"/>
                 </DockPanel>
             </UniformGrid>
-            
+
             <TextBlock Grid.Row="1" Margin="0,3" TextWrapping="Wrap" HorizontalAlignment="Center"
                        Text="Processing these files will take xx hours and xx minutes."/>
-            
+
             <StackPanel Grid.Row="2" Margin="0,3" Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="What do I do when the processing is complete?" VerticalAlignment="Center" />
                 <ComboBox SelectedItem="{Binding PostProcessAction}" Margin="10,0,0,0">
-            <TextBlock Grid.Row="1" TextWrapping="Wrap" HorizontalAlignment="Center"
-                       Text="Processing these files will take xx hours and xx minutes." FontSize="16"/>
-            
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="What do I do when the processing is complete?" VerticalAlignment="Center" FontSize="16" />
-                <ComboBox SelectedItem="{Binding PostProcessAction}" Margin="10,0,0,0" FontSize="16">
                     <ComboBoxItem Content="Nothing" IsSelected="True"/>
                     <ComboBoxItem Content="Sleep"/>
                     <ComboBoxItem Content="Shut down"/>
