@@ -34,13 +34,23 @@ namespace Database.Repository
             String identifier = String.Empty;
             if (file != null) identifier = getIdentifier(file.OpenRead());
 
-            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            try
+            {
+                _saveImage( blob, identifier );
+            }
+            catch { }
+        }
+
+
+        private void _saveImage( byte[] blob, String identifier )
+        {
+            using( SqlConnection conn = new SqlConnection( ConnectionManager.getConnection ) )
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("spr_InsertProcessedImages_v001", conn);
+                SqlCommand cmd = new SqlCommand( "spr_InsertProcessedImages_v001", conn );
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@imageUID", SqlDbType.VarChar).Value = identifier;
-                cmd.Parameters.Add("@imageBlob", SqlDbType.VarBinary, blob.Length).Value = blob;
+                cmd.Parameters.Add( "@imageUID", SqlDbType.VarChar ).Value = identifier;
+                cmd.Parameters.Add( "@imageBlob", SqlDbType.VarBinary, blob.Length ).Value = blob;
                 cmd.ExecuteNonQuery();
             }
         }
