@@ -39,8 +39,11 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             }
             set
             {
-                _output = value;
-                OnPropertyChanged();
+                if( value != null )
+                {
+                    _output = (Image)value.Clone();
+                    OnPropertyChanged();
+                }
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]

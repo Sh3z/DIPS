@@ -175,7 +175,7 @@ namespace DIPS.Processor.Worker
                 theInput = plugin.Output ?? plugin.Input;
             }
 
-            InputProcessedArgs e = new InputProcessedArgs( input.Identifier, theInput );
+            InputProcessedArgs e = new InputProcessedArgs( input.Identifier, (Image)theInput.Clone() );
             _ticket.OnInputProcessed( e );
             return theInput;
         }

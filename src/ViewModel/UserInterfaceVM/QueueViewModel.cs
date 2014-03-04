@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
@@ -33,10 +34,12 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             CancelCommand = new CancelJobCommand();
             _tracker = tracker;
+            _tracker.PropertyChanged += _trackerPropertyChanged;
             _tracker.Pending.CollectionChanged += _pendingChanged;
             _tracker.Finished.CollectionChanged += _finishedChanged;
             Entries = new ObservableCollection<JobViewModel>();
             IsPresentingQueued = false;
+            CurrentJob = _tracker.Current;
         }
 
 
@@ -97,6 +100,24 @@ namespace DIPS.ViewModel.UserInterfaceVM
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private JobViewModel _selectedJob;
 
+        /// <summary>
+        /// Gets or sets the currently executing job.
+        /// </summary>
+        public JobViewModel CurrentJob
+        {
+            get
+            {
+                return _currentJob;
+            }
+            set
+            {
+                _currentJob = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private JobViewModel _currentJob;
+
 
         /// <summary>
         /// Updates the elements of the Entries collection based on
@@ -149,6 +170,15 @@ namespace DIPS.ViewModel.UserInterfaceVM
             foreach( object item in items )
             {
                 theAction( (JobViewModel)item );
+            }
+        }
+
+        private void _trackerPropertyChanged( object sender, PropertyChangedEventArgs e )
+        {
+            string lowerName = e.PropertyName.ToLower();
+            if( lowerName == "current" )
+            {
+                CurrentJob = _tracker.Current;
             }
         }
 

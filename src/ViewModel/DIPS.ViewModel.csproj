@@ -87,10 +87,12 @@
     <Compile Include="Commands\PersistPipelineCommand.cs" />
     <Compile Include="Commands\PresentQueueCommand.cs" />
     <Compile Include="Commands\PersistPipelineDatabaseCommand.cs" />
+    <Compile Include="Converters\DecimalToPercentageConverter.cs" />
     <Compile Include="Converters\ImageToImageSourceConverter.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\UnityCommand.cs" />
     <Compile Include="Converters\BooleanNotConverter.cs" />
+    <Compile Include="Converters\SingleItemToEnumerableConverter.cs" />
     <Compile Include="IPipelineInfo.cs" />
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Unity\IQueueDialog.cs" />

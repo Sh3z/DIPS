@@ -8,6 +8,8 @@
     <Window.Resources>
         <Converters:BooleanNotConverter x:Key="BoolNotConverter" />
         <Converters:ImageToImageSourceConverter x:Key="ImageToImageSource" />
+        <Converters:SingleItemToEnumerableConverter x:Key="SingleToSetConverter" />
+        <Converters:DecimalToPercentageConverter x:Key="DecimalFormatter" />
         <Style TargetType="RadioButton">
             <Setter Property="Margin" Value="3" />
         </Style>
@@ -17,13 +19,59 @@
         <Style TargetType="GridViewColumnHeader">
             <Setter Property="Padding" Value="5,0" />
         </Style>
+        <Style x:Key="JobRowToolTipStyle" TargetType="ListViewItem">
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <TextBlock Text="{Binding Path=LongStatus}" />
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid Margin="3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <DockPanel Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+            <TextBlock DockPanel.Dock="Top" Text="Current Job" />
+            <ListView ItemsSource="{Binding CurrentJob, Converter={StaticResource SingleToSetConverter}}"
+                      SelectedItem="{Binding Path=SelectedJob, Mode=TwoWay}"
+                      ItemContainerStyle="{StaticResource JobRowToolTipStyle}">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="Identifier"
+                                            DisplayMemberBinding="{Binding Path=Identifier}" />
+                            <GridViewColumn Header="Time Enqueued"
+                                            DisplayMemberBinding="{Binding Path=TimeEnqueued}" />
+                            <GridViewColumn Header="Time Began"
+                                            DisplayMemberBinding="{Binding Path=TimeBegan}" />
+                            <GridViewColumn Header="Inputs Processed"
+                                            DisplayMemberBinding="{Binding Path=InputsProcessed}" />
+                            <GridViewColumn Header="Inputs To Process"
+                                            DisplayMemberBinding="{Binding Path=Inputs.Count}" />
+                            <GridViewColumn Header="EstimatedCompletion">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Margin="3" LastChildFill="True">
+                                            <TextBlock  DockPanel.Dock="Right" Margin="5,0"
+                                                        Text="{Binding Path=EstimatedCompletion, Mode=OneWay, Converter={StaticResource DecimalFormatter}}" />
+                                            <ProgressBar DockPanel.Dock="Left"
+                                                         Value="{Binding Path=EstimatedCompletion, Mode=OneWay}" />
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+        <DockPanel Grid.Column="0" Grid.Row="1">
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                 <RadioButton x:Name="QueuedRadioButton"
                              Content="Queued"
@@ -32,16 +80,8 @@
                              IsChecked="{Binding Path=IsPresentingQueued, Converter={StaticResource BoolNotConverter}}" />
             </StackPanel>
             <ListView ItemsSource="{Binding Path=Entries}"
-                      SelectedItem="{Binding Path=SelectedJob, Mode=TwoWay}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="ToolTip">
-                            <Setter.Value>
-                                <TextBlock Text="{Binding Path=LongStatus}" />
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
+                      SelectedItem="{Binding Path=SelectedJob, Mode=TwoWay}"
+                      ItemContainerStyle="{StaticResource JobRowToolTipStyle}">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
@@ -63,7 +103,7 @@
                 </ListView.View>
             </ListView>
         </DockPanel>
-        <Grid Grid.Column="1" DataContext="{Binding Path=SelectedJob}">
+        <Grid Grid.Column="1" Grid.Row="1" DataContext="{Binding Path=SelectedJob}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />

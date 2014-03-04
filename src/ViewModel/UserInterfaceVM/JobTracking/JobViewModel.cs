@@ -110,6 +110,24 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         }
 
         /// <summary>
+        /// Gets or sets the <see cref="DateTime"/> the job began running.
+        /// </summary>
+        public DateTime TimeBegan
+        {
+            get
+            {
+                return _timeBegan;
+            }
+            set
+            {
+                _timeBegan = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private DateTime _timeBegan;
+
+        /// <summary>
         /// Gets the <see cref="DateTime"/> when this <see cref="JobViewModel"/>
         /// finished processing.
         /// </summary>
@@ -122,11 +140,30 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             set
             {
                 _timeFinished = value;
+                JobDuration = value - TimeBegan;
                 OnPropertyChanged();
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private DateTime _timeFinished;
+
+        /// <summary>
+        /// Gets the <see cref="TimeSpan"/> taken by the job to complete.
+        /// </summary>
+        public TimeSpan JobDuration
+        {
+            get
+            {
+                return _duration;
+            }
+            private set
+            {
+                _duration = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private TimeSpan _duration;
 
         /// <summary>
         /// Gets the collection of <see cref="InputViewModel"/>s associated
@@ -231,6 +268,36 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private bool _isCancelled;
 
+        /// <summary>
+        /// Gets or sets the number of processed inputs.
+        /// </summary>
+        public int InputsProcessed
+        {
+            get
+            {
+                return _inputsProcessed;
+            }
+            set
+            {
+                _inputsProcessed = value;
+                OnPropertyChanged();
+                OnPropertyChanged( "EstimatedCompletion" );
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private int _inputsProcessed;
+
+        /// <summary>
+        /// Gets an estimate of the % completion of the job.
+        /// </summary>
+        public decimal EstimatedCompletion
+        {
+            get
+            {
+                return ( (decimal)( (decimal)InputsProcessed / (decimal)Inputs.Count ) ) * 100;
+            }
+        }
+
 
         /// <summary>
         /// Occurs when the job begins.
@@ -239,6 +306,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// <param name="e">N/A</param>
         private void _onJobStarted( object sender, EventArgs e )
         {
+            TimeBegan = DateTime.Now;
             IsRunning = true;
             _updateFromState();
             if( JobStarted != null )
@@ -292,6 +360,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         private void _inputProcessed( object sender, InputProcessedArgs e )
         {
             // Provide the info to the relevant input
+            InputsProcessed++;
             var inputWithID = ( from input in Inputs
                                 where input.Identifier == e.Identifier
                                 select input ).FirstOrDefault();

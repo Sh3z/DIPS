@@ -25,18 +25,19 @@ namespace DIPS.ViewModel.Converters
         {
             if( value is Image == false )
             {
-                return Binding.DoNothing;
+                return new BitmapImage();
             }
-
-            MemoryStream ms = new MemoryStream();
-            ( (System.Drawing.Image)value ).Save( ms, System.Drawing.Imaging.ImageFormat.Bmp );
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            ms.Seek( 0, SeekOrigin.Begin );
-            image.StreamSource = ms;
-            image.EndInit();
-
-            return image;
+            else
+            {
+                MemoryStream ms = new MemoryStream();
+                ( (Image)value ).Save( ms, System.Drawing.Imaging.ImageFormat.Bmp );
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                ms.Seek( 0, SeekOrigin.Begin );
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
         }
 
         /// <summary>
