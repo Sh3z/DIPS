@@ -1,4 +1,6 @@
-﻿using DIPS.Processor.Client;
+﻿using System.Windows.Input;
+using Database.Repository;
+using DIPS.Processor.Client;
 using DIPS.ViewModel.Commands;
 using Microsoft.Practices.Unity;
 using System;
@@ -28,6 +30,8 @@ namespace DIPS.ViewModel
             SavePipeline = new PersistPipelineCommand( this );
             LoadPipeline = new LoadPipelineCommand( this );
             SavePipelineDatabase = new PersistPipelineDatabaseCommand(this);
+
+            FinishButtonCommand = new RelayCommand(new Action<object>(ProgressToMainOrStep2));
         }
 
 
@@ -131,6 +135,30 @@ namespace DIPS.ViewModel
             get;
             private set;
         }
-        
+
+        public Boolean FromLoadStep2 { get; set; }
+        public ICommand FinishButtonCommand { get; set; }
+
+        private void ProgressToMainOrStep2(object obj)
+        {
+            if (FromLoadStep2)
+            {
+                OverallFrame.Content = _LoadNewDsStep2ViewModel;
+                if (_LoadNewDsStep2ViewModel.ListofTechniques != null)
+                {
+                     _LoadNewDsStep2ViewModel.ListofTechniques.Clear();
+
+                    ImageProcessingRepository imgProRep = new ImageProcessingRepository();
+                    _LoadNewDsStep2ViewModel.ListofTechniques = imgProRep.getAllTechnique();
+                }
+            }
+            else
+            {
+                OverallFrame.Content = _MainViewModel;
+            }
+            
+        }
+            
+        }
+
     }
-}

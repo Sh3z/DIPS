@@ -159,6 +159,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             OverallFrame.Content = BaseViewModel._AlgorithmBuilderViewModel;
 
             _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
+            _AlgorithmBuilderViewModel.FromLoadStep2 = true;
 
             IPipelineManager manager = GlobalContainer.Instance.Container.Resolve<IPipelineManager>();
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
