@@ -41,5 +41,13 @@ namespace DIPS.Processor.Registry
         /// identifier; null if no algorithm is associated with the given
         /// identifier.</returns>
         Type FetchType( string algorithmName );
+
+        /// <summary>
+        /// Resolves the qualified name of the plugin from its registered
+        /// identifier.
+        /// </summary>
+        /// <param name="id">The registered identifier of the plugin.</param>
+        /// <returns>The fully qualified plugin name.</returns>
+        string NameForIdentifier( string id );
     }
 }

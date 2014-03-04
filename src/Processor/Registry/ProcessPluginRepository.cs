@@ -52,6 +52,25 @@ namespace DIPS.Processor.Registry
         }
 
         /// <summary>
+        /// Resolves the qualified name of the plugin from its registered
+        /// identifier.
+        /// </summary>
+        /// <param name="id">The registered identifier of the plugin.</param>
+        /// <returns>The fully qualified plugin name.</returns>
+        public string NameForIdentifier( string id )
+        {
+            AlgorithmDefinition match = _pluginCache.Keys.FirstOrDefault( x => x.AlgorithmName == id );
+            if( match == null )
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return match.DisplayName;
+            }
+        }
+
+        /// <summary>
         /// Resolves the <see cref="Type"/> of the algorithm with the given
         /// identifier.
         /// </summary>

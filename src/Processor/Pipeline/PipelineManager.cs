@@ -3,6 +3,7 @@ using DIPS.Processor.Registry;
 using DIPS.Processor.XML.Compilation;
 using DIPS.Processor.XML.Decompilation;
 using DIPS.Processor.XML.Pipeline;
+using DIPS.Util.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -100,7 +101,9 @@ namespace DIPS.Processor.Pipeline
             try
             {
                 traverser.Traverse( pipeline );
-                return new Client.PipelineDefinition( visitor.Algorithms );
+                var algorithms = visitor.Algorithms;
+                _updateAlgorithmNames( algorithms );
+                return new Client.PipelineDefinition( algorithms );
             }
             catch( Exception e )
             {
@@ -109,8 +112,27 @@ namespace DIPS.Processor.Pipeline
         }
 
 
+        /// <summary>
+        /// Updates the display names of the algorithms using the algorithm reg
+        /// </summary>
+        /// <param name="algorithms">The algorithms to provide names for</param>
+        private void _updateAlgorithmNames( IEnumerable<AlgorithmDefinition> algorithms )
+        {
+            foreach( AlgorithmDefinition d in algorithms )
+            {
+                d.DisplayName = _algorithmRegistry.NameForIdentifier( d.AlgorithmName );
+            }
+        }
+
+
+        /// <summary>
+        /// Retains the pipeline repo object
+        /// </summary>
         private IPipelineRepository _repo;
 
+        /// <summary>
+        /// Retains the algorithm registry object
+        /// </summary>
         private IAlgorithmRegistrar _algorithmRegistry;
     }
 }
