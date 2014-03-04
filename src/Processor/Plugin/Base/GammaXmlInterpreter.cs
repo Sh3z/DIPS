@@ -7,6 +7,10 @@ using System.Xml.Linq;
 
 namespace DIPS.Processor.Plugin.Base
 {
+    /// <summary>
+    /// Represents the object used to convert the properties of the
+    /// <see cref="GammaCorrection"/> plugin to and from Xml
+    /// </summary>
     [PipelineXmlOriginator( typeof( GammaCorrection ) )]
     public class GammaXmlInterpreter : IPipelineXmlInterpreter
     {

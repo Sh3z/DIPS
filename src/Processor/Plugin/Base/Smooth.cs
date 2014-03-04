@@ -13,7 +13,7 @@ namespace DIPS.Processor.Plugin.Base
     /// Represents the <see cref="AlgorithmPlugin"/> used to smooth an
     /// image.
     /// </summary>
-    [Algorithm( "gaussian", ParameterObjectType = typeof( SmoothProperties ) )]
+    [Algorithm( "smooth", ParameterObjectType = typeof( SmoothProperties ) )]
     [AlgorithmMetadata( "Smoothing",
         Description = "Smooths an input image using a specific algorithm" )]
     public class Smooth : AlgorithmPlugin
