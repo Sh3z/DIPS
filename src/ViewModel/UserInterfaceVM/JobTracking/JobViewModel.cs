@@ -294,7 +294,13 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         {
             get
             {
-                return ( (decimal)( (decimal)InputsProcessed / (decimal)Inputs.Count ) ) * 100;
+                decimal count = (decimal)Inputs.Count;
+                if( count == 0 )
+                {
+                    count++;
+                }
+
+                return ( (decimal)( (decimal)InputsProcessed / count ) ) * 100;
             }
         }
 
