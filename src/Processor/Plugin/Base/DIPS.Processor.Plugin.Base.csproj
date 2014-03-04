@@ -83,6 +83,7 @@
     <Compile Include="GammaCorrection.cs" />
     <Compile Include="GammaProperties.cs" />
     <Compile Include="GammaXmlInterpreter.cs" />
+    <Compile Include="HistogramEqualization.cs" />
     <Compile Include="ISmoother.cs" />
     <Compile Include="Smooth.cs" />
     <Compile Include="SmoothingXmlInterpreter.cs" />
