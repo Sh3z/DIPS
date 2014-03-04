@@ -40,6 +40,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
         }
 
+        public IProcessingService Service { get; set; }
         /// <summary>
         /// Static instances of the ViewModels.
         /// </summary>
@@ -49,7 +50,18 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public ICommand ViewCreateAlgorithmCommand { get; set; }
         public ICommand ViewExistingAlgorithmsCommand { get; set; }
     
-        public IProcessingService Service { get; set; }
+        public IUnityContainer Container
+        {
+            get
+            {
+                return _container;
+            }
+            set
+            {
+                _container = value;
+            }
+        }
+        private IUnityContainer _container;
 
         public MainViewModel(Frame theFrame)
         {
@@ -59,6 +71,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             OngoingJobsViewModel vm = new OngoingJobsViewModel();
             vm.Handler = new SaveResultsHandler();
             GlobalContainer.Instance.Container.RegisterInstance<IJobTracker>( vm );
+
+            Container = GlobalContainer.Instance.Container;
         }
 
         private void SetupCommands()
@@ -91,12 +105,22 @@ namespace DIPS.ViewModel.UserInterfaceVM
             OverallFrame.Content = _AlgorithmBuilderViewModel;
 
             _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
+            _AlgorithmBuilderViewModel.FromLoadStep2 = false;
 
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
-            foreach (var algorithm in Service.PipelineManager.AvailableProcesses)
+
+            if (Container != null)
             {
-                AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
-                _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
+                Service = Container.Resolve<IProcessingService>();
+            }
+            
+            if (Service != null)
+            {
+                    foreach (var algorithm in Service.PipelineManager.AvailableProcesses)
+                {
+                    AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
+                    _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
+                }
             }
         }
 
