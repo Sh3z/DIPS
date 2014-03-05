@@ -285,6 +285,12 @@ namespace DIPS.Tests.Processor.Registry
             {
                 return typeof( TestPluginInterpreter );
             }
+
+
+            public string NameForIdentifier( string id )
+            {
+                throw new NotImplementedException();
+            }
         }
 
         class TestRegistrar : IAlgorithmRegistrar
@@ -308,6 +314,12 @@ namespace DIPS.Tests.Processor.Registry
             {
                 return algorithmName == "Test" ?
                     typeof( TestPlugin ) : typeof( TestPluginNoParameterlessConstructor );
+            }
+
+
+            public string NameForIdentifier( string id )
+            {
+                throw new NotImplementedException();
             }
         }
     }
