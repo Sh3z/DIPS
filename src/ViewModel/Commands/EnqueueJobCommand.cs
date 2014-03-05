@@ -11,6 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DIPS.ViewModel.Commands
@@ -99,6 +100,17 @@ namespace DIPS.ViewModel.Commands
         /// null.</param>
         public override void Execute( object parameter )
         {
+            Thread t = new Thread( _execute );
+            t.Start();
+            _openQueueUI();
+        }
+
+
+        /// <summary>
+        /// Entry point to the threaded execute functionality
+        /// </summary>
+        private void _execute()
+        {
             IProcessingService service = Container.Resolve<IProcessingService>();
             ObjectJobDefinition d = new ObjectJobDefinition( _source.Pipeline, _filesToInputs() );
             JobRequest r = new JobRequest( d );
@@ -106,9 +118,7 @@ namespace DIPS.ViewModel.Commands
             IJobTicket t = service.JobManager.EnqueueJob( r );
             IJobTracker tracker = Container.Resolve<IJobTracker>();
             tracker.Add( t );
-            _openQueueUI();
         }
-
 
         /// <summary>
         /// Occurs when a property within the job source has changed
