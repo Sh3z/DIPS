@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Database;
-using Database.Objects;
 using Database.Unity;
 using DIPS.Database.Objects;
 using DIPS.Unity;
@@ -17,7 +10,6 @@ using DIPS.ViewModel.Commands;
 using Microsoft.Practices.Unity;
 using Database.Repository;
 using DIPS.ViewModel.Unity;
-using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -64,6 +56,18 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set
             {
                 _imgUnprocessed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private BitmapImage _imgProcessed;
+
+        public BitmapImage ImgProcessed
+        {
+            get { return _imgProcessed; }
+            set
+            {
+                _imgProcessed = value;
                 OnPropertyChanged();
             }
         }

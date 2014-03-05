@@ -4,7 +4,7 @@
         xmlns:Converters="clr-namespace:DIPS.ViewModel.Converters;assembly=DIPS.ViewModel"
         xmlns:Custom="clr-namespace:DIPS.UI.CustomControls;assembly=DIPS.UI.CustomControls"
         x:Name="Window"
-        Title="Queue" Height="317" Width="706" Margin="3">
+        Title="Queue" Height="345.358" Width="706" Margin="3">
     <Window.Resources>
         <Converters:BooleanNotConverter x:Key="BoolNotConverter" />
         <Converters:ImageToImageSourceConverter x:Key="ImageToImageSource" />
@@ -28,7 +28,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Margin="3">
+    <Grid Margin="3,3,3,13">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -72,17 +72,24 @@
                 </ListView.View>
             </ListView>
         </DockPanel>
-        <DockPanel Grid.Column="0" Grid.Row="1">
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+        <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,0,0,15">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="30">
                 <RadioButton x:Name="QueuedRadioButton"
                              Content="Queued"
                              IsChecked="{Binding Path=IsPresentingQueued}" />
                 <RadioButton Content="Complete"
                              IsChecked="{Binding Path=IsPresentingQueued, Converter={StaticResource BoolNotConverter}}" />
+                <Label Content="Finishing action?" FontSize="12" Margin="0,0,0,-1" Width="103"/>
+
+                <ComboBox SelectedItem="{Binding PostProcessAction}" Width="78" Margin="0,0,0,10" >
+                    <ComboBoxItem Content="Nothing" />
+                    <ComboBoxItem Content="Sleep" IsSelected="True"/>
+                    <ComboBoxItem Content="Shut down"/>
+                </ComboBox>
             </StackPanel>
             <ListView ItemsSource="{Binding Path=Entries}"
                       SelectedItem="{Binding Path=SelectedJob, Mode=TwoWay}"
-                      ItemContainerStyle="{StaticResource JobRowToolTipStyle}">
+                      ItemContainerStyle="{StaticResource JobRowToolTipStyle}" Margin="3,3,3,0">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
@@ -103,6 +110,9 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="26">
+                
+            </StackPanel>
         </DockPanel>
         <Grid Grid.Column="1" Grid.Row="1" DataContext="{Binding Path=SelectedJob}">
             <Grid.RowDefinitions>

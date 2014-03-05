@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using DIPS.Database.Objects;
 using DIPS.ViewModel.Commands;
@@ -15,6 +16,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public ICommand ProgressToStep2Command { get; set; }
         public ICommand OpenFileDialogCommand { get; set; }
         public ICommand ClearFieldsCommand { get; set; }
+        public ICommand RemoveFileFromListCommand { get; set; }
+
+        private FileInfo _selectedFileItem;
+
+        public FileInfo SelectedFileItem
+        {
+            get { return _selectedFileItem; }
+            set { _selectedFileItem = value; }
+        }
+        
 
         private ObservableCollection<Technique> _listOfTechniques;
 
@@ -54,11 +65,22 @@ namespace DIPS.ViewModel.UserInterfaceVM
             ProgressToStep2Command = new RelayCommand(new Action<object>(ConfirmAndMoveToStep2));
             OpenFileDialogCommand = new RelayCommand(new Action<object>(SelectFilesForDataset));
             ClearFieldsCommand = new RelayCommand(new Action<object>(ClearFields));
+            RemoveFileFromListCommand = new RelayCommand(new Action<object>(RemoveFileFromList));
+
+            ListOfFiles = new ObservableCollection<FileInfo>();
         }
 
         private void ClearFields(object obj)
         {
             ListOfFiles.Clear();
+        }
+
+        private void RemoveFileFromList(object obj)
+        {
+            if (SelectedFileItem != null)
+            {
+                ListOfFiles.Remove(SelectedFileItem);
+            }
         }
 
         private void ConfirmAndMoveToStep2(object obj)
@@ -67,12 +89,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
             {
                 _LoadNewDsStep2ViewModel.ListOfFiles = ListOfFiles;
                 OverallFrame.Content = _LoadNewDsStep2ViewModel;
-
-                //if (_LoadNewDsStep2ViewModel != null)
-                //{
-                //    _LoadNewDsStep2ViewModel.ListofTechniques.Clear();
-                //    _LoadNewDsStep2ViewModel.ListofTechniques = new ObservableCollection<Technique>();
-                //}
             }
 
         }
@@ -93,8 +109,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             if (isOkay == true)
             {
-                ListOfFiles = new ObservableCollection<FileInfo>();
-               
                 foreach (string file in dialogOpen.FileNames)
                 {
                     FileInfo uploadFile = new FileInfo(file);

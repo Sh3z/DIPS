@@ -9,7 +9,7 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="109,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="329"><Run Language="en-gb" Text="Step 1:  Please select the images you would like to select for processing." FontSize="20"/></TextBlock>
-        <ListBox ItemsSource="{Binding ListOfFiles, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="177" Margin="10,126,0,0" VerticalAlignment="Top" Width="263" ScrollViewer.CanContentScroll="True" FontSize="16">
+        <ListBox SelectedItem="{Binding SelectedFileItem}" ItemsSource="{Binding ListOfFiles, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="177" Margin="10,126,0,0" VerticalAlignment="Top" Width="263" ScrollViewer.CanContentScroll="True" FontSize="16">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -23,6 +23,7 @@
         <Button Command="{Binding ProgressToStep2Command}" Content="Confirm Choice" HorizontalAlignment="Left" Margin="302,275,0,0" VerticalAlignment="Top" Width="122" FontSize="16"/>
         <Controls:infoBell HorizontalAlignment="Left" Margin="449,131,0,0" VerticalAlignment="Top" Height="33" Width="35" />
         <Controls:infoBell HorizontalAlignment="Left" Margin="449,270,0,0" VerticalAlignment="Top" Height="32" Width="35" />
+        <Button Command="{Binding RemoveFileFromListCommand}" Content="Remove File" HorizontalAlignment="Left" Margin="302,182,0,0" VerticalAlignment="Top" Width="122" FontSize="16"/>
 
     </Grid>
 </UserControl>

@@ -40,12 +40,12 @@ namespace DIPS.UI.Controls
 
         private void imgBell1_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.txtInfoText.Visibility = Visibility.Visible;
+            txtInfoText.Visibility = Visibility.Visible;
         }
 
         private void txtInfoText_Loaded(object sender, RoutedEventArgs e)
         {
-            this.txtInfoText.Text = this.setText;
+            txtInfoText.Text = this.setText;
         }
       }
         

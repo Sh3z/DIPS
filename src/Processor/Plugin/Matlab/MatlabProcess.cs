@@ -86,7 +86,8 @@ namespace DIPS.Processor.Plugin.Matlab
         private void _putInput( MatlabEngine e )
         {
             string name = "Tmp.bmp";
-            Input.Save( name, ImageFormat.Bmp );
+            string path = string.Format( @"{0}/{1}", Directory.GetCurrentDirectory(), name );
+            Input.Save( path, ImageFormat.Bmp );
             e.Base.PutObject( "dipsinput", name );
         }
 
@@ -95,7 +96,9 @@ namespace DIPS.Processor.Plugin.Matlab
             string scriptName = Path.GetFileName( p.ScriptFile );
             using( IDisposable tmp = new TemporaryFile( scriptName, p.SerializedFile ) )
             {
-                return File.ReadAllLines( p.ScriptFile );
+                // Remove any blank lines from the script
+                var script = File.ReadAllLines( p.ScriptFile );
+                return script.Where( x => string.IsNullOrEmpty( x ) == false );
             }
         }
 
