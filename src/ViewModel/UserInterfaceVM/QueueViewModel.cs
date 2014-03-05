@@ -1,4 +1,6 @@
-﻿using DIPS.Util.Extensions;
+﻿using System.Windows;
+using System.Windows.Controls;
+using DIPS.Util.Extensions;
 using DIPS.ViewModel.Commands;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using System;
@@ -25,11 +27,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
         /// present within the queue.</param>
         /// <exception cref="ArgumentNullException">tracker is
         /// null.</exception>
-        public QueueViewModel( IJobTracker tracker )
+        public QueueViewModel(IJobTracker tracker)
         {
-            if( tracker == null )
+            if (tracker == null)
             {
-                throw new ArgumentNullException( "tracker" );
+                throw new ArgumentNullException("tracker");
             }
 
             CancelCommand = new CancelJobCommand();
@@ -46,11 +48,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         /// <summary>
         /// Gets the <see cref="ICommand"/> used to cancel queued jobs.
         /// </summary>
-        public Command CancelCommand
-        {
-            get;
-            private set;
-        }
+        public Command CancelCommand { get; private set; }
 
         /// <summary>
         /// Gets or sets whether the currently queued elements are
@@ -58,10 +56,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         /// </summary>
         public bool IsPresentingQueued
         {
-            get
-            {
-                return _isPresentingQueued;
-            }
+            get { return _isPresentingQueued; }
             set
             {
                 _isPresentingQueued = value;
@@ -69,27 +64,22 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 OnPropertyChanged();
             }
         }
-        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private bool _isPresentingQueued;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private bool _isPresentingQueued;
 
         /// <summary>
         /// Gets the set of currently displayed entries.
         /// </summary>
-        public ObservableCollection<JobViewModel> Entries
-        {
-            get;
-            private set;
-        }
+        public ObservableCollection<JobViewModel> Entries { get; private set; }
+
+        public ComboBoxItem PostProcessAction { get; set; }
 
         /// <summary>
         /// Gets or sets the selected job.
         /// </summary>
         public JobViewModel SelectedJob
         {
-            get
-            {
-                return _selectedJob;
-            }
+            get { return _selectedJob; }
             set
             {
                 _selectedJob = value;
@@ -97,26 +87,23 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 OnPropertyChanged();
             }
         }
-        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private JobViewModel _selectedJob;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private JobViewModel _selectedJob;
 
         /// <summary>
         /// Gets or sets the currently executing job.
         /// </summary>
         public JobViewModel CurrentJob
         {
-            get
-            {
-                return _currentJob;
-            }
+            get { return _currentJob; }
             set
             {
                 _currentJob = value;
                 OnPropertyChanged();
             }
         }
-        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private JobViewModel _currentJob;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)] private JobViewModel _currentJob;
 
 
         /// <summary>
@@ -126,37 +113,39 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void _updateDisplayedEntries()
         {
             Entries.Clear();
-            if( IsPresentingQueued )
+            if (IsPresentingQueued)
             {
-                _tracker.Pending.ForEach( Entries.Add );
+                _tracker.Pending.ForEach(Entries.Add);
             }
             else
             {
-                _tracker.Finished.ForEach( Entries.Add );
+                _tracker.Finished.ForEach(Entries.Add);
             }
         }
 
-        private void _pendingChanged( object sender, NotifyCollectionChangedEventArgs e )
+        private void _pendingChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if( IsPresentingQueued )
+            if (IsPresentingQueued)
             {
-                _updateEntries( e );
+                _updateEntries(e);
             }
         }
 
-        private void _finishedChanged( object sender, NotifyCollectionChangedEventArgs e )
+        private void _finishedChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if( IsPresentingQueued == false )
+            if (IsPresentingQueued == false)
             {
-                _updateEntries( e );
+                _updateEntries(e);
             }
+
+            _trackerPendingCheckAndAction();
         }
 
-        private void _updateEntries( NotifyCollectionChangedEventArgs e )
+        private void _updateEntries(NotifyCollectionChangedEventArgs e)
         {
             Action<JobViewModel> theAction = null;
             IList items = null;
-            if( e.Action == NotifyCollectionChangedAction.Add )
+            if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 items = e.NewItems;
                 theAction = Entries.Add;
@@ -164,25 +153,44 @@ namespace DIPS.ViewModel.UserInterfaceVM
             else
             {
                 items = e.OldItems;
-                theAction = x => Entries.Remove( x );
+                theAction = x => Entries.Remove(x);
             }
 
-            foreach( object item in items )
+            foreach (object item in items)
             {
-                theAction( (JobViewModel)item );
+                theAction((JobViewModel) item);
             }
         }
 
-        private void _trackerPropertyChanged( object sender, PropertyChangedEventArgs e )
+        private void _trackerPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             string lowerName = e.PropertyName.ToLower();
-            if( lowerName == "current" )
+            if (lowerName == "current")
             {
                 CurrentJob = _tracker.Current;
             }
         }
 
+        private void _trackerPendingCheckAndAction()
+        {
+            if (_tracker != null)
+            {
+                if (_tracker.Pending.Count == 0 && PostProcessAction != null)
+            {
+                    if (PostProcessAction.Content.ToString() == "Shut down")
+                {
+                    Process.Start("shutdown", "/s /t 0");
+                }
 
+                else if (PostProcessAction.Content.ToString() == "Sleep")
+                {
+                    // Hibernate
+                    Process.Start("shutdown", "/h /f");
+                }
+            }
+           }
+            
+        }
         /// <summary>
         /// Contains the tracking instance we provide presentation logic
         /// against.
