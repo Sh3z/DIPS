@@ -95,7 +95,9 @@ namespace DIPS.Processor.Plugin.Matlab
             string scriptName = Path.GetFileName( p.ScriptFile );
             using( IDisposable tmp = new TemporaryFile( scriptName, p.SerializedFile ) )
             {
-                return File.ReadAllLines( p.ScriptFile );
+                // Remove any blank lines from the script
+                var script = File.ReadAllLines( p.ScriptFile );
+                return script.Where( x => string.IsNullOrEmpty( x ) == false );
             }
         }
 
