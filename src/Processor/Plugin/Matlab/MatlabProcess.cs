@@ -86,7 +86,8 @@ namespace DIPS.Processor.Plugin.Matlab
         private void _putInput( MatlabEngine e )
         {
             string name = "Tmp.bmp";
-            Input.Save( name, ImageFormat.Bmp );
+            string path = string.Format( @"{0}/{1}", Directory.GetCurrentDirectory(), name );
+            Input.Save( path, ImageFormat.Bmp );
             e.Base.PutObject( "dipsinput", name );
         }
 
