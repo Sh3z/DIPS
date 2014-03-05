@@ -23,6 +23,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
 
             Input = input.Input;
             Identifier = input.Identifier;
+            _outputPadlock = new object();
         }
 
         public Image Input
@@ -41,8 +42,11 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             {
                 if( value != null )
                 {
-                    _output = (Image)value.Clone();
-                    OnPropertyChanged();
+                    lock( _outputPadlock )
+                    {
+                        _output = (Image)value.Clone();
+                        OnPropertyChanged();
+                    }
                 }
             }
         }
@@ -69,5 +73,11 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private bool _isProcessed;
+
+
+        /// <summary>
+        /// Contains a padlock used for accessing the padlock
+        /// </summary>
+        private object _outputPadlock;
     }
 }
