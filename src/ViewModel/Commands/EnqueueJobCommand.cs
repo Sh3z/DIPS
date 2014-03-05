@@ -154,20 +154,18 @@ namespace DIPS.ViewModel.Commands
         {
             Image theImg = null;
             string path = string.Format( @"{0}/{1}", file.Directory, file.Name );
-            string ext = file.Extension.ToLower();
-            if( ext == ".dicom" )
+
+            // Ensure we have a DICOM file
+            verifyDicom d = new verifyDicom();
+            if( d.verify( path ) )
             {
-                readImage reader = new readImage();
-                byte[] bytes = reader.blob( path );
+                readImage i = new readImage();
+                byte[] bytes = i.blob( path );
                 using( Stream stream = new MemoryStream( bytes ) )
                 {
                     Image tmp = Image.FromStream( stream );
                     theImg = new Bitmap( tmp );
                 }
-            }
-            else
-            {
-                theImg = Image.FromFile( path );
             }
 
             return theImg;
