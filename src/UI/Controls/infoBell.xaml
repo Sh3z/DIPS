@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Height="33.055" Width="36.666">
     <Grid x:Name="imgBell" MouseLeave="imgBell_MouseLeave" Margin="10,10,0,0">
-        <TextBox Visibility="Hidden" Name="txtInfoText" HorizontalAlignment="Left" Height="86" Margin="45,-28,-153,-26" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="142" Background="#FFDEDEDE" BorderBrush="{x:Null}" Loaded="txtInfoText_Loaded"/>
+        <TextBox Visibility="Hidden" Name="txtInfoText" HorizontalAlignment="Left" Height="91" Margin="45,-28,-201,-40" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="183" Background="#FFDEDEDE" BorderBrush="{x:Null}" Loaded="txtInfoText_Loaded"/>
         <Image x:Name="imgBell1" Source="../Images/information.png" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.583,0.84" Stretch="None" MouseEnter="imgBell1_MouseEnter" Margin="-7,-9,0,0"/>
 
     </Grid>
