@@ -42,6 +42,19 @@ namespace DIPS.ViewModel
             }
         }
 
+        private BitmapImage _baseProcessedImage;
+        public BitmapImage BaseProcessedImage
+        {
+            get { return _baseProcessedImage; }
+            set
+            {
+                _baseProcessedImage = value;
+                OnPropertyChanged();
+                _ViewExistingDatasetViewModel.ImgProcessed = _baseProcessedImage;
+            }
+        }
+
+
         private String _baseimageInfo;
 
         public String BaseImageInfo
