@@ -166,7 +166,7 @@ namespace Database
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spr_SelectProperties_v001", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@fileID", SqlDbType.VarChar).Value = fileID;
+                cmd.Parameters.Add("@fileID", SqlDbType.Int).Value = Int32.Parse(fileID);
                 SqlDataReader dataReader = cmd.ExecuteReader();
                 dataReader.Read();
 

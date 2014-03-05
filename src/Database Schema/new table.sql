@@ -74,5 +74,5 @@ TO DISK = 'C:\Users\Joseph\Documents\Backup\Test.BAK'
 DROP DATABASE medicalImaging;
 
 RESTORE DATABASE medicalImaging
-FROM DISK = 'C:\Users\Joseph\Documents\Backup\Test.BAK'
+FROM DISK = 'C:\Users\Public\Documents\Backup\Test.BAK'
 WITH STATS = 1

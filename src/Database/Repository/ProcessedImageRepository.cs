@@ -1,5 +1,8 @@
-﻿using Dicom;
+﻿using Database.Connection;
+using Database.Objects;
+using Dicom;
 using Dicom.Data;
+using DIPS.Database;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -37,6 +40,8 @@ namespace Database.Repository
             try
             {
                 _saveImage( blob, identifier );
+                ProcessRepository repo = new ProcessRepository();
+                repo.processDicom(file.FullName);
             }
             catch { }
         }

@@ -1,4 +1,6 @@
-﻿using DIPS.Database;
+﻿using Database.Connection;
+using Database.Objects;
+using DIPS.Database;
 using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Unity;
@@ -127,6 +129,9 @@ namespace DIPS.ViewModel.Commands
         private IEnumerable<JobInput> _filesToInputs()
         {
             List<JobInput> jobs = new List<JobInput>();
+            Log.Created = false;
+            Log.NeedUpdate = false;
+
             foreach( FileInfo file in _source.Files )
             {
                 try
@@ -140,6 +145,12 @@ namespace DIPS.ViewModel.Commands
                 {
 
                 }
+            }
+
+            if (Log.NeedUpdate == true)
+            {
+                DAOLog log = new DAOLog();
+                log.update(Log.Series);
             }
 
             return jobs;
