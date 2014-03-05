@@ -89,7 +89,7 @@
             </StackPanel>
             <ListView ItemsSource="{Binding Path=Entries}"
                       SelectedItem="{Binding Path=SelectedJob, Mode=TwoWay}"
-                      ItemContainerStyle="{StaticResource JobRowToolTipStyle}" Margin="3,3,3,0" Width="344">
+                      ItemContainerStyle="{StaticResource JobRowToolTipStyle}" Margin="3,3,3,0">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>

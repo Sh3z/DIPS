@@ -103,12 +103,14 @@ namespace DIPS.Matlab
 
             try
             {
-                return _session.Matlab.GetVariable( name, WorkspaceName );
+                object output = null;
+                _session.Matlab.GetWorkspaceData( name, WorkspaceName, out output );
+                return output;
             }
             catch( Exception e )
             {
                 string err = string.Format(
-                    "Exception while retrieving variable \"{0}\". Perhaps it has no been set?",
+                    "Exception while retrieving variable \"{0}\"",
                     name );
                 throw new MatlabException( err, e );
             }
