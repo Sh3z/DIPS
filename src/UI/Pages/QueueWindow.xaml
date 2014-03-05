@@ -4,7 +4,7 @@
         xmlns:Converters="clr-namespace:DIPS.ViewModel.Converters;assembly=DIPS.ViewModel"
         xmlns:Custom="clr-namespace:DIPS.UI.CustomControls;assembly=DIPS.UI.CustomControls"
         x:Name="Window"
-        Title="Queue" Height="345.358" Width="706" Margin="3">
+        Title="Queue" Height="345.358" Width="769" Margin="3">
     <Window.Resources>
         <Converters:BooleanNotConverter x:Key="BoolNotConverter" />
         <Converters:ImageToImageSourceConverter x:Key="ImageToImageSource" />
@@ -72,21 +72,25 @@
                 </ListView.View>
             </ListView>
         </DockPanel>
-        <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,0,0,15">
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="30">
-                <RadioButton x:Name="QueuedRadioButton"
+        <DockPanel Grid.Column="0" Grid.Row="1">
+            <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                    <RadioButton x:Name="QueuedRadioButton" VerticalAlignment="Center"
                              Content="Queued"
                              IsChecked="{Binding Path=IsPresentingQueued}" />
-                <RadioButton Content="Complete"
+                    <RadioButton Content="Complete" VerticalAlignment="Center"
                              IsChecked="{Binding Path=IsPresentingQueued, Converter={StaticResource BoolNotConverter}}" />
-                <Label Content="Finishing action?" FontSize="12" Margin="0,0,0,-1" Width="103"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Label Content="Finishing action?" FontSize="12" VerticalAlignment="Center" />
 
-                <ComboBox SelectedItem="{Binding PostProcessAction}" Width="78" Margin="0,0,0,10" >
-                    <ComboBoxItem Content="Nothing" />
-                    <ComboBoxItem Content="Sleep" IsSelected="True"/>
-                    <ComboBoxItem Content="Shut down"/>
-                </ComboBox>
-            </StackPanel>
+                    <ComboBox SelectedItem="{Binding PostProcessAction}" Width="78" VerticalAlignment="Center" >
+                        <ComboBoxItem Content="Nothing" />
+                        <ComboBoxItem Content="Sleep" IsSelected="True"/>
+                        <ComboBoxItem Content="Shut down"/>
+                    </ComboBox>
+                </StackPanel>
+            </DockPanel>
             <ListView ItemsSource="{Binding Path=Entries}"
                       SelectedItem="{Binding Path=SelectedJob, Mode=TwoWay}"
                       ItemContainerStyle="{StaticResource JobRowToolTipStyle}" Margin="3,3,3,0">
@@ -110,9 +114,6 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="26">
-                
-            </StackPanel>
         </DockPanel>
         <Grid Grid.Column="1" Grid.Row="1" DataContext="{Binding Path=SelectedJob}">
             <Grid.RowDefinitions>
@@ -140,6 +141,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Path=IsProcessed, Mode=OneWay}"
+                                                  IsHitTestVisible="False"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
