@@ -18,13 +18,6 @@ namespace DIPS.Database
             {
 
                 Process task = new Process();
-
-                if (Log.CodecRegistration == false)
-                {
-
-                    Log.CodecRegistration = true;
-                }
-
                 DicomInfo dicom = new DicomInfo();
                 dicom.readFile = filePath;
                 task.processDicom(dicom, filePath);
