@@ -15,6 +15,23 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
     public class CompositeHandler : Collection<IJobResultsHandler>, IJobResultsHandler
     {
         /// <summary>
+        /// Returns a new <see cref="CompositeHandler"/> that is a clone of
+        /// this <see cref="CompositeHandler"/>.
+        /// </summary>
+        /// <returns>A new <see cref="CompositeHandler"/> contained cloned instances
+        /// of all child <see cref="IJobResultsHandler"/>s.</returns>
+        public object Clone()
+        {
+            CompositeHandler h = new CompositeHandler();
+            foreach( IJobResultsHandler handler in this )
+            {
+                h.Add( (IJobResultsHandler)h.Clone() );
+            }
+
+            return h;
+        }
+
+        /// <summary>
         /// Handles the results of a finised job.
         /// </summary>
         /// <param name="completeJob">The <see cref="IJobTicket"/> representing

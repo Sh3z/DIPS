@@ -158,6 +158,11 @@ namespace DIPS.Tests.ViewModel
 
         class DudHandler : IJobResultsHandler
         {
+            public object Clone()
+            {
+                return new DudHandler();
+            }
+
             public void HandleResults( IJobTicket completeJob )
             {
             }

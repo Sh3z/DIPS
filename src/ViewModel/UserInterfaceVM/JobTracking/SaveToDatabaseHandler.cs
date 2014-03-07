@@ -21,6 +21,16 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
     public class SaveToDatabaseHandler : PersistenceHandler
     {
         /// <summary>
+        /// Creates a copy of this <see cref="PersistenceHandler"/>.
+        /// </summary>
+        /// <returns>A new <see cref="PersistenceHandler"/> that is a copy
+        /// of this <see cref="PersistenceHandler"/>.</returns>
+        public override object Clone()
+        {
+            return new SaveToDatabaseHandler();
+        }
+
+        /// <summary>
         /// Saves the output from the processor to the data-store. This is invoked
         /// when no corresponding input is found.
         /// </summary>

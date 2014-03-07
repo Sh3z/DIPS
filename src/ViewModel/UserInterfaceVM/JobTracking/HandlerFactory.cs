@@ -1,6 +1,7 @@
 ﻿using DIPS.Util.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -19,7 +20,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// </summary>
         public HandlerFactory()
         {
-            _handlers = new Dictionary<string, Type>();
+            _handlers = new Dictionary<string, LoadedHandler>();
         }
 
 
@@ -47,7 +48,15 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                 {
                     if( _handlers.ContainsKey( validType.Identifier ) == false )
                     {
-                        _handlers.Add( validType.Identifier, validType.Type );
+                        LoadedHandler h = new LoadedHandler( (IJobResultsHandler)Activator.CreateInstance( validType.Type ) );
+                        object[] nameAttr = validType.Type.GetCustomAttributes( typeof( DisplayNameAttribute ), false );
+                        if( nameAttr.Any() && nameAttr.First() is DisplayNameAttribute )
+                        {
+                            DisplayNameAttribute a = (DisplayNameAttribute)nameAttr[0];
+                            h.DisplayName = a.DisplayName;
+                        }
+
+                        _handlers.Add( validType.Identifier, h );
                     }
                 }
             }
@@ -65,7 +74,8 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         {
             if( _handlers.ContainsKey( identifier ) )
             {
-                return (IJobResultsHandler)Activator.CreateInstance( _handlers[identifier] );
+                LoadedHandler h = _handlers[identifier];
+                return (IJobResultsHandler)h.Handler.Clone();
             }
             else
             {
@@ -115,6 +125,6 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// <summary>
         /// Retains the set of registered handlers.
         /// </summary>
-        private IDictionary<string, Type> _handlers;
+        private IDictionary<string, LoadedHandler> _handlers;
     }
 }
