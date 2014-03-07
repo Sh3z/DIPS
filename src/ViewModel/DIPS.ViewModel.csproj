@@ -98,6 +98,10 @@
     <Compile Include="Unity\IQueueDialog.cs" />
     <Compile Include="Objects\ImageHandler.cs" />
     <Compile Include="UserInterfaceVM\CreateAlgorithmViewModel.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\CompositeHandler.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\HandlerAttribute.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\HandlerFactory.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\IHandlerFactory.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\IJobResultsHandler.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\IJobTracker.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\InputViewModel.cs" />

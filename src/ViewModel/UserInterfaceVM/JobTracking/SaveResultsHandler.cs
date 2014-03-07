@@ -15,6 +15,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
     /// Represents the <see cref="IJobResultsHandler"/> used to save
     /// results to the database.
     /// </summary>
+    [Handler( "Database" )]
     public class SaveResultsHandler : IJobResultsHandler
     {
         /// <summary>
