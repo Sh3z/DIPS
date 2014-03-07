@@ -118,6 +118,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             _AlgorithmBuilderViewModel.FromLoadStep2 = false;
 
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
+            _AlgorithmBuilderViewModel.SelectedProcesses.Clear();
+            _AlgorithmBuilderViewModel.PipelineName = String.Empty;
 
             if (Container != null)
             {
@@ -136,6 +138,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void ShowViewExistingAlgorithms(object obj)
         {
+            _ViewAlgorithmViewModel.GetAllAlgorithmPlans();
             OverallFrame.Content = _ViewAlgorithmViewModel;
         }
     }
