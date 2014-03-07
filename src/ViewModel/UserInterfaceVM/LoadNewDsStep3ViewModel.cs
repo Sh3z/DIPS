@@ -73,7 +73,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             PipelineAlgorithms.CollectionChanged += _jobDetailsChanged;
             ListOfFiles.CollectionChanged += _jobDetailsChanged;
             SetupCommands();
-            Handler = new SaveResultsHandler();
+            Handler = new SaveToDatabaseHandler();
         }
 
         
