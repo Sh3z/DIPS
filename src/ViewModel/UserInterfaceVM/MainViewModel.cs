@@ -69,7 +69,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
             OverallFrame = theFrame;
 
             OngoingJobsViewModel vm = new OngoingJobsViewModel();
-            vm.Handler = new SaveResultsHandler();
             GlobalContainer.Instance.Container.RegisterInstance<IJobTracker>( vm );
 
             Container = GlobalContainer.Instance.Container;

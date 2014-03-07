@@ -84,9 +84,12 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// </summary>
         /// <param name="ticket">The <see cref="IJobTicket"/> to begin
         /// tracking.</param>
-        public void Add( IJobTicket ticket )
+        /// <param name="handler">The <see cref="IJobResultsHandler"/> called
+        /// when the job has finished executing.</param>
+        public void Add( IJobTicket ticket, IJobResultsHandler handler )
         {
             JobViewModel vm = new JobViewModel( ticket );
+            vm.Handler = handler;
             switch( ticket.State )
             {
                 case JobState.InQueue:
@@ -105,16 +108,6 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                     _safeViewModelAction( Finished.Add, vm );
                     break;
             }
-        }
-
-        /// <summary>
-        /// Gets or sets the <see cref="IJobResultsHandler"/> called
-        /// when the results of a pocessing job are complete.
-        /// </summary>
-        public IJobResultsHandler Handler
-        {
-            get;
-            set;
         }
 
 
@@ -139,11 +132,6 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             Current = null;
             _safeViewModelAction( x => Pending.Remove( x ), (JobViewModel)sender );
             _safeViewModelAction( Finished.Add, (JobViewModel)sender );
-            if( Handler != null )
-            {
-                JobViewModel vm = (JobViewModel)sender;
-                Handler.HandleResults( vm.Ticket );
-            }
         }
 
         /// <summary>

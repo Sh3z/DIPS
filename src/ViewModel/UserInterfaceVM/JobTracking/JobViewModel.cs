@@ -91,6 +91,17 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         }
 
         /// <summary>
+        /// Gets or sets the <see cref="IJobResultsHandler"/> responsible
+        /// for handling the results gathered on completion of the associated
+        /// job.
+        /// </summary>
+        public IJobResultsHandler Handler
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets the identifier given to the job.
         /// </summary>
         public object Identifier
@@ -343,6 +354,10 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             IsRunning = false;
             _updateFromState();
             _fireIfComplete();
+            if( Handler != null )
+            {
+                Handler.HandleResults( this.Ticket );
+            }
         }
 
         /// <summary>

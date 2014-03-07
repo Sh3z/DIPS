@@ -46,6 +46,15 @@ namespace DIPS.ViewModel.Commands
         {
             get;
         }
+
+        /// <summary>
+        /// Gets the <see cref="IJobResultsHandler"/> chosen by the user for
+        /// handling finished jobs.
+        /// </summary>
+        IJobResultsHandler Handler
+        {
+            get;
+        }
     }
 
     /// <summary>
@@ -70,8 +79,6 @@ namespace DIPS.ViewModel.Commands
             _source = source;
             _source.PropertyChanged += _sourcePropertyChanged;
         }
-
-        
 
 
         /// <summary>
@@ -118,7 +125,7 @@ namespace DIPS.ViewModel.Commands
             r.Identifier = _source.Identifier;
             IJobTicket t = service.JobManager.EnqueueJob( r );
             IJobTracker tracker = Container.Resolve<IJobTracker>();
-            tracker.Add( t );
+            tracker.Add( t, _source.Handler );
         }
 
         /// <summary>

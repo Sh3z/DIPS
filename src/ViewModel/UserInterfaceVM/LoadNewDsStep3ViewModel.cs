@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using DIPS.Processor.Client;
 using System.Collections.Specialized;
 using DIPS.Unity;
+using DIPS.ViewModel.UserInterfaceVM.JobTracking;
+using System.Windows.Data;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -71,6 +73,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             PipelineAlgorithms.CollectionChanged += _jobDetailsChanged;
             ListOfFiles.CollectionChanged += _jobDetailsChanged;
             SetupCommands();
+            Handler = new SaveResultsHandler();
         }
 
         
@@ -133,5 +136,20 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     from process in PipelineAlgorithms select process.Definition );
             }
         }
+
+        public IJobResultsHandler Handler
+        {
+            get
+            {
+                return _handler;
+            }
+            set
+            {
+                _handler = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private IJobResultsHandler _handler;
     }
 }
