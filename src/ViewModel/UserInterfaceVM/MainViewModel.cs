@@ -85,7 +85,15 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private static void ShowExistingDataSet(object obj)
         {
-            ImageRepository imgRepository = new ImageRepository();
+            ImageRepository repo = new ImageRepository();
+            _ViewExistingDatasetViewModel.PatientsList = repo.generateTreeView(false);
+            TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(_ViewExistingDatasetViewModel.PatientsList);
+
+            _ViewExistingDatasetViewModel.TopLevelViewModel = tvpv;
+
+            _ViewExistingDatasetViewModel.ImgUnprocessed = null;
+            _ViewExistingDatasetViewModel.ImgProcessed = null;
+            _ViewExistingDatasetViewModel.ImageInfo = string.Empty;
             
             OverallFrame.Content = _ViewExistingDatasetViewModel;
         }

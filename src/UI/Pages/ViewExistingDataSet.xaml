@@ -52,7 +52,7 @@
 
         <Label Content="----&gt;" HorizontalAlignment="Left" Margin="495,111,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
 
-        <TreeView ItemsSource="{Binding TopLevelViewModel.Patients}" HorizontalAlignment="Left" Height="358" Margin="26,56,0,0" VerticalAlignment="Top" Width="237">
+        <TreeView ItemsSource="{Binding TopLevelViewModel.Patients}" HorizontalAlignment="Left" Height="349" Margin="26,56,0,0" VerticalAlignment="Top" Width="237">
             <TreeView.ItemContainerStyle>
                 <!-- 
         This Style binds a TreeViewItem to a TreeViewItemViewModel. 
@@ -104,5 +104,6 @@
         <CheckBox IsChecked="{Binding ToggleFilter}" Content="Active Filter?" HorizontalAlignment="Left" Margin="156,25,0,0" VerticalAlignment="Top" FontSize="16" />
         <Button Command="{Binding OpenQueueCommand}" Content="Queue" HorizontalAlignment="Left" Margin="822,19,0,0" VerticalAlignment="Top" Width="75"/>
         <Label Content="View Existing Dataset" HorizontalAlignment="Left" Margin="401,10,0,0" VerticalAlignment="Top" FontSize="22"/>
+        <Button Command="{Binding RefreshTreeviewCommand}" Content="Refresh" HorizontalAlignment="Left" Margin="111,410,0,0" VerticalAlignment="Top" Width="75" FontSize="16"/>
     </Grid>
 </UserControl>

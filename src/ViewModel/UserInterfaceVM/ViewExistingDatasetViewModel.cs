@@ -85,6 +85,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         }
 
         public ICommand OpenFilterDialogCommand { get; set; }
+        public ICommand RefreshTreeviewCommand { get; set; }
         public UnityCommand OpenQueueCommand { get; set; }
 
         public IUnityContainer Container
@@ -114,7 +115,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 AdminRepository admin = new AdminRepository();
                 if (_isSelected == true) transform = admin.verified();
 
-                if (transform) GetPatientsForTreeview();
+                if (transform) GetPatientsForTreeview(null);
                 else
                 {
                     _isSelected = false;
@@ -171,19 +172,17 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 }
                 else
                 {
-                    GetPatientsForTreeview();
+                    GetPatientsForTreeview(null);
                 }
             }
         }
-        
-        
         #endregion
 
         #region Constructor
         public ViewExistingDatasetViewModel()
         {
             SetupCommands();
-            GetPatientsForTreeview();
+            GetPatientsForTreeview(null);
         } 
         #endregion
 
@@ -191,6 +190,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void SetupCommands()
         {
             OpenFilterDialogCommand = new RelayCommand(new Action<object>(OpenFilterDialog));
+            RefreshTreeviewCommand = new RelayCommand(new Action<object>(GetPatientsForTreeview));
             OpenQueueCommand = new PresentQueueCommand();
             OpenQueueCommand.Container = GlobalContainer.Instance.Container;
         }
@@ -207,12 +207,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
             FilterTreeView.OpenDialog();
         }
 
-        private void GetPatientsForTreeview()
+        private void GetPatientsForTreeview(object obj)
         {
             ImageRepository repo = new ImageRepository();
             PatientsList = repo.generateTreeView(_isSelected);
             TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(PatientsList);
 
+            ImgUnprocessed = null;
+            ImgProcessed = null;
+            ImageInfo = string.Empty;
+            
             TopLevelViewModel = tvpv;
         }
 
