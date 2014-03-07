@@ -109,6 +109,7 @@
     <None Include="Commands\ProcessImageCommand.cs" />
     <Compile Include="Commands\LoadPipelineCommand.cs" />
     <Compile Include="Commands\PersistPipelineCommand.cs" />
+    <Compile Include="Commands\PresentPostProcessingCommand.cs" />
     <Compile Include="Commands\PresentQueueCommand.cs" />
     <Compile Include="Commands\PersistPipelineDatabaseCommand.cs" />
     <Compile Include="Converters\DecimalToPercentageConverter.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Converters\SingleItemToEnumerableConverter.cs" />
     <Compile Include="IPipelineInfo.cs" />
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Unity\IPostProcessingResolver.cs" />
     <Compile Include="Unity\IQueueDialog.cs" />
     <Compile Include="Objects\ImageHandler.cs" />
     <Compile Include="UserInterfaceVM\CreateAlgorithmViewModel.cs" />

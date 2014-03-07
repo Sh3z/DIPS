@@ -19,6 +19,8 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
     /// Represents the <see cref="IJobResultsHandler"/> used to save
     /// job results to the local file-system.
     /// </summary>
+    [DisplayName( "Save to File System" )]
+    [Handler( "FileSystem" )]
     public class SaveToFileSystemHandler : PersistenceHandler, INotifyPropertyChanged
     {
         /// <summary>

@@ -4,6 +4,7 @@ using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
     /// Represents the <see cref="IJobResultsHandler"/> used to save
     /// results to the database.
     /// </summary>
+    [DisplayName( "Save to Database" )]
     [Handler( "Database" )]
     public class SaveToDatabaseHandler : PersistenceHandler
     {

@@ -66,6 +66,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         public UnityCommand ProcessFilesCommand { get; private set; }
 
+        public ICommand PostProcessingCommand
+        {
+            get
+            {
+                return _postProcessingCommand;
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private PresentPostProcessingCommand _postProcessingCommand;
+
         public LoadNewDsStep3ViewModel()
         {
             PipelineAlgorithms = new ObservableCollection<AlgorithmViewModel>();
@@ -115,6 +125,15 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             ProcessFilesCommand = new EnqueueJobCommand( this );
             ProcessFilesCommand.Container = GlobalContainer.Instance.Container;
+            _postProcessingCommand = new PresentPostProcessingCommand();
+            _postProcessingCommand.Container = GlobalContainer.Instance.Container;
+            _postProcessingCommand.ChosenHandlerModified += _postProcessingHandlerModified;
+        }
+
+        private void _postProcessingHandlerModified( object sender, EventArgs e )
+        {
+            Handler = _postProcessingCommand.ChosenHandler;
+            ProcessFilesCommand.ExecutableStateChanged();
         }
 
         private void _jobDetailsChanged( object sender, NotifyCollectionChangedEventArgs e )
