@@ -64,7 +64,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             GetAllAlgorithmPlans();
         }
 
-        private void GetAllAlgorithmPlans()
+        public void GetAllAlgorithmPlans()
         {
             AllTechniques = new ObservableCollection<Technique>();
             ImageProcessingRepository imgProRep = new ImageProcessingRepository();
@@ -109,8 +109,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     var restoredPipeline = manager.RestorePipeline(xDoc);
                     _info = _AlgorithmBuilderViewModel;
                     _info.SelectedProcesses.Clear();
-                    
-                    _info.PipelineName = Path.GetFileNameWithoutExtension("Loaded");
+                    _info.PipelineName = Path.GetFileNameWithoutExtension(tech.Name);
 
                     foreach (var process in restoredPipeline)
                     {
