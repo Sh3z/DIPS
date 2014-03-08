@@ -28,6 +28,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
 
         /// <summary>
+        /// Gets or sets the <see cref="IHandlerFactory"/> used by this
+        /// <see cref="PostProcessingOptions"/>.
+        /// </summary>
+        public IHandlerFactory Factory
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets the collection of available <see cref="LoadedHandler"/>
         /// from the factory.
         /// </summary>
@@ -50,6 +60,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             {
                 _selectedHandler = value;
                 OnPropertyChanged();
+                OnSelectedHandlerChanged();
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
@@ -85,20 +96,19 @@ namespace DIPS.ViewModel.UserInterfaceVM
         }
 
         /// <summary>
-        /// In a dervied class, gets an <see cref="ICommand"/> used
-        /// to reset the state of this <see cref="PostProcessingOption"/>s.
-        /// </summary>
-        public abstract ICommand Reset
-        {
-            get;
-        }
-
-        /// <summary>
         /// In a dervied class, creates the <see cref="IJobResultsHandler"/>
         /// represented by the settings within this <see cref="PostProcessingOptions"/>.
         /// </summary>
         /// <returns>A <see cref="IJobResultsHandler"/> represented by the properties
         /// within this <see cref="PostProcessingOptions"/></returns>
         public abstract IJobResultsHandler CreateHandler();
+
+
+        /// <summary>
+        /// Occurs when the selected handler is changed.
+        /// </summary>
+        protected virtual void OnSelectedHandlerChanged()
+        {
+        }
     }
 }

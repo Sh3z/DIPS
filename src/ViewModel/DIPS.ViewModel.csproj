@@ -153,6 +153,7 @@
     <Compile Include="UserInterfaceVM\PostProcessingViewModel.cs" />
     <Compile Include="UserInterfaceVM\QueueViewModel.cs" />
     <Compile Include="UserInterfaceVM\ResultsHandlerViewModel.cs" />
+    <Compile Include="UserInterfaceVM\SingleHandlerOptions.cs" />
     <Compile Include="UserInterfaceVM\TreeViewFilterViewModel.cs" />
     <Compile Include="UserInterfaceVM\TreeViewGroupPatientsViewModel.cs" />
     <Compile Include="UserInterfaceVM\TreeViewImageDatasetViewModel.cs" />

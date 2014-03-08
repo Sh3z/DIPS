@@ -112,6 +112,7 @@
     <Compile Include="Controls\infoBell.xaml.cs">
       <DependentUpon>infoBell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataContextProxy.cs" />
     <Compile Include="imageDemo.cs" />
     <Compile Include="MainNavi.xaml.cs">
       <DependentUpon>MainNavi.xaml</DependentUpon>
@@ -131,11 +132,17 @@
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MultiPostProcessorControl.xaml.cs">
+      <DependentUpon>MultiPostProcessorControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PostProcessingControl.xaml.cs">
       <DependentUpon>PostProcessingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\QueueWindow.xaml.cs">
       <DependentUpon>QueueWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SinglePostProcessorControl.xaml.cs">
+      <DependentUpon>SinglePostProcessorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TreeViewFilter.xaml.cs">
       <DependentUpon>TreeViewFilter.xaml</DependentUpon>
@@ -201,6 +208,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\MultiPostProcessorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\PostProcessingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -208,6 +219,10 @@
     <Page Include="Pages\QueueWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\SinglePostProcessorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\TreeViewFilter.xaml">
       <Generator>MSBuild:Compile</Generator>

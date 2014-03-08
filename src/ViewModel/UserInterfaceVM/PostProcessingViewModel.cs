@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace DIPS.ViewModel.UserInterfaceVM
@@ -45,14 +46,28 @@ namespace DIPS.ViewModel.UserInterfaceVM
             AvailableOptions = new ObservableCollection<PostProcessingOptions>();
             foreach( string identifier in _store.AvailableOptions )
             {
-                AvailableOptions.Add( _store[identifier] );
+                PostProcessingOptions options = _store[identifier];
+                options.Factory = _factory;
+                AvailableOptions.Add( options );
             }
 
-            CurrentOptions = _store.OrderBy( x => x.Identifier ).First();
+            if( AvailableOptions.Any() )
+            {
+                CurrentOptions = AvailableOptions.OrderBy( x => x.Identifier ).First();
+            }
 
             _updateAvailableHandlers();
         }
 
+
+        /// <summary>
+        /// Gets or sets the overall containing Frame.
+        /// </summary>
+        public Frame OverallFrame
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets the collection of available post-processing option types.
@@ -87,7 +102,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set
             {
                 _currentOptions = value;
-                _resetCommand.ExecutableStateChanged();
                 OnPropertyChanged();
                 OnPropertyChanged( "CanContinue" );
             }
@@ -109,18 +123,18 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private UnityCommand _loadHandlersCommand;
 
         /// <summary>
-        /// Gets an <see cref="ICommand"/> used to reset the state
-        /// of the options in this view-model.
+        /// Gets the <see cref="ICommand"/> used to continue to the next
+        /// step.
         /// </summary>
-        public ICommand Reset
+        public ICommand Continue
         {
             get
             {
-                return _resetCommand;
+                return _continueCommand;
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private RelayCommand _resetCommand;
+        private RelayCommand _continueCommand;
 
 
         /// <summary>
@@ -178,23 +192,14 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
         }
 
-        /// <summary>
-        /// Performs the Reset.CanExecute logic
-        /// </summary>
-        /// <param name="parameter">Optional parameter</param>
-        /// <returns>True if the options can be reset</returns>
-        private bool _canReset( object parameter )
+        private bool _canContinue( object parameter )
         {
-            return CurrentOptions != null && CurrentOptions.Reset.CanExecute( parameter );
+            return CurrentOptions != null && CurrentOptions.IsValid;
         }
 
-        /// <summary>
-        /// Performs the Reset.Execute logic
-        /// </summary>
-        /// <param name="parameter">Optional parameter</param>
-        private void _reset( object parameter )
+        private void _continue( object parameter )
         {
-            CurrentOptions.Reset.Execute( parameter );
+            this.OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
         }
 
 

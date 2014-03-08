@@ -69,7 +69,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         /// <returns>true if the provided options are added to this store.</returns>
         public bool AddOptions( string identifier, PostProcessingOptions options )
         {
-            if( string.IsNullOrEmpty( identifier ) == false || options == null )
+            if( string.IsNullOrEmpty( identifier ) || options == null )
             {
                 return false;
             }

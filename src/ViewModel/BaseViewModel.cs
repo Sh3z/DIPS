@@ -8,11 +8,23 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using DIPS.ViewModel.UserInterfaceVM;
+using DIPS.ViewModel.UserInterfaceVM.JobTracking;
+using DIPS.Unity;
+using Microsoft.Practices.Unity;
 
 namespace DIPS.ViewModel
 {
     public abstract class BaseViewModel : ViewModel
     {
+        static BaseViewModel()
+        {
+            IHandlerFactory f = GlobalContainer.Instance.Container.Resolve<IHandlerFactory>();
+            PostProcessingStore s = new PostProcessingStore();
+            s.AddOptions( "Single", new SingleHandlerOptions() );
+            s.AddOptions( "Multiple", new MultiHandlerOptions() );
+            _PostProcessingViewModel = new PostProcessingViewModel( f, s );
+        }
+
         public static BaseViewModel ViewModel { get; set; }
         
         public static Frame OverallFrame { get; set; }
@@ -25,6 +37,7 @@ namespace DIPS.ViewModel
         readonly public static MainViewModel _MainViewModel = new MainViewModel(OverallFrame);
         readonly public static TreeViewFilterViewModel _FilterViewModel = new TreeViewFilterViewModel();
         readonly public static ViewAlgorithmViewModel _ViewAlgorithmViewModel = new ViewAlgorithmViewModel();
+        readonly public static PostProcessingViewModel _PostProcessingViewModel;
 
         public static object ImageViewModel { get; set; }
 

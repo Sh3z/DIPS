@@ -13,7 +13,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 {
     /// <summary>
     /// Represents the <see cref="PostProcessingOptions"/> used to specify
-    /// multiply post-processing actions.
+    /// multiple post-processing actions.
     /// </summary>
     public class MultiHandlerOptions : PostProcessingOptions
     {
@@ -24,6 +24,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public MultiHandlerOptions()
         {
             ChosenHandlers = new ObservableCollection<ResultsHandlerViewModel>();
+            _removeHandler = new RelayCommand( _removeSelectedHandler, _canExecuteRemoveHandler );
         }
 
 
@@ -41,7 +42,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         /// Gets the command used to remove a handler from the
         /// ChosenHandlers collection.
         /// </summary>
-        public ICommand RemoveHandlerCommand
+        public ICommand RemoveHandler
         {
             get
             {
@@ -64,20 +65,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
         }
 
         /// <summary>
-        /// In a dervied class, gets an <see cref="ICommand"/> used
-        /// to reset the state of this <see cref="PostProcessingOption"/>s.
-        /// </summary>
-        public override ICommand Reset
-        {
-            get
-            {
-                return _resetCommand;
-            }
-        }
-        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private RelayCommand _resetCommand;
-
-        /// <summary>
         /// Creates the <see cref="IJobResultsHandler"/> represented by the
         /// settings within this <see cref="PostProcessingOptions"/>.
         /// </summary>
@@ -85,7 +72,24 @@ namespace DIPS.ViewModel.UserInterfaceVM
         /// within this <see cref="PostProcessingOptions"/></returns>
         public override IJobResultsHandler CreateHandler()
         {
-            throw new NotImplementedException();
+            CompositeHandler h = new CompositeHandler();
+            foreach( IJobResultsHandler handler in ChosenHandlers )
+            {
+                h.Add( handler );
+            }
+
+            return h;
+        }
+
+
+        /// <summary>
+        /// Occurs when the selected handler is changed.
+        /// </summary>
+        protected override void OnSelectedHandlerChanged()
+        {
+            base.OnSelectedHandlerChanged();
+
+            _removeHandler.ExecutableStateChanged();
         }
 
 
@@ -97,7 +101,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
         /// chosen handlers set</returns>
         private bool _canExecuteRemoveHandler( object parameter )
         {
-            return SelectedHandler != null && ChosenHandlers.Contains( SelectedHandler );
+            return  SelectedHandler != null &&
+                    ChosenHandlers.Contains( SelectedHandler );
         }
 
         /// <summary>
@@ -107,26 +112,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void _removeSelectedHandler( object parameter )
         {
             ChosenHandlers.Remove( SelectedHandler );
-        }
-
-        /// <summary>
-        /// Performs the ResetCommand.CanExecute logic
-        /// </summary>
-        /// <param name="parameter">N/A</param>
-        /// <returns>True if the ChosenHandlers collection contains
-        /// any elements.</returns>
-        private bool _canResetHandlers( object parameter )
-        {
-            return ChosenHandlers.Any();
-        }
-
-        /// <summary>
-        /// Performs the ResetCommand.Execute logic.
-        /// </summary>
-        /// <param name="parameter">N/A</param>
-        private void _resetHandlers( object parameter )
-        {
-            ChosenHandlers.Clear();
         }
     }
 }
