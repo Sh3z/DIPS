@@ -107,9 +107,9 @@
     <Compile Include="Commands\EnqueueJobCommand.cs" />
     <Compile Include="Commands\ImageCommands.cs" />
     <None Include="Commands\ProcessImageCommand.cs" />
+    <Compile Include="Commands\LoadHandlersAssemblyCommand.cs" />
     <Compile Include="Commands\LoadPipelineCommand.cs" />
     <Compile Include="Commands\PersistPipelineCommand.cs" />
-    <Compile Include="Commands\PresentPostProcessingCommand.cs" />
     <Compile Include="Commands\PresentQueueCommand.cs" />
     <Compile Include="Commands\PersistPipelineDatabaseCommand.cs" />
     <Compile Include="Converters\DecimalToPercentageConverter.cs" />
@@ -120,13 +120,14 @@
     <Compile Include="Converters\SingleItemToEnumerableConverter.cs" />
     <Compile Include="IPipelineInfo.cs" />
     <Compile Include="BaseViewModel.cs" />
-    <Compile Include="Unity\IPostProcessingResolver.cs" />
     <Compile Include="Unity\IQueueDialog.cs" />
     <Compile Include="Objects\ImageHandler.cs" />
     <Compile Include="UserInterfaceVM\CreateAlgorithmViewModel.cs" />
+    <Compile Include="UserInterfaceVM\PostProcessingStore.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\CompositeHandler.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\HandlerAttribute.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\HandlerFactory.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\HandlerRegisteredArgs.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\IHandlerFactory.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\IJobResultsHandler.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\IJobTracker.cs" />
@@ -147,6 +148,9 @@
     <Compile Include="UserInterfaceVM\LoadNewDsStep3ViewModel.cs" />
     <Compile Include="UserInterfaceVM\MainNaviViewModel.cs" />
     <Compile Include="UserInterfaceVM\MainViewModel.cs" />
+    <Compile Include="UserInterfaceVM\MultiHandlerOptions.cs" />
+    <Compile Include="UserInterfaceVM\PostProcessingOptions.cs" />
+    <Compile Include="UserInterfaceVM\PostProcessingViewModel.cs" />
     <Compile Include="UserInterfaceVM\QueueViewModel.cs" />
     <Compile Include="UserInterfaceVM\ResultsHandlerViewModel.cs" />
     <Compile Include="UserInterfaceVM\TreeViewFilterViewModel.cs" />

@@ -13,6 +13,20 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
     public interface IHandlerFactory : IEnumerable<string>
     {
         /// <summary>
+        /// Occurs when a new <see cref="IJobResultsHandler"/> is registered
+        /// within this <see cref="IHandlerFactory"/>
+        /// </summary>
+        event EventHandler<HandlerRegisteredArgs> HandlerRegistered;
+
+        /// <summary>
+        /// Gets the set of loaded handlers.
+        /// </summary>
+        IEnumerable<LoadedHandler> LoadedHandlers
+        {
+            get;
+        }
+
+        /// <summary>
         /// Loads the result handler implementations from the provided
         /// assembly.
         /// </summary>

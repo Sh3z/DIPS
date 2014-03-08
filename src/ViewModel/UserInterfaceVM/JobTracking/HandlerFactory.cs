@@ -25,6 +25,23 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
 
 
         /// <summary>
+        /// Occurs when a new <see cref="IJobResultsHandler"/> is registered
+        /// within this <see cref="IHandlerFactory"/>
+        /// </summary>
+        public event EventHandler<HandlerRegisteredArgs> HandlerRegistered;
+
+        /// <summary>
+        /// Gets the set of loaded handlers.
+        /// </summary>
+        public IEnumerable<LoadedHandler> LoadedHandlers
+        {
+            get
+            {
+                return new List<LoadedHandler>( _handlers.Values );
+            }
+        }
+
+        /// <summary>
         /// Loads the result handler implementations from the provided
         /// assembly.
         /// </summary>
@@ -48,15 +65,9 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                 {
                     if( _handlers.ContainsKey( validType.Identifier ) == false )
                     {
-                        LoadedHandler h = new LoadedHandler( (IJobResultsHandler)Activator.CreateInstance( validType.Type ) );
-                        object[] nameAttr = validType.Type.GetCustomAttributes( typeof( DisplayNameAttribute ), false );
-                        if( nameAttr.Any() && nameAttr.First() is DisplayNameAttribute )
-                        {
-                            DisplayNameAttribute a = (DisplayNameAttribute)nameAttr[0];
-                            h.DisplayName = a.DisplayName;
-                        }
-
-                        _handlers.Add( validType.Identifier, h );
+                        Type t = validType.Type;
+                        string id = validType.Identifier;
+                        _registerHandler( t, id );
                     }
                 }
             }
@@ -119,6 +130,29 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+
+        /// <summary>
+        /// Registers a new handler within this factory
+        /// </summary>
+        /// <param name="t">The type of the handler</param>
+        /// <param name="id">The identifier for the handler</param>
+        private void _registerHandler( Type t, string id )
+        {
+            LoadedHandler h = new LoadedHandler( (IJobResultsHandler)Activator.CreateInstance( t ) );
+            object[] nameAttr = t.GetCustomAttributes( typeof( DisplayNameAttribute ), false );
+            if( nameAttr.Any() && nameAttr.First() is DisplayNameAttribute )
+            {
+                DisplayNameAttribute a = (DisplayNameAttribute)nameAttr[0];
+                h.DisplayName = a.DisplayName;
+            }
+
+            _handlers.Add( id, h );
+            if( HandlerRegistered != null )
+            {
+                HandlerRegistered( this, new HandlerRegisteredArgs( h ) );
+            }
         }
 
 
