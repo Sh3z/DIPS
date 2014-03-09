@@ -5,6 +5,7 @@ using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -45,6 +46,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             _store = store;
             _factory.HandlerRegistered += _handlerRegistered;
             AvailableOptions = new ObservableCollection<PostProcessingOptions>();
+            _continueCommand = new RelayCommand( _continue, _canContinue );
+
             foreach( string identifier in _store.AvailableOptions )
             {
                 PostProcessingOptions options = _store[identifier];
@@ -80,18 +83,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
         }
 
         /// <summary>
-        /// Gets a value indicating whether the post-processing options have
-        /// been specified.
-        /// </summary>
-        public bool CanContinue
-        {
-            get
-            {
-                return CurrentOptions != null && CurrentOptions.IsValid;
-            }
-        }
-
-        /// <summary>
         /// Gets the currently chosen <see cref="PostProcessingOptions"/>.
         /// </summary>
         public PostProcessingOptions CurrentOptions
@@ -102,9 +93,20 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
             set
             {
+                if( _currentOptions != null )
+                {
+                    _currentOptions.PropertyChanged -= _optionsPropertyChanged;
+                }
+
                 _currentOptions = value;
+
+                if( _currentOptions != null )
+                {
+                    _currentOptions.PropertyChanged += _optionsPropertyChanged;
+                }
+
+                _continueCommand.ExecutableStateChanged();
                 OnPropertyChanged();
-                OnPropertyChanged( "CanContinue" );
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
@@ -193,14 +195,39 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
         }
 
+        /// <summary>
+        /// Provides the Continue.CanExecute logic
+        /// </summary>
+        /// <param name="parameter">N/A</param>
+        /// <returns>true if the user has provided sufficient information
+        /// to continue</returns>
         private bool _canContinue( object parameter )
         {
             return CurrentOptions != null && CurrentOptions.IsValid;
         }
 
+        /// <summary>
+        /// Provides the Continue.Execute logic
+        /// </summary>
+        /// <param name="parameter">N/A</param>
         private void _continue( object parameter )
         {
             this.OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
+        }
+
+        /// <summary>
+        /// Occurs when a property within the current options object has
+        /// been modified
+        /// </summary>
+        /// <param name="sender">N/A</param>
+        /// <param name="e">Event information</param>
+        private void _optionsPropertyChanged( object sender, PropertyChangedEventArgs e )
+        {
+            string lowerName = e.PropertyName.ToLower();
+            if( lowerName == "isvalid" )
+            {
+                _continueCommand.ExecutableStateChanged();
+            }
         }
 
 

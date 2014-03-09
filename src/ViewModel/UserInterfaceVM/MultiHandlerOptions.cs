@@ -4,6 +4,7 @@ using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public MultiHandlerOptions()
         {
             ChosenHandlers = new ObservableCollection<ResultsHandlerViewModel>();
+            ChosenHandlers.CollectionChanged += _chosenHandlersChanged;
             _removeHandler = new RelayCommand( _removeSelectedHandler, _canExecuteRemoveHandler );
         }
 
@@ -113,6 +115,17 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void _removeSelectedHandler( object parameter )
         {
             ChosenHandlers.Remove( SelectedHandler );
+        }
+
+        /// <summary>
+        /// Occurs when the contents of the ChosenHandlers collection is
+        /// modified
+        /// </summary>
+        /// <param name="sender">N/A</param>
+        /// <param name="e">N/A</param>
+        private void _chosenHandlersChanged( object sender, NotifyCollectionChangedEventArgs e )
+        {
+            IsValid = ChosenHandlers.Any();
         }
     }
 }

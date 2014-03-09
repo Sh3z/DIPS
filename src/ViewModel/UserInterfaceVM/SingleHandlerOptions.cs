@@ -55,5 +55,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 return null;
             }
         }
+
+
+        /// <summary>
+        /// Occurs when the selected handler is changed.
+        /// </summary>
+        protected override void OnSelectedHandlerChanged()
+        {
+            base.OnSelectedHandlerChanged();
+
+            IsValid = SelectedHandler != null;
+        }
     }
 }
