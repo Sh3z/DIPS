@@ -1,4 +1,5 @@
-﻿using DIPS.Util.Extensions;
+﻿using DIPS.Util.Commanding;
+using DIPS.Util.Extensions;
 using DIPS.ViewModel.Commands;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using System;

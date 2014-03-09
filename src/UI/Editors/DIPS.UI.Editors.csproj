@@ -74,11 +74,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionEditor.cs" />
+    <Compile Include="CommandingEditor.cs" />
+    <Compile Include="DirectoryEditor.cs" />
     <Compile Include="FileEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Unity\DIPS.Unity.csproj">
+      <Project>{58bea286-5bcf-41b1-aaf0-d06c4663d4fd}</Project>
+      <Name>DIPS.Unity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

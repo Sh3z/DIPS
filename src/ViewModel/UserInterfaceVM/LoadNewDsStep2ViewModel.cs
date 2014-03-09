@@ -11,6 +11,7 @@ using DIPS.ViewModel.Commands;
 using DIPS.Util.Extensions;
 using Microsoft.Practices.Unity;
 using System.Diagnostics;
+using DIPS.Util.Commanding;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {

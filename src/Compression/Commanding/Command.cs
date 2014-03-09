@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace DIPS.ViewModel.Commands
+namespace DIPS.Util.Commanding
 {
     /// <summary>
     /// Defines a command. This class is abstract.

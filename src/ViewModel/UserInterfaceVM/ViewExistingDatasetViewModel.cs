@@ -10,6 +10,7 @@ using DIPS.ViewModel.Commands;
 using Microsoft.Practices.Unity;
 using Database.Repository;
 using DIPS.ViewModel.Unity;
+using DIPS.Util.Commanding;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {

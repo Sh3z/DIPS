@@ -16,6 +16,7 @@ using DIPS.ViewModel.Commands;
 using Microsoft.Expression.Interactivity.Core;
 using Microsoft.Practices.Unity;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
+using DIPS.Util.Commanding;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {

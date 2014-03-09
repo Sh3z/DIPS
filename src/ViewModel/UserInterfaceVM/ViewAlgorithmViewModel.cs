@@ -16,6 +16,7 @@ using DIPS.Processor.Client;
 using DIPS.Unity;
 using DIPS.ViewModel.Commands;
 using Microsoft.Practices.Unity;
+using DIPS.Util.Commanding;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {

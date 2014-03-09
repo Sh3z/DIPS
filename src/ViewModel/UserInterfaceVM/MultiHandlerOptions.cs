@@ -1,4 +1,5 @@
-﻿using DIPS.ViewModel.Commands;
+﻿using DIPS.Util.Commanding;
+using DIPS.ViewModel.Commands;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using System;
 using System.Collections.Generic;

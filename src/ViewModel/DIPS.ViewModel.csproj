@@ -103,7 +103,6 @@
     <Compile Include="AlgorithmBuilderViewModel.cs" />
     <Compile Include="AlgorithmViewModel.cs" />
     <Compile Include="Commands\CancelJobCommand.cs" />
-    <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\EnqueueJobCommand.cs" />
     <Compile Include="Commands\ImageCommands.cs" />
     <None Include="Commands\ProcessImageCommand.cs" />
@@ -114,7 +113,6 @@
     <Compile Include="Commands\PersistPipelineDatabaseCommand.cs" />
     <Compile Include="Converters\DecimalToPercentageConverter.cs" />
     <Compile Include="Converters\ImageToImageSourceConverter.cs" />
-    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\UnityCommand.cs" />
     <Compile Include="Converters\BooleanNotConverter.cs" />
     <Compile Include="Converters\SingleItemToEnumerableConverter.cs" />
