@@ -37,13 +37,16 @@ namespace Database.Repository
             String identifier = String.Empty;
             if (file != null) identifier = getIdentifier(file.OpenRead());
 
-            try
+            if (ConnectionManager.ValidConnection == true)
             {
-                _saveImage( blob, identifier );
-                ProcessRepository repo = new ProcessRepository();
-                repo.processDicom(file.FullName);
+                try
+                {
+                    _saveImage(blob, identifier);
+                    ProcessRepository repo = new ProcessRepository();
+                    repo.processDicom(file.FullName);
+                }
+                catch { }
             }
-            catch { }
         }
 
 

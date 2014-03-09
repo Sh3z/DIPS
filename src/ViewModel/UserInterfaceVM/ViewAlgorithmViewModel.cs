@@ -65,7 +65,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             GetAllAlgorithmPlans();
         }
 
-        private void GetAllAlgorithmPlans()
+        public void GetAllAlgorithmPlans()
         {
             AllTechniques = new ObservableCollection<Technique>();
             ImageProcessingRepository imgProRep = new ImageProcessingRepository();
@@ -95,7 +95,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             try
             {
                 Technique tech = new Technique();
-                tech = (Technique) SelectedTechnique;
+                tech = (Technique)SelectedTechnique;
                 XDocument xDoc = new XDocument();
 
                 ImageProcessingRepository proImgRepos = new ImageProcessingRepository();
@@ -104,24 +104,26 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 if (xDoc != null)
                 {
                     Container = GlobalContainer.Instance.Container;
+
+                    _AlgorithmBuilderViewModel.Container = Container;
                     IPipelineManager manager = Container.Resolve<IPipelineManager>();
                     var restoredPipeline = manager.RestorePipeline(xDoc);
+                    _info = _AlgorithmBuilderViewModel;
                     _info.SelectedProcesses.Clear();
-                    _info.PipelineName = Path.GetFileNameWithoutExtension("Loaded");
+                    _info.PipelineName = Path.GetFileNameWithoutExtension(tech.Name);
 
                     foreach (var process in restoredPipeline)
                     {
                         _info.SelectedProcesses.Add(new AlgorithmViewModel(process));
                     }
+
+                    OverallFrame.Content = _AlgorithmBuilderViewModel;
                 }
-                
             }
             catch (Exception e)
             {
                 _showErrorDialog();
             }
-            
-            OverallFrame.Content = _AlgorithmBuilderViewModel;
         }
 
         private void _showErrorDialog()

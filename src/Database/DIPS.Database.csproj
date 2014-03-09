@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\DAOLog.cs" />
+    <Compile Include="Connection\ValidateConnection.cs" />
     <Compile Include="DicomHelper\Codec.cs" />
     <Compile Include="DicomHelper\Encryption.cs" />
     <Compile Include="DicomHelper\Logger.cs" />

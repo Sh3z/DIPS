@@ -16,46 +16,46 @@ namespace Database.Repository
     {
         public void insertTechnique(String name, XDocument doc)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            if (ConnectionManager.ValidConnection == true)
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("spr_InsertTechnique_v001", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
-                cmd.Parameters.Add("@technique", SqlDbType.Xml).Value = doc.ToString();
-                cmd.ExecuteNonQuery();
+                using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("spr_InsertTechnique_v001", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
+                    cmd.Parameters.Add("@technique", SqlDbType.Xml).Value = doc.ToString();
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
         public ObservableCollection <Technique> getAllTechnique()
         {
             ObservableCollection<Technique> list = new ObservableCollection<Technique>();
-
-            try
+            if (ConnectionManager.ValidConnection == true)
             {
-                using( SqlConnection conn = new SqlConnection( ConnectionManager.getConnection ) )
+                using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand( "spr_RetrieveAllTechnique_v001", conn );
+                    SqlCommand cmd = new SqlCommand("spr_RetrieveAllTechnique_v001", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     SqlDataReader data = cmd.ExecuteReader();
 
-                    while( data.Read() )
+                    while (data.Read())
                     {
                         if (list == null) list = new ObservableCollection<Technique>();
                         Technique technique = new Technique();
-                        technique.ID = data.GetInt32( data.GetOrdinal( "ID" ) );
-                        technique.Name = data.GetString( data.GetOrdinal( "name" ) );
+                        technique.ID = data.GetInt32(data.GetOrdinal("ID"));
+                        technique.Name = data.GetString(data.GetOrdinal("name"));
                         SqlXml xmlTech = data.GetSqlXml(data.GetOrdinal("technique"));
                         technique.xml = XDocument.Load(xmlTech.CreateReader());
 
-                        list.Add( technique );
+                        list.Add(technique);
                     }
                     data.Close();
                 }
             }
-            catch { }
-
             return list;
         }
 

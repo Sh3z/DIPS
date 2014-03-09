@@ -13,25 +13,31 @@ namespace Database.Repository
     {
         public void CreateBackup(String filePath)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            if (ConnectionManager.ValidConnection == true)
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("spr_CreateBackup_v001", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@filePath", SqlDbType.VarChar).Value = filePath;
-                cmd.ExecuteNonQuery();
+                using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("spr_CreateBackup_v001", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@filePath", SqlDbType.VarChar).Value = filePath;
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
         public void RestoreBackup(String filePath)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionManager.getMasterConnection))
+            if (ConnectionManager.ValidMasterConnection == true)
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("spr_RestoreBackup_v001", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@filePath", SqlDbType.VarChar).Value = filePath;
-                cmd.ExecuteNonQuery();
+                using (SqlConnection conn = new SqlConnection(ConnectionManager.getMasterConnection))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("spr_RestoreBackup_v001", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@filePath", SqlDbType.VarChar).Value = filePath;
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
     }

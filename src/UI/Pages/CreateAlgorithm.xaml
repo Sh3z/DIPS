@@ -27,10 +27,10 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <TextBox HorizontalAlignment="Left" Height="27" Margin="150,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191"
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="150,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="172"
                  Text="{Binding Path=PipelineName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="301" Margin="27,127,0,0" VerticalAlignment="Top" Width="295" FontSize="16">
+        <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="315" Margin="27,113,0,0" VerticalAlignment="Top" Width="295" FontSize="16">
             <ScrollViewer>
                 <ListView
                     ItemsSource="{Binding Path=AvailableAlgorithms}"
@@ -40,7 +40,7 @@
                     dd:DragDrop.IsDropTarget="False" FontSize="12" />
             </ScrollViewer>
         </GroupBox>
-        <GroupBox Header="Algorithm" Margin="412,127,0,0" VerticalAlignment="Top" Height="301" HorizontalAlignment="Left" Width="303" FontSize="16">
+        <GroupBox Header="Algorithm" Margin="412,113,0,0" VerticalAlignment="Top" Height="315" HorizontalAlignment="Left" Width="303" FontSize="16">
             <ScrollViewer>
                 <ListView
                     ItemsSource="{Binding Path=SelectedProcesses, Mode=TwoWay}"
@@ -48,20 +48,18 @@
                     Background="Lavender"
                     ItemContainerStyle="{StaticResource AlgorithmItemStyle}"
                     dd:DragDrop.IsDragSource="True"
-                    dd:DragDrop.IsDropTarget="True" FontSize="12" Height="288" />
+                    dd:DragDrop.IsDropTarget="True" FontSize="12" Height="319" />
             </ScrollViewer>
 
         </GroupBox>
-        <Button Content="Save as XML file
-                " HorizontalAlignment="Left" Margin="397,47,0,0" VerticalAlignment="Top" Width="131" Command="{Binding SavePipeline}" FontSize="16"/>
-        <xctk:PropertyGrid Margin="766,127,10,10" IsManipulationEnabled="True"
+        <xctk:PropertyGrid Margin="735,141,10,79" IsManipulationEnabled="True"
                            SelectedObject="{Binding Path=SelectedAlgorithm.ParameterObject}"/>
-        <Button Content="Load from XML file
-                " HorizontalAlignment="Left" Margin="545,47,0,0" VerticalAlignment="Top" Width="141"
-                Command="{Binding LoadPipeline}" FontSize="16" Height="59"/>
-        <Button Command="{Binding SavePipelineDatabase}"  Content="Save to Database" HorizontalAlignment="Left" Margin="397,79,0,0" VerticalAlignment="Top" Width="131" FontSize="16"/>
+        <Button Command="{Binding SavePipelineDatabase}"  Content="Save to Database" HorizontalAlignment="Left" Margin="776,64,0,0" VerticalAlignment="Top" Width="154" FontSize="16"/>
         <Label Content="Algorithm Builder
                " HorizontalAlignment="Left" VerticalAlignment="Top" Width="181" Height="42" FontSize="22" Margin="430,0,0,0"/>
-        <Button Command="{Binding FinishButtonCommand}" Content="Finished" HorizontalAlignment="Left" Margin="864,47,0,0" VerticalAlignment="Top" Width="87" Height="59" FontSize="16"/>
+        <Button Command="{Binding FinishButtonCommand}" Content="Finished" HorizontalAlignment="Left" Margin="803,369,0,0" VerticalAlignment="Top" Width="87" Height="59" FontSize="16"/>
+        <Button Command="{Binding ClearSelectedAlgorithmsCommand}" Content="Clear Selected Algorithms" HorizontalAlignment="Left" Margin="479,64,0,0" VerticalAlignment="Top" Width="188" FontSize="16"/>
+        <Button Command="{Binding LoadPipeline}"  Content="Load from XML file" HorizontalAlignment="Left" Margin="776,96,0,0" VerticalAlignment="Top" Width="154" FontSize="16"/>
+        <Button Command="{Binding SavePipeline}"  Content="Save as XML file" HorizontalAlignment="Left" Margin="776,32,0,0" VerticalAlignment="Top" Width="154" FontSize="16"/>
     </Grid>
 </UserControl>

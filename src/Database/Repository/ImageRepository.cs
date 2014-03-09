@@ -20,21 +20,24 @@ namespace Database
             Technique t = new Technique();
             ObservableCollection<Patient> allDatasetsActive = new ObservableCollection<Patient>();
 
-            try
+            if (ConnectionManager.ValidConnection == true)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+                try
                 {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand("spr_TreeView_v001", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    SqlDataReader data = cmd.ExecuteReader();
+                    using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+                    {
+                        conn.Open();
+                        SqlCommand cmd = new SqlCommand("spr_TreeView_v001", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        SqlDataReader data = cmd.ExecuteReader();
 
-                    allDatasetsActive = DatabaseToList(data,showName);
+                        allDatasetsActive = DatabaseToList(data, showName);
 
-                    data.Close();
+                        data.Close();
+                    }
                 }
+                catch (Exception e) { Console.WriteLine(e); }
             }
-            catch (Exception e) { Console.WriteLine(e); }
 
             return allDatasetsActive;
         }
@@ -55,35 +58,37 @@ namespace Database
                 dateCompareResultTo = DateTime.Compare(invalidDate, filter.AcquisitionDateTo);
             }
 
-            try
+            if (ConnectionManager.ValidConnection == true)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+                try
                 {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand("spr_CustomList_v001", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    if (!String.IsNullOrEmpty(filter.PatientID))
-                        cmd.Parameters.Add("@IDContains", SqlDbType.VarChar).Value = filter.PatientID;
-                    if (!String.IsNullOrEmpty(filter.Modality))
-                        cmd.Parameters.Add("@modality", SqlDbType.VarChar).Value = filter.Modality;
-                    if (!String.IsNullOrEmpty(filter.Gender))
-                        cmd.Parameters.Add("@Sex", SqlDbType.VarChar).Value = filter.Gender;
-                    if (filter.AcquisitionDateFrom != null && dateCompareResultFrom != 0)
-                        cmd.Parameters.Add("@AcquireBetweenFrom", SqlDbType.Date).Value = filter.AcquisitionDateFrom;
-                    if (filter.AcquisitionDateTo != null && dateCompareResultTo != 0)
-                        cmd.Parameters.Add("@AcquireBetweenTo", SqlDbType.Date).Value = filter.AcquisitionDateTo;                 
+                    using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+                    {
+                        conn.Open();
+                        SqlCommand cmd = new SqlCommand("spr_CustomList_v001", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        if (!String.IsNullOrEmpty(filter.PatientID))
+                            cmd.Parameters.Add("@IDContains", SqlDbType.VarChar).Value = filter.PatientID;
+                        if (!String.IsNullOrEmpty(filter.Modality))
+                            cmd.Parameters.Add("@modality", SqlDbType.VarChar).Value = filter.Modality;
+                        if (!String.IsNullOrEmpty(filter.Gender))
+                            cmd.Parameters.Add("@Sex", SqlDbType.VarChar).Value = filter.Gender;
+                        if (filter.AcquisitionDateFrom != null && dateCompareResultFrom != 0)
+                            cmd.Parameters.Add("@AcquireBetweenFrom", SqlDbType.Date).Value = filter.AcquisitionDateFrom;
+                        if (filter.AcquisitionDateTo != null && dateCompareResultTo != 0)
+                            cmd.Parameters.Add("@AcquireBetweenTo", SqlDbType.Date).Value = filter.AcquisitionDateTo;
 
-                    int batch = 0;
-                    Boolean batchNumerical = int.TryParse(filter.Batch, out batch);
-                    if (batchNumerical) cmd.Parameters.Add("@Batch", SqlDbType.Int).Value = batch;
+                        int batch = 0;
+                        Boolean batchNumerical = int.TryParse(filter.Batch, out batch);
+                        if (batchNumerical) cmd.Parameters.Add("@Batch", SqlDbType.Int).Value = batch;
 
-                    SqlDataReader data = cmd.ExecuteReader();
-                    allDatasetsActive = DatabaseToList(data,showName);
-                    data.Close();
+                        SqlDataReader data = cmd.ExecuteReader();
+                        allDatasetsActive = DatabaseToList(data, showName);
+                        data.Close();
+                    }
                 }
+                catch (Exception e) { Console.WriteLine(e); }
             }
-            catch (Exception e) { Console.WriteLine(e); }
-
             return allDatasetsActive;
 
         }
@@ -161,42 +166,45 @@ namespace Database
         public String retrieveImageProperties(String fileID)
         {
             String properties = "null";
-            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            if (ConnectionManager.ValidConnection == true)
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("spr_SelectProperties_v001", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@fileID", SqlDbType.Int).Value = Int32.Parse(fileID);
-                SqlDataReader dataReader = cmd.ExecuteReader();
-                dataReader.Read();
+                using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("spr_SelectProperties_v001", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@fileID", SqlDbType.Int).Value = Int32.Parse(fileID);
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    dataReader.Read();
 
-                properties = "Patient ID : " + dataReader.GetString(dataReader.GetOrdinal("Patient ID"));
-                properties += System.Environment.NewLine;
-                properties += "Birthdate : " + dataReader.GetString(dataReader.GetOrdinal("Birthdate"));
-                properties += System.Environment.NewLine;
-                properties += "Age : " + dataReader.GetString(dataReader.GetOrdinal("Age"));
-                properties += System.Environment.NewLine;
-                properties += "Sex : " + dataReader.GetString(dataReader.GetOrdinal("Sex"));
-                properties += System.Environment.NewLine;
-                properties += "DICOM Acquisition Date : " + dataReader.GetDateTime(dataReader.GetOrdinal("Image Date Time")).ToString();
-                properties += System.Environment.NewLine;
-                properties += "Last Modified Date : " + dataReader.GetDateTime(dataReader.GetOrdinal("Modified Date")).ToString();
-                properties += System.Environment.NewLine;
-                properties += "Body Part : " + dataReader.GetString(dataReader.GetOrdinal("Body Part"));
-                properties += System.Environment.NewLine;
-                properties += "Slice Thickness : " + dataReader.GetString(dataReader.GetOrdinal("Slice Thickness"));
-                properties += System.Environment.NewLine;
-                properties += "Study Description : " + dataReader.GetString(dataReader.GetOrdinal("Study Description"));
-                properties += System.Environment.NewLine;
-                properties += "Series Description : " + dataReader.GetString(dataReader.GetOrdinal("Series Description"));
-                properties += System.Environment.NewLine; 
-                properties += "Study Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Study UID"));
-                properties += System.Environment.NewLine;
-                properties += "Series Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Series UID"));
-                properties += System.Environment.NewLine;
-                properties += "SOP Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Image UID"));
-                properties += System.Environment.NewLine;
-                dataReader.Close();
+                    properties = "Patient ID : " + dataReader.GetString(dataReader.GetOrdinal("Patient ID"));
+                    properties += System.Environment.NewLine;
+                    properties += "Birthdate : " + dataReader.GetString(dataReader.GetOrdinal("Birthdate"));
+                    properties += System.Environment.NewLine;
+                    properties += "Age : " + dataReader.GetString(dataReader.GetOrdinal("Age"));
+                    properties += System.Environment.NewLine;
+                    properties += "Sex : " + dataReader.GetString(dataReader.GetOrdinal("Sex"));
+                    properties += System.Environment.NewLine;
+                    properties += "DICOM Acquisition Date : " + dataReader.GetDateTime(dataReader.GetOrdinal("Image Date Time")).ToString();
+                    properties += System.Environment.NewLine;
+                    properties += "Last Modified Date : " + dataReader.GetDateTime(dataReader.GetOrdinal("Modified Date")).ToString();
+                    properties += System.Environment.NewLine;
+                    properties += "Body Part : " + dataReader.GetString(dataReader.GetOrdinal("Body Part"));
+                    properties += System.Environment.NewLine;
+                    properties += "Slice Thickness : " + dataReader.GetString(dataReader.GetOrdinal("Slice Thickness"));
+                    properties += System.Environment.NewLine;
+                    properties += "Study Description : " + dataReader.GetString(dataReader.GetOrdinal("Study Description"));
+                    properties += System.Environment.NewLine;
+                    properties += "Series Description : " + dataReader.GetString(dataReader.GetOrdinal("Series Description"));
+                    properties += System.Environment.NewLine;
+                    properties += "Study Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Study UID"));
+                    properties += System.Environment.NewLine;
+                    properties += "Series Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Series UID"));
+                    properties += System.Environment.NewLine;
+                    properties += "SOP Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Image UID"));
+                    properties += System.Environment.NewLine;
+                    dataReader.Close();
+                }
             }
             return properties;
         }
