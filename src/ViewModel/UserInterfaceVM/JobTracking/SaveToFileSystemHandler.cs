@@ -32,7 +32,8 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// Gets or sets the directory to save the results to.
         /// </summary>
         [Description( "The directory to output the results to" )]
-        [Editor( typeof( FileEditor ), typeof( UITypeEditor ) )]
+        [DisplayName( "Output Directory" )]
+        [Editor( typeof( DirectoryEditor ), typeof( UITypeEditor ) )]
         public string OutputDirectory
         {
             get
