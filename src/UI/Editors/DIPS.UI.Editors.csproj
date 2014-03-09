@@ -83,6 +83,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Compression\DIPS.Util.csproj">
+      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
+      <Name>DIPS.Util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Unity\DIPS.Unity.csproj">
       <Project>{58bea286-5bcf-41b1-aaf0-d06c4663d4fd}</Project>
       <Name>DIPS.Unity</Name>

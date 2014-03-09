@@ -1,6 +1,5 @@
 ﻿using DIPS.Unity.Implementations;
 using DIPS.Util.Commanding;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using Xceed.Wpf.Toolkit.PropertyGrid;
 using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
@@ -16,9 +14,9 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
 namespace DIPS.UI.Editors
 {
     /// <summary>
-    /// Represents the editor used to choose files.
+    /// Represents the editor used to specify directories
     /// </summary>
-    public class FileEditor : CommandingEditor
+    public class DirectoryEditor : CommandingEditor
     {
         /// <summary>
         /// Creates and returns the <see cref="ICommand"/> applicable
@@ -28,12 +26,12 @@ namespace DIPS.UI.Editors
         /// <see cref="CommandingEditor"/>.</returns>
         public override ICommand CreateCommand()
         {
-            if( _dialogCommand == null )
+            if( _command == null )
             {
-                _dialogCommand = new RelayCommand( _showDialog );
+                _command = new RelayCommand( _pickDirectory );
             }
 
-            return _dialogCommand;
+            return _command;
         }
 
         /// <summary>
@@ -46,38 +44,38 @@ namespace DIPS.UI.Editors
         /// <see cref="CommandingEditor"/>.</returns>
         public override FrameworkElement CreateUI()
         {
-            if( _fileDisplayTextBox == null )
+            if( _directoryDisplayTextBox == null )
             {
-                _fileDisplayTextBox = new TextBox();
+                _directoryDisplayTextBox = new TextBox();
             }
 
-            return _fileDisplayTextBox;
+            return _directoryDisplayTextBox;
         }
 
 
         /// <summary>
         /// Runs the commanding logic
         /// </summary>
-        /// <param name="parameter">Not used</param>
-        private void _showDialog( object parameter )
+        /// <param name="parameter">N/A</param>
+        private void _pickDirectory( object sender )
         {
-            FilePickerService s = new FilePickerService();
-            if( s.SelectPath() )
+            DirectoryPicker p = new DirectoryPicker();
+            if( p.Resolve() )
             {
-                _fileDisplayTextBox.Text = s.Path;
-                Property.Value = s.Path;
+                _directoryDisplayTextBox.Text = p.Directory;
+                Property.Value = p.Directory;
             }
         }
 
 
         /// <summary>
-        /// Contains the command used to present the dialog
+        /// Contains the command provided to the base class
         /// </summary>
-        private ICommand _dialogCommand;
+        private ICommand _command;
 
         /// <summary>
-        /// Contains the TextBox used to display the current file.
+        /// Contains the TextBox used to display the current directory.
         /// </summary>
-        private TextBox _fileDisplayTextBox;
+        private TextBox _directoryDisplayTextBox;
     }
 }

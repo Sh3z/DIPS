@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DIPS.ViewModel.Commands;
+using DIPS.Util.Commanding;
 
 namespace DIPS.Tests.ViewModel
 {
