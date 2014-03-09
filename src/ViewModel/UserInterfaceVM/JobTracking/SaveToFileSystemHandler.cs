@@ -111,9 +111,18 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                 if( Directory.Exists( OutputDirectory ) == false )
                 {
                     Directory.CreateDirectory( OutputDirectory );
-                    string outputs = string.Format( @"{0}/{1}", OutputDirectory, "Output" );
-                    string inputs = string.Format( @"{0}/{1}", OutputDirectory, "Input" );
+                }
+
+                string outputs = string.Format( @"{0}/{1}", OutputDirectory, "Output" );
+                string inputs = string.Format( @"{0}/{1}", OutputDirectory, "Input" );
+
+                if( Directory.Exists( outputs ) == false )
+                {
                     Directory.CreateDirectory( outputs );
+                }
+
+                if( Directory.Exists( inputs ) == false )
+                {
                     Directory.CreateDirectory( inputs );
                 }
             }

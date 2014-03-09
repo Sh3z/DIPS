@@ -76,7 +76,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public override IJobResultsHandler CreateHandler()
         {
             CompositeHandler h = new CompositeHandler();
-            foreach( IJobResultsHandler handler in ChosenHandlers )
+            foreach( IJobResultsHandler handler in ChosenHandlers.Select( x => x.Handler ) )
             {
                 h.Add( handler );
             }

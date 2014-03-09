@@ -213,6 +213,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void _continue( object parameter )
         {
             this.OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
+            BaseViewModel._LoadNewDsStep3ViewModel.Handler = CreatePostProcessor();
         }
 
         /// <summary>
