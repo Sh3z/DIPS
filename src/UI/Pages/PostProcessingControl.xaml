@@ -3,22 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
     <UserControl.Resources>
-        <Style TargetType="ComboBox">
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-        <Style x:Key="CommonButtonStyle" TargetType="Button">
-            <Setter Property="Margin" Value="3" />
-            <Setter Property="Width" Value="66" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="ComboBox">
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="CommonButtonStyle" TargetType="Button">
+                <Setter Property="Margin" Value="3" />
+                <Setter Property="Width" Value="66" />
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
-        <DockPanel Grid.Row="0" LastChildFill="False">
+        <TextBlock Grid.Row="0" Margin="3,3,3,6"
+                   Style="{StaticResource MediumTextBlockFont}"
+                   Text="Step 3: Specify how to handle the results upon completion" />
+        <DockPanel Grid.Row="1" LastChildFill="False">
             <ComboBox DockPanel.Dock="Left" MinWidth="100" Margin="3,0,0,0"
                       ItemsSource="{Binding Path=AvailableOptions}"
                       SelectedItem="{Binding Path=CurrentOptions}">
@@ -32,8 +40,8 @@
                     Style="{StaticResource CommonButtonStyle}" 
                     Command="{Binding Path=Reset}"/>
         </DockPanel>
-        <ContentControl Grid.Row="1" Content="{Binding Path=CurrentOptions}" />
-        <DockPanel Grid.Row="2" LastChildFill="False">
+        <ContentControl Grid.Row="2" Content="{Binding Path=CurrentOptions}" />
+        <DockPanel Grid.Row="3" LastChildFill="False">
             <Button DockPanel.Dock="Right" Content="Continue"
                     Style="{StaticResource CommonButtonStyle}"
                     Command="{Binding Path=Continue}" />
