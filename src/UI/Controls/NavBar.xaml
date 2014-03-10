@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Height="62.462" Width="331.224">
-    <Grid>
+    <Grid Background="#FFEFF7FF">
         <Button Command="{Binding ViewExistingDataSetCommand}" HorizontalAlignment="left" VerticalAlignment="Top" Margin="0,19,0,0" Height="33" Width="60">
             <Button.Template>
                 <ControlTemplate>
