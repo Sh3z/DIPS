@@ -25,7 +25,6 @@ namespace Database.Connection
                 using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
                 {
                     conn.Open();
-                    conn.Close();
                     ConnectionManager.ValidConnection = true;
                 }
             }
@@ -42,7 +41,6 @@ namespace Database.Connection
                 using (SqlConnection conn = new SqlConnection(ConnectionManager.getMasterConnection))
                 {
                     conn.Open();
-                    conn.Close();
                     ConnectionManager.ValidMasterConnection = true;
                 }
             }

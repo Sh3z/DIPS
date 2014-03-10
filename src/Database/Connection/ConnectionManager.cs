@@ -11,6 +11,8 @@ namespace Database
     {
         private static Boolean _valid = false;
         private static Boolean _masterValid = false;
+        private static String _connection = DIPSConnection.Default.Connection;
+        private static String _masterConnection = DIPSConnection.Default.MasterConnection;
 
         public static Boolean ValidConnection
         {
@@ -66,12 +68,21 @@ namespace Database
 
         public static String getConnection
         {
-            get { return DIPSConnection.Default.Connection; }
+            get { return _connection; }
+            set { _connection = value; }
         }
 
         public static String getMasterConnection
         {
-            get { return DIPSConnection.Default.MasterConnection; }
+            get { return _masterConnection; }
+            set { _masterConnection = value; }
+        }
+
+        public static void buidUnitTestConnection()
+        {
+            _connection = "Data Source = " + DIPSConnection.Default.DataSource + 
+                "; Initial Catalog = UnitTestDB; Integrated Security = " +
+                DIPSConnection.Default.Security;
         }
 
         private static void rebuildConnection()
@@ -84,6 +95,8 @@ namespace Database
                                 "; Initial Catalog = master; Integrated Security = " +
                                 DIPSConnection.Default.Security + "; " + DIPSConnection.Default.Extra;
             DIPSConnection.Default.Save();
+            _connection = DIPSConnection.Default.Connection;
+            _masterConnection = DIPSConnection.Default.MasterConnection;
         }
     }
 }

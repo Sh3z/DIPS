@@ -35,26 +35,30 @@ namespace Database.Repository
             ObservableCollection<Technique> list = new ObservableCollection<Technique>();
             if (ConnectionManager.ValidConnection == true)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+                try
                 {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand("spr_RetrieveAllTechnique_v001", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    SqlDataReader data = cmd.ExecuteReader();
-
-                    while (data.Read())
+                    using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
                     {
-                        if (list == null) list = new ObservableCollection<Technique>();
-                        Technique technique = new Technique();
-                        technique.ID = data.GetInt32(data.GetOrdinal("ID"));
-                        technique.Name = data.GetString(data.GetOrdinal("name"));
-                        SqlXml xmlTech = data.GetSqlXml(data.GetOrdinal("technique"));
-                        technique.xml = XDocument.Load(xmlTech.CreateReader());
+                        conn.Open();
+                        SqlCommand cmd = new SqlCommand("spr_RetrieveAllTechnique_v001", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        SqlDataReader data = cmd.ExecuteReader();
 
-                        list.Add(technique);
+                        while (data.Read())
+                        {
+                            if (list == null) list = new ObservableCollection<Technique>();
+                            Technique technique = new Technique();
+                            technique.ID = data.GetInt32(data.GetOrdinal("ID"));
+                            technique.Name = data.GetString(data.GetOrdinal("name"));
+                            SqlXml xmlTech = data.GetSqlXml(data.GetOrdinal("technique"));
+                            technique.xml = XDocument.Load(xmlTech.CreateReader());
+
+                            list.Add(technique);
+                        }
+                        data.Close();
                     }
-                    data.Close();
                 }
+                catch { }
             }
             return list;
         }
