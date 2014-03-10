@@ -22,10 +22,13 @@ namespace DIPS.ViewModel.UserInterfaceVM
         #region Properties
 
         public string PatientID { set; get; }
+        public string Modality { set; get; }
+        public string Batch { set; get; }
         public DateTime DateFrom { set; get; }
         public DateTime DateTo { set; get; }
         public bool IsMale { set; get; }
         public bool IsFemale { set;get; }
+
         public Filter OverallFilter { set;get; }
 
         public ICommand ApplyFilterCommand { get; set; }
@@ -109,6 +112,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 FilterTreeView.IsFemale = IsFemale;
                 FilterTreeView.IsMale = IsMale;
                 FilterTreeView.ShowNames = ShowName;
+                FilterTreeView.Modality = Modality;
+                FilterTreeView.Batch = Batch;
             }
             
         }

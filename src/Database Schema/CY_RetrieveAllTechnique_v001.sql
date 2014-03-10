@@ -27,6 +27,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	SELECT ID, name, technique from imageProcessing
+	SELECT ID, name from imageProcessing
 END
 GO

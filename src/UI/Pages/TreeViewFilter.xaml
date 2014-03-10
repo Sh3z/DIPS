@@ -28,10 +28,10 @@
         <DatePicker SelectedDate="{Binding DateTo}" x:Name="dtpDateTo" HorizontalAlignment="Left" Margin="108,76,0,0" VerticalAlignment="Top" Width="139"/>
         <RadioButton x:Name="radNotSelected" Content="Not Selected" HorizontalAlignment="Left" Margin="196,183,0,0" VerticalAlignment="Top" IsChecked="True" Width="86"/>
         <CheckBox IsChecked="{Binding ShowName}" Content="Display Names?" HorizontalAlignment="Left" Margin="106,231,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="108,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139"/>
+        <TextBox Text="{Binding Modality}" HorizontalAlignment="Left" Height="23" Margin="108,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139"/>
         <Label Content="Modality:" HorizontalAlignment="Left" Margin="44,102,0,0" VerticalAlignment="Top"/>
         <Label Content=" Return" HorizontalAlignment="Left" Margin="44,133,0,0" VerticalAlignment="Top" Width="49"/>
-        <ComboBox HorizontalAlignment="Left" Margin="97,137,0,0" VerticalAlignment="Top" Width="34" RenderTransformOrigin="2.781,0.596">
+        <ComboBox SelectedIndex="{Binding Batch}" HorizontalAlignment="Left" Margin="97,137,0,0" VerticalAlignment="Top" Width="34" RenderTransformOrigin="2.781,0.596">
             <ComboBoxItem Content="All"/>
             <ComboBoxItem Content="1"/>
             <ComboBoxItem Content="2"/>

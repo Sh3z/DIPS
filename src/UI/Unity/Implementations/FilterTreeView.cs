@@ -18,6 +18,8 @@ namespace DIPS.UI.Unity.Implementations
     {
         #region Properties
         public string PatientID { set; private get; }
+        public string Modality {set;private get;}
+        public string Batch { set; private get; }
         public DateTime DateFrom { set; private get; }
         public DateTime DateTo { set; private get; }
         public bool IsMale { set; private get; }
@@ -69,6 +71,8 @@ namespace DIPS.UI.Unity.Implementations
             OverallFilter = new Filter();
 
             OverallFilter.PatientID = PatientID;
+            OverallFilter.Modality = Modality;
+            OverallFilter.Batch = Batch;
 
             if (DateFrom != DateTime.MinValue)
             {

@@ -78,9 +78,7 @@ namespace Database
                         if (filter.AcquisitionDateTo != null && dateCompareResultTo != 0)
                             cmd.Parameters.Add("@AcquireBetweenTo", SqlDbType.Date).Value = filter.AcquisitionDateTo;
 
-                        int batch = 0;
-                        Boolean batchNumerical = int.TryParse(filter.Batch, out batch);
-                        if (batchNumerical) cmd.Parameters.Add("@Batch", SqlDbType.Int).Value = batch;
+                        if(filter.Batch!=null) cmd.Parameters.Add("@Batch", SqlDbType.Int).Value = filter.Batch;
 
                         SqlDataReader data = cmd.ExecuteReader();
                         allDatasetsActive = DatabaseToList(data, showName);

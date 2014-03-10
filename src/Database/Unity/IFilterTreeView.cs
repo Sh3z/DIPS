@@ -8,6 +8,8 @@ namespace Database.Unity
     public interface IFilterTreeView
     {
         String PatientID { set; }
+        String Batch { set; }
+        String Modality { set; }
         DateTime DateFrom { set; }
         DateTime DateTo { set; }
         Boolean IsMale { set; }
