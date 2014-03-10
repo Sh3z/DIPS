@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -87,6 +88,13 @@ namespace DIPS.Processor.Plugin.Matlab
         {
             string name = "Tmp.bmp";
             string path = string.Format( @"{0}/{1}", Directory.GetCurrentDirectory(), name );
+
+            // Ensure we are giving Matlab the newest file by deleting the previous
+            if( File.Exists( path ) )
+            {
+                File.Delete( path );
+            }
+
             Input.Save( path, ImageFormat.Bmp );
             e.Base.PutObject( "dipsinput", name );
         }
@@ -112,6 +120,8 @@ namespace DIPS.Processor.Plugin.Matlab
                 cmd.Execute();
                 MatlabCommand c = engine.CreateCommand( script );
                 c.Execute();
+                MatlabCommand close = engine.CreateCommand( "fclose('all')" );
+                close.Execute();
             }
             catch( Exception e )
             {
@@ -129,11 +139,22 @@ namespace DIPS.Processor.Plugin.Matlab
                 throw new AlgorithmException( "Script did not output file path" );
             }
 
-            string outputStr = string.Empty;
+
+            _matlabOutputPath = (string)output;
+            _tryLoadOutputFromPath();
+        }
+
+        private void _tryLoadOutputFromPath()
+        {
             try
             {
-                outputStr = output as string;
-                Output = Image.FromFile( outputStr );
+                using( Stream s = File.Open( _matlabOutputPath, FileMode.Open ) )
+                {
+                    Output = Image.FromStream( s );
+                    Output = new Bitmap( Output );
+                }
+
+                File.Delete( _matlabOutputPath );
             }
             catch( Exception e )
             {
@@ -153,5 +174,8 @@ namespace DIPS.Processor.Plugin.Matlab
                 throw new AlgorithmException( err, e );
             }
         }
+
+
+        private string _matlabOutputPath;
     }
 }
