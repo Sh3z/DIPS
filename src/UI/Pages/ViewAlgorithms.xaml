@@ -8,7 +8,7 @@
 	Height="558.208" Width="1004.477">
 
     <Grid>
-        <DataGrid SelectedItem="{Binding SelectedTechnique}" ItemsSource="{Binding AllTechniques}" HorizontalAlignment="Left" Height="237" Margin="30,68,0,0" VerticalAlignment="Top" Width="951" SelectionMode="Single" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"/>
+        <DataGrid SelectedItem="{Binding SelectedTechnique}" ItemsSource="{Binding AllTechniques}" HorizontalAlignment="Left" Height="237" Margin="30,68,0,0" VerticalAlignment="Top" Width="951" SelectionMode="Single" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserReorderColumns="False"/>
         <Button Command="{Binding AddNewAlgorithmCommand}" Content="New" HorizontalAlignment="Left" Margin="907,323,0,0" VerticalAlignment="Top" Width="75"/>
         <Label HorizontalAlignment="Left" Margin="449,18,0,0" VerticalAlignment="Top"/>
 

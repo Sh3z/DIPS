@@ -36,7 +36,7 @@
 
 
         </Border>
-        <xctk:PropertyGrid x:Name="_propertyGrid" Margin="766,46,10,34"
+        <xctk:PropertyGrid x:Name="_propertyGrid" Margin="766,19,10,10"
                                      AutoGenerateProperties="True" IsManipulationEnabled="True"/>
         <Border x:Name="brdProcessed" 
     		BorderThickness="2"
@@ -50,9 +50,7 @@
     			Content="{Binding ProcessedSource}" Margin="-114,180,114,-180" />
         </Border>
 
-        <Label Content="----&gt;" HorizontalAlignment="Left" Margin="495,111,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
-
-        <TreeView ItemsSource="{Binding TopLevelViewModel.Patients}" HorizontalAlignment="Left" Height="349" Margin="26,56,0,0" VerticalAlignment="Top" Width="237">
+        <TreeView ItemsSource="{Binding TopLevelViewModel.Patients}" HorizontalAlignment="Left" Height="350" Margin="26,88,0,0" VerticalAlignment="Top" Width="237">
             <TreeView.ItemContainerStyle>
                 <!-- 
         This Style binds a TreeViewItem to a TreeViewItemViewModel. 
@@ -99,11 +97,17 @@
             </TreeView.Resources>
         </TreeView>
         <Image Source="{Binding ImgUnprocessed, Mode=TwoWay}" HorizontalAlignment="Left" Height="128" Margin="314,60,0,0" VerticalAlignment="Top" Width="128"/>
-        <TextBox Text="{Binding ImageInfo, Mode=TwoWay}"  HorizontalAlignment="Left" Height="198" Margin="314,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" IsEnabled="False"/>
-        <Button Content="Filter Options" Command="{Binding OpenFilterDialogCommand}" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Width="109" FontSize="16" />
-        <CheckBox IsChecked="{Binding ToggleFilter}" Content="Active Filter?" HorizontalAlignment="Left" Margin="156,25,0,0" VerticalAlignment="Top" FontSize="16" />
-        <Button Command="{Binding OpenQueueCommand}" Content="Queue" HorizontalAlignment="Left" Margin="822,19,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox Text="{Binding ImageInfo, Mode=TwoWay}"  HorizontalAlignment="Left" Height="222" Margin="314,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" IsEnabled="False"/>
+        <Button Content="Filter Options" Command="{Binding OpenFilterDialogCommand}" HorizontalAlignment="Left" Margin="26,55,0,0" VerticalAlignment="Top" Width="109" FontSize="16" />
+        <CheckBox IsChecked="{Binding ToggleFilter}" Content="Active Filter?" HorizontalAlignment="Left" Margin="156,60,0,0" VerticalAlignment="Top" FontSize="16" />
         <Label Content="View Existing Dataset" HorizontalAlignment="Left" Margin="401,10,0,0" VerticalAlignment="Top" FontSize="22"/>
-        <Button Command="{Binding RefreshTreeviewCommand}" Content="Refresh" HorizontalAlignment="Left" Margin="111,410,0,0" VerticalAlignment="Top" Width="75" FontSize="16"/>
+        <Button Command="{Binding RefreshTreeviewCommand}" Content="Refresh" HorizontalAlignment="Left" Margin="129,10,0,0" VerticalAlignment="Top" Width="49" FontSize="16" ToolTip="Refresh Treeview" Height="37">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="../Resources/arrow_refresh.png"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Image Source="pack://application:,,,/DIPS.UI;component/Resources/arrow_right.png" HorizontalAlignment="Left" Height="42" Margin="490,110,0,0" VerticalAlignment="Top" Width="42"/>
     </Grid>
 </UserControl>
