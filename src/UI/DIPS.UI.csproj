@@ -331,6 +331,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Resources\arrow_refresh.png" />
+    <Resource Include="Resources\arrow_right.png" />
     <Resource Include="Resources\arrow_switch.png" />
     <Resource Include="Resources\algorithm.png" />
     <Resource Include="Images\Image.png" />
