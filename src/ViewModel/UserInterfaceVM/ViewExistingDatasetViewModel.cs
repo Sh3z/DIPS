@@ -11,6 +11,10 @@ using Microsoft.Practices.Unity;
 using Database.Repository;
 using DIPS.ViewModel.Unity;
 using DIPS.Util.Commanding;
+using DIPS.Processor.Client;
+using System.Windows.Controls;
+using DIPS.ViewModel.UserInterfaceVM.JobTracking;
+using Database.Connection;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -27,6 +31,18 @@ namespace DIPS.ViewModel.UserInterfaceVM
             {
                 _PatientsList = value;
                 OnPropertyChanged();
+            }
+        }
+        private IProcessingService _service;
+        public IProcessingService Service
+        {
+            get
+            {
+                return _service;
+            }
+            set
+            {
+                _service = value;
             }
         }
 
@@ -180,8 +196,20 @@ namespace DIPS.ViewModel.UserInterfaceVM
         #endregion
 
         #region Constructor
-        public ViewExistingDatasetViewModel()
+        public ViewExistingDatasetViewModel(Frame theFrame)
         {
+            if (theFrame != null)
+            {
+                OverallFrame = theFrame;
+            }
+           
+            OngoingJobsViewModel vm = new OngoingJobsViewModel();
+            GlobalContainer.Instance.Container.RegisterInstance<IJobTracker>(vm);
+
+            Container = GlobalContainer.Instance.Container;
+
+            ValidateConnection.validateConnection();
+            
             SetupCommands();
             GetPatientsForTreeview(null);
         } 
