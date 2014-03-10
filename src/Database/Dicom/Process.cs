@@ -32,7 +32,7 @@ namespace DIPS.Database
                 }
             }
             else Console.WriteLine("Not a Valid DICOM file");
-        }        
+        }
 
         private void CheckIfPatientExist(DicomInfo dicom)
         {

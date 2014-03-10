@@ -1,4 +1,5 @@
-﻿using DIPS.Database;
+﻿using Database.DicomHelper;
+using DIPS.Database;
 using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using DIPS.Unity;
@@ -45,6 +46,15 @@ namespace DIPS.ViewModel.Commands
         {
             get;
         }
+
+        /// <summary>
+        /// Gets the <see cref="IJobResultsHandler"/> chosen by the user for
+        /// handling finished jobs.
+        /// </summary>
+        IJobResultsHandler Handler
+        {
+            get;
+        }
     }
 
     /// <summary>
@@ -69,8 +79,6 @@ namespace DIPS.ViewModel.Commands
             _source = source;
             _source.PropertyChanged += _sourcePropertyChanged;
         }
-
-        
 
 
         /// <summary>
@@ -117,7 +125,7 @@ namespace DIPS.ViewModel.Commands
             r.Identifier = _source.Identifier;
             IJobTicket t = service.JobManager.EnqueueJob( r );
             IJobTracker tracker = Container.Resolve<IJobTracker>();
-            tracker.Add( t );
+            tracker.Add( t, _source.Handler );
         }
 
         /// <summary>
@@ -137,6 +145,10 @@ namespace DIPS.ViewModel.Commands
         private IEnumerable<JobInput> _filesToInputs()
         {
             List<JobInput> jobs = new List<JobInput>();
+
+            Logger log = new Logger();
+            log.start();
+
             foreach( FileInfo file in _source.Files )
             {
                 try
@@ -151,7 +163,7 @@ namespace DIPS.ViewModel.Commands
 
                 }
             }
-
+            log.finish();
             return jobs;
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,20 @@ namespace Database
 {
     public static class ConnectionManager
     {
+        private static Boolean _valid = false;
+        private static Boolean _masterValid = false;
+
+        public static Boolean ValidConnection
+        {
+            get { return _valid; }
+            set { _valid = value; }
+        }
+
+        public static Boolean ValidMasterConnection
+        {
+            get { return _masterValid; }
+            set { _masterValid = value; }
+        }
 
         public static String DataSource
         {

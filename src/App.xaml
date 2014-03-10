@@ -50,5 +50,16 @@
         <DataTemplate DataType="{x:Type vm:TreeViewPatientViewModel}">
            
         </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type vm:PostProcessingViewModel}">
+            <v:PostProcessingControl />
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type vm:SingleHandlerOptions}">
+            <v:SinglePostProcessorControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MultiHandlerOptions}">
+            <v:MultiPostProcessorControl />
+        </DataTemplate>
     </Application.Resources>
 </Application>

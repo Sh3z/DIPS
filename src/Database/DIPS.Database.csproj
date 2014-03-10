@@ -47,14 +47,32 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dicom, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0605845bb95bde07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>External Library\Dicom.dll</HintPath>
     </Reference>
-    <Reference Include="Dicom.Codec, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Dicom.Codec64, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>External Library\Dicom.Codec.dll</HintPath>
+      <HintPath>External Library\Dicom.Codec64.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
@@ -73,7 +91,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\DAOLog.cs" />
+    <Compile Include="Connection\ValidateConnection.cs" />
+    <Compile Include="DicomHelper\Codec.cs" />
     <Compile Include="DicomHelper\Encryption.cs" />
+    <Compile Include="DicomHelper\Logger.cs" />
     <Compile Include="Dicom\InsertToDatabase.cs" />
     <Compile Include="DicomHelper\PatientID.cs" />
     <Compile Include="Dicom\Process.cs" />
@@ -125,7 +146,7 @@
     <Content Include="External Library\Database.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="External Library\Dicom.Codec.dll">
+    <Content Include="External Library\Dicom.Codec64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="External Library\Dicom.dll">
@@ -142,7 +163,6 @@
       <LastGenOutput>DIPSConnection.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

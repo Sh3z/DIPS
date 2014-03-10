@@ -11,7 +11,7 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
     /// Represents the object responsible for handling the post-processing
     /// of complete jobs.
     /// </summary>
-    public interface IJobResultsHandler
+    public interface IJobResultsHandler : ICloneable
     {
         /// <summary>
         /// Handles the results of a finised job.

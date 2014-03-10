@@ -67,11 +67,12 @@ namespace DIPS.Database
 
                 while (dataReader.Read())
                 {
-                    dicom.patientExist = true;
-                    dicom.databaseID = dataReader.GetInt32(dataReader.GetOrdinal("Patient ID"));
+                    
 
                     if (allMatched(dicom, dataReader))
                     {
+                        dicom.patientExist = true;
+                        dicom.databaseID = dataReader.GetInt32(dataReader.GetOrdinal("Patient ID"));
                         dicom.sameSeries = true;
                         Log.NeedUpdate = true;
                         dicom.seriesID = dataReader.GetInt32(dataReader.GetOrdinal("Series ID"));

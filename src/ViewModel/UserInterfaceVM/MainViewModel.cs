@@ -16,6 +16,7 @@ using DIPS.ViewModel.Commands;
 using Microsoft.Expression.Interactivity.Core;
 using Microsoft.Practices.Unity;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
+using DIPS.Util.Commanding;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -69,7 +70,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
             OverallFrame = theFrame;
 
             OngoingJobsViewModel vm = new OngoingJobsViewModel();
-            vm.Handler = new SaveResultsHandler();
             GlobalContainer.Instance.Container.RegisterInstance<IJobTracker>( vm );
 
             Container = GlobalContainer.Instance.Container;
@@ -85,7 +85,15 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private static void ShowExistingDataSet(object obj)
         {
-            ImageRepository imgRepository = new ImageRepository();
+            ImageRepository repo = new ImageRepository();
+            _ViewExistingDatasetViewModel.PatientsList = repo.generateTreeView(false);
+            TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(_ViewExistingDatasetViewModel.PatientsList);
+
+            _ViewExistingDatasetViewModel.TopLevelViewModel = tvpv;
+
+            _ViewExistingDatasetViewModel.ImgUnprocessed = null;
+            _ViewExistingDatasetViewModel.ImgProcessed = null;
+            _ViewExistingDatasetViewModel.ImageInfo = string.Empty;
             
             OverallFrame.Content = _ViewExistingDatasetViewModel;
         }

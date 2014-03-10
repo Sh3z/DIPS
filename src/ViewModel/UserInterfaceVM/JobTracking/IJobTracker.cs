@@ -45,6 +45,8 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// </summary>
         /// <param name="ticket">The <see cref="IJobTicket"/> to begin
         /// tracking.</param>
-        void Add( IJobTicket ticket );
+        /// <param name="handler">The <see cref="IJobResultsHandler"/> used to
+        /// handle the results of a complete job.</param>
+        void Add( IJobTicket ticket, IJobResultsHandler handler );
     }
 }

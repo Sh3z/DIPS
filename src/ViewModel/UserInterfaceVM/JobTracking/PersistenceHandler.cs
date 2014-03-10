@@ -1,10 +1,7 @@
-﻿using Database.Repository;
-using DIPS.Database;
-using DIPS.Processor.Client;
+﻿using DIPS.Processor.Client;
 using DIPS.Processor.Client.JobDeployment;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +9,10 @@ using System.Threading.Tasks;
 namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
 {
     /// <summary>
-    /// Represents the <see cref="IJobResultsHandler"/> used to save
-    /// results to the database.
+    /// Represents the <see cref="IJobResultsHandler"/> used to persist
+    /// results to a data-store. This class is abstract.
     /// </summary>
-    public class SaveResultsHandler : IJobResultsHandler
+    public abstract class PersistenceHandler : IJobResultsHandler
     {
         /// <summary>
         /// Handles the results of a finised job.
@@ -33,6 +30,29 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
 
 
         /// <summary>
+        /// Creates a copy of this <see cref="PersistenceHandler"/>.
+        /// </summary>
+        /// <returns>A new <see cref="PersistenceHandler"/> that is a copy
+        /// of this <see cref="PersistenceHandler"/>.</returns>
+        public abstract object Clone();
+
+
+        /// <summary>
+        /// Saves the output from the processor to the data-store. This is invoked
+        /// when no corresponding input is found.
+        /// </summary>
+        /// <param name="output">The output from the processor.</param>
+        protected abstract void Save( IProcessedImage output );
+
+        /// <summary>
+        /// Saves the output from the processor to the data-store.
+        /// </summary>
+        /// <param name="input">The input object provided to the processor.</param>
+        /// <param name="output">The output from the processor.</param>
+        protected abstract void Save( JobInput input, IProcessedImage output );
+
+
+        /// <summary>
         /// Saves the provided set of images to the database
         /// </summary>
         /// <param name="inputs">The corresponding inputs</param>
@@ -47,44 +67,13 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                                       select input ).FirstOrDefault();
                 if( matchingInput == null )
                 {
-                    _saveWithoutIdentifier( image );
+                    Save( image );
                 }
                 else
                 {
-                    _saveWithIdentifier( image, matchingInput );
+                    Save( matchingInput, image );
                 }
             }
-        }
-
-        /// <summary>
-        /// Saves the processed image to the database without relating it to
-        /// a stored input
-        /// </summary>
-        /// <param name="image">The processed image to save</param>
-        private void _saveWithoutIdentifier( IProcessedImage image )
-        {
-            // Todo for Joe 
-            readImage reader = new readImage();
-            byte[] blob = reader.ImageToByteArray(image.Output);
-
-            ProcessedImageRepository processed = new ProcessedImageRepository();
-            processed.saveImage(null, blob);
-        }
-
-        /// <summary>
-        /// Saves the processed image to the database with its input
-        /// </summary>
-        /// <param name="image">The image to be saved</param>
-        /// <param name="input">The corresponding input</param>
-        private void _saveWithIdentifier( IProcessedImage image, JobInput input )
-        {
-            // Todo for Joe
-            FileInfo file = (FileInfo)image.Identifier;
-            readImage reader = new readImage();
-            byte[] blob = reader.ImageToByteArray(image.Output);
-
-            ProcessedImageRepository processed = new ProcessedImageRepository();
-            processed.saveImage(file,blob);
         }
     }
 }

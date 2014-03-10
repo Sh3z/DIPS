@@ -139,6 +139,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 if (processed != null)
                 {
                     BitmapImage processedBmp = ToImage(processed);
+
+                    BaseProcessedImage = processedBmp;
                 }
             }
         }

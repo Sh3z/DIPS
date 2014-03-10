@@ -52,8 +52,10 @@
                 </DockPanel>
             </UniformGrid>
 
-            <TextBlock Grid.Row="1" Margin="0,3" TextWrapping="Wrap" HorizontalAlignment="Center"
-                       Text="Processing these files will take xx hours and xx minutes."/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="Save the output of the process to: " />
+                <ComboBox VerticalAlignment="Center" Margin="3,0,0,0" />
+            </StackPanel>
 
             <StackPanel Grid.Row="2" Margin="0,3" Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="What do I do when the processing is complete?" VerticalAlignment="Center" />

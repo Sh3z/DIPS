@@ -23,17 +23,17 @@ studyDescription varchar(50),
 seriesDescription varchar(50),
 sliceThickness varchar(20)
 );
+create table processedImages(
+fileID int identity PRIMARY KEY,
+imageUID varchar(70) UNIQUE,
+imageBlob varbinary(MAX)
+);
 create table images(
 fileID int identity PRIMARY KEY,
 seriesID int FOREIGN KEY REFERENCES imageProperties(seriesID),
+imageUID varchar(70) FOREIGN KEY REFERENCES processedImages(imageUID),
 imageNumber varchar(5),
-imageUID varchar(70),
 imageBlob varbinary(MAX),
-);
-create table processedImages(
-fileID int identity PRIMARY KEY,
-imageUID varchar(70),
-imageBlob varbinary(MAX)
 );
 create table timeLog(
 logID int identity PRIMARY KEY,
@@ -53,8 +53,8 @@ select * from processedImages;
 select * from timeLog;
 
 drop table timeLog;
-drop table processedImages;
 drop table images;
+drop table processedImages;
 drop table imageProperties;
 drop table name;
 drop table patient;
@@ -74,5 +74,5 @@ TO DISK = 'C:\Users\Joseph\Documents\Backup\Test.BAK'
 DROP DATABASE medicalImaging;
 
 RESTORE DATABASE medicalImaging
-FROM DISK = 'C:\Users\Joseph\Documents\Backup\Test.BAK'
+FROM DISK = 'C:\Users\Public\Documents\Backup\Test.BAK'
 WITH STATS = 1

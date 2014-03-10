@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DIPS.Util.Commanding;
 
 namespace DIPS.ViewModel
 {
@@ -32,6 +33,7 @@ namespace DIPS.ViewModel
             SavePipelineDatabase = new PersistPipelineDatabaseCommand(this);
 
             FinishButtonCommand = new RelayCommand(new Action<object>(ProgressToMainOrStep2));
+            ClearSelectedAlgorithmsCommand = new RelayCommand(new Action<object>(ClearSelectedCommand));
         }
 
 
@@ -138,6 +140,7 @@ namespace DIPS.ViewModel
 
         public Boolean FromLoadStep2 { get; set; }
         public ICommand FinishButtonCommand { get; set; }
+        public ICommand ClearSelectedAlgorithmsCommand { get; set; }
 
         private void ProgressToMainOrStep2(object obj)
         {
@@ -156,7 +159,11 @@ namespace DIPS.ViewModel
             {
                 OverallFrame.Content = _MainViewModel;
             }
-            
+        }
+
+        public void ClearSelectedCommand(object obj)
+        {
+            SelectedProcesses.Clear();
         }
             
         }

@@ -7,12 +7,14 @@ using DIPS.Unity;
 using DIPS.Unity.Implementations;
 using DIPS.ViewModel;
 using DIPS.ViewModel.Unity;
+using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -41,7 +43,10 @@ namespace DIPS
             FilterTreeView ftv = new FilterTreeView();
             QueueDialog qd = new QueueDialog();
             UIContext context = new UIContext();
+            HandlerFactory f = new HandlerFactory();
+            f.Load( Assembly.GetAssembly( typeof( HandlerFactory ) ) );
 
+            c.RegisterInstance<IHandlerFactory>( f );
             c.RegisterInstance<IUIContext>( context );
             c.RegisterInstance<IFilterTreeView>(ftv);
             c.RegisterInstance<IQueueDialog>(qd);

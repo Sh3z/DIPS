@@ -7,6 +7,7 @@ using System.Windows.Input;
 using DIPS.Database.Objects;
 using DIPS.ViewModel.Commands;
 using Microsoft.Win32;
+using DIPS.Util.Commanding;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {

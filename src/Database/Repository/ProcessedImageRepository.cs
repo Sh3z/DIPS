@@ -1,5 +1,8 @@
-﻿using Dicom;
+﻿using Database.Connection;
+using Database.Objects;
+using Dicom;
 using Dicom.Data;
+using DIPS.Database;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -34,11 +37,16 @@ namespace Database.Repository
             String identifier = String.Empty;
             if (file != null) identifier = getIdentifier(file.OpenRead());
 
-            try
+            if (ConnectionManager.ValidConnection == true)
             {
-                _saveImage( blob, identifier );
+                try
+                {
+                    _saveImage(blob, identifier);
+                    ProcessRepository repo = new ProcessRepository();
+                    repo.processDicom(file.FullName);
+                }
+                catch { }
             }
-            catch { }
         }
 
 

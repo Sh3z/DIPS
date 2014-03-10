@@ -11,6 +11,7 @@ using DIPS.ViewModel.Commands;
 using DIPS.Util.Extensions;
 using Microsoft.Practices.Unity;
 using System.Diagnostics;
+using DIPS.Util.Commanding;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -139,13 +140,13 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void ProgressToStep3(object obj)
         {
-            OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
+            OverallFrame.Content = BaseViewModel._PostProcessingViewModel;
 
             BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Clear();
-            this.ListOfFiles.ForEach(BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Add);
+            this.ListOfFiles.ForEach( BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Add );
             BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Clear();
-            TechniqueAlgorithms.ForEach(BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Add);
-            BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = (this as IPipelineInfo).PipelineName;
+            TechniqueAlgorithms.ForEach( BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Add );
+            BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = ( this as IPipelineInfo ).PipelineName;
         }
 
 

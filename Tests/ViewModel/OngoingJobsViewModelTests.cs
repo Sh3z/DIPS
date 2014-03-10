@@ -34,7 +34,7 @@ namespace DIPS.Tests.ViewModel
             TicketImpl ticket = new TicketImpl();
             ticket.State = JobState.InQueue;
             OngoingJobsViewModel vm = new OngoingJobsViewModel();
-            vm.Add( ticket );
+            vm.Add( ticket, new DudHandler() );
 
             Assert.IsNull( vm.Current );
             Assert.AreEqual( 0, vm.Finished.Count );
@@ -51,7 +51,7 @@ namespace DIPS.Tests.ViewModel
             TicketImpl ticket = new TicketImpl();
             ticket.State = JobState.InQueue;
             OngoingJobsViewModel vm = new OngoingJobsViewModel();
-            vm.Add( ticket );
+            vm.Add( ticket, new DudHandler() );
             ticket._sink.FireSync( "JobStarted", EventArgs.Empty );
 
             Assert.IsNotNull( vm.Current );
@@ -69,7 +69,7 @@ namespace DIPS.Tests.ViewModel
             TicketImpl ticket = new TicketImpl();
             ticket.State = JobState.InQueue;
             OngoingJobsViewModel vm = new OngoingJobsViewModel();
-            vm.Add( ticket );
+            vm.Add( ticket, new DudHandler() );
             ticket._sink.FireSync( "JobStarted", EventArgs.Empty );
             ticket.Result = new JobResult( new List<IProcessedImage>() );
             ticket._sink.FireSync( "JobCompleted", EventArgs.Empty );
@@ -87,7 +87,7 @@ namespace DIPS.Tests.ViewModel
             TicketImpl ticket = new TicketImpl();
             ticket.State = JobState.InQueue;
             OngoingJobsViewModel vm = new OngoingJobsViewModel();
-            vm.Add( ticket );
+            vm.Add( ticket, new DudHandler() );
             ticket._sink.FireSync( "JobStarted", EventArgs.Empty );
             ticket.Result = JobResult.Cancelled;
             ticket._sink.FireSync( "JobCancelled", EventArgs.Empty );
@@ -105,7 +105,7 @@ namespace DIPS.Tests.ViewModel
             TicketImpl ticket = new TicketImpl();
             ticket.State = JobState.InQueue;
             OngoingJobsViewModel vm = new OngoingJobsViewModel();
-            vm.Add( ticket );
+            vm.Add( ticket, new DudHandler() );
             ticket._sink.FireSync( "JobStarted", EventArgs.Empty );
             ticket.Result = new JobResult( new Exception() );
             ticket._sink.FireSync( "JobError", EventArgs.Empty );
@@ -153,6 +153,18 @@ namespace DIPS.Tests.ViewModel
             public void Cancel()
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        class DudHandler : IJobResultsHandler
+        {
+            public object Clone()
+            {
+                return new DudHandler();
+            }
+
+            public void HandleResults( IJobTicket completeJob )
+            {
             }
         }
     }
