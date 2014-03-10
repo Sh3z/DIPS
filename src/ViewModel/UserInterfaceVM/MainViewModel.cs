@@ -17,6 +17,7 @@ using Microsoft.Expression.Interactivity.Core;
 using Microsoft.Practices.Unity;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using DIPS.Util.Commanding;
+using Database.Connection;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -73,6 +74,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             GlobalContainer.Instance.Container.RegisterInstance<IJobTracker>( vm );
 
             Container = GlobalContainer.Instance.Container;
+            ValidateConnection.validateConnection();
         }
 
         private void SetupCommands()
@@ -116,6 +118,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             _AlgorithmBuilderViewModel.FromLoadStep2 = false;
 
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
+            _AlgorithmBuilderViewModel.PipelineName = string.Empty;
 
             if (Container != null)
             {

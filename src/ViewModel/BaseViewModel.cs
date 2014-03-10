@@ -35,7 +35,7 @@ namespace DIPS.ViewModel
         }
         private static Frame _frame;
 
-        readonly public static ViewExistingDatasetViewModel _ViewExistingDatasetViewModel = new ViewExistingDatasetViewModel();
+        readonly public static ViewExistingDatasetViewModel _ViewExistingDatasetViewModel = new ViewExistingDatasetViewModel(null);
         readonly public static LoadNewDsStep1ViewModel _LoadNewDsStep1ViewModel = new LoadNewDsStep1ViewModel();
         readonly public static AlgorithmBuilderViewModel _AlgorithmBuilderViewModel = new AlgorithmBuilderViewModel();
         readonly public static LoadNewDsStep2ViewModel _LoadNewDsStep2ViewModel = new LoadNewDsStep2ViewModel();

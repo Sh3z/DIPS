@@ -25,7 +25,7 @@ namespace DIPS.UI
         public MainNavi()
         {
             InitializeComponent();
-            _main = new MainViewModel(this.MainNaviControl);
+            _main = new ViewExistingDatasetViewModel(this.MainNaviControl);
             this.MainNaviControl.Content = _main;
         }
 
@@ -52,8 +52,8 @@ namespace DIPS.UI
         /// Contains a reference to the root page view.
         /// </summary>
         
-        private static MainViewModel _main;
-        public MainViewModel Main
+        private static ViewExistingDatasetViewModel _main;
+        public ViewExistingDatasetViewModel Main
         {
             get
             {
