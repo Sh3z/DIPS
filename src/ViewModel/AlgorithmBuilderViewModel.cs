@@ -65,7 +65,7 @@ namespace DIPS.ViewModel
         public ObservableCollection<AlgorithmViewModel> AvailableAlgorithms
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace DIPS.ViewModel
         public ObservableCollection<AlgorithmViewModel> SelectedProcesses
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>

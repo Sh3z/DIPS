@@ -61,6 +61,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         public ViewAlgorithmViewModel()
         {
+            Container = GlobalContainer.Instance.Container;
             SetupCommands();
             GetAllAlgorithmPlans();
         }
@@ -81,12 +82,30 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void AddNewAlgorithm(object obj)
         {
             OverallFrame.Content = _AlgorithmBuilderViewModel;
-            _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container; 
-            
-            foreach( var algorithm in Service.PipelineManager.AvailableProcesses )
+
+            _AlgorithmBuilderViewModel.PipelineName = string.Empty;
+            _AlgorithmBuilderViewModel.SelectedProcesses = new ObservableCollection<AlgorithmViewModel>();
+            _AlgorithmBuilderViewModel.AvailableAlgorithms = new ObservableCollection<AlgorithmViewModel>();
+
+            PopulateAvailableAlgorithms();
+        }
+
+        private void PopulateAvailableAlgorithms()
+        {
+            _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
+
+            if (Container != null)
             {
-                AlgorithmViewModel viewModel = new AlgorithmViewModel( algorithm );
-                _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
+                Service = Container.Resolve<IProcessingService>();
+
+                if (Service != null)
+                {
+                    foreach (var algorithm in Service.PipelineManager.AvailableProcesses)
+                    {
+                        AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
+                        _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
+                    }
+                }
             }
         }
 
@@ -116,6 +135,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     {
                         _info.SelectedProcesses.Add(new AlgorithmViewModel(process));
                     }
+
+                    PopulateAvailableAlgorithms();
 
                     OverallFrame.Content = _AlgorithmBuilderViewModel;
                 }

@@ -118,6 +118,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             _AlgorithmBuilderViewModel.FromLoadStep2 = false;
 
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
+            _AlgorithmBuilderViewModel.PipelineName = string.Empty;
 
             if (Container != null)
             {
