@@ -111,6 +111,18 @@ namespace DIPS.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        private string _pipelineID;
+
+        public string PipelineID
+        {
+            get { return _pipelineID; }
+            set { 
+                  _pipelineID = value;
+                  OnPropertyChanged();
+                }
+        }
+        
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private string _pipelineName;
 

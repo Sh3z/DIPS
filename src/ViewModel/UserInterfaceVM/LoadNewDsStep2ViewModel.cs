@@ -113,6 +113,12 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set;
         }
 
+        string IPipelineInfo.PipelineID
+        {
+            get;
+            set;
+        }
+
         ObservableCollection<AlgorithmViewModel> IPipelineInfo.SelectedProcesses
         {
             get { return TechniqueAlgorithms; }
@@ -164,6 +170,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             IPipelineManager manager = GlobalContainer.Instance.Container.Resolve<IPipelineManager>();
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
+            _AlgorithmBuilderViewModel.PipelineID = string.Empty;
 
             foreach (var algorithm in manager.AvailableProcesses)
             {

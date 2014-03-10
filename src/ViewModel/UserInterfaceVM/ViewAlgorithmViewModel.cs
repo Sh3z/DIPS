@@ -130,6 +130,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     _info = _AlgorithmBuilderViewModel;
                     _info.SelectedProcesses.Clear();
                     _info.PipelineName = Path.GetFileNameWithoutExtension(tech.Name);
+                    _info.PipelineID = tech.ID.ToString();
 
                     foreach (var process in restoredPipeline)
                     {
