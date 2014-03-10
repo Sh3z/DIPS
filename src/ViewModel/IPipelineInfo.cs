@@ -23,6 +23,12 @@ namespace DIPS.ViewModel
             set;
         }
 
+        string PipelineID
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Gets the observable collection of process view models defining
         /// the pipeline.
