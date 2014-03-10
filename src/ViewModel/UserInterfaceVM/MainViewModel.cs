@@ -51,6 +51,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public ICommand ViewProcessDataSetCommand { get; set; }
         public ICommand ViewCreateAlgorithmCommand { get; set; }
         public ICommand ViewExistingAlgorithmsCommand { get; set; }
+
+        public UnityCommand OpenQueueCommand { get; set; }
     
         public IUnityContainer Container
         {
@@ -83,6 +85,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             ViewProcessDataSetCommand = new RelayCommand(new Action<object>(ShowProcessDataSet));
             ViewCreateAlgorithmCommand = new RelayCommand(new Action<object>( ShowCreateAlgorithm));
             ViewExistingAlgorithmsCommand = new RelayCommand(new Action<object>(ShowViewExistingAlgorithms));
+            OpenQueueCommand = new PresentQueueCommand();
+            OpenQueueCommand.Container = GlobalContainer.Instance.Container;
         }
 
         private static void ShowExistingDataSet(object obj)
