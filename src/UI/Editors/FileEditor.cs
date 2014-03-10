@@ -62,6 +62,7 @@ namespace DIPS.UI.Editors
         private void _showDialog( object parameter )
         {
             FilePickerService s = new FilePickerService();
+            s.Mode = Unity.FilePickerMode.Open;
             if( s.SelectPath() )
             {
                 _fileDisplayTextBox.Text = s.Path;
