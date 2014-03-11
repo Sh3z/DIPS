@@ -3,42 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Height="62.462" Width="417.224">
-    <Grid Background="#FFEFF7FF">
-        <Button Command="{Binding ViewExistingDataSetCommand}" HorizontalAlignment="left" VerticalAlignment="Top" Margin="0,19,0,0" Height="33" Width="60" ToolTip="View Existing Dataset">
+             mc:Ignorable="d" Height="96.462" Width="417.224" BorderThickness="1" BorderBrush="#FFC8B1F0">
+    <Grid Background="#FFDCD1F5">
+        <Button Command="{Binding ViewExistingDataSetCommand}" HorizontalAlignment="left" VerticalAlignment="Top" Margin="0,50,0,0" Height="33" Width="60" ToolTip="View Existing Dataset">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="../Resources/find.png"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Command="{Binding ViewCreateAlgorithmCommand}" HorizontalAlignment="Left" Margin="191,19,0,0" VerticalAlignment="Top" Width="36" Height="33" ToolTip="Create New Algorithm" RenderTransformOrigin="4.167,1.765">
+        <Button Command="{Binding ViewCreateAlgorithmCommand}" HorizontalAlignment="Left" Margin="191,50,0,0" VerticalAlignment="Top" Width="36" Height="33" ToolTip="Create New Algorithm" RenderTransformOrigin="4.167,1.765">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="../Resources/color_wheel.png"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Command="{Binding ViewProcessDataSetCommand}" HorizontalAlignment="Left" Margin="101,19,0,0" VerticalAlignment="Top" Width="37" Height="33" ToolTip="Load New Dataset" RenderTransformOrigin="1,0.833">
+        <Button Command="{Binding ViewProcessDataSetCommand}" HorizontalAlignment="Left" Margin="101,50,0,0" VerticalAlignment="Top" Width="37" Height="33" ToolTip="Load New Dataset" RenderTransformOrigin="1,0.833">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="../Resources/cog.png"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Command="{Binding ViewExistingAlgorithmsCommand}" HorizontalAlignment="Left" Margin="279,19,0,0" VerticalAlignment="Top" Width="37" Height="33" ToolTip="View Existing Algorithm Plans">
+        <Button Command="{Binding ViewExistingAlgorithmsCommand}" HorizontalAlignment="Left" Margin="279,50,0,0" VerticalAlignment="Top" Width="37" Height="33" ToolTip="View Existing Algorithm Plans">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="../Resources/algorithm.png"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Command="{Binding OpenQueueCommand}" HorizontalAlignment="Left" Margin="361,19,0,0" VerticalAlignment="Top" Width="37" Height="33" ToolTip="View Queue">
+        <Button Command="{Binding OpenQueueCommand}" HorizontalAlignment="Left" Margin="361,50,0,0" VerticalAlignment="Top" Width="37" Height="33" ToolTip="View Queue">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="../Resources/arrow_switch.png" ToolTip="View Queue"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        <Label Content="Dynamic Image Processing System" HorizontalAlignment="Left" Margin="35,7,0,0" VerticalAlignment="Top" FontFamily="SketchFlow Print" FontSize="20"/>
     </Grid>
 </UserControl>
