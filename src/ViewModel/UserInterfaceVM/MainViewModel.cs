@@ -134,6 +134,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     foreach (var algorithm in Service.PipelineManager.AvailableProcesses)
                 {
                     AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
+                    viewModel.IsRemovable = false;
                     _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
                 }
             }

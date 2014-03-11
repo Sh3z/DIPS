@@ -84,8 +84,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             OverallFrame.Content = _AlgorithmBuilderViewModel;
 
             _AlgorithmBuilderViewModel.PipelineName = string.Empty;
-            _AlgorithmBuilderViewModel.SelectedProcesses = new ObservableCollection<AlgorithmViewModel>();
-            _AlgorithmBuilderViewModel.AvailableAlgorithms = new ObservableCollection<AlgorithmViewModel>();
+            _AlgorithmBuilderViewModel.SelectedProcesses.Clear();
+            _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
 
             PopulateAvailableAlgorithms();
         }
@@ -103,6 +103,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     foreach (var algorithm in Service.PipelineManager.AvailableProcesses)
                     {
                         AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
+                        viewModel.IsRemovable = false;
                         _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
                     }
                 }

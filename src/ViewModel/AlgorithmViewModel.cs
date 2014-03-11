@@ -1,9 +1,12 @@
 ﻿using DIPS.Processor.Client;
+using DIPS.Util.Commanding;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace DIPS.ViewModel
 {
@@ -11,7 +14,7 @@ namespace DIPS.ViewModel
     /// Represents the view-model of an <see cref="AlgorithmDefinition"/>
     /// object.
     /// </summary>
-    public class AlgorithmViewModel : ViewModel
+    public class AlgorithmViewModel : ViewModel, ICloneable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AlgorithmViewModel"/>
@@ -29,7 +32,16 @@ namespace DIPS.ViewModel
 
             Definition = definition;
             ParameterObject = definition.ParameterObject;
+            _removeCmd = new RelayCommand( _remove, _canRemove );
+            IsRemovable = true;
         }
+
+
+        /// <summary>
+        /// Occurs when this <see cref="AlgorithmViewModel"/> has requested
+        /// to be removed.
+        /// </summary>
+        public event EventHandler RemovalRequested;
 
 
         /// <summary>
@@ -58,10 +70,87 @@ namespace DIPS.ViewModel
         /// Gets the <see cref="object"/> describing the parameters the underlying
         /// algorithm will use when executing.
         /// </summary>
-        public object ParameterObject
+        public ICloneable ParameterObject
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the represented
+        /// algorithm is removable.
+        /// </summary>
+        public bool IsRemovable
+        {
+            get
+            {
+                return _isRemovable;
+            }
+            set
+            {
+                _isRemovable = value;
+                OnPropertyChanged();
+                _removeCmd.ExecutableStateChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private bool _isRemovable;
+
+        /// <summary>
+        /// Gets the <see cref="ICommand"/> used to remove this algorithm.
+        /// </summary>
+        public ICommand Remove
+        {
+            get
+            {
+                return _removeCmd;
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private RelayCommand _removeCmd;
+
+
+        /// <summary>
+        /// Returns a new object that is a copy of the current
+        /// <see cref="AlgorithmViewModel"/>.
+        /// </summary>
+        /// <returns>A new <see cref="AlgorithmViewModel"/> with the
+        /// same values as the current instance.</returns>
+        public object Clone()
+        {
+            ICloneable paramsObj = null;
+            if( this.ParameterObject != null )
+            {
+                paramsObj = (ICloneable)this.ParameterObject.Clone();
+            }
+
+            return new AlgorithmViewModel( Definition )
+            {
+                IsRemovable = this.IsRemovable,
+                ParameterObject = paramsObj
+            };
+        }
+
+
+        /// <summary>
+        /// Performs the Remove.CanExecute logic
+        /// </summary>
+        /// <param name="parameter">N/A</param>
+        private bool _canRemove( object parameter )
+        {
+            return IsRemovable;
+        }
+
+        /// <summary>
+        /// Performs the Remove.Execute logic
+        /// </summary>
+        /// <param name="parameter">N/A</param>
+        private void _remove( object parameter )
+        {
+            if( RemovalRequested != null )
+            {
+                RemovalRequested( this, EventArgs.Empty );
+            }
         }
     }
 }

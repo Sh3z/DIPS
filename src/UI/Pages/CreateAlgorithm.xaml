@@ -18,14 +18,6 @@
 
     <Grid>
         <Label x:Name="lblName" Content="Algorithm Name:" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontSize="16">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-0.33"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Label.RenderTransform>
         </Label>
         <TextBox HorizontalAlignment="Left" Height="27" Margin="150,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="172"
                  Text="{Binding Path=PipelineName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -48,7 +40,9 @@
                     Background="Lavender"
                     ItemContainerStyle="{StaticResource AlgorithmItemStyle}"
                     dd:DragDrop.IsDragSource="True"
-                    dd:DragDrop.IsDropTarget="True" FontSize="12" Height="319" />
+                    dd:DragDrop.IsDropTarget="True"
+                    dd:DragDrop.DropHandler="{Binding}"
+                    FontSize="12" Height="319" />
             </ScrollViewer>
 
         </GroupBox>

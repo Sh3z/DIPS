@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DIPS.Util.Commanding;
+using System.Collections.Specialized;
+using GongSolutions.Wpf.DragDrop;
 
 namespace DIPS.ViewModel
 {
@@ -18,7 +20,7 @@ namespace DIPS.ViewModel
     /// Represents the object providing the presentation logic for the
     /// algorithm builder view.
     /// </summary>
-    public class AlgorithmBuilderViewModel : BaseViewModel, IPipelineInfo
+    public class AlgorithmBuilderViewModel : BaseViewModel, IPipelineInfo, IDropTarget
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -30,11 +32,15 @@ namespace DIPS.ViewModel
             SelectedProcesses = new ObservableCollection<AlgorithmViewModel>();
             SavePipeline = new PersistPipelineCommand( this );
             LoadPipeline = new LoadPipelineCommand( this );
-            SavePipelineDatabase = new PersistPipelineDatabaseCommand(this);
+            SavePipelineDatabase = new PersistPipelineDatabaseCommand( this );
 
-            FinishButtonCommand = new RelayCommand(new Action<object>(ProgressToMainOrStep2));
-            ClearSelectedAlgorithmsCommand = new RelayCommand(new Action<object>(ClearSelectedCommand));
+            FinishButtonCommand = new RelayCommand( new Action<object>( ProgressToMainOrStep2 ) );
+            ClearSelectedAlgorithmsCommand = new RelayCommand( new Action<object>( ClearSelectedCommand ) );
+
+            SelectedProcesses.CollectionChanged += _chosenProcessesCollectionChanged;
         }
+
+
 
 
         /// <summary>
@@ -75,7 +81,7 @@ namespace DIPS.ViewModel
         public ObservableCollection<AlgorithmViewModel> SelectedProcesses
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
@@ -117,12 +123,13 @@ namespace DIPS.ViewModel
         public string PipelineID
         {
             get { return _pipelineID; }
-            set { 
-                  _pipelineID = value;
-                  OnPropertyChanged();
-                }
+            set
+            {
+                _pipelineID = value;
+                OnPropertyChanged();
+            }
         }
-        
+
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private string _pipelineName;
 
@@ -154,14 +161,33 @@ namespace DIPS.ViewModel
         public ICommand FinishButtonCommand { get; set; }
         public ICommand ClearSelectedAlgorithmsCommand { get; set; }
 
-        private void ProgressToMainOrStep2(object obj)
+
+        void IDropTarget.DragOver( IDropInfo dropInfo )
         {
-            if (FromLoadStep2)
+            dropInfo.NotHandled = true;
+        }
+
+        void IDropTarget.Drop( IDropInfo dropInfo )
+        {
+            bool notHandled = true;
+            if( dropInfo.Data is AlgorithmViewModel )
+            {
+                AlgorithmViewModel clone = (AlgorithmViewModel)( (AlgorithmViewModel)dropInfo.Data ).Clone();
+                SelectedProcesses.Add( clone );
+                notHandled = false;
+            }
+
+            dropInfo.NotHandled = notHandled;
+        }
+
+        private void ProgressToMainOrStep2( object obj )
+        {
+            if( FromLoadStep2 )
             {
                 OverallFrame.Content = _LoadNewDsStep2ViewModel;
-                if (_LoadNewDsStep2ViewModel.ListofTechniques != null)
+                if( _LoadNewDsStep2ViewModel.ListofTechniques != null )
                 {
-                     _LoadNewDsStep2ViewModel.ListofTechniques.Clear();
+                    _LoadNewDsStep2ViewModel.ListofTechniques.Clear();
 
                     ImageProcessingRepository imgProRep = new ImageProcessingRepository();
                     _LoadNewDsStep2ViewModel.ListofTechniques = imgProRep.getAllTechnique();
@@ -173,11 +199,52 @@ namespace DIPS.ViewModel
             }
         }
 
-        public void ClearSelectedCommand(object obj)
+        public void ClearSelectedCommand( object obj )
         {
             SelectedProcesses.Clear();
         }
-            
+
+        /// <summary>
+        /// Occurs when the selected processes collection is modified
+        /// </summary>
+        /// <param name="sender">N/A</param>
+        /// <param name="e">Event information</param>
+        private void _chosenProcessesCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
+        {
+            switch( e.Action )
+            {
+                case NotifyCollectionChangedAction.Add:
+                    foreach( AlgorithmViewModel vm in e.NewItems.OfType<AlgorithmViewModel>() )
+                    {
+                        vm.IsRemovable = true;
+                        vm.RemovalRequested += _algorithmRemovalRequested;
+                    }
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    var items = e.OldItems ?? new List<AlgorithmViewModel>();
+                    foreach( AlgorithmViewModel vm in items.OfType<AlgorithmViewModel>() )
+                    {
+                        vm.RemovalRequested -= _algorithmRemovalRequested;
+                    }
+                    break;
+            }
         }
 
+        /// <summary>
+        /// Occurs when an algorithm has requested removal from the selected
+        /// algorithms collection
+        /// </summary>
+        /// <param name="sender">The algorithm</param>
+        /// <param name="e">N/A</param>
+        private void _algorithmRemovalRequested( object sender, EventArgs e )
+        {
+            AlgorithmViewModel vm = sender as AlgorithmViewModel;
+            if( vm != null && SelectedProcesses.Contains( vm ) )
+            {
+                SelectedProcesses.Remove( vm );
+            }
+        }
     }
+
+}

@@ -175,6 +175,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             foreach (var algorithm in manager.AvailableProcesses)
             {
                 AlgorithmViewModel viewModel = new AlgorithmViewModel(algorithm);
+                viewModel.IsRemovable = false;
                 _AlgorithmBuilderViewModel.AvailableAlgorithms.Add(viewModel);
             }
         }

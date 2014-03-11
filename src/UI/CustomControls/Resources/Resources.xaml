@@ -3,6 +3,7 @@
                     xmlns:converters="clr-namespace:DIPS.UI.Converters;assembly=DIPS.UI.Converters">
 
     <converters:AlgorithmDisplayNameConverter x:Key="AlgorithmToName" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     
     <Style x:Key="AlgorithmItemStyle" TargetType="ListViewItem">
         <Setter Property="BorderBrush" Value="Black" />
@@ -18,8 +19,16 @@
                             MinHeight="{TemplateBinding MinHeight}"
                             MaxWidth="{TemplateBinding MaxWidth}">
                         <!-- The ListView should be presenting a set of AlgorithmViewModels to satisfy this Binding. -->
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Text="{Binding Converter={StaticResource AlgorithmToName}}" />
+                        <Grid>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding Converter={StaticResource AlgorithmToName}}" />
+                            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3"
+                                       Visibility="{Binding Path=IsRemovable, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Hyperlink Command="{Binding Path=Remove}">
+                                    <TextBlock Text="Remove" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
