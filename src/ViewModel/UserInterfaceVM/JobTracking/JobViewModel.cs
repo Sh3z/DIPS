@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
@@ -49,12 +50,13 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             _sink.JobError += _onJobError;
             _sink.JobStarted += _onJobStarted;
             _sink.InputProcessed += _inputProcessed;
+            _sink.InputStarted += _inputStarted;
             Ticket = job;
             Ticket.Sinks.Add( _sink );
             _updateFromState();
         }
 
-
+        
         void IDisposable.Dispose()
         {
             if( Ticket != null )
@@ -143,23 +145,22 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         private DateTime _timeBegan;
 
         /// <summary>
-        /// Gets the <see cref="DateTime"/> in which the job should finish,
-        /// or null if no esimate has been resolved
+        /// Gets the <see cref="TimeSpan"/> remaining before the job finishes
         /// </summary>
-        public DateTime? EstimatedCompletionTime
+        public TimeSpan? EstimatedTimeRemaining
         {
             get
             {
-                return _estimatedFinishTime;
+                return _estimatedTimeRemaining;
             }
             private set
             {
-                _estimatedFinishTime = value;
+                _estimatedTimeRemaining = value;
                 OnPropertyChanged();
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private DateTime? _estimatedFinishTime;
+        private TimeSpan? _estimatedTimeRemaining;
 
         /// <summary>
         /// Gets the <see cref="DateTime"/> when this <see cref="JobViewModel"/>
@@ -349,6 +350,8 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             TimeBegan = DateTime.Now;
             IsRunning = true;
             _updateFromState();
+            Thread t = new Thread( _completionTimeThread );
+            t.Start();
             if( JobStarted != null )
             {
                 JobStarted( this, EventArgs.Empty );
@@ -394,6 +397,16 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             IsCancelled = true;
             _updateFromState();
             _fireIfComplete();
+        }
+
+        /// <summary>
+        /// Occurs when an input has begun processing
+        /// </summary>
+        /// <param name="sender">N/A</param>
+        /// <param name="e">N/A</param>
+        private void _inputStarted( object sender, EventArgs e )
+        {
+            _currentInputTime = DateTime.Now;
         }
 
         /// <summary>
@@ -475,11 +488,51 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             string lower = e.PropertyName.ToLower();
             if( lower == "durationestimate" )
             {
-                // Time remaining = pending inputs * duration
-                int remaining = Inputs.Count - InputsProcessed;
-                long ticks = _estimator.DurationEstimate.Value.Ticks * remaining;
-                EstimatedCompletionTime = DateTime.Now + TimeSpan.FromTicks( ticks );
+                _updateEstimatedCompletionTime();
             }
+        }
+
+        /// <summary>
+        /// Updates the EstimatedCompletionTime property using the
+        /// rolling average
+        /// </summary>
+        private void _updateEstimatedCompletionTime()
+        {
+            lock( _estimator )
+            {
+                if( _estimator.DurationEstimate.HasValue )
+                {
+                    // Time remaining = pending inputs * duration
+                    int remaining = Inputs.Count - InputsProcessed;
+                    long ticks = _estimator.DurationEstimate.Value.Ticks * remaining;
+                    TimeSpan timePending = TimeSpan.FromTicks( ticks );
+
+                    if( _currentInputTime.HasValue )
+                    {
+                        TimeSpan secondsRan = DateTime.Now - (DateTime)_currentInputTime;
+                        timePending -= secondsRan;
+                    }
+
+                    EstimatedTimeRemaining = timePending;
+                }
+                else
+                {
+                    EstimatedTimeRemaining = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Performs the background completion time update procedure
+        /// </summary>
+        private void _completionTimeThread()
+        {
+            do
+            {
+                _updateEstimatedCompletionTime();
+                Thread.Sleep( TimeSpan.FromSeconds( 0.5 ) );
+            }
+            while( _isRunning );
         }
 
 
@@ -492,5 +545,10 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// Calculates the ongoing rolling average for job completion
         /// </summary>
         private InputTimeEstimator _estimator;
+
+        /// <summary>
+        /// Contains the time the current input began running
+        /// </summary>
+        private DateTime? _currentInputTime;
     }
 }

@@ -21,13 +21,13 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         /// <returns>The string form of the <see cref="DateTime"/>.</returns>
         public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
         {
-            if( value is DateTime )
+            if( value is TimeSpan )
             {
-                return _formatDate( (DateTime)value );
+                return _formatSpan( (TimeSpan)value );
             }
-            else if( value is DateTime? )
+            else if( value == null )
             {
-                return _formatNullableDatetime( value );
+                return "Calculating...";
             }
             else
             {
@@ -50,33 +50,12 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
 
 
         /// <summary>
-        /// Formats the nullable datetime
-        /// </summary>
-        /// <param name="value">The nullable datetime</param>
-        /// <returns>The formatted time</returns>
-        private object _formatNullableDatetime( object value )
-        {
-            DateTime? val = (DateTime?)value;
-            if( val.HasValue )
-            {
-                return _formatDate( val.Value );
-            }
-            else
-            {
-                return "Calculating...";
-            }
-        }
-
-        /// <summary>
         /// Formats the incoming time into a string
         /// </summary>
-        /// <param name="date">The time to format</param>
+        /// <param name="span">The time to format</param>
         /// <returns>The formatted time</returns>
-        private string _formatDate( DateTime date )
+        private string _formatSpan( TimeSpan span )
         {
-            DateTime now = DateTime.Now;
-            TimeSpan span = date - now;
-
             // If less than an hour, display minutes and seconds
             if( span.Hours == 0 )
             {

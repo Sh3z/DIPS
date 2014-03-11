@@ -70,7 +70,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Estimated Time Remaining"
-                                            DisplayMemberBinding="{Binding Path=EstimatedCompletionTime, Converter={StaticResource EstimatedTimeConverter}}"/>
+                                            DisplayMemberBinding="{Binding Path=EstimatedTimeRemaining, Converter={StaticResource EstimatedTimeConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
