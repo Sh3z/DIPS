@@ -22,7 +22,6 @@
         <Button Command="{Binding OpenFileDialogCommand}" Content="Select Images" HorizontalAlignment="Left" Margin="302,131,0,0" VerticalAlignment="Top" Width="122" Height="28" FontSize="16"/>
         <Button Command="{Binding ProgressToStep2Command}" Content="Confirm Choice" HorizontalAlignment="Left" Margin="302,275,0,0" VerticalAlignment="Top" Width="122" FontSize="16"/>
         <Controls:infoBell SetText="Select images for processing by clicking the button.  Remove images by clicking highlighting the file and clicking the remove file button" HorizontalAlignment="Left" Margin="449,131,0,0" VerticalAlignment="Top" Height="33" Width="35" />
-        <Controls:infoBell HorizontalAlignment="Left" Margin="449,270,0,0" VerticalAlignment="Top" Height="32" Width="35" />
         <Button Command="{Binding RemoveFileFromListCommand}" Content="Remove File" HorizontalAlignment="Left" Margin="302,182,0,0" VerticalAlignment="Top" Width="122" FontSize="16"/>
 
     </Grid>
