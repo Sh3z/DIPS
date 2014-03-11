@@ -25,27 +25,27 @@ namespace DIPS.UI.Controls
             InitializeComponent();
         }
 
-        private String _setText;
+        public static readonly DependencyProperty SetTextProperty = DependencyProperty.Register("SetText", typeof(String), typeof(infoBell), null);
 
-        public String setText
+        public String SetText
         {
-            get { return _setText; }
-            set { _setText = value; }
-        }           
+            get { return (String)GetValue(SetTextProperty); }
+            set { SetValue(SetTextProperty, value); }
+        }         
 
         private void imgBell_MouseLeave(object sender, MouseEventArgs e)
         {
-            txtInfoText.Visibility = Visibility.Hidden;
+            textTitle.Visibility = Visibility.Hidden;
         }
 
         private void imgBell1_MouseEnter(object sender, MouseEventArgs e)
         {
-            txtInfoText.Visibility = Visibility.Visible;
+            textTitle.Visibility = Visibility.Visible;
         }
 
         private void txtInfoText_Loaded(object sender, RoutedEventArgs e)
         {
-            txtInfoText.Text = this.setText;
+            textTitle.Text = this.SetText;
         }
       }
         

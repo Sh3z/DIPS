@@ -28,7 +28,7 @@
         </ScrollViewer>
         <Label Content="Plan Composition
                " HorizontalAlignment="Left" Margin="385,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="135" FontSize="16"/>
-        <Button Command="{Binding BuildAlgorithmCommand}" Content="Build Technique" HorizontalAlignment="Left" Margin="779,75,0,0" VerticalAlignment="Top" Width="122" RenderTransformOrigin="0.533,-0.6" Height="49" FontSize="16" />
+        <Button Command="{Binding BuildAlgorithmCommand}" Content="Build Technique" HorizontalAlignment="Left" Margin="779,122,0,0" VerticalAlignment="Top" Width="122" RenderTransformOrigin="0.533,-0.6" Height="49" FontSize="16" />
         <ListBox ItemsSource="{Binding ListOfFiles}" HorizontalAlignment="Left" Height="293" Margin="29,115,0,0" VerticalAlignment="Top" Width="166" FontSize="16">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -42,7 +42,8 @@
 
         <!--<Controls:infoBell x:Name="selectedFileInfo" HorizontalAlignment="Left" Margin="200,163,0,0" VerticalAlignment="Top" Height="42" Width="44" />-->
         <Label Content="Properties" HorizontalAlignment="Left" Margin="620,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="81" FontSize="16"/>
-        <Button Content="Load from File" HorizontalAlignment="Left" Margin="779,149,0,0" VerticalAlignment="Top" Width="122" Height="38" Command="{Binding LoadFromFile}" FontSize="16"/>
+        <Button Content="Load from File" HorizontalAlignment="Left" Margin="779,196,0,0" VerticalAlignment="Top" Width="122" Height="38" Command="{Binding LoadFromFile}" FontSize="16"/>
+        <Controls:infoBell SetText="Select the algorithm plan that you wish to use to process the files.  You can also create a new one by clicking Build Technique." HorizontalAlignment="Left" Height="33" Margin="822,38,0,0" VerticalAlignment="Top" Width="38"/>
 
     </Grid>
 </UserControl>

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DIPS.Util.Commanding;
+using System.Windows;
 
 namespace DIPS.ViewModel
 {
@@ -154,6 +155,18 @@ namespace DIPS.ViewModel
         public ICommand FinishButtonCommand { get; set; }
         public ICommand ClearSelectedAlgorithmsCommand { get; set; }
 
+        private Visibility _goBackButtonState;
+
+        public Visibility GoBackButtonState
+        {
+            get { return _goBackButtonState; }
+            set { 
+                  _goBackButtonState = value;
+                  OnPropertyChanged();
+                }
+        }
+        
+
         private void ProgressToMainOrStep2(object obj)
         {
             if (FromLoadStep2)
@@ -169,7 +182,7 @@ namespace DIPS.ViewModel
             }
             else
             {
-                OverallFrame.Content = _MainViewModel;
+                OverallFrame.Content = _ViewExistingDatasetViewModel;
             }
         }
 

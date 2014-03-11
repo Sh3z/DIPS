@@ -57,14 +57,7 @@
                 <ComboBox VerticalAlignment="Center" Margin="3,0,0,0" />
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Margin="0,3" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="What do I do when the processing is complete?" VerticalAlignment="Center" />
-                <ComboBox SelectedItem="{Binding PostProcessAction}" Margin="10,0,0,0">
-                    <ComboBoxItem Content="Nothing" IsSelected="True"/>
-                    <ComboBoxItem Content="Sleep"/>
-                    <ComboBoxItem Content="Shut down"/>
-                </ComboBox>
-            </StackPanel>
+            <StackPanel Grid.Row="2" Margin="0,3" Orientation="Horizontal" HorizontalAlignment="Center"/>
             <DockPanel Grid.Row="3" Margin="0,3">
                 <TextBlock DockPanel.Dock="Left" Text="Identifier: " Margin="5,0" />
                 <TextBox Text="{Binding Path=Identifier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="100" />

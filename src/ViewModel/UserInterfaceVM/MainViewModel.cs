@@ -120,6 +120,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
             _AlgorithmBuilderViewModel.FromLoadStep2 = false;
+            _AlgorithmBuilderViewModel.GoBackButtonState = Visibility.Hidden;
 
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
             _AlgorithmBuilderViewModel.PipelineName = string.Empty;
