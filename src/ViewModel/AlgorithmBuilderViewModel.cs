@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using DIPS.Util.Commanding;
 using System.Collections.Specialized;
 using GongSolutions.Wpf.DragDrop;
+using System.Windows;
 
 namespace DIPS.ViewModel
 {
@@ -161,7 +162,6 @@ namespace DIPS.ViewModel
         public ICommand FinishButtonCommand { get; set; }
         public ICommand ClearSelectedAlgorithmsCommand { get; set; }
 
-
         void IDropTarget.DragOver( IDropInfo dropInfo )
         {
             dropInfo.NotHandled = true;
@@ -180,7 +180,19 @@ namespace DIPS.ViewModel
             dropInfo.NotHandled = notHandled;
         }
 
-        private void ProgressToMainOrStep2( object obj )
+        private Visibility _goBackButtonState;
+
+        public Visibility GoBackButtonState
+        {
+            get { return _goBackButtonState; }
+            set { 
+                  _goBackButtonState = value;
+                  OnPropertyChanged();
+                }
+        }
+        
+
+        private void ProgressToMainOrStep2(object obj)
         {
             if( FromLoadStep2 )
             {
@@ -195,7 +207,7 @@ namespace DIPS.ViewModel
             }
             else
             {
-                OverallFrame.Content = _MainViewModel;
+                OverallFrame.Content = _ViewExistingDatasetViewModel;
             }
         }
 

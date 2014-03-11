@@ -12,9 +12,9 @@
         <Button Command="{Binding AddNewAlgorithmCommand}" Content="New" HorizontalAlignment="Left" Margin="907,323,0,0" VerticalAlignment="Top" Width="75"/>
         <Label HorizontalAlignment="Left" Margin="449,18,0,0" VerticalAlignment="Top"/>
 
-        <Controls:infoBell HorizontalAlignment="Left" Margin="30,18,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.212,0.404" Height="33" Width="37" setText="Algorithms created are displayed below.  Double click an algorithm to view in the builder." />
         <Label Content="View an Existing Algorithm
                " HorizontalAlignment="Left" Margin="385,10,0,0" VerticalAlignment="Top" FontSize="22" Width="276"/>
-
+        
+        <Controls:infoBell RenderTransformOrigin="-11.7,-6.413" Margin="30,30,937,495" SetText="All algorithm plans that have been created are displayed below." />
     </Grid>
 </UserControl>

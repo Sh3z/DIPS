@@ -51,7 +51,7 @@
         <Button Command="{Binding SavePipelineDatabase}"  Content="Save to Database" HorizontalAlignment="Left" Margin="776,64,0,0" VerticalAlignment="Top" Width="154" FontSize="16"/>
         <Label Content="Algorithm Builder
                " HorizontalAlignment="Left" VerticalAlignment="Top" Width="181" Height="42" FontSize="22" Margin="430,0,0,0"/>
-        <Button Command="{Binding FinishButtonCommand}" Content="Finished" HorizontalAlignment="Left" Margin="803,369,0,0" VerticalAlignment="Top" Width="87" Height="59" FontSize="16"/>
+        <Button Visibility="{Binding GoBackButtonState}" Command="{Binding FinishButtonCommand}" Content="Go Back" HorizontalAlignment="Left" Margin="803,369,0,0" VerticalAlignment="Top" Width="87" Height="59" FontSize="16"/>
         <Button Command="{Binding ClearSelectedAlgorithmsCommand}" Content="Clear Selected Algorithms" HorizontalAlignment="Left" Margin="479,64,0,0" VerticalAlignment="Top" Width="188" FontSize="16"/>
         <Button Command="{Binding LoadPipeline}"  Content="Load from XML file" HorizontalAlignment="Left" Margin="776,96,0,0" VerticalAlignment="Top" Width="154" FontSize="16"/>
         <Button Command="{Binding SavePipeline}"  Content="Save as XML file" HorizontalAlignment="Left" Margin="776,32,0,0" VerticalAlignment="Top" Width="154" FontSize="16"/>
