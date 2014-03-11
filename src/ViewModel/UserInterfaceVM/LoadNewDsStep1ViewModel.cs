@@ -71,12 +71,12 @@ namespace DIPS.ViewModel.UserInterfaceVM
             ListOfFiles = new ObservableCollection<FileInfo>();
         }
 
-        private void ClearFields(object obj)
+        public void ClearFields(object obj)
         {
             ListOfFiles.Clear();
         }
 
-        private void RemoveFileFromList(object obj)
+        public void RemoveFileFromList(object obj)
         {
             if (SelectedFileItem != null)
             {
