@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Converters="clr-namespace:DIPS.ViewModel.Converters;assembly=DIPS.ViewModel"
         xmlns:Custom="clr-namespace:DIPS.UI.CustomControls;assembly=DIPS.UI.CustomControls"
+        xmlns:Tracking="clr-namespace:DIPS.ViewModel.UserInterfaceVM.JobTracking;assembly=DIPS.ViewModel"
         x:Name="Window"
         Title="Queue" Height="345.358" Width="769" Margin="3">
     <Window.Resources>
@@ -10,6 +11,7 @@
         <Converters:ImageToImageSourceConverter x:Key="ImageToImageSource" />
         <Converters:SingleItemToEnumerableConverter x:Key="SingleToSetConverter" />
         <Converters:DecimalToPercentageConverter x:Key="DecimalFormatter" />
+        <Tracking:TimeRemainingFormatter x:Key="EstimatedTimeConverter" />
         <Style TargetType="RadioButton">
             <Setter Property="Margin" Value="3" />
         </Style>
@@ -55,7 +57,7 @@
                                             DisplayMemberBinding="{Binding Path=InputsProcessed}" />
                             <GridViewColumn Header="Inputs To Process"
                                             DisplayMemberBinding="{Binding Path=Inputs.Count}" />
-                            <GridViewColumn Header="EstimatedCompletion">
+                            <GridViewColumn Header="Progress">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <DockPanel Margin="3" LastChildFill="True">
@@ -67,6 +69,8 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                            <GridViewColumn Header="Estimated Time Remaining"
+                                            DisplayMemberBinding="{Binding Path=EstimatedCompletionTime, Converter={StaticResource EstimatedTimeConverter}}"/>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>

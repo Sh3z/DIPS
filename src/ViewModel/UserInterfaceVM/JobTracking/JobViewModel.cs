@@ -5,10 +5,12 @@ using DIPS.Util.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
 {
@@ -30,6 +32,8 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
                 throw new ArgumentNullException( "job" );
             }
 
+            _estimator = new InputTimeEstimator( job );
+            _estimator.PropertyChanged += _estimatorPropertyChanged;
             TimeEnqueued = DateTime.Now;
             Identifier = job.Request.Identifier;
             Inputs = new ObservableCollection<InputViewModel>();
@@ -137,6 +141,25 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
         private DateTime _timeBegan;
+
+        /// <summary>
+        /// Gets the <see cref="DateTime"/> in which the job should finish,
+        /// or null if no esimate has been resolved
+        /// </summary>
+        public DateTime? EstimatedCompletionTime
+        {
+            get
+            {
+                return _estimatedFinishTime;
+            }
+            private set
+            {
+                _estimatedFinishTime = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private DateTime? _estimatedFinishTime;
 
         /// <summary>
         /// Gets the <see cref="DateTime"/> when this <see cref="JobViewModel"/>
@@ -442,10 +465,32 @@ namespace DIPS.ViewModel.UserInterfaceVM.JobTracking
             }
         }
 
+        /// <summary>
+        /// Occurs when a property of the time-estimator has changed
+        /// </summary>
+        /// <param name="sender">N/A</param>
+        /// <param name="e">Event information</param>
+        private void _estimatorPropertyChanged( object sender, PropertyChangedEventArgs e )
+        {
+            string lower = e.PropertyName.ToLower();
+            if( lower == "durationestimate" )
+            {
+                // Time remaining = pending inputs * duration
+                int remaining = Inputs.Count - InputsProcessed;
+                long ticks = _estimator.DurationEstimate.Value.Ticks * remaining;
+                EstimatedCompletionTime = DateTime.Now + TimeSpan.FromTicks( ticks );
+            }
+        }
+
 
         /// <summary>
         /// Contains the event sink used by the ticket.
         /// </summary>
         private TicketSink _sink;
+
+        /// <summary>
+        /// Calculates the ongoing rolling average for job completion
+        /// </summary>
+        private InputTimeEstimator _estimator;
     }
 }
