@@ -134,6 +134,7 @@ namespace DIPS.Processor.Worker
         {
             try
             {
+                _ticket.OnBeganInput();
                 Image theInput = _processInput( pipeline, input );
                 _currentArgs.Persister.Persist(
                         _ticket.JobID, theInput, input.Identifier );
