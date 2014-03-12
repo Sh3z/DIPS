@@ -50,7 +50,8 @@ namespace Database.Repository
                             Technique technique = new Technique();
                             technique.ID = data.GetInt32(data.GetOrdinal("ID"));
                             technique.Name = data.GetString(data.GetOrdinal("name"));
-                            technique.xml = null;
+                            SqlXml xmltech = data.GetSqlXml(data.GetOrdinal("technique"));
+                            technique.xml = XDocument.Load(xmltech.CreateReader());
                             list.Add(technique);
                         }
                         data.Close();

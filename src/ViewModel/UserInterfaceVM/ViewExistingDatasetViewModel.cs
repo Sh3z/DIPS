@@ -198,11 +198,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
         #region Constructor
         public ViewExistingDatasetViewModel(Frame theFrame)
         {
-            if (theFrame != null)
-            {
-                OverallFrame = theFrame;
-            }
-           
             OngoingJobsViewModel vm = new OngoingJobsViewModel();
             GlobalContainer.Instance.Container.RegisterInstance<IJobTracker>(vm);
 

@@ -76,7 +76,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             GlobalContainer.Instance.Container.RegisterInstance<IJobTracker>( vm );
 
             Container = GlobalContainer.Instance.Container;
-            ValidateConnection.validateConnection();
+            
         }
 
         private void SetupCommands()
