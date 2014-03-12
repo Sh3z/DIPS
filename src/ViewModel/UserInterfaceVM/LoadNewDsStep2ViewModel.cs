@@ -151,8 +151,14 @@ namespace DIPS.ViewModel.UserInterfaceVM
             BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Clear();
             this.ListOfFiles.ForEach( BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Add );
             BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Clear();
-            TechniqueAlgorithms.ForEach( BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Add );
+            TechniqueAlgorithms.ForEach( _addAlgorithmToStep3 );
             BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = ( this as IPipelineInfo ).PipelineName;
+        }
+
+        private void _addAlgorithmToStep3( AlgorithmViewModel viewModel )
+        {
+            viewModel.IsRemovable = false;
+            BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Add( viewModel );
         }
 
 
