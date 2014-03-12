@@ -100,11 +100,30 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set
             {
                 _currentJob = value;
+                IsJobRunning = value != null;
                 OnPropertyChanged();
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)] private JobViewModel _currentJob;
+
+        /// <summary>
+        /// Gets a value indicating whether a job is currently in progress.
+        /// </summary>
+        public bool IsJobRunning
+        {
+            get
+            {
+                return _isJobRunning;
+            }
+            private set
+            {
+                _isJobRunning = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private bool _isJobRunning;
 
 
         /// <summary>
