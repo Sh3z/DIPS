@@ -19,7 +19,7 @@ namespace DIPS.Tests.ViewModel
         {
             LoadNewDsStep1ViewModel step1 = new LoadNewDsStep1ViewModel();
             step1.ListOfFiles = new System.Collections.ObjectModel.ObservableCollection<System.IO.FileInfo>();
-            step1.ListOfFiles.Add(new System.IO.FileInfo());
+            step1.ListOfFiles.Add(new System.IO.FileInfo(null));
 
             step1.ListOfFiles.Clear();
 
