@@ -68,6 +68,10 @@
       <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
       <Name>DIPS.Util</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Database\DIPS.Database.csproj">
+      <Project>{a200fc0f-f24e-4f28-b34e-88b1ebd4773c}</Project>
+      <Name>DIPS.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Processor\Client\DIPS.Processor.Client.csproj">
       <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
       <Name>DIPS.Processor.Client</Name>
