@@ -38,9 +38,12 @@ namespace DIPS.Util.Remoting
         /// <param name="sink">The <see cref="EventSink"/> to add.</param>
         public void Add( T sink )
         {
-            if( sink != null )
+            lock( _sinks )
             {
-                _sinks.Add( sink );
+                if( sink != null )
+                {
+                    _sinks.Add( sink );
+                }
             }
         }
 
@@ -51,9 +54,12 @@ namespace DIPS.Util.Remoting
         /// <param name="sink">The <see cref="EventSink"/> to remove.</param>
         public void Remove( T sink )
         {
-            if( sink != null )
+            lock( _sinks )
             {
-                _sinks.Add( sink );
+                if( sink != null )
+                {
+                    _sinks.Add( sink );
+                }
             }
         }
 
@@ -154,9 +160,12 @@ namespace DIPS.Util.Remoting
         /// <param name="e">The event information</param>
         private void _invokeOnSinks( string eventName, object sender, EventArgs e )
         {
-            foreach( T sink in _sinks )
+            lock( _sinks )
             {
-                _tryInvokeOnSink( sink, eventName, sender, e );
+                foreach( T sink in _sinks )
+                {
+                    _tryInvokeOnSink( sink, eventName, sender, e );
+                }
             }
         }
 
