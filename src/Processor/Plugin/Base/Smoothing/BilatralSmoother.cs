@@ -16,6 +16,18 @@ namespace DIPS.Processor.Plugin.Base.Smoothing
     public class BilatralSmoother : ISmoother
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="BilatralSmoother"/>
+        /// class.
+        /// </summary>
+        public BilatralSmoother()
+        {
+            Size = 3;
+            Colour = 1;
+            Space = 1;
+        }
+
+
+        /// <summary>
         /// Gets or sets the size of the smoothing kernel.
         /// </summary>
         [Description( "The size of the smoothing kernel" )]

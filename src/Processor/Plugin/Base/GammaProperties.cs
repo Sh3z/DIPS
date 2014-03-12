@@ -16,6 +16,16 @@ namespace DIPS.Processor.Plugin.Base
     public class GammaProperties : ICloneable
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GammaProperties"/>
+        /// class.
+        /// </summary>
+        public GammaProperties()
+        {
+            Gamma = 1;
+        }
+
+
+        /// <summary>
         /// Gets the default <see cref="GammaProperties"/> instance.
         /// </summary>
         [Browsable( false )]
@@ -27,7 +37,7 @@ namespace DIPS.Processor.Plugin.Base
             }
         }
         [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private static GammaProperties _default = new GammaProperties() { Gamma = 1 };
+        private static GammaProperties _default = new GammaProperties();
 
         /// <summary>
         /// Gets or sets the target gamma.

@@ -16,6 +16,17 @@ namespace DIPS.Processor.Plugin.Base.Smoothing
     public class BlurSmoother : ISmoother
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="BlurSmoother"/>
+        /// class.
+        /// </summary>
+        public BlurSmoother()
+        {
+            Width = 3;
+            Height = 3;
+        }
+
+
+        /// <summary>
         /// Gets or sets the smoothing kernel width.
         /// </summary>
         [Description( "The width of the smoothing kernel" )]

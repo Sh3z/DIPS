@@ -16,6 +16,16 @@ namespace DIPS.Processor.Plugin.Base.Smoothing
     public class GaussianSmoother : ISmoother
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GaussianSmoother"/>
+        /// class.
+        /// </summary>
+        public GaussianSmoother()
+        {
+            Size = 3;
+        }
+
+
+        /// <summary>
         /// Gets or sets the size of the smoothing kernel.
         /// </summary>
         [Description( "The size of the smoothing kernel" )]
