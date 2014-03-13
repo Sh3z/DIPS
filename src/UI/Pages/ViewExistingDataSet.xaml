@@ -74,6 +74,15 @@
                     </StackPanel>
                 </HierarchicalDataTemplate>
 
+                <HierarchicalDataTemplate 
+                    DataType="{x:Type vm:TreeViewTechniqueViewModel}"
+                    ItemsSource="{Binding Children}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Margin="3,0" Source="pack://application:,,,/DIPS.UI;component/Images/Image.png" />
+                        <TextBlock Text="{Binding techniqueName}" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+
                 <DataTemplate DataType="{x:Type vm:TreeViewImageViewModel}">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="16" Height="16" Margin="3,0" Source="pack://application:,,,/DIPS.UI;component/Images/Image.png" />

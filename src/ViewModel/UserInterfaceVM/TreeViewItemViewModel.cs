@@ -20,6 +20,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private bool _isExpanded;
         private bool _isSelected;
+        private String selectedImageID;
 
         protected TreeViewItemViewModel(TreeViewItemViewModel parent, bool lazyLoadChildren)
         {
@@ -81,13 +82,14 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     _isSelected = value;
                     OnPropertyChanged();
                     ImageViewModel = this;
-                    
+
                     if (ImageViewModel is TreeViewImageViewModel)
                     {
                         TreeViewImageViewModel tivm = (TreeViewImageViewModel) ImageViewModel;
-                        setImage(tivm.ImageName.ToString());
+                        if (tivm.processed) setProcessedImage(tivm.ImageName.ToString());
+                        else setImage(tivm.ImageName.ToString());
                         _ViewExistingDatasetViewModel.ImageInfo = string.Empty;
-                        GetImageInfo(tivm.ImageName.ToString());
+                        GetImageInfo(selectedImageID);
                     }
                     
                 }
@@ -118,6 +120,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spr_RetrieveImage_v001", conn);
+                
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@fID", SqlDbType.VarChar).Value = fileID;
                 SqlDataReader dataReader = cmd.ExecuteReader();
@@ -142,8 +145,49 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
                     BaseProcessedImage = processedBmp;
                 }
+                selectedImageID = fileID;
             }
         }
+
+        public void setProcessedImage(String fileID)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spr_RetrieveProcessedImageB_v001", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@fileID", SqlDbType.VarChar).Value = fileID;
+                SqlDataReader dataReader = cmd.ExecuteReader();
+
+                dataReader.Read();
+                byte[] image = (byte[])dataReader.GetValue(dataReader.GetOrdinal("imageBlob"));
+                String UID = dataReader.GetString(dataReader.GetOrdinal("imageUID"));
+                dataReader.Close();
+
+                BitmapImage theBmp = ToImage(image);
+                BaseProcessedImage = theBmp;
+
+
+                SqlCommand cmd2 = new SqlCommand("spr_RetrieveImageByUID_v001", conn);
+                cmd2.CommandType = CommandType.StoredProcedure;
+                cmd2.Parameters.Add("@imageUID", SqlDbType.VarChar).Value = UID;
+                SqlDataReader dataReader2 = cmd2.ExecuteReader();
+
+                dataReader2.Read();
+                byte[] processed = (byte[])dataReader2.GetValue(dataReader2.GetOrdinal("imageBlob"));
+                selectedImageID = dataReader2.GetInt32(dataReader2.GetOrdinal("fileID")).ToString();
+                dataReader2.Close();
+
+                if (processed != null)
+                {
+                    BitmapImage processedBmp = ToImage(processed);
+
+                    BaseUnProcessedImage = processedBmp;
+                }
+            }
+        }
+
 
         public BitmapImage ToImage(byte[] array)
         {

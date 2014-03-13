@@ -4,11 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using Database.Objects;
 
 namespace DIPS.Database.Objects
 {
     public class ImageDataset
     {
+        private int _seriesID;
+
+        public int seriesID
+        {
+            get { return _seriesID; }
+            set { _seriesID = value; }
+        }
+        
         private String _series;
 
         public String series
@@ -17,18 +26,19 @@ namespace DIPS.Database.Objects
             set { _series = value; }
         }
 
-        private ObservableCollection<PatientImage> _relatedImages;
+        private ObservableCollection<ProcessTechnique> _relatedTechnique;
 
-        public ObservableCollection<PatientImage> relatedImages
+        public ObservableCollection<ProcessTechnique> relatedTechnique
         {
-            get { return _relatedImages; }
-            set { _relatedImages = value; }
+            get { return _relatedTechnique; }
+            set { _relatedTechnique = value; }
         }
 
-        public ImageDataset(string dsSeries, ObservableCollection<PatientImage> images)
+        public ImageDataset(int seriesID, string dsSeries, ObservableCollection<ProcessTechnique> techniques)
         {
+            this.seriesID = seriesID;
             this.series = dsSeries;
-            this.relatedImages = images;
+            this.relatedTechnique = techniques;
         }
 
         public ImageDataset()

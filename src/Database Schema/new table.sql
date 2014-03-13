@@ -25,7 +25,8 @@ sliceThickness varchar(20)
 );
 create table processedImages(
 fileID int identity PRIMARY KEY,
-imageUID varchar(70) UNIQUE,
+processMethod varchar(100),
+imageUID varchar(70),
 imageBlob varbinary(MAX)
 );
 create table images(

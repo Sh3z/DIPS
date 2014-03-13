@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Database;
 using DIPS.Database.Objects;
+using Database.Objects;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -25,8 +26,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         protected override void LoadChildren()
         {
-            foreach (PatientImage img in _imgDataset.relatedImages)
-                base.Children.Add(new TreeViewImageViewModel(img, this));
+            foreach (ProcessTechnique technique in _imgDataset.relatedTechnique)
+                base.Children.Add(new TreeViewTechniqueViewModel(technique, this));
         }
     }
 }

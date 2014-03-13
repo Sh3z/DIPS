@@ -15,24 +15,19 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <26/02/2013>
--- Description:	<Insert Image File>
+-- Create date: <13/03/2013>
+-- Description:	<Retrieve processed image by fileID>
 -- =============================================
-CREATE PROCEDURE spr_InsertProcessedImages_v001
+CREATE PROCEDURE spr_RetrieveProcessedImageB_v001
 	-- Add the parameters for the stored procedure here
-	@processMethod varchar(100) = NULL,
-	@imageUID varchar(70) = NULL,
-	@imageBlob varbinary(MAX) = NULL
+	@fileID int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	IF @imageUID = ''
-		SET @imageUID = NULL
-
     -- Insert statements for procedure here
-	INSERT INTO processedImages (processMethod, imageUID,imageBlob) VALUES (@processMethod, @imageUID,@imageBlob)
+	select imageBlob,imageUID from processedImages where fileID = @fileID
 END
 GO

@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using DIPS.Database;
 using Database.Objects;
 using Database.DicomHelper;
+using Database.Repository;
 
 namespace Database
 {
@@ -31,7 +32,8 @@ namespace Database
                         cmd.CommandType = CommandType.StoredProcedure;
                         SqlDataReader data = cmd.ExecuteReader();
 
-                        allDatasetsActive = DatabaseToList(data, showName);
+                        TreeViewGenerator generator = new TreeViewGenerator();
+                        allDatasetsActive = generator.GetCollection(data, showName, conn);
 
                         data.Close();
                     }
@@ -81,7 +83,8 @@ namespace Database
                         if(filter.Batch!=null) cmd.Parameters.Add("@Batch", SqlDbType.Int).Value = filter.Batch;
 
                         SqlDataReader data = cmd.ExecuteReader();
-                        allDatasetsActive = DatabaseToList(data, showName);
+                        TreeViewGenerator generator = new TreeViewGenerator();
+                        allDatasetsActive = generator.GetCollection(data, showName, conn);
                         data.Close();
                     }
                 }
@@ -90,76 +93,6 @@ namespace Database
             return allDatasetsActive;
 
         }
-
-        private ObservableCollection<Patient> DatabaseToList(SqlDataReader data, Boolean showName)
-        {
-            ObservableCollection<Patient> patientList = null;
-            ObservableCollection<ImageDataset> dataSets = null;
-            ObservableCollection<PatientImage> imageCollectionDS = null;
-            ImageDataset imgDS = null;
-            PatientImage img = null;
-            Patient patient = null;
-
-            Boolean patientExist = false;
-            string patientName;
-            string currentID;
-            string prevID = "null";
-            string currentSeries;
-            string prevSeries = "null";
-
-            patientList = new ObservableCollection<Patient>();
-            Encryption encryptedName = new Encryption();
-
-            while (data.Read())
-            {
-                img = new PatientImage();
-                currentID = data.GetString(data.GetOrdinal("Patient ID"));
-                patientName = data.GetString(data.GetOrdinal("Patient Name"));
-                currentSeries = data.GetString(data.GetOrdinal("Series"));
-
-                if (!currentID.Equals(prevID))
-                {
-                    foreach (Patient p in patientList)
-                    {
-                        if (p.patientID.Equals(currentID))
-                        {
-                            dataSets = p.dataSet;
-                            patientExist = true;
-                        }
-                    }
-
-                    if (patientExist == false)
-                    {
-                        dataSets = new ObservableCollection<ImageDataset>();
-                        int tableID = data.GetInt32(data.GetOrdinal("Table ID"));
-                        if(showName==true) patient = new Patient(currentID, encryptedName.Decrypt(patientName,tableID), dataSets);
-                        else patient = new Patient(currentID, currentID, dataSets);
-                        patientList.Add(patient);
-                    }
-                    else patientExist = false;
-
-                    imageCollectionDS = new ObservableCollection<PatientImage>();
-                    imgDS = new ImageDataset(currentSeries, imageCollectionDS);
-                    dataSets.Add(imgDS);
-                }
-
-                else if (!currentSeries.Equals(prevSeries))
-                {
-                    imageCollectionDS = new ObservableCollection<PatientImage>();
-                    imgDS = new ImageDataset(currentSeries, imageCollectionDS);
-                    dataSets.Add(imgDS);
-                }
-
-                img.imgID = data.GetInt32(data.GetOrdinal("File ID"));
-                imageCollectionDS.Add(img);
-                
-                prevID = currentID;
-                prevSeries = currentSeries;
-            }
-
-            return patientList;
-        }
-
 
         public String retrieveImageProperties(String fileID)
         {
