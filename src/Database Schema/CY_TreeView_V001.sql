@@ -16,7 +16,7 @@ GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
 -- Create date: <23/11/2013>
--- Description:	<Retrieve id, image number to produce treeview>
+-- Description:	<Produce treeview for every patients (Patient ID/Name and Series Description)>
 -- =============================================
 CREATE PROCEDURE spr_TreeView_v001
 	-- Add the parameters for the stored procedure here
@@ -29,10 +29,9 @@ BEGIN
 
     -- Insert statements for procedure here
 	select p.patientID as 'Patient ID', n.patientName as 'Patient Name', 
-	n.patientID as 'Table ID', iv.seriesDescription as 'Series', i.fileID as 'File ID'
+	n.patientID as 'Table ID', iv.seriesDescription as 'Series', iv.seriesID as 'Series ID'
 	from patient p join name n on p.tableID = n.patientID
 	join imageProperties iv on p.tableID = iv.patientID 
-	join images i on iv.seriesID = i.seriesID 
 	order by iv.lastModifiedDate desc
 END
 GO

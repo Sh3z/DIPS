@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Database;
+using Database.Repository;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -81,7 +82,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     _isSelected = value;
                     OnPropertyChanged();
                     ImageViewModel = this;
-                    
+
                     if (ImageViewModel is TreeViewImageViewModel)
                     {
                         TreeViewImageViewModel tivm = (TreeViewImageViewModel) ImageViewModel;
@@ -114,35 +115,18 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         public void setImage(String fileID)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("spr_RetrieveImage_v001", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@fID", SqlDbType.VarChar).Value = fileID;
-                SqlDataReader dataReader = cmd.ExecuteReader();
+            SelectedImageRepository sir = new SelectedImageRepository();
+            byte[] image = sir.getUnprocessedImage(fileID);
+            sir.updateAlgorithmList(SelectedImage.UID);
 
-                dataReader.Read();
-                byte[] image = (byte[])dataReader.GetValue(dataReader.GetOrdinal("imageBlob"));
-                String UID = dataReader.GetString(dataReader.GetOrdinal("imageUID"));
-                dataReader.Close();
+            BitmapImage theBmp = ToImage(image);
+            BaseUnProcessedImage = theBmp;
+            SelectedImage.ImageNumberSelected = fileID;
 
-                BitmapImage theBmp = ToImage(image);
-                BaseUnProcessedImage = theBmp;
+            byte[] processed = SelectedImage.updateProcessedImage();
+            BitmapImage processedBmp = ToImage(processed);
+            BaseProcessedImage = processedBmp;
 
-
-                SqlCommand cmd2 = new SqlCommand("spr_RetrieveProcessedImage_v001", conn);
-                cmd2.CommandType = CommandType.StoredProcedure;
-                cmd2.Parameters.Add("@imageUID", SqlDbType.VarChar).Value = UID;
-                byte[] processed = (byte[]) cmd2.ExecuteScalar();
-
-                if (processed != null)
-                {
-                    BitmapImage processedBmp = ToImage(processed);
-
-                    BaseProcessedImage = processedBmp;
-                }
-            }
         }
 
         public BitmapImage ToImage(byte[] array)

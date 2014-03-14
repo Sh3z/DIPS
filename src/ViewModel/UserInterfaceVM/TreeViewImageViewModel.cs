@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DIPS.Database.Objects;
+using Database.Objects;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {

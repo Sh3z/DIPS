@@ -35,7 +35,7 @@ namespace DIPS.ViewModel
         }
         private static Frame _frame;
 
-        readonly public static ViewExistingDatasetViewModel _ViewExistingDatasetViewModel = new ViewExistingDatasetViewModel(null);
+        public static ViewExistingDatasetViewModel _ViewExistingDatasetViewModel;
         readonly public static LoadNewDsStep1ViewModel _LoadNewDsStep1ViewModel = new LoadNewDsStep1ViewModel();
         readonly public static AlgorithmBuilderViewModel _AlgorithmBuilderViewModel = new AlgorithmBuilderViewModel();
         readonly public static LoadNewDsStep2ViewModel _LoadNewDsStep2ViewModel = new LoadNewDsStep2ViewModel();
@@ -96,6 +96,11 @@ namespace DIPS.ViewModel
                 s.AddOptions( "Single", new SingleHandlerOptions() );
                 s.AddOptions( "Multiple", new MultiHandlerOptions() );
                 _PostProcessingViewModel = new PostProcessingViewModel( f, s );
+            }
+            if (_ViewExistingDatasetViewModel == null && _frame != null)
+            {
+                _ViewExistingDatasetViewModel = new ViewExistingDatasetViewModel(_frame);
+                _frame.Content = _ViewExistingDatasetViewModel;
             }
         } 
     }

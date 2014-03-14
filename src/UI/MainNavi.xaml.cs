@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using DIPS.UI.Pages;
 using DIPS.Processor.Client;
 using DIPS.ViewModel.UserInterfaceVM;
+using DIPS.ViewModel;
 
 namespace DIPS.UI
 {
@@ -25,25 +26,8 @@ namespace DIPS.UI
         public MainNavi()
         {
             InitializeComponent();
-            _main = new ViewExistingDatasetViewModel(this.MainNaviControl);
-            this.MainNaviControl.Content = _main;
-        }
-
-
-        /// <summary>
-        /// Gets or sets the <see cref="IProcessingService"/> connected to
-        /// the active DIPS processor.
-        /// </summary>
-        public IProcessingService Service
-        {
-            get
-            {
-                return _main.Service;
-            }
-            set
-            {
-                _main.Service = value;
-            }
+            BaseViewModel.OverallFrame = this.MainNaviControl;
+            //this.MainNaviControl.Content = _main;
         }
 
 

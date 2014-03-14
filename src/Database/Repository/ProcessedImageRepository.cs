@@ -57,6 +57,7 @@ namespace Database.Repository
                 conn.Open();
                 SqlCommand cmd = new SqlCommand( "spr_InsertProcessedImages_v001", conn );
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@processMethod", SqlDbType.VarChar).Value = "Gamma 0.0";
                 cmd.Parameters.Add( "@imageUID", SqlDbType.VarChar ).Value = identifier;
                 cmd.Parameters.Add( "@imageBlob", SqlDbType.VarBinary, blob.Length ).Value = blob;
                 cmd.ExecuteNonQuery();

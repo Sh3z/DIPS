@@ -1,4 +1,5 @@
-﻿using Database.Unity;
+﻿using Database.Connection;
+using Database.Unity;
 using DIPS.Processor;
 using DIPS.Processor.Client;
 using DIPS.UI;
@@ -33,6 +34,8 @@ namespace DIPS
         {
             base.OnStartup( e );
 
+            ValidateConnection.validateConnection();
+
             // Create the window and provide it with the presentation layer.
             ProcessingService s = new ProcessingService();
 
@@ -52,7 +55,6 @@ namespace DIPS
             c.RegisterInstance<IQueueDialog>(qd);
 
             MainNavi navWindow = new MainNavi();
-            navWindow.Service = s;
             try
             {
                 navWindow.ShowDialog();

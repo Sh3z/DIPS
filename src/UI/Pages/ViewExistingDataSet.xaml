@@ -111,6 +111,5 @@
             </Button.Template>
         </Button>
         <Image Source="pack://application:,,,/DIPS.UI;component/Resources/arrow_right.png" HorizontalAlignment="Left" Height="42" Margin="490,110,0,0" VerticalAlignment="Top" Width="42"/>
-        <Controls:infoBell SetText="All saved datasets are represented in the treeview below.  Filter results by clicking on the filter options button." HorizontalAlignment="Left" Height="37" Margin="226,12,0,0" VerticalAlignment="Top" Width="37"/>
     </Grid>
 </UserControl>
