@@ -20,7 +20,8 @@ GO
 -- =============================================
 CREATE PROCEDURE spr_RetrieveProcessedImage_v001
 	-- Add the parameters for the stored procedure here
-	@imageUID varchar(70)
+	@fileID int,
+	@processMethod varchar(100)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -28,6 +29,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select imageBlob from processedImages where imageUID = @imageUID
+	select PImg.imageBlob from processedImages Pimg
+	JOIN images Img on Pimg.imageUID = Img.imageUID
+	where Img.fileID = @fileID and PImg.processMethod = @processMethod
 END
 GO

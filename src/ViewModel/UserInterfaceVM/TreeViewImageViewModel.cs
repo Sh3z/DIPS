@@ -12,7 +12,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
     {
         private readonly PatientImage _image;
 
-        public TreeViewImageViewModel(PatientImage image, TreeViewTechniqueViewModel parent) : base(parent, true)
+        public TreeViewImageViewModel(PatientImage image, TreeViewImageDatasetViewModel parent) : base(parent, true)
         {
             _image = image;
         }
@@ -20,11 +20,6 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public int ImageName
         {
             get { return _image.imgID; }
-        }
-
-        public Boolean processed
-        {
-            get { return _image.processed; }
         }
 
     }

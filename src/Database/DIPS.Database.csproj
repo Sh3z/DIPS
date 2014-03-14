@@ -98,11 +98,10 @@
     <Compile Include="Dicom\InsertToDatabase.cs" />
     <Compile Include="DicomHelper\PatientID.cs" />
     <Compile Include="Dicom\Process.cs" />
+    <Compile Include="Objects\Algorithm.cs" />
     <Compile Include="Objects\Log.cs" />
-    <Compile Include="Objects\ProcessTechnique.cs" />
     <Compile Include="Repository\AdminRepository.cs" />
     <Compile Include="Repository\ConnectionRepository.cs" />
-    <Compile Include="Repository\DeleteRepository.cs" />
     <Compile Include="DIPSConnection.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -141,6 +140,8 @@
     <Compile Include="DicomHelper\verifyDicom.cs" />
     <Compile Include="Repository\ProcessedImageRepository.cs" />
     <Compile Include="Repository\ProcessRepository.cs" />
+    <Compile Include="Repository\SelectedImage.cs" />
+    <Compile Include="Repository\SelectedImageRepository.cs" />
     <Compile Include="Repository\TreeViewGenerator.cs" />
     <Compile Include="Unity\IFilterTreeView.cs" />
   </ItemGroup>

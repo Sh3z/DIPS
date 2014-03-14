@@ -26,8 +26,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         protected override void LoadChildren()
         {
-            foreach (ProcessTechnique technique in _imgDataset.relatedTechnique)
-                base.Children.Add(new TreeViewTechniqueViewModel(technique, this));
+            foreach (PatientImage image in _imgDataset.relatedImages)
+                base.Children.Add(new TreeViewImageViewModel(image, this));
         }
     }
 }

@@ -16,7 +16,6 @@ namespace Database.Connection
             Thread master = new Thread(new ThreadStart(openMasterConn));
             normal.Start();
             master.Start();
-            normal.Join();
         }
 
         private static void openConn()

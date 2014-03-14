@@ -15,15 +15,6 @@ namespace DIPS.Database.Objects
             this.imgID = id;
         }
 
-        private Boolean _processed = false;
-
-        public Boolean processed
-        {
-            get { return _processed; }
-            set { _processed = value; }
-        }
-        
-
         private int _imgID;
 
         public int imgID

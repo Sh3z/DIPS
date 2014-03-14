@@ -74,19 +74,21 @@ namespace Database.Repository
 
         private void ImageSetCollection(ImageDataset dataSet)
         {
-            ObservableCollection<ProcessTechnique> techniqueCollection = new ObservableCollection<ProcessTechnique>();
-            dataSet.relatedTechnique = techniqueCollection;
+            ObservableCollection<PatientImage> imageCollection = new ObservableCollection<PatientImage>();
+            dataSet.relatedImages = imageCollection;
 
-            SqlCommand cmd = new SqlCommand("spr_UnprocessSubTreeView_v001", conn);
+            SqlCommand cmd = new SqlCommand("spr_SubTreeView_v001", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@seriesID", SqlDbType.Int).Value = dataSet.seriesID;
             SqlDataReader data = cmd.ExecuteReader();
-            if (data.HasRows)
+
+            while (data.Read())
             {
-                techniqueCollection.Add(UnprocessedCollection(data));
+                PatientImage image = new PatientImage(data.GetInt32(data.GetOrdinal("fileID")));
+                imageCollection.Add(image);
             }
             data.Close();
-
+            /*
             SqlCommand cmd2 = new SqlCommand("spr_RetreiveTechniqueUsed_v001", conn);
             cmd2.CommandType = CommandType.StoredProcedure;
             cmd2.Parameters.Add("@seriesID", SqlDbType.Int).Value = dataSet.seriesID;
@@ -99,41 +101,7 @@ namespace Database.Repository
             foreach(String technique in algoList)
             {
                 techniqueCollection.Add(ProcessedCollection(technique));
-            }
-        }
-
-        private ProcessTechnique UnprocessedCollection(SqlDataReader data)
-        {
-            ObservableCollection<PatientImage> imageCollection = new ObservableCollection<PatientImage>();
-
-            while (data.Read())
-            {
-                PatientImage image = new PatientImage(data.GetInt32(data.GetOrdinal("fileID")));
-                imageCollection.Add(image);
-            }
-            data.Close();
-            ProcessTechnique technique = new ProcessTechnique("Original", imageCollection);
-            return technique;
-        }
-
-        private ProcessTechnique ProcessedCollection(String techniqueName)
-        {
-            SqlCommand cmd3 = new SqlCommand("spr_ProcessSubTreeView_v001", conn);
-            cmd3.CommandType = CommandType.StoredProcedure;
-            cmd3.Parameters.Add("@method", SqlDbType.VarChar).Value = techniqueName;
-            SqlDataReader data3 = cmd3.ExecuteReader();
-
-            ObservableCollection<PatientImage> imageCollection = new ObservableCollection<PatientImage>();
-
-            while (data3.Read())
-            {
-                PatientImage image = new PatientImage(data3.GetInt32(data3.GetOrdinal("fileID")));
-                image.processed = true;
-                imageCollection.Add(image);
-            }
-            data3.Close();
-            ProcessTechnique technique = new ProcessTechnique(techniqueName, imageCollection);
-            return technique;
+            }*/
         }
     }
 }

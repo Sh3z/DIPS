@@ -26,19 +26,19 @@ namespace DIPS.Database.Objects
             set { _series = value; }
         }
 
-        private ObservableCollection<ProcessTechnique> _relatedTechnique;
+        private ObservableCollection<PatientImage> _relatedImages;
 
-        public ObservableCollection<ProcessTechnique> relatedTechnique
+        public ObservableCollection<PatientImage> relatedImages
         {
-            get { return _relatedTechnique; }
-            set { _relatedTechnique = value; }
+            get { return _relatedImages; }
+            set { _relatedImages = value; }
         }
 
-        public ImageDataset(int seriesID, string dsSeries, ObservableCollection<ProcessTechnique> techniques)
+        public ImageDataset(int seriesID, string dsSeries, ObservableCollection<PatientImage> images)
         {
             this.seriesID = seriesID;
             this.series = dsSeries;
-            this.relatedTechnique = techniques;
+            this.relatedImages = images;
         }
 
         public ImageDataset()

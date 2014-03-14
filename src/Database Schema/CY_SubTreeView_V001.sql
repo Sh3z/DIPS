@@ -16,9 +16,9 @@ GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
 -- Create date: <13/03/2013>
--- Description:	<Produce Sub Tree (Unprocessed Images and File ID) Using Series ID>
+-- Description:	<Produce Sub Tree (Images and File ID) Using Series ID>
 -- =============================================
-CREATE PROCEDURE spr_UnprocessSubTreeView_v001
+CREATE PROCEDURE spr_SubTreeView_v001
 	-- Add the parameters for the stored procedure here
 	@seriesID int
 AS
@@ -29,6 +29,5 @@ BEGIN
 
     -- Insert statements for procedure here
 	SELECT fileID FROM images WHERE seriesID = @seriesID
-	AND imageUID NOT IN (SELECT imageUID FROM processedImages)
 END
 GO

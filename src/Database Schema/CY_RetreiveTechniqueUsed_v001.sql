@@ -20,7 +20,7 @@ GO
 -- =============================================
 CREATE PROCEDURE spr_RetreiveTechniqueUsed_v001
 	-- Add the parameters for the stored procedure here
-	@seriesID int
+	@imageUID varchar(70)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -29,8 +29,6 @@ BEGIN
 
     -- Insert statements for procedure here
 	SELECT DISTINCT(processMethod) AS 'Algorithm' 
-	FROM processedImages PImg
-	JOIN images Img ON PImg.imageUID = Img.imageUID
-	WHERE Img.seriesID = @seriesID
+	FROM processedImages WHERE imageUID = @imageUID
 END
 GO

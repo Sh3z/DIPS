@@ -164,7 +164,6 @@
     <Compile Include="UserInterfaceVM\TreeViewImageViewModel.cs" />
     <Compile Include="UserInterfaceVM\TreeViewItemViewModel.cs" />
     <Compile Include="UserInterfaceVM\TreeViewPatientViewModel.cs" />
-    <Compile Include="UserInterfaceVM\TreeViewTechniqueViewModel.cs" />
     <Compile Include="UserInterfaceVM\ViewAlgorithmViewModel.cs" />
     <Compile Include="UserInterfaceVM\ViewExistingDatasetViewModel.cs" />
     <Compile Include="UserInterfaceVM\ViewModelLocator.cs" />
