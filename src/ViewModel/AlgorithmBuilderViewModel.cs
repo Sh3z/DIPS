@@ -36,12 +36,12 @@ namespace DIPS.ViewModel
             SavePipelineDatabase = new PersistPipelineDatabaseCommand( this );
 
             FinishButtonCommand = new RelayCommand( new Action<object>( ProgressToMainOrStep2 ) );
-            ClearSelectedAlgorithmsCommand = new RelayCommand( new Action<object>( ClearSelectedCommand ) );
+            _clearSelectedAlgorithms = new RelayCommand( new Action<object>( ClearSelectedCommand ), _canClearSelectedAlgorithms );
 
             SelectedProcesses.CollectionChanged += _chosenProcessesCollectionChanged;
         }
 
-
+        
 
 
         /// <summary>
@@ -160,7 +160,16 @@ namespace DIPS.ViewModel
 
         public Boolean FromLoadStep2 { get; set; }
         public ICommand FinishButtonCommand { get; set; }
-        public ICommand ClearSelectedAlgorithmsCommand { get; set; }
+
+        public ICommand ClearSelectedAlgorithmsCommand
+        {
+            get
+            {
+                return _clearSelectedAlgorithms;
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private RelayCommand _clearSelectedAlgorithms;
 
         void IDropTarget.DragOver( IDropInfo dropInfo )
         {
@@ -216,6 +225,11 @@ namespace DIPS.ViewModel
             SelectedProcesses.Clear();
         }
 
+        private bool _canClearSelectedAlgorithms( object parameter )
+        {
+            return SelectedProcesses.Any();
+        }
+
         /// <summary>
         /// Occurs when the selected processes collection is modified
         /// </summary>
@@ -223,6 +237,7 @@ namespace DIPS.ViewModel
         /// <param name="e">Event information</param>
         private void _chosenProcessesCollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
+            _clearSelectedAlgorithms.ExecutableStateChanged();
             switch( e.Action )
             {
                 case NotifyCollectionChangedAction.Add:
