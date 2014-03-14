@@ -5,57 +5,84 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
-      mc:Ignorable="d"
-	Height="438.09" Width="961.478">
+      mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="200">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Resources.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/DIPS.UI.CustomControls;component/Resources/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="GroupBox">
+                <Setter Property="Margin" Value="3" />
+            </Style>
+            <Style TargetType="ListView">
+                <Setter Property="Margin" Value="3" />
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
-        <Label x:Name="lblName" Content="Algorithm Name:" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontSize="16">
-        </Label>
-        <TextBox HorizontalAlignment="Left" Height="27" Margin="150,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="172"
-                 Text="{Binding Path=PipelineName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-        <GroupBox Header="Image Processing Techniques" HorizontalAlignment="Left" Height="315" Margin="27,113,0,0" VerticalAlignment="Top" Width="295" FontSize="16">
-            <ScrollViewer>
-                <ListView
-                    ItemsSource="{Binding Path=AvailableAlgorithms}"
-                    Background="LightGray"
-                    ItemContainerStyle="{StaticResource AlgorithmItemStyle}"
-                    dd:DragDrop.IsDragSource="True"
-                    dd:DragDrop.IsDropTarget="False" FontSize="12" />
-            </ScrollViewer>
-        </GroupBox>
-        <GroupBox Header="Algorithm" Margin="412,113,0,0" VerticalAlignment="Top" Height="315" HorizontalAlignment="Left" Width="303" FontSize="16">
-            <ScrollViewer>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Text="Algorithm Builder" HorizontalAlignment="Center">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource MediumTextBlockFont}">
+                    <Setter Property="Margin" Value="5" />
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Content="Save to XML..." Command="{Binding Path=SavePipeline}" />
+            <Button Content="Save to Database..." Command="{Binding Path=SavePipelineDatabase}" />
+        </StackPanel>
+        <Button Grid.Row="0" HorizontalAlignment="Left" Content="Load..."
+                Command="{Binding Path=LoadPipeline}" />
+        <DockPanel Grid.Row="1" HorizontalAlignment="Center" LastChildFill="False">
+            <TextBlock Text="Algorithm Name" VerticalAlignment="Center" Margin="3" />
+            <TextBox MinWidth="166" Margin="3" Text="{Binding Path=PipelineName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </DockPanel>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Header="Available Processing Techniques">
+                <ListView ItemsSource="{Binding Path=AvailableAlgorithms}"
+                          ItemContainerStyle="{StaticResource AlgorithmItemStyle}"
+                          dd:DragDrop.IsDragSource="True"
+                          dd:DragDrop.IsDropTarget="False" />
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="Algorithm">
                 <ListView
                     ItemsSource="{Binding Path=SelectedProcesses, Mode=TwoWay}"
                     SelectedItem="{Binding Path=SelectedAlgorithm, Mode=TwoWay}"
-                    Background="Lavender"
                     ItemContainerStyle="{StaticResource AlgorithmItemStyle}"
                     dd:DragDrop.IsDragSource="True"
                     dd:DragDrop.IsDropTarget="True"
-                    dd:DragDrop.DropHandler="{Binding}"
-                    FontSize="12" Height="319" />
-            </ScrollViewer>
-
-        </GroupBox>
-        <xctk:PropertyGrid Margin="735,141,10,79" IsManipulationEnabled="True"
-                           SelectedObject="{Binding Path=SelectedAlgorithm.ParameterObject}"/>
-        <Button Command="{Binding SavePipelineDatabase}"  Content="Save to Database" HorizontalAlignment="Left" Margin="776,64,0,0" VerticalAlignment="Top" Width="154" FontSize="16"/>
-        <Label Content="Algorithm Builder
-               " HorizontalAlignment="Left" VerticalAlignment="Top" Width="181" Height="42" FontSize="22" Margin="430,0,0,0"/>
-        <Button Visibility="{Binding GoBackButtonState}" Command="{Binding FinishButtonCommand}" Content="Go Back" HorizontalAlignment="Left" Margin="803,369,0,0" VerticalAlignment="Top" Width="87" Height="59" FontSize="16"/>
-        <Button Command="{Binding ClearSelectedAlgorithmsCommand}" Content="Clear Selected Algorithms" HorizontalAlignment="Left" Margin="479,64,0,0" VerticalAlignment="Top" Width="188" FontSize="16"/>
-        <Button Command="{Binding LoadPipeline}"  Content="Load from XML file" HorizontalAlignment="Left" Margin="776,96,0,0" VerticalAlignment="Top" Width="154" FontSize="16"/>
-        <Button Command="{Binding SavePipeline}"  Content="Save as XML file" HorizontalAlignment="Left" Margin="776,32,0,0" VerticalAlignment="Top" Width="154" FontSize="16"/>
-        <Label Content="Algorithm ID:" HorizontalAlignment="Left" Margin="37,43,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox Text="{Binding PipelineID}" HorizontalAlignment="Left" Height="23" Margin="150,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47" IsEnabled="False"/>
+                    dd:DragDrop.DropHandler="{Binding}" />
+            </GroupBox>
+            <DockPanel Grid.Column="1" Grid.Row="1" LastChildFill="False">
+                <Button DockPanel.Dock="Right" Content="Clear"
+                        Command="{Binding Path=ClearSelectedAlgorithmsCommand}" />
+            </DockPanel>
+            <xctk:PropertyGrid Grid.Column="2" IsManipulationEnabled="True"
+                               SelectedObject="{Binding Path=SelectedAlgorithm.ParameterObject}" />
+        </Grid>
+        <DockPanel Grid.Row="3" LastChildFill="False">
+            <Button DockPanel.Dock="Right" Content="Go Back"
+                    Visibility="{Binding GoBackButtonState}"
+                    Command="{Binding FinishButtonCommand}" />
+        </DockPanel>
     </Grid>
 </UserControl>
