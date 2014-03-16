@@ -40,10 +40,10 @@ namespace Database.Repository
             if (ConnectionManager.ValidConnection == true)
             {
                 try
-                {
-                    _saveImage(blob, identifier);
+                {      
                     ProcessRepository repo = new ProcessRepository();
                     repo.processDicom(file.FullName);
+                    _saveImage(blob, identifier);
                 }
                 catch { }
             }

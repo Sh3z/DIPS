@@ -23,18 +23,18 @@ studyDescription varchar(50),
 seriesDescription varchar(50),
 sliceThickness varchar(20)
 );
-create table processedImages(
-fileID int identity PRIMARY KEY,
-processMethod varchar(100),
-imageUID varchar(70),
-imageBlob varbinary(MAX)
-);
 create table images(
 fileID int identity PRIMARY KEY,
 seriesID int FOREIGN KEY REFERENCES imageProperties(seriesID),
-imageUID varchar(70) FOREIGN KEY REFERENCES processedImages(imageUID),
+imageUID varchar(70) UNIQUE,
 imageNumber varchar(5),
 imageBlob varbinary(MAX),
+);
+create table processedImages(
+fileID int identity PRIMARY KEY,
+imageUID varchar(70) FOREIGN KEY REFERENCES images(imageUID),
+processMethod varchar(100),
+imageBlob varbinary(MAX)
 );
 create table timeLog(
 logID int identity PRIMARY KEY,
@@ -70,10 +70,10 @@ select backup_size from msdb..backupset;
 select compressed_backup_size from msdb..backupset;
 
 BACKUP DATABASE medicalImaging
-TO DISK = 'C:\Users\Joseph\Documents\Backup\Test.BAK'
+TO DISK = 'C:\Users\Joseph\Documents\Backup\Test2.BAK'
 
 DROP DATABASE medicalImaging;
 
 RESTORE DATABASE medicalImaging
-FROM DISK = 'C:\Users\Public\Documents\Backup\Test.BAK'
+FROM DISK = 'C:\Users\Joseph\Documents\Backup\Test2.BAK'
 WITH STATS = 1
