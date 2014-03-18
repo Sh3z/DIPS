@@ -79,6 +79,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
         #region Constructor
         public TreeViewFilterViewModel()
         {
+            DateFrom = DateTime.Today.AddYears(-2);
+            DateTo = DateTime.Today;
             ConfigureCommands();
             SendParameters();
         }

@@ -39,8 +39,10 @@ BEGIN
     -- Insert statements for procedure here
 	select ISNULL(p.tableID,'') as 'Patient ID', ISNULL(ip.modality,'') as 'Modality',
 	ISNULL(ip.bodyPart,'') as 'Body Parts', ISNULL(ip.studyDescription,'') as 'Study Description',
-	ISNULL(ip.seriesDescription,'') as 'Series Description', ISNULL(ip.seriesID,'') as 'Series ID'
-	from patient p inner join imageProperties ip on p.tableID = ip.patientID 
+	ISNULL(ip.seriesDescription,'') as 'Series Description', ISNULL(ip.seriesID,'') as 'Series ID',
+	ISNULL(n.patientName,'') as 'Patient Name'
+	from patient p inner join name n on p.tableID = n.patientID
+	join imageProperties ip on p.tableID = ip.patientID
 	where (p.birthdate IS NULL OR p.birthdate = @birthdate) 
 	and (p.age IS NULL OR p.age = @age)
 	and (p.sex IS NULL OR p.sex = @sex)

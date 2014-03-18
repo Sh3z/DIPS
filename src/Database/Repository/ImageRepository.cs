@@ -46,7 +46,6 @@ namespace Database
 
         public ObservableCollection<Patient> generateCustomTreeView(Filter filter, Boolean showName)
         {
-            Technique t = new Technique();
             ObservableCollection<Patient> allDatasetsActive = null;
             int dateCompareResultFrom = 0;
             int dateCompareResultTo = 0;
@@ -116,10 +115,6 @@ namespace Database
                     properties += System.Environment.NewLine;
                     properties += "Sex : " + dataReader.GetString(dataReader.GetOrdinal("Sex"));
                     properties += System.Environment.NewLine;
-                    properties += "DICOM Acquisition Date : " + dataReader.GetDateTime(dataReader.GetOrdinal("Image Date Time")).ToString();
-                    properties += System.Environment.NewLine;
-                    properties += "Last Modified Date : " + dataReader.GetDateTime(dataReader.GetOrdinal("Modified Date")).ToString();
-                    properties += System.Environment.NewLine;
                     properties += "Body Part : " + dataReader.GetString(dataReader.GetOrdinal("Body Part"));
                     properties += System.Environment.NewLine;
                     properties += "Slice Thickness : " + dataReader.GetString(dataReader.GetOrdinal("Slice Thickness"));
@@ -127,12 +122,6 @@ namespace Database
                     properties += "Study Description : " + dataReader.GetString(dataReader.GetOrdinal("Study Description"));
                     properties += System.Environment.NewLine;
                     properties += "Series Description : " + dataReader.GetString(dataReader.GetOrdinal("Series Description"));
-                    properties += System.Environment.NewLine;
-                    properties += "Study Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Study UID"));
-                    properties += System.Environment.NewLine;
-                    properties += "Series Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Series UID"));
-                    properties += System.Environment.NewLine;
-                    properties += "SOP Instance UID : " + dataReader.GetString(dataReader.GetOrdinal("Image UID"));
                     properties += System.Environment.NewLine;
                     dataReader.Close();
                 }

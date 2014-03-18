@@ -39,29 +39,34 @@ namespace Database.Repository
 
             if (ConnectionManager.ValidConnection == true)
             {
-                try
-                {      
-                    ProcessRepository repo = new ProcessRepository();
-                    repo.processDicom(file.FullName);
-                    _saveImage(blob, identifier);
-                }
-                catch { }
+                ProcessRepository repo = new ProcessRepository();
+                repo.processDicom(file.FullName);
+                _saveImage(blob, identifier);
             }
         }
 
 
         private void _saveImage( byte[] blob, String identifier )
         {
-            using( SqlConnection conn = new SqlConnection( ConnectionManager.getConnection ) )
+            try
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand( "spr_InsertProcessedImages_v001", conn );
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@processMethod", SqlDbType.VarChar).Value = "Gamma 0.0";
-                cmd.Parameters.Add( "@imageUID", SqlDbType.VarChar ).Value = identifier;
-                cmd.Parameters.Add( "@imageBlob", SqlDbType.VarBinary, blob.Length ).Value = blob;
-                cmd.ExecuteNonQuery();
+                int seriesID = 0;
+                using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("spr_InsertProcessedImages_v001", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@processMethod", SqlDbType.VarChar).Value = Log.ProcessName;
+                    cmd.Parameters.Add("@imageUID", SqlDbType.VarChar).Value = identifier;
+                    cmd.Parameters.Add("@imageBlob", SqlDbType.VarBinary, blob.Length).Value = blob;
+                    seriesID = (Int32)cmd.ExecuteScalar();
+                }
+
+                //update series "Last Modified Date" column
+                DAOLog log = new DAOLog();
+                log.update(seriesID);
             }
+            catch { }
         }
     }
 }

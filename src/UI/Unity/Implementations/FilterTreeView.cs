@@ -74,15 +74,20 @@ namespace DIPS.UI.Unity.Implementations
             OverallFilter.Modality = Modality;
             OverallFilter.Batch = Batch;
 
-            if (DateFrom != DateTime.MinValue)
-            {
-                OverallFilter.AcquisitionDateFrom = DateFrom;
-            }
+            string date = "01/01/1753";
+            DateTime minDate = Convert.ToDateTime(date);   
 
-            if (DateTo != DateTime.MinValue)
+            if (DateFrom < minDate)
             {
-                OverallFilter.AcquisitionDateTo = DateTo;
+                OverallFilter.AcquisitionDateFrom = minDate;
             }
+            else OverallFilter.AcquisitionDateFrom = DateFrom;
+
+            if (DateTo > DateTime.Today)
+            {
+                OverallFilter.AcquisitionDateTo = DateTime.Today.AddDays(1);
+            }
+            else OverallFilter.AcquisitionDateTo = DateTo.AddDays(1);
 
             if (IsFemale == true)
             {

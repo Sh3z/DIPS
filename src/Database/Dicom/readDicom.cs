@@ -56,11 +56,6 @@ namespace DIPS.Database
             dicom.studyDesc = dff.Dataset.GetValueString(DicomTags.StudyDescription);
             dicom.seriesDesc = dff.Dataset.GetValueString(DicomTags.SeriesDescription);
             dicom.sliceThickness = dff.Dataset.GetValueString(DicomTags.SliceThickness);
-
-            if (dff.Dataset.GetValueString(DicomTags.AcquisitionDate) == "") dateNull = true;
-            if (dff.Dataset.GetValueString(DicomTags.AcquisitionTime) == "") timeNull = true;
-            date = dff.Dataset.GetDA(DicomTags.AcquisitionDate);
-            time = dff.Dataset.GetTM(DicomTags.AcquisitionTime);
         }
 
         private void nullCheck(DicomInfo dicom)
@@ -79,17 +74,6 @@ namespace DIPS.Database
                     Console.WriteLine(e);
                     dicom.patientName = pName;
                 }
-            }
-
-            if (dateNull == true && timeNull == true)
-            {
-                DateTime dt = DateTime.MinValue;
-                dicom.imgDateTime = dt.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-            else
-            {
-                System.DateTime imgDateTime = date.GetDateTime().Date + time.GetDateTime().TimeOfDay;
-                dicom.imgDateTime = imgDateTime.ToString("yyyy-MM-dd HH:mm:ss");
             }
 
             if (dicom.studyUID == null) dicom.studyUID = String.Empty;
