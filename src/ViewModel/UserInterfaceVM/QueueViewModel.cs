@@ -43,6 +43,12 @@ namespace DIPS.ViewModel.UserInterfaceVM
             Entries = new ObservableCollection<JobViewModel>();
             IsPresentingQueued = false;
             CurrentJob = _tracker.Current;
+
+            if (PostProcessAction == null)
+            {
+                PostProcessAction = new ComboBoxItem();
+                PostProcessAction.Content = "Nothing";
+            }
         }
 
 
