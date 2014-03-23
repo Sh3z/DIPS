@@ -63,6 +63,7 @@
     <Compile Include="ServiceDialog.xaml.cs">
       <DependentUpon>ServiceDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VM\ServiceViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -74,6 +75,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Resources\Resources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ServiceDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -92,11 +97,12 @@
       <Project>{aa521185-aa1a-4461-810c-b0bf60063136}</Project>
       <Name>DIPS.ViewModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Client\DIPS.Processor.Client.csproj">
+      <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
+      <Name>DIPS.Processor.Client</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-    <Folder Include="VM\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,5 @@
 ﻿using DIPS.UI.Service;
+using DIPS.UI.Service.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,8 @@ namespace DIPS.Processor.Service
                 {
                     // Launch the processor with the GUI
                     ServiceDialog dialog = new ServiceDialog();
+                    ServiceViewModel vm = new ServiceViewModel( InternalService.Service );
+                    dialog.DataContext = vm;
                     dialog.ShowDialog();
                 }
             }
@@ -55,23 +58,18 @@ namespace DIPS.Processor.Service
         /// Launches the DIPS processor as a Windows service.
         /// </summary>
         /// <returns>true if the service is deployed</returns>
-        private static bool _launchWindowsService()
+        private static void _launchWindowsService()
         {
             try
             {
-                if( Environment.UserInteractive )
-                {
-                    return false;
-                }
-                else
+                if( Environment.UserInteractive == false )
                 {
                     _runWindowsService();
-                    return true;
                 }
             }
             catch
             {
-                return false;
+                // Todo logging
             }
         }
 
