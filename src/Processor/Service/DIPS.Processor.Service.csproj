@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B3574B49-8C3C-4CD8-929C-1F767656B4EB}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{F7304DE8-237B-47A7-8C62-FED1497662AF}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DIPS.Processor.Client</RootNamespace>
-    <AssemblyName>DIPS.Processor.Client</AssemblyName>
+    <RootNamespace>DIPS.Processor.Service</RootNamespace>
+    <AssemblyName>DIPS.Processor.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>$(FEMOREBIN)\Release\</OutputPath>
@@ -30,58 +32,49 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgorithmDefinition.cs" />
-    <Compile Include="Eventing\InputProcessedArgs.cs" />
-    <Compile Include="Eventing\JobErrorArgs.cs" />
-    <Compile Include="IDIPS.cs" />
-    <Compile Include="IJobManager.cs" />
-    <Compile Include="IJobTicket.cs" />
-    <Compile Include="IPipelineManager.cs" />
-    <Compile Include="IProcessedImage.cs" />
-    <Compile Include="IProcessingService.cs" />
-    <Compile Include="ISynchronousProcessor.cs" />
-    <Compile Include="JobDeployment\IJobDefinition.cs" />
-    <Compile Include="JobDeployment\JobInput.cs" />
-    <Compile Include="JobRequest.cs" />
-    <Compile Include="JobDeployment\ObjectJobDefinition.cs" />
-    <Compile Include="JobDeployment\XmlJobDefinition.cs" />
-    <Compile Include="JobResult.cs" />
-    <Compile Include="JobState.cs" />
-    <Compile Include="Pipeline.cs" />
-    <Compile Include="ProcessedImageIdentifierComparer.cs" />
-    <Compile Include="ProcessedImageSet.cs" />
+    <Compile Include="InternalService.cs" />
+    <Compile Include="ProcessingWindowsService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProcessingWindowsService.Designer.cs">
+      <DependentUpon>ProcessingWindowsService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Property.cs" />
-    <Compile Include="PropertyBuilder.cs" />
-    <Compile Include="PropertySet.cs" />
-    <Compile Include="PropertyTypeException.cs" />
-    <Compile Include="Sinks\TicketSink.cs" />
+    <Compile Include="TCPAssistant.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Compression\DIPS.Util.csproj">
-      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
-      <Name>DIPS.Util</Name>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Client\DIPS.Processor.Client.csproj">
+      <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
+      <Name>DIPS.Processor.Client</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\DIPS.Processor.csproj">
+      <Project>{bbc18fc7-4ed1-4a6a-8e1b-e05035ff85d8}</Project>
+      <Name>DIPS.Processor</Name>
+    </ProjectReference>
+    <ProjectReference Include="UI\DIPS.UI.Service.csproj">
+      <Project>{06876cd4-6eeb-4b67-900a-2147f9dc9dbf}</Project>
+      <Name>DIPS.UI.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

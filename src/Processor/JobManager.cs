@@ -11,6 +11,7 @@ namespace DIPS.Processor
     /// <summary>
     /// Provides management of jobs within a service instance.
     /// </summary>
+    [Serializable]
     public class JobManager : IJobManager
     {
         /// <summary>

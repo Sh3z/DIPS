@@ -17,6 +17,7 @@ namespace DIPS.Processor.Pipeline
     /// <summary>
     /// Represents the pipeline management module of the server.
     /// </summary>
+    [Serializable]
     public class PipelineManager : IPipelineManager
     {
         /// <summary>

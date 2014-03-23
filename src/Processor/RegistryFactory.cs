@@ -13,6 +13,7 @@ namespace DIPS.Processor
     /// Represents the plugin factory used to manufacture plugins using the
     /// types loaded from the registry.
     /// </summary>
+    [Serializable]
     public class RegistryFactory : IPluginFactory
     {
         /// <summary>

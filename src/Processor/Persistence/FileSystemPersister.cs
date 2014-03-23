@@ -13,6 +13,7 @@ namespace DIPS.Processor.Persistence
     /// Represents the job persister used to save jobs to the Windows
     /// filesystem.
     /// </summary>
+    [Serializable]
     public class FileSystemPersister : IJobPersister
     {
         /// <summary>

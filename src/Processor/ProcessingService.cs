@@ -18,6 +18,7 @@ namespace DIPS.Processor
     /// <summary>
     /// Represents an instance of the processing service used by DIPS.
     /// </summary>
+    [Serializable]
     public class ProcessingService : IProcessingService
     {
         /// <summary>
