@@ -72,6 +72,7 @@
     <Compile Include="PropertyBuilder.cs" />
     <Compile Include="PropertySet.cs" />
     <Compile Include="PropertyTypeException.cs" />
+    <Compile Include="ServiceHelper.cs" />
     <Compile Include="Sinks\TicketSink.cs" />
   </ItemGroup>
   <ItemGroup>

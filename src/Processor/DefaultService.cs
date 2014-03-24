@@ -3,41 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Tcp;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIPS.Processor.Service
+namespace DIPS.Processor
 {
     /// <summary>
-    /// Represents the real DIPS processing service. This can be used by various
-    /// implementations of the running service.
+    /// Represents a default <see cref="IDIPS"/> service ran locally.
     /// </summary>
-    [Serializable]
-    internal class InternalService : MarshalByRefObject, IDIPS
+    public class DefaultService : MarshalByRefObject, IDIPS
     {
-        /// <summary>
-        /// Singleton constructor.
-        /// </summary>
-        static InternalService()
-        {
-            _service = new InternalService();
-        }
-
-        /// <summary>
-        /// Singleton instance accessor.
-        /// </summary>
-        public static InternalService Service
-        {
-            get
-            {
-                return _service;
-            }
-        }
-        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
-        private static InternalService _service;
-
         /// <summary>
         /// Gets a value indicating whether the service has been initialized.
         /// </summary>
@@ -45,14 +20,14 @@ namespace DIPS.Processor.Service
         {
             get
             {
-                lock( _service )
+                lock( this )
                 {
                     return _initialized;
                 }
             }
             private set
             {
-                lock( _service )
+                lock( this )
                 {
                     _initialized = value;
                 }
@@ -75,14 +50,14 @@ namespace DIPS.Processor.Service
         /// </summary>
         public void Start()
         {
-            lock( _service )
+            lock( this )
             {
-                if( _service.Initialized )
+                if( Initialized )
                 {
                     return;
                 }
 
-                _service.Processor = new ProcessingService();
+                Processor = new ProcessingService();
             }
         }
 
@@ -91,7 +66,7 @@ namespace DIPS.Processor.Service
         /// </summary>
         public void Stop()
         {
-            
+
         }
     }
 }
