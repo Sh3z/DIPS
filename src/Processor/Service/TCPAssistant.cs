@@ -29,15 +29,16 @@ namespace DIPS.Processor.Service
         /// <summary>
         /// Registers the provided service to the DIPS port.
         /// </summary>
-        /// <param name="service">The <see cref="InternalService"/> to register
+        /// <param name="service">The <see cref="IDIPS"/> to register
         /// to a particular port.</param>
-        public static void Register( InternalService service )
+        public static void Register( IDIPS service )
         {
             TcpChannel channel = new TcpChannel( Port );
             channel.StartListening( null );
             ChannelServices.RegisterChannel( channel, true );
             WellKnownServiceTypeEntry obj = new WellKnownServiceTypeEntry(
-                typeof( InternalService ), "DIPS/Service", WellKnownObjectMode.Singleton );
+                typeof( IDIPS ), "DIPS/Service", WellKnownObjectMode.Singleton );
+            RemotingConfiguration.RegisterWellKnownServiceType( obj );
         }
     }
 }
