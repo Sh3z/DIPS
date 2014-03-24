@@ -57,8 +57,8 @@ BEGIN
 	WHERE (sex = @Sex OR @Sex IS NULL)
 		and (@IDContains IS NULL OR P.patientID like CONCAT('%',@IDContains,'%'))
 		and (modality = @modality OR @modality IS NULL)
-		and imageAcquisitionDate between @AcquireBetweenFrom and @AcquireBetweenTo
-		and lastModifiedDate between @BatchTime and current_timestamp
+		and creationDate between @AcquireBetweenFrom and @AcquireBetweenTo
+		and creationDate between @BatchTime and current_timestamp
 	ORDER BY IP.lastModifiedDate DESC
 
 END

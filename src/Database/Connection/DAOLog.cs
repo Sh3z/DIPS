@@ -30,6 +30,7 @@ namespace Database.Connection
 
         public void update(int series)
         {
+            Log.NeedUpdate = false;
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();

@@ -15,12 +15,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <25/02/2013>
--- Description:	<Retrieve Image Info by specific SOPInstanceUID>
+-- Create date: <18/03/2013>
+-- Description:	<Check Image Exist By Matching DICOM SOP Instance UID>
 -- =============================================
-CREATE PROCEDURE spr_RetrieveImageInfo_v001
+CREATE PROCEDURE spr_CheckSOPUIDExist_v001
 	-- Add the parameters for the stored procedure here
-	@identifier varchar(70)
+	@sopUID varchar(70)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -28,7 +28,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select seriesID, imageNumber from images where imageUID = @identifier
-
+	SELECT COUNT(fileID) FROM images WHERE imageUID = @sopUID;
 END
 GO

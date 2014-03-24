@@ -16,7 +16,7 @@ seriesID int identity PRIMARY KEY,
 patientID int FOREIGN KEY REFERENCES patient(tableID),
 seriesUID varchar(70),
 modality varchar(15),
-imageAcquisitionDate datetime,
+creationDate datetime default current_timestamp,
 lastModifiedDate datetime default current_timestamp,
 bodyPart varchar(20),
 studyDescription varchar(50),
@@ -54,8 +54,8 @@ select * from processedImages;
 select * from timeLog;
 
 drop table timeLog;
-drop table images;
 drop table processedImages;
+drop table images;
 drop table imageProperties;
 drop table name;
 drop table patient;

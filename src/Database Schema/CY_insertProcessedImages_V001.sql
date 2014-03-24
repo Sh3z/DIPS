@@ -32,7 +32,12 @@ BEGIN
 	IF @imageUID = ''
 		SET @imageUID = NULL
 
+	DECLARE @series int
+	SET @series = (SELECT seriesID FROM images WHERE imageUID = @imageUID)
+
     -- Insert statements for procedure here
-	INSERT INTO processedImages (processMethod, imageUID,imageBlob) VALUES (@processMethod, @imageUID,@imageBlob)
+	INSERT INTO processedImages (processMethod, imageUID,imageBlob)
+	OUTPUT @series 
+	VALUES (@processMethod, @imageUID,@imageBlob)
 END
 GO

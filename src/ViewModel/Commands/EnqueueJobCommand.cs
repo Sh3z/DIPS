@@ -163,7 +163,6 @@ namespace DIPS.ViewModel.Commands
 
                 }
             }
-            log.finish();
             return jobs;
         }
 

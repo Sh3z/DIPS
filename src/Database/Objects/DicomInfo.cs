@@ -25,7 +25,6 @@ namespace DIPS.Database
         private String _age = "";
         private String _imgNumber = "";
         private String _modality = "";
-        private String _imgDateTime = "";
         private String _bodyPart = "";
         private String _studyDesc = "";
         private String _seriesDesc = "";
@@ -127,12 +126,6 @@ namespace DIPS.Database
         {
             get { return _modality; }
             set { _modality = value; }
-        }
-
-        public String imgDateTime
-        {
-            get { return _imgDateTime; }
-            set { _imgDateTime = value; }
         }
 
         public String bodyPart

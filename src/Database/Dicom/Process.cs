@@ -37,12 +37,17 @@ namespace DIPS.Database
         private void CheckIfPatientExist(DicomInfo dicom)
         {
             DAOGeneral dao = new DAOGeneral();
-            if (dicom.studyUID.Length != 0 && dicom.seriesUID.Length != 0)
+            if ((dicom.studyUID.Length != 0 && dicom.seriesUID.Length != 0) && dicom.imageUID.Length != 0)
             {
                 dao.patientExist(dicom);
                 if (dicom.patientExist == true) dao.seriesExist(dicom);
+                if (dicom.sameSeries == true) dao.retrieveImageNumber(dicom);
             }
-            else dao.patientExistBackup(dicom);
+            else
+            {
+                dao.patientExistBackup(dicom);
+                if (dicom.sameSeries == true) dao.retrieveImageNumber(dicom);
+            }
 
             if (dicom.patientExist == false)
             {
@@ -52,10 +57,6 @@ namespace DIPS.Database
             else if (dicom.sameSeries == false)
             {
                 dao.updatePatientSeries(dicom);
-            }
-            else if (dicom.sameSeries == true)
-            {
-                dao.retrieveImageNumber(dicom);
             }
         }
     }

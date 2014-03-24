@@ -23,14 +23,5 @@ namespace Database.DicomHelper
                 Log.CodecRegistration = true;
             }
         }
-
-        public void finish()
-        {
-            if (Log.NeedUpdate == true)
-            {
-                DAOLog log = new DAOLog();
-                log.update(Log.Series);
-            }
-        }
     }
 }

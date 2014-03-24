@@ -16,7 +16,7 @@ GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
 -- Create date: <26/02/2013>
--- Description:	<Retrieve processed image by UID>
+-- Description:	<Retrieve processed image by File ID and Process Algorithm>
 -- =============================================
 CREATE PROCEDURE spr_RetrieveProcessedImage_v001
 	-- Add the parameters for the stored procedure here

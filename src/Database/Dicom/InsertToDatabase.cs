@@ -14,11 +14,11 @@ namespace Database.Connection
         {
             DAOInsertPatient dao = new DAOInsertPatient();
             DAOLog log = new DAOLog();
+            if (Log.NeedUpdate == true) log.update(dicom.seriesID);
 
             if (dicom.patientExist == false)
             {
                 if (Log.Created == false) log.create();
-                if (Log.NeedUpdate == true) log.update(dicom.seriesID);
                 dao.insertPatient(dicom);
                 dao.insertName(dicom);
                 dao.insertImageInfo(dicom);
@@ -27,7 +27,6 @@ namespace Database.Connection
             else if (dicom.sameSeries == false)
             {
                 if (Log.Created == false) log.create();
-                if (Log.NeedUpdate == true) log.update(dicom.seriesID);
                 dao.insertImageInfo(dicom);
                 dao.insertImageFile(dicom,filePath);
             }

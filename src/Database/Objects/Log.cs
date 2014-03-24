@@ -12,6 +12,7 @@ namespace Database.Objects
         private static Boolean _logCreated = false;
         private static Boolean _logNeedUpdate = false;
         private static Boolean _firstLaunch = false;
+        private static String _processName = "Gamma 0.0";
 
         public static int Series
         {
@@ -35,6 +36,12 @@ namespace Database.Objects
         {
             get { return _logNeedUpdate; }
             set { _logNeedUpdate = value; }
+        }
+
+        public static String ProcessName
+        {
+            get { return _processName; }
+            set { _processName = value; }
         }
         
     }

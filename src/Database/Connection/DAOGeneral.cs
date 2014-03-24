@@ -1,5 +1,6 @@
 ﻿using Database;
 using Database.Dicom;
+using Database.DicomHelper;
 using Database.Objects;
 using System;
 using System.Collections.Generic;
@@ -45,9 +46,23 @@ namespace DIPS.Database
                 {
                     dicom.sameSeries = true;
                     dicom.seriesID = dataReader.GetInt32(0);
-                    Log.NeedUpdate = true;
                 }
                 dataReader.Close();
+            }
+        }
+
+        public void imageExist(DicomInfo dicom)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spr_CheckSOPUIDExist_v001", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@sopUID", SqlDbType.VarChar).Value = dicom.imageUID;
+                int count = (Int32)cmd.ExecuteScalar();
+
+                if(count!=0) dicom.imageExist = true;
+                else Log.NeedUpdate = true;
             }
         }
 
@@ -56,6 +71,7 @@ namespace DIPS.Database
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
             {
                 conn.Open();
+                Encryption name = new Encryption();
                 SqlCommand cmd = new SqlCommand("spr_CheckPatientExist_v001", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -67,14 +83,20 @@ namespace DIPS.Database
 
                 while (dataReader.Read())
                 {
-                    
-
-                    if (allMatched(dicom, dataReader))
+                    if (dicom.patientName.Length != 0 && dicom.patientExist == false)
                     {
-                        dicom.patientExist = true;
-                        dicom.databaseID = dataReader.GetInt32(dataReader.GetOrdinal("Patient ID"));
+                        int tempID = dataReader.GetInt32(dataReader.GetOrdinal("Patient ID"));
+                        String tempName = dataReader.GetString(dataReader.GetOrdinal("Patient Name"));
+
+                        if (name.Decrypt(tempName, tempID).Equals(dicom.patientName))
+                        {
+                            dicom.patientExist = true;
+                            dicom.databaseID = tempID;
+                        }
+                    }
+                    if (dicom.patientExist == true && allMatched(dicom, dataReader))
+                    {
                         dicom.sameSeries = true;
-                        Log.NeedUpdate = true;
                         dicom.seriesID = dataReader.GetInt32(dataReader.GetOrdinal("Series ID"));
                         break;
                     }
@@ -92,18 +114,6 @@ namespace DIPS.Database
             return true;
         }
 
-        public void updatePatientSeries(DicomInfo dicom)
-        {
-            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
-            {
-                conn.Open();
-                SqlCommand cmd3 = new SqlCommand("spr_UpdateSeriesAvailable_v001", conn);
-                cmd3.CommandType = CommandType.StoredProcedure;
-                cmd3.Parameters.Add("@databaseID", SqlDbType.Int).Value = dicom.databaseID;
-                cmd3.ExecuteNonQuery();
-            }
-        }
-
         public void retrieveImageNumber(DicomInfo dicom)
         {
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
@@ -116,7 +126,20 @@ namespace DIPS.Database
                 cmd2.Parameters.Add("@number", SqlDbType.VarChar).Value = dicom.imgNumber;
                 int count = (Int32)cmd2.ExecuteScalar();
 
-                if(count!=0) dicom.imageExist = true;
+                if (count != 0) dicom.imageExist = true;
+                else Log.NeedUpdate = true;
+            }
+        }
+
+        public void updatePatientSeries(DicomInfo dicom)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
+            {
+                conn.Open();
+                SqlCommand cmd3 = new SqlCommand("spr_UpdateSeriesAvailable_v001", conn);
+                cmd3.CommandType = CommandType.StoredProcedure;
+                cmd3.Parameters.Add("@databaseID", SqlDbType.Int).Value = dicom.databaseID;
+                cmd3.ExecuteNonQuery();
             }
         }
     }

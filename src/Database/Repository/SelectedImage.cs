@@ -45,8 +45,15 @@ namespace Database.Repository
 
         public static byte[] updateProcessedImage()
         {
-            SelectedImageRepository sir = new SelectedImageRepository();
-            return sir.getProcessedImage(_imageNumberSelected, _algorithmSelected);
+            try
+            {
+                SelectedImageRepository sir = new SelectedImageRepository();
+                return sir.getProcessedImage(_imageNumberSelected, _algorithmSelected);
+            }
+            catch
+            {
+                return null;
+            }
         }
         
     }

@@ -78,7 +78,6 @@ namespace DIPS.Database
                     cmd.Parameters.Add("@id", SqlDbType.Int).Value = dicom.databaseID;
                     cmd.Parameters.Add("@seriesUID", SqlDbType.VarChar).Value = dicom.seriesUID;
                     cmd.Parameters.Add("@modality", SqlDbType.VarChar).Value = dicom.modality;
-                    cmd.Parameters.Add("@imgDateTime", SqlDbType.DateTime).Value = dicom.imgDateTime;
                     cmd.Parameters.Add("@bodyPart", SqlDbType.VarChar).Value = dicom.bodyPart;
                     cmd.Parameters.Add("@studyDesc", SqlDbType.VarChar).Value = dicom.studyDesc;
                     cmd.Parameters.Add("@seriesDesc", SqlDbType.VarChar).Value = dicom.seriesDesc;

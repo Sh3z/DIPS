@@ -90,9 +90,9 @@
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                     <Label Content="Finishing action?" FontSize="12" VerticalAlignment="Center" />
 
-                    <ComboBox SelectedItem="{Binding PostProcessAction}" Width="78" VerticalAlignment="Center" >
-                        <ComboBoxItem Content="Nothing" />
-                        <ComboBoxItem Content="Sleep" IsSelected="True"/>
+                    <ComboBox SelectedItem="{Binding PostProcessAction}" Width="78" VerticalAlignment="Center" SelectedIndex="0" >
+                        <ComboBoxItem Content="Nothing" IsSelected="True" />
+                        <ComboBoxItem Content="Sleep"/>
                         <ComboBoxItem Content="Shut down"/>
                     </ComboBox>
                 </StackPanel>
