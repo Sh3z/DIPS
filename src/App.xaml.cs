@@ -37,9 +37,11 @@ namespace DIPS
             ValidateConnection.validateConnection();
 
             // Create the window and provide it with the presentation layer.
-            ProcessingService s = new ProcessingService();
+            IDIPS service = ServiceHelper.CreateLocalService();
+            IProcessingService s = service.Processor;
 
             IUnityContainer c = GlobalContainer.Instance.Container;
+            c.RegisterInstance<IDIPS>( service );
             c.RegisterInstance<IProcessingService>( s );
             c.RegisterInstance<IPipelineManager>( s.PipelineManager );
 

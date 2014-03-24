@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,8 +26,10 @@ namespace DIPS.Processor.Client
             try
             {
                 RegistryKey service = Registry.LocalMachine.OpenSubKey( @"SOFTWARE\Wow6432Node\DIPS\Service" );
+                string typeAssembly = (string)service.GetValue( "DefaultTypeAssembly" );
                 string typeName = (string)service.GetValue( "DefaultType" );
-                Type type = Type.GetType( typeName );
+                Assembly assembly = Assembly.LoadFrom( typeAssembly );
+                Type type = assembly.GetType( typeName );
                 return (IDIPS)Activator.CreateInstance( type );
             }
             catch

@@ -14,6 +14,16 @@ namespace DIPS.Processor
     public class DefaultService : MarshalByRefObject, IDIPS
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultService"/>
+        /// class.
+        /// </summary>
+        public DefaultService()
+        {
+            Processor = new ProcessingService();
+        }
+
+
+        /// <summary>
         /// Gets a value indicating whether the service has been initialized.
         /// </summary>
         public bool Initialized
