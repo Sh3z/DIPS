@@ -44,6 +44,7 @@ namespace DIPS.Processor.Service
                     // Launch the processor with the GUI
                     ServiceDialog dialog = new ServiceDialog();
                     ServiceViewModel vm = new ServiceViewModel( InternalService.Service );
+                    vm.IsInInteractiveMode = true;
                     dialog.DataContext = vm;
                     dialog.ShowDialog();
                 }
