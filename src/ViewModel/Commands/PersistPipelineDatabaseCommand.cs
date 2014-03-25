@@ -76,7 +76,7 @@ namespace DIPS.ViewModel.Commands
 
             try
             {
-                if (_info.PipelineID.Equals(String.Empty)) imgProRep.insertTechnique(_info.PipelineName, xml);
+                if (string.IsNullOrEmpty(_info.PipelineID)) imgProRep.insertTechnique(_info.PipelineName, xml);
                 else imgProRep.updateTechnique(Int32.Parse(_info.PipelineID), _info.PipelineName, xml);
                 MessageBox.Show("Algorithm plan saved", "Plan saved", MessageBoxButton.OK, MessageBoxImage.Information);
             }
