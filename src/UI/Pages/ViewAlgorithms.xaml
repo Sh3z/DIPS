@@ -5,16 +5,41 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:Controls="clr-namespace:DIPS.UI.Controls" x:Class="DIPS.UI.Pages.ViewAlgorithms" 
       mc:Ignorable="d"
-	Height="558.208" Width="1004.477">
-
+	  d:DesignHeight="558.208" d:DesignWidth="1004.477">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        <DataGrid SelectedItem="{Binding SelectedTechnique}" ItemsSource="{Binding AllTechniques}" HorizontalAlignment="Left" Height="237" Margin="30,68,0,0" VerticalAlignment="Top" Width="951" SelectionMode="Single" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserReorderColumns="False"/>
-        <Button Command="{Binding AddNewAlgorithmCommand}" Content="New" HorizontalAlignment="Left" Margin="907,323,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label HorizontalAlignment="Left" Margin="449,18,0,0" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center"
+                   Style="{StaticResource HeaderTextBlockStyle}"
+                   Text="View an Existing Algorithm" />
 
-        <Label Content="View an Existing Algorithm
-               " HorizontalAlignment="Left" Margin="385,10,0,0" VerticalAlignment="Top" FontSize="22" Width="276"/>
-        
-        <Controls:infoBell RenderTransformOrigin="-11.7,-6.413" Margin="30,30,937,495" SetText="All algorithm plans that have been created are displayed below." />
+        <Grid Grid.Row="1" Margin="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Column="0" Margin="3"
+                      SelectedItem="{Binding SelectedTechnique}"
+                      ItemsSource="{Binding AllTechniques}"
+                      AutoGenerateColumns="False"
+                      SelectionMode="Single" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserReorderColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Path=ID}" Width="*" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Button Grid.Row="2" Command="{Binding AddNewAlgorithmCommand}" Content="New" HorizontalAlignment="Right" />
+
+        <!--<Controls:infoBell RenderTransformOrigin="-11.7,-6.413" Margin="30,30,937,495" SetText="All algorithm plans that have been created are displayed below." />-->
     </Grid>
 </UserControl>
