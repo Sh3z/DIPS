@@ -8,13 +8,23 @@ using DIPS.Database.Objects;
 using DIPS.ViewModel.Commands;
 using Microsoft.Win32;
 using DIPS.Util.Commanding;
+using System.Diagnostics;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
     public class LoadNewDsStep1ViewModel : BaseViewModel
     {
         #region Properties
-        public ICommand ProgressToStep2Command { get; set; }
+        public ICommand ProgressToStep2Command
+        {
+            get
+            {
+                return _progressToNextStepCmd;
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private RelayCommand _progressToNextStepCmd;
+
         public ICommand OpenFileDialogCommand { get; set; }
         public ICommand ClearFieldsCommand { get; set; }
         public ICommand RemoveFileFromListCommand { get; set; }
@@ -50,7 +60,33 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 _listofFiles = value;
                 OnPropertyChanged();
             }
-        } 
+        }
+
+        public bool RecursivleyLoadInputs
+        {
+            get
+            {
+                return _recursivleyLoadInputs;
+            }
+            set
+            {
+                _recursivleyLoadInputs = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private bool _recursivleyLoadInputs;
+
+        public ICommand RemoveAllInputs
+        {
+            get
+            {
+                return _removeAllInputsCmd;
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private RelayCommand _removeAllInputsCmd;
+
         #endregion
 
         #region Constructor
@@ -63,13 +99,17 @@ namespace DIPS.ViewModel.UserInterfaceVM
         #region Methods
         private void SetupCommands()
         {
-            ProgressToStep2Command = new RelayCommand(new Action<object>(ConfirmAndMoveToStep2));
+            _progressToNextStepCmd = new RelayCommand(new Action<object>(ConfirmAndMoveToStep2), _canMoveToNextStep);
             OpenFileDialogCommand = new RelayCommand(new Action<object>(SelectFilesForDataset));
             ClearFieldsCommand = new RelayCommand(new Action<object>(ClearFields));
             RemoveFileFromListCommand = new RelayCommand(new Action<object>(RemoveFileFromList));
+            _removeAllInputsCmd = new RelayCommand( _removeAllInputs, _canRemoveAllInputs );
 
             ListOfFiles = new ObservableCollection<FileInfo>();
+            ListOfFiles.CollectionChanged += _filesCollectionModified;
         }
+
+        
 
         public void ClearFields(object obj)
         {
@@ -82,6 +122,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
             {
                 ListOfFiles.Remove(SelectedFileItem);
             }
+        }
+
+        private bool _canMoveToNextStep( object obj )
+        {
+            return ListOfFiles.Count > 0;
         }
 
         private void ConfirmAndMoveToStep2(object obj)
@@ -118,6 +163,17 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
 
         }
+
+        private bool _canRemoveAllInputs( object obj )
+        {
+            return ListOfFiles.Count > 0;
+        }
+
+        private void _removeAllInputs( object obj )
+        {
+            ListOfFiles.Clear();
+        }
+
         private Boolean ValidateFields()
         {
             if (ListOfFiles.Count == 0)
@@ -127,6 +183,12 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
 
             return true;
+        }
+
+        private void _filesCollectionModified( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e )
+        {
+            _removeAllInputsCmd.ExecutableStateChanged();
+            _progressToNextStepCmd.ExecutableStateChanged();
         }
 
         #endregion
