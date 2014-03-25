@@ -35,7 +35,7 @@ namespace Database.Repository
             set { _imageNumberSelected = value; }
         }
 
-        private static String _algorithmSelected;
+        private static String _algorithmSelected = "Gamma 0.0";
 
         public static String AlgorithmSelected
         {
