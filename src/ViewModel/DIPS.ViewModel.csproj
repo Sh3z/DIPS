@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AA521185-AA1A-4461-810C-B0BF60063136}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DIPS.ViewModel</RootNamespace>
+    <AssemblyName>DIPS.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(FEMOREBIN)\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(FEMOREBIN)\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>$(FEMOREBIN)\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>$(FEMOREBIN)\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GongSolutions.Wpf.DragDrop, Version=0.1.3.11, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\gong-wpf-dragdrop.0.1.3.11\lib\net40\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlgorithmBuilderViewModel.cs" />
+    <Compile Include="AlgorithmViewModel.cs" />
+    <Compile Include="Commands\CancelJobCommand.cs" />
+    <Compile Include="Commands\EnqueueJobCommand.cs" />
+    <Compile Include="Commands\ImageCommands.cs" />
+    <None Include="Commands\ProcessImageCommand.cs" />
+    <Compile Include="Commands\LoadHandlersAssemblyCommand.cs" />
+    <Compile Include="Commands\LoadPipelineCommand.cs" />
+    <Compile Include="Commands\PersistPipelineCommand.cs" />
+    <Compile Include="Commands\PresentQueueCommand.cs" />
+    <Compile Include="Commands\PersistPipelineDatabaseCommand.cs" />
+    <Compile Include="Converters\DecimalToPercentageConverter.cs" />
+    <Compile Include="Converters\ImageToImageSourceConverter.cs" />
+    <Compile Include="Commands\UnityCommand.cs" />
+    <Compile Include="Converters\BooleanNotConverter.cs" />
+    <Compile Include="Converters\SingleItemToEnumerableConverter.cs" />
+    <Compile Include="IPipelineInfo.cs" />
+    <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Unity\IQueueDialog.cs" />
+    <Compile Include="Objects\ImageHandler.cs" />
+    <Compile Include="UserInterfaceVM\CreateAlgorithmViewModel.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\InputTimeEstimator.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\TimeRemainingFormatter.cs" />
+    <Compile Include="UserInterfaceVM\PostProcessingStore.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\CompositeHandler.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\HandlerAttribute.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\HandlerFactory.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\HandlerRegisteredArgs.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\IHandlerFactory.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\IJobResultsHandler.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\IJobTracker.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\InputViewModel.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\JobViewModel.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\LoadedHandler.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\OngoingJobsViewModel.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\PersistenceHandler.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\SaveToDatabaseHandler.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\SaveToFileSystemHandler.cs" />
+    <Compile Include="UserInterfaceVM\JobTracking\StatusStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StatusStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterfaceVM\LoadNewDsStep1ViewModel.cs" />
+    <Compile Include="UserInterfaceVM\LoadNewDsStep2ViewModel.cs" />
+    <Compile Include="UserInterfaceVM\LoadNewDsStep3ViewModel.cs" />
+    <Compile Include="UserInterfaceVM\MainNaviViewModel.cs" />
+    <Compile Include="UserInterfaceVM\MainViewModel.cs" />
+    <Compile Include="UserInterfaceVM\MultiHandlerOptions.cs" />
+    <Compile Include="UserInterfaceVM\PostProcessingOptions.cs" />
+    <Compile Include="UserInterfaceVM\PostProcessingViewModel.cs" />
+    <Compile Include="UserInterfaceVM\QueueViewModel.cs" />
+    <Compile Include="UserInterfaceVM\ResultsHandlerViewModel.cs" />
+    <Compile Include="UserInterfaceVM\SingleHandlerOptions.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewFilterViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewGroupPatientsViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewImageDatasetViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewImageViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewItemViewModel.cs" />
+    <Compile Include="UserInterfaceVM\TreeViewPatientViewModel.cs" />
+    <Compile Include="UserInterfaceVM\ViewAlgorithmViewModel.cs" />
+    <Compile Include="UserInterfaceVM\ViewExistingDatasetViewModel.cs" />
+    <Compile Include="UserInterfaceVM\ViewModelLocator.cs" />
+    <Compile Include="ViewModel.cs" />
+    <Compile Include="ImageProcessedArgs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="packages.config" />
+    <None Include="PrototypeViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Compression\DIPS.Util.csproj">
+      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
+      <Name>DIPS.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Database\DIPS.Database.csproj">
+      <Project>{A200FC0F-F24E-4F28-B34E-88B1EBD4773C}</Project>
+      <Name>DIPS.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Processor\Client\DIPS.Processor.Client.csproj">
+      <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
+      <Name>DIPS.Processor.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI\Editors\DIPS.UI.Editors.csproj">
+      <Project>{d85a5e93-45e0-43e4-bb5a-e3b7cdd536a4}</Project>
+      <Name>DIPS.UI.Editors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unity\DIPS.Unity.csproj">
+      <Project>{58bea286-5bcf-41b1-aaf0-d06c4663d4fd}</Project>
+      <Name>DIPS.Unity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UserInterfaceVM\JobTracking\StatusStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StatusStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

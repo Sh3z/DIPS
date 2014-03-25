@@ -1,0 +1,63 @@
+﻿<UserControl
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Controls="clr-namespace:DIPS.UI.Controls" x:Class="DIPS.UI.Pages.LoadNewDataset.LoadNewDSStep1" 
+      mc:Ignorable="d"
+	  d:DesignWidth="532.045" d:DesignHeight="331">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center"
+                   Style="{StaticResource HeaderTextBlockStyle}"
+                   Text="Step 1: Select the images to process" />
+        <DockPanel Grid.Row="1">
+            <CheckBox DockPanel.Dock="Top" Margin="3"
+                      IsChecked="{Binding Path=RecursivleyLoadInputs}" 
+                      Content="Recursively load from subfolders">
+                <CheckBox.ToolTip>
+                    <ToolTip>
+                        <TextBlock Text="If enabled, choosing a folder will load all inputs from all subfolders" />
+                    </ToolTip>
+                </CheckBox.ToolTip>
+            </CheckBox>
+            <Grid DockPanel.Dock="Top">
+                <Button x:Name="LargestButton" HorizontalAlignment="Left"
+                    Command="{Binding Path=OpenFileDialogCommand}" Content="Choose Images..." />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Command="{Binding Path=RemoveAllInputs}"
+                            Content="Clear Files"
+                            Width="{Binding ElementName=LargestButton, Path=ActualWidth}" />
+                    <Button Command="{Binding Path=RemoveFileFromListCommand}"
+                            Content="Remove Selected"
+                            Width="{Binding ElementName=LargestButton, Path=Width, Mode=TwoWay}"/>
+                </StackPanel>
+            </Grid>
+            <ListView Margin="3"
+                      SelectedItem="{Binding Path=SelectedFileItem}"
+                      ItemsSource="{Binding Path=ListOfFiles}">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="File Name" DisplayMemberBinding="{Binding Path=Name}" />
+                            <GridViewColumn Header="Full Path" DisplayMemberBinding="{Binding}" />
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+        <Button Grid.Row="2" HorizontalAlignment="Right" Width="{Binding ElementName=LargestButton, Path=ActualWidth}" Command="{Binding Path=ProgressToStep2Command}" Content="Continue" />
+    </Grid>
+</UserControl>

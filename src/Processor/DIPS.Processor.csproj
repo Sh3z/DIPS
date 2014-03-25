@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BBC18FC7-4ED1-4A6A-8E1B-E05035FF85D8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DIPS.Processor</RootNamespace>
+    <AssemblyName>DIPS.Processor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(FEMOREBIN)\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(FEMOREBIN)\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BatchProcessor.cs" />
+    <Compile Include="DefaultService.cs" />
+    <Compile Include="Persistence\PersistedJobIdentifiers.cs" />
+    <Compile Include="Worker\TicketWorker.cs" />
+    <Compile Include="Queue\QueueExecutor.cs" />
+    <Compile Include="Pipeline\IPipelineFactory.cs" />
+    <Compile Include="Pipeline\PipelineEntry.cs" />
+    <Compile Include="Pipeline\IPipelineRepository.cs" />
+    <Compile Include="JobManager.cs" />
+    <Compile Include="Persistence\FileSystemPersister.cs" />
+    <Compile Include="Persistence\IJobPersister.cs" />
+    <Compile Include="IJobQueue.cs" />
+    <Compile Include="IPluginFactory.cs" />
+    <Compile Include="Worker\IWorker.cs" />
+    <Compile Include="ITicketCancellationHandler.cs" />
+    <Compile Include="JobTicket.cs" />
+    <Compile Include="Persistence\MemoryPersister.cs" />
+    <Compile Include="Persistence\PersistedResult.cs" />
+    <Compile Include="Pipeline\Pipeline.cs" />
+    <Compile Include="Pipeline\PipelineManager.cs" />
+    <Compile Include="Pipeline\PipelineXmlRepository.cs" />
+    <Compile Include="Pipeline\PluginPipelineFactory.cs" />
+    <Compile Include="ProcessingService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queue\JobQueue.cs" />
+    <Compile Include="RegistryFactory.cs" />
+    <Compile Include="SynchronousProcessor.cs" />
+    <Compile Include="Worker\WorkerArgs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Compression\DIPS.Util.csproj">
+      <Project>{64782f97-2f28-479f-90fd-ffe55c884eea}</Project>
+      <Name>DIPS.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="Client\DIPS.Processor.Client.csproj">
+      <Project>{b3574b49-8c3c-4cd8-929c-1f767656b4eb}</Project>
+      <Name>DIPS.Processor.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="Client\XML\DIPS.Processor.XML.csproj">
+      <Project>{e9c0ce2f-6645-41ab-ae80-2d8d63da1a61}</Project>
+      <Name>DIPS.Processor.XML</Name>
+    </ProjectReference>
+    <ProjectReference Include="Plugin\DIPS.Processor.Plugin.csproj">
+      <Project>{5bc8fe69-c985-4b78-86f2-441a82fb435f}</Project>
+      <Name>DIPS.Processor.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="Registry\DIPS.Processor.Registry.csproj">
+      <Project>{3fb76655-e579-4832-a014-4b68893cf1e1}</Project>
+      <Name>DIPS.Processor.Registry</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,45 @@
+﻿<UserControl
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Controls="clr-namespace:DIPS.UI.Controls" x:Class="DIPS.UI.Pages.ViewAlgorithms" 
+      mc:Ignorable="d"
+	  d:DesignHeight="558.208" d:DesignWidth="1004.477">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center"
+                   Style="{StaticResource HeaderTextBlockStyle}"
+                   Text="View an Existing Algorithm" />
+
+        <Grid Grid.Row="1" Margin="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Column="0" Margin="3"
+                      SelectedItem="{Binding SelectedTechnique}"
+                      ItemsSource="{Binding AllTechniques}"
+                      AutoGenerateColumns="False"
+                      SelectionMode="Single" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserReorderColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Path=ID}" Width="*" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Button Grid.Row="2" Command="{Binding AddNewAlgorithmCommand}" Content="New" HorizontalAlignment="Right" />
+
+        <!--<Controls:infoBell RenderTransformOrigin="-11.7,-6.413" Margin="30,30,937,495" SetText="All algorithm plans that have been created are displayed below." />-->
+    </Grid>
+</UserControl>

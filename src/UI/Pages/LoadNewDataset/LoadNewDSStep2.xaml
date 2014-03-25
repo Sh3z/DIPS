@@ -1,0 +1,48 @@
+﻿<UserControl
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Controls="clr-namespace:DIPS.UI.Controls" x:Class="DIPS.UI.Pages.LoadNewDataset.LoadNewDSStep2" 
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      mc:Ignorable="d"
+	Width="921.441" Height="490.075">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/DIPS.UI.CustomControls;component/Resources/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Margin="10,10,0,45">
+        <xctk:PropertyGrid Margin="555,120,151,27" IsManipulationEnabled="True"
+                           SelectedObject="{Binding Path=SelectedTechSelectedItem.ParameterObject}"/>
+        <TextBlock x:Name="lblStep2Title" HorizontalAlignment="Left" Margin="26,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="31" Width="598" Text="Step 2:  Please select the image process techniques you wish to use." FontSize="20"/>
+        <ListBox ItemsSource="{Binding ListofTechniques, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedItem="{Binding ChosenTechnique,Mode=TwoWay}"  HorizontalAlignment="Left" Height="293" Margin="231,115,0,0" VerticalAlignment="Top" Width="120" ScrollViewer.CanContentScroll="True" FontSize="16" />
+        <Label Content="Algorithm Plan" HorizontalAlignment="Left" Margin="231,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="120" FontSize="16"/>
+        <Button Command="{Binding ProgressToStep3Command}" Content="Make Selection" HorizontalAlignment="Left" Margin="779,346,0,0" VerticalAlignment="Top" Width="122" Height="62" FontSize="16" />
+        <ScrollViewer Margin="376,115,375,27" RenderTransformOrigin="0.409,0.517">
+            <ListView ItemsSource="{Binding Path=TechniqueAlgorithms}" SelectedItem="{Binding Path=SelectedTechSelectedItem,Mode=TwoWay}" ItemContainerStyle="{StaticResource AlgorithmItemStyle}" HorizontalAlignment="Left" Height="290" Width="160" ScrollViewer.CanContentScroll="True" />
+        </ScrollViewer>
+        <Label Content="Plan Composition
+               " HorizontalAlignment="Left" Margin="385,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="135" FontSize="16"/>
+        <Button Command="{Binding BuildAlgorithmCommand}" Content="Build Technique" HorizontalAlignment="Left" Margin="779,122,0,0" VerticalAlignment="Top" Width="122" RenderTransformOrigin="0.533,-0.6" Height="49" FontSize="16" />
+        <ListBox ItemsSource="{Binding ListOfFiles}" HorizontalAlignment="Left" Height="293" Margin="29,115,0,0" VerticalAlignment="Top" Width="166" FontSize="16">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Selected Files" HorizontalAlignment="Left" Margin="61,84,0,0" VerticalAlignment="Top" FontSize="16"/>
+
+        <!--<Controls:infoBell x:Name="selectedFileInfo" HorizontalAlignment="Left" Margin="200,163,0,0" VerticalAlignment="Top" Height="42" Width="44" />-->
+        <Label Content="Properties" HorizontalAlignment="Left" Margin="620,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,-0.462" Width="81" FontSize="16"/>
+        <Button Content="Load from File" HorizontalAlignment="Left" Margin="779,196,0,0" VerticalAlignment="Top" Width="122" Height="38" Command="{Binding LoadFromFile}" FontSize="16"/>
+
+    </Grid>
+</UserControl>
