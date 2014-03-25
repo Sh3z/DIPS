@@ -29,14 +29,28 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         public ICommand OpenFileDialogCommand { get; set; }
         public ICommand ClearFieldsCommand { get; set; }
-        public ICommand RemoveFileFromListCommand { get; set; }
+
+        public ICommand RemoveFileFromListCommand
+        {
+            get
+            {
+                return _removeSelectedItemCmd;
+            }
+        }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private RelayCommand _removeSelectedItemCmd;
 
         private FileInfo _selectedFileItem;
 
         public FileInfo SelectedFileItem
         {
             get { return _selectedFileItem; }
-            set { _selectedFileItem = value; }
+            set
+            {
+                _selectedFileItem = value;
+                OnPropertyChanged();
+                _removeSelectedItemCmd.ExecutableStateChanged();
+            }
         }
         
 
@@ -104,7 +118,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             _progressToNextStepCmd = new RelayCommand(new Action<object>(ConfirmAndMoveToStep2), _canMoveToNextStep);
             OpenFileDialogCommand = new RelayCommand(new Action<object>(SelectFilesForDataset));
             ClearFieldsCommand = new RelayCommand(new Action<object>(ClearFields));
-            RemoveFileFromListCommand = new RelayCommand(new Action<object>(RemoveFileFromList));
+            _removeSelectedItemCmd = new RelayCommand(new Action<object>(RemoveFileFromList), _canRemoveSelectedFile);
             _removeAllInputsCmd = new RelayCommand( _removeAllInputs, _canRemoveAllInputs );
 
             ListOfFiles = new ObservableCollection<FileInfo>();
@@ -116,6 +130,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public void ClearFields(object obj)
         {
             ListOfFiles.Clear();
+        }
+
+        private bool _canRemoveSelectedFile( object obj )
+        {
+            return SelectedFileItem != null;
         }
 
         public void RemoveFileFromList(object obj)
