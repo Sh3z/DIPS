@@ -9,6 +9,8 @@ using DIPS.ViewModel.Commands;
 using Microsoft.Win32;
 using DIPS.Util.Commanding;
 using System.Diagnostics;
+using DIPS.Unity;
+using Microsoft.Practices.Unity;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -141,27 +143,36 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void SelectFilesForDataset(object obj)
         {
-            Stream myStream;
-            OpenFileDialog dialogOpen = new OpenFileDialog();
-            ;
-            //Setup properties for open file dialog
-            dialogOpen.InitialDirectory = "C:\\";
-            dialogOpen.FilterIndex = 1;
-            dialogOpen.Multiselect = true;
-            dialogOpen.Title = "Please select image files which are going to be part of this dataset";
-
-            Nullable<bool> isOkay = dialogOpen.ShowDialog();
-            String[] strFiles = dialogOpen.FileNames;
-
-            if (isOkay == true)
+            if( RecursivleyLoadInputs )
             {
-                foreach (string file in dialogOpen.FileNames)
+                IDirectoryPicker picker = GlobalContainer.Instance.Container.Resolve<IDirectoryPicker>();
+                if( picker.Resolve() )
                 {
-                    FileInfo uploadFile = new FileInfo(file);
-                    ListOfFiles.Add(uploadFile);
+                    _loadFilesFromDirectoryAndSubDirectories( picker.Directory );
                 }
             }
+            else
+            {
+                Stream myStream;
+                OpenFileDialog dialogOpen = new OpenFileDialog();
+                ;
+                //Setup properties for open file dialog
+                dialogOpen.InitialDirectory = "C:\\";
+                dialogOpen.FilterIndex = 1;
+                dialogOpen.Multiselect = true;
+                dialogOpen.Title = "Please select image files which are going to be part of this dataset";
 
+                Nullable<bool> isOkay = dialogOpen.ShowDialog();
+                String[] strFiles = dialogOpen.FileNames;
+
+                if( isOkay == true )
+                {
+                    foreach( string file in dialogOpen.FileNames )
+                    {
+                        _addFileToCurrentSet( file );
+                    }
+                }
+            }
         }
 
         private bool _canRemoveAllInputs( object obj )
@@ -189,6 +200,34 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             _removeAllInputsCmd.ExecutableStateChanged();
             _progressToNextStepCmd.ExecutableStateChanged();
+        }
+
+        private void _loadFilesFromDirectoryAndSubDirectories( string directory )
+        {
+            if( Directory.Exists( directory ) == false )
+            {
+                return;
+            }
+
+            foreach( var file in Directory.GetFiles( directory ) )
+            {
+                _addFileToCurrentSet( file );
+            }
+
+            foreach( var subDir in Directory.GetDirectories( directory ) )
+            {
+                _loadFilesFromDirectoryAndSubDirectories( subDir );
+            }
+        }
+
+        private void _addFileToCurrentSet( string file )
+        {
+            // Make sure the file is legal
+            if( string.IsNullOrEmpty( Path.GetExtension( file ) ) )
+            {
+                FileInfo fileInfo = new FileInfo( file );
+                ListOfFiles.Add( fileInfo );
+            }
         }
 
         #endregion

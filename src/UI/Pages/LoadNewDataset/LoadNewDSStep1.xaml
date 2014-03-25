@@ -24,7 +24,9 @@
                    Style="{StaticResource HeaderTextBlockStyle}"
                    Text="Step 1: Select the images to process" />
         <DockPanel Grid.Row="1">
-            <CheckBox DockPanel.Dock="Top" Margin="3" Content="Recursively load from subfolders">
+            <CheckBox DockPanel.Dock="Top" Margin="3"
+                      IsChecked="{Binding Path=RecursivleyLoadInputs}" 
+                      Content="Recursively load from subfolders">
                 <CheckBox.ToolTip>
                     <ToolTip>
                         <TextBlock Text="If enabled, choosing a folder will load all inputs from all subfolders" />
@@ -50,6 +52,7 @@
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="File Name" DisplayMemberBinding="{Binding Path=Name}" />
+                            <GridViewColumn Header="Full Path" DisplayMemberBinding="{Binding}" />
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
