@@ -31,7 +31,6 @@ namespace DIPS.ViewModel
             }
 
             Definition = definition;
-            ParameterObject = definition.ParameterObject;
             _removeCmd = new RelayCommand( _remove, _canRemove );
             IsRemovable = true;
         }
@@ -72,8 +71,10 @@ namespace DIPS.ViewModel
         /// </summary>
         public ICloneable ParameterObject
         {
-            get;
-            private set;
+            get
+            {
+                return Definition.ParameterObject;
+            }
         }
 
         /// <summary>
@@ -126,8 +127,7 @@ namespace DIPS.ViewModel
 
             return new AlgorithmViewModel( Definition )
             {
-                IsRemovable = this.IsRemovable,
-                ParameterObject = paramsObj
+                IsRemovable = this.IsRemovable
             };
         }
 
