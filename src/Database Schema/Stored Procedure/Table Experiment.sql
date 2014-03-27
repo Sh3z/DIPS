@@ -63,12 +63,6 @@ drop table patient;
 select * from imageProcessing;
 drop table imageProcessing;
 
-SELECT @@SERVERNAME AS 'Server Name';
-SELECT count(name) FROM master.dbo.sysdatabases where name = 'medicalImaging';
-
-select backup_size from msdb..backupset;
-select compressed_backup_size from msdb..backupset;
-
 BACKUP DATABASE medicalImaging
 TO DISK = 'C:\Users\Joseph\Documents\Backup\Test2.BAK'
 
