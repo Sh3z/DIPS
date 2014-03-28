@@ -159,6 +159,7 @@ namespace DIPS.ViewModel
         }
 
         public Boolean FromLoadStep2 { get; set; }
+        public Boolean FromViewAlgorithms { get; set; }
         public ICommand FinishButtonCommand { get; set; }
 
         public ICommand ClearSelectedAlgorithmsCommand
@@ -213,8 +214,11 @@ namespace DIPS.ViewModel
                     ImageProcessingRepository imgProRep = new ImageProcessingRepository();
                     _LoadNewDsStep2ViewModel.ListofTechniques = imgProRep.getAllTechnique();
                 }
-            }
-            else
+            } else if (FromViewAlgorithms)
+            {
+                _ViewAlgorithmViewModel.GetAllAlgorithmPlans();
+                OverallFrame.Content = _ViewAlgorithmViewModel;
+            } else
             {
                 OverallFrame.Content = _ViewExistingDatasetViewModel;
             }

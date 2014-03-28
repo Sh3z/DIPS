@@ -86,6 +86,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             _AlgorithmBuilderViewModel.PipelineName = string.Empty;
             _AlgorithmBuilderViewModel.SelectedProcesses.Clear();
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
+            _AlgorithmBuilderViewModel.FromViewAlgorithms = true;
+            _AlgorithmBuilderViewModel.FromLoadStep2 = false;
 
             PopulateAvailableAlgorithms();
         }
@@ -138,8 +140,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
                         _info.SelectedProcesses.Add(new AlgorithmViewModel(process));
                     }
 
+                    _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
                     PopulateAvailableAlgorithms();
 
+                    _AlgorithmBuilderViewModel.FromViewAlgorithms = true;
+                    _AlgorithmBuilderViewModel.FromLoadStep2 = false;
                     OverallFrame.Content = _AlgorithmBuilderViewModel;
                 }
             }
