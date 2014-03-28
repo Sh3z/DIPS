@@ -139,6 +139,9 @@
     <Compile Include="Pages\MultiPostProcessorControl.xaml.cs">
       <DependentUpon>MultiPostProcessorControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\NewViewExistingDataset.xaml.cs">
+      <DependentUpon>NewViewExistingDataset.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PostProcessingControl.xaml.cs">
       <DependentUpon>PostProcessingControl.xaml</DependentUpon>
     </Compile>
@@ -218,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MultiPostProcessorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NewViewExistingDataset.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

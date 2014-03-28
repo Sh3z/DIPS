@@ -99,7 +99,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             _ViewExistingDatasetViewModel.ImgUnprocessed = null;
             _ViewExistingDatasetViewModel.ImgProcessed = null;
-            _ViewExistingDatasetViewModel.ImageInfo = string.Empty;
+            _ViewExistingDatasetViewModel.ImageInfo = "Please Select An Image To View Image Information Here.";
             
             OverallFrame.Content = _ViewExistingDatasetViewModel;
         }

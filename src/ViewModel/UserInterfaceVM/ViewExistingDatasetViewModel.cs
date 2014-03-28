@@ -207,6 +207,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             
             SetupCommands();
             GetPatientsForTreeview(null);
+
+            ImageInfo = "Please Select An Image To View Image Information Here.";
         } 
         #endregion
 
@@ -239,7 +241,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             ImgUnprocessed = null;
             ImgProcessed = null;
-            ImageInfo = string.Empty;
+            ImageInfo = "Please Select An Image To View Image Information Here.";
             
             TopLevelViewModel = tvpv;
         }

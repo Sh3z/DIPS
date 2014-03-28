@@ -87,7 +87,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     {
                         TreeViewImageViewModel tivm = (TreeViewImageViewModel) ImageViewModel;
                         setImage(tivm.ImageName.ToString());
-                        _ViewExistingDatasetViewModel.ImageInfo = string.Empty;
+                        _ViewExistingDatasetViewModel.ImageInfo = "Please Select An Image To View Image Information Here.";
                         GetImageInfo(tivm.ImageName.ToString());
                     }
                     

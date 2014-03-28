@@ -1,0 +1,146 @@
+﻿<UserControl x:Class="DIPS.UI.Pages.NewViewExistingDataset"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+      xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
+      mc:Ignorable="d" d:DesignHeight="558.208" d:DesignWidth="1004.477">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Resources.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/DIPS.UI.CustomControls;component/Resources/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="GroupBox">
+                <Setter Property="Margin" Value="3" />
+            </Style>
+            <Style TargetType="ListView">
+                <Setter Property="Margin" Value="3" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+            
+                <DockPanel Grid.Row="0">
+                    <Button DockPanel.Dock="Left" Content="Filter Options" HorizontalAlignment="Center" Command="{Binding OpenFilterDialogCommand}" FontSize="16" />
+                <CheckBox DockPanel.Dock="Right" IsChecked="{Binding ToggleFilter}" Content="Active Filter?" HorizontalAlignment="Left" FontSize="16" />
+                </DockPanel>
+                
+                    <GroupBox Header="Select an image from a dataset:" Grid.Row="1">
+
+                        <TreeView ItemsSource="{Binding TopLevelViewModel.Patients}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                            <TreeView.Resources>
+                                <HierarchicalDataTemplate 
+					DataType="{x:Type vm:TreeViewPatientViewModel}" 
+					ItemsSource="{Binding Children}"
+          >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16" Height="16" Margin="3,0" Source="pack://application:,,,/DIPS.UI;component/Images/Patient.png" />
+                                        <TextBlock Text="{Binding PatientIdentifier}" />
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+
+                                <HierarchicalDataTemplate 
+					DataType="{x:Type vm:TreeViewImageDatasetViewModel}" 
+					ItemsSource="{Binding Children}"
+          >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16" Height="16" Margin="3,0" Source="pack://application:,,,/DIPS.UI;component/Images/Dataset.png" />
+                                        <TextBlock Text="{Binding ImgDatasetName}" />
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+
+                                <DataTemplate DataType="{x:Type vm:TreeViewImageViewModel}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16" Height="16" Margin="3,0" Source="pack://application:,,,/DIPS.UI;component/Images/Image.png" />
+                                        <TextBlock Text="{Binding ImageName}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </TreeView.Resources>
+                            <TreeView.ItemContainerStyle>
+                                <!-- 
+        This Style binds a TreeViewItem to a TreeViewItemViewModel. 
+        -->
+                                <Style TargetType="{x:Type TreeViewItem}">
+                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                    <Setter Property="FontWeight" Value="Normal" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TreeView.ItemContainerStyle>
+
+                        </TreeView>
+                    </GroupBox>
+                
+            
+            <Button Grid.Row="2" Content="Refresh Treeview"
+                Command="{Binding Path=LoadPipeline}" FontSize="16" />
+            
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"
+                   Text="View Existing Dataset" HorizontalAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MediumTextBlockFont}">
+                        <Setter Property="Margin" Value="5" />
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Grid.Column="1" Header="Unprocessed Image">
+                    <Image Source="{Binding ImgUnprocessed, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="128"  Width="128"/>
+                </GroupBox>
+
+                <GroupBox Grid.Column="2" Header="Processed Image">
+                    <Image Source="{Binding ImgUnprocessed, Mode=TwoWay}" HorizontalAlignment="Center" Height="128" VerticalAlignment="Center" Width="128"/>
+                </GroupBox>
+
+                <GroupBox Grid.Column="3" Header="Algorithm Plan Used">
+                    <ListView
+                    ItemsSource="{Binding Path=AlgorithmPlanUsed, Mode=TwoWay}"
+                    ItemContainerStyle="{StaticResource AlgorithmItemStyle}"/>
+                </GroupBox>
+            </Grid>
+            <DockPanel Grid.Row="3" LastChildFill="True">
+                <TextBox Text="{Binding ImageInfo, Mode=TwoWay}"  HorizontalAlignment="Center" Height="Auto" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"/>
+            </DockPanel>
+        </Grid>
+
+    </Grid>
+</UserControl>
