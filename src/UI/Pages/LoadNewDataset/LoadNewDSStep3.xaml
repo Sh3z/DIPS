@@ -62,8 +62,12 @@
                 <TextBox Text="{Binding Path=Identifier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="100" />
             </DockPanel>
 
-            <Button DockPanel.Dock="Bottom" Grid.Row="4" MaxWidth="100"
+            <DockPanel Grid.Row="4">
+                <Button HorizontalAlignment="Left" Command="{Binding Path=GoBackCommand}" Content="Go Back" />
+                <Button DockPanel.Dock="Bottom"  MaxWidth="100"
                 Command="{Binding ProcessFilesCommand}" Content="Process" FontSize="16"/>
+            </DockPanel>
+            
         </Grid>
     </DockPanel>
 </UserControl>

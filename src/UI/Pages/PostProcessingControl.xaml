@@ -42,6 +42,7 @@
         </DockPanel>
         <ContentControl Grid.Row="2" Content="{Binding Path=CurrentOptions}" />
         <DockPanel Grid.Row="3" LastChildFill="False">
+            <Button HorizontalAlignment="Left" Command="{Binding Path=GoBackCommand}" Content="Go Back" />
             <Button DockPanel.Dock="Right" Content="Continue"
                     Style="{StaticResource CommonButtonStyle}"
                     Command="{Binding Path=Continue}" />

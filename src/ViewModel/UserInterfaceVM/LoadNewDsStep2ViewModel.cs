@@ -101,6 +101,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         
         public RelayCommand ProgressToStep3Command { get; set; }
         public ICommand BuildAlgorithmCommand { get; set; }
+        public ICommand GoBackCommand { get; set; }
         public UnityCommand LoadFromFile
         {
             get;
@@ -196,10 +197,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             ProgressToStep3Command = new RelayCommand(new Action<object>(ProgressToStep3), _canProgressToStep3);
             BuildAlgorithmCommand = new RelayCommand(new Action<object>(BuildAlgorithm), _canBuildAlgorithm);
+            GoBackCommand = new RelayCommand(new Action<object>(_goBack));
             LoadFromFile = new LoadPipelineCommand(this);
             LoadFromFile.Container = GlobalContainer.Instance.Container;
 
             TechniqueAlgorithms.CollectionChanged += (s, e) => ProgressToStep3Command.ExecutableStateChanged();
+        }
+
+        private void _goBack(object obj)
+        {
+            OverallFrame.Content = _LoadNewDsStep1ViewModel;
         }
 
         private void _updateAlgorithmsInTechnique(Technique value)

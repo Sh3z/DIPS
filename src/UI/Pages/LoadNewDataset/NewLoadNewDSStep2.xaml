@@ -72,7 +72,8 @@
         </Grid>
         
         <DockPanel Grid.Row="3">
-            <Button Command="{Binding ProgressToStep3Command}" HorizontalAlignment="Right" Width="{Binding ElementName=LargestButton, Path=ActualWidth}" Content="Continue" />
+            <Button Width="{Binding ElementName=LargestButton, Path=ActualWidth}" HorizontalAlignment="Left" Command="{Binding Path=GoBackCommand}" Content="Go Back" />
+            <Button Width="{Binding ElementName=LargestButton, Path=ActualWidth}" Command="{Binding ProgressToStep3Command}" HorizontalAlignment="Right" Content="Continue" />
         </DockPanel>
     </Grid>
 </UserControl>

@@ -34,8 +34,11 @@
                 </CheckBox.ToolTip>
             </CheckBox>
             <Grid DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal">
                 <Button x:Name="LargestButton" HorizontalAlignment="Left"
                     Command="{Binding Path=OpenFileDialogCommand}" Content="Choose Images..." />
+                </StackPanel>
+                
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Command="{Binding Path=RemoveAllInputs}"
                             Content="Clear Files"
@@ -44,6 +47,7 @@
                             Content="Remove Selected"
                             Width="{Binding ElementName=LargestButton, Path=Width, Mode=TwoWay}"/>
                 </StackPanel>
+                
             </Grid>
             <ListView Margin="3"
                       SelectedItem="{Binding Path=SelectedFileItem}"
@@ -58,6 +62,8 @@
                 </ListView.View>
             </ListView>
         </DockPanel>
-        <Button Grid.Row="2" HorizontalAlignment="Right" Width="{Binding ElementName=LargestButton, Path=ActualWidth}" Command="{Binding Path=ProgressToStep2Command}" Content="Continue" />
+        <DockPanel Grid.Row="2">
+            <Button HorizontalAlignment="Right" Width="{Binding ElementName=LargestButton, Path=ActualWidth}" Command="{Binding Path=ProgressToStep2Command}" Content="Continue" />
+        </DockPanel>
     </Grid>
 </UserControl>
