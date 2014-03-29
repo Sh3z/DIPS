@@ -37,8 +37,8 @@
                 </Grid.RowDefinitions>
             
                 <DockPanel Grid.Row="0">
-                    <Button DockPanel.Dock="Left" Content="Filter Options" HorizontalAlignment="Center" Command="{Binding OpenFilterDialogCommand}" FontSize="16" />
-                <CheckBox DockPanel.Dock="Right" IsChecked="{Binding ToggleFilter}" Content="Active Filter?" HorizontalAlignment="Left" FontSize="16" />
+                    <Button DockPanel.Dock="Left" Content="Filter Options" HorizontalAlignment="Center" Command="{Binding OpenFilterDialogCommand}" />
+                <CheckBox DockPanel.Dock="Right" IsChecked="{Binding ToggleFilter}" Content="Active Filter?" HorizontalAlignment="Left" />
                 </DockPanel>
                 
                     <GroupBox Header="Select an image from a dataset:" Grid.Row="1">
@@ -93,7 +93,7 @@
                 
             
             <Button Grid.Row="2" Content="Refresh Treeview"
-                Command="{Binding Path=LoadPipeline}" FontSize="16" />
+                Command="{Binding Path=LoadPipeline}" />
             
         </Grid>
 
@@ -107,7 +107,7 @@
             <TextBlock Grid.Row="0"
                    Text="View Existing Dataset" HorizontalAlignment="Center">
                 <TextBlock.Style>
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource MediumTextBlockFont}">
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource HeaderTextBlockStyle}">
                         <Setter Property="Margin" Value="5" />
                     </Style>
                 </TextBlock.Style>

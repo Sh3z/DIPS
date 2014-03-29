@@ -32,7 +32,7 @@
         <TextBlock Grid.Row="0"
                    Text="Algorithm Builder" HorizontalAlignment="Center">
             <TextBlock.Style>
-                <Style TargetType="TextBlock" BasedOn="{StaticResource MediumTextBlockFont}">
+                <Style TargetType="TextBlock" BasedOn="{StaticResource HeaderTextBlockStyle}">
                     <Setter Property="Margin" Value="5" />
                 </Style>
             </TextBlock.Style>

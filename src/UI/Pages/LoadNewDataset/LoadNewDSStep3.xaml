@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/DIPS.UI.CustomControls;component/Resources/Resources.xaml" />
+                <ResourceDictionary Source="../../Resources/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -25,8 +26,8 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" HorizontalAlignment="Center" DockPanel.Dock="Top" TextWrapping="Wrap" FontSize="14"
-                    Text="Click to confirm that you want to forward with processing the following files with the selected algorithm plan:">
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" DockPanel.Dock="Top" TextWrapping="Wrap" FontSize="14"
+                    Text="Please confirm your choices to process selected images">
             </TextBlock>
 
             <UniformGrid Grid.Row="1" Rows="1" Columns="2">
@@ -63,9 +64,8 @@
             </DockPanel>
 
             <DockPanel Grid.Row="4">
-                <Button HorizontalAlignment="Left" Command="{Binding Path=GoBackCommand}" Content="Go Back" />
-                <Button DockPanel.Dock="Bottom"  MaxWidth="100"
-                Command="{Binding ProcessFilesCommand}" Content="Process" FontSize="16"/>
+                <Button Width="{Binding ElementName=LargestButton, Path=ActualWidth}" HorizontalAlignment="Left" Command="{Binding Path=GoBackCommand}" Content="Go Back" />
+                <Button Width="{Binding ElementName=LargestButton, Path=ActualWidth}" HorizontalAlignment="Right"  MaxWidth="100" Command="{Binding ProcessFilesCommand}" Content="Process" />
             </DockPanel>
             
         </Grid>
