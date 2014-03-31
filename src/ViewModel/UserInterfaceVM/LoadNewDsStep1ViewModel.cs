@@ -11,6 +11,7 @@ using DIPS.Util.Commanding;
 using System.Diagnostics;
 using DIPS.Unity;
 using Microsoft.Practices.Unity;
+using DIPS.Database;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -241,8 +242,9 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void _addFileToCurrentSet( string file )
         {
+            verifyDicom dicom = new verifyDicom();
             // Make sure the file is legal
-            if( string.IsNullOrEmpty( Path.GetExtension( file ) ) )
+            if( dicom.verify( file )  )
             {
                 FileInfo fileInfo = new FileInfo( file );
                 ListOfFiles.Add( fileInfo );

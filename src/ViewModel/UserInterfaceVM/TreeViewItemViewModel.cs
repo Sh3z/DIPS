@@ -123,6 +123,18 @@ namespace DIPS.ViewModel.UserInterfaceVM
             BitmapImage theBmp = ToImage(image);
             BaseUnProcessedImage = theBmp;
             SelectedImage.ImageNumberSelected = fileID;
+
+            try
+            {
+                byte[] processed = SelectedImage.updateProcessedImage();
+                if (processed != null)
+                {
+                    BitmapImage processedBmp = ToImage(processed);
+                    BaseProcessedImage = processedBmp;
+                }
+            }
+            catch {
+            }
         }
 
         public BitmapImage ToImage(byte[] array)
