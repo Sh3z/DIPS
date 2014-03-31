@@ -123,17 +123,29 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+                <GroupBox Grid.Column="0" Header="Algorithms Used">
+                    <ListView ItemsSource="{Binding ListOfAlgorithms, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" SelectedItem="{Binding ListViewItemAlgorithm,Mode=TwoWay}">
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Header="Plan Name" DisplayMemberBinding="{Binding Path=Name}" />
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </GroupBox>
+                
                 <GroupBox Grid.Column="1" Header="Unprocessed Image">
                     <Image Source="{Binding ImgUnprocessed, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="128"  Width="128"/>
                 </GroupBox>
 
                 <GroupBox Grid.Column="2" Header="Processed Image">
-                    <Image Source="{Binding ImgUnprocessed, Mode=TwoWay}" HorizontalAlignment="Center" Height="128" VerticalAlignment="Center" Width="128"/>
+                    <Image Source="{Binding ImgProcessed, Mode=TwoWay}" HorizontalAlignment="Center" Height="128" VerticalAlignment="Center" Width="128"/>
                 </GroupBox>
 
                 <GroupBox Grid.Column="3" Header="Algorithm Plan Used">
                     <ListView
-                    ItemsSource="{Binding Path=AlgorithmPlanUsed, Mode=TwoWay}"
+                    ItemsSource="{Binding Path=TechniqueAlgorithms, Mode=TwoWay}"
                     ItemContainerStyle="{StaticResource AlgorithmItemStyle}"/>
                 </GroupBox>
             </Grid>

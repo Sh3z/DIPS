@@ -21,7 +21,7 @@ GO
 CREATE PROCEDURE spr_RetrieveProcessedImage_v001
 	-- Add the parameters for the stored procedure here
 	@fileID int,
-	@processMethod varchar(100)
+	@processMethod int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from

@@ -54,7 +54,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set
             {
                 _chosenTechnique = value;
-                Log.ProcessName = value.Name;
+                Log.ProcessID = value.ID;
                 _updateAlgorithmsInTechnique(value);
                 OnPropertyChanged();
             }

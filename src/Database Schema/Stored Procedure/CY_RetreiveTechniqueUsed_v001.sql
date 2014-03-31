@@ -28,7 +28,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	SELECT DISTINCT(processMethod) AS 'Algorithm' 
-	FROM processedImages WHERE imageUID = @imageUID
+	SELECT imgP.name AS 'Algorithm', imgP.technique AS 'XML', imgP.ID AS 'ID'
+	FROM processedImages pImg join imageProcessing imgP on pImg.processMethod = imgP.ID
+	WHERE imageUID = @imageUID
 END
 GO

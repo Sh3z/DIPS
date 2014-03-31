@@ -56,7 +56,7 @@ namespace Database.Repository
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("spr_InsertProcessedImages_v001", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@processMethod", SqlDbType.VarChar).Value = Log.ProcessName;
+                    cmd.Parameters.Add("@processMethod", SqlDbType.Int).Value = Log.ProcessID;
                     cmd.Parameters.Add("@imageUID", SqlDbType.VarChar).Value = identifier;
                     cmd.Parameters.Add("@imageBlob", SqlDbType.VarBinary, blob.Length).Value = blob;
                     seriesID = (Int32)cmd.ExecuteScalar();

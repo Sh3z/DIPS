@@ -20,7 +20,7 @@ GO
 -- =============================================
 CREATE PROCEDURE spr_InsertProcessedImages_v001
 	-- Add the parameters for the stored procedure here
-	@processMethod varchar(100) = NULL,
+	@processMethod int = NULL,
 	@imageUID varchar(70) = NULL,
 	@imageBlob varbinary(MAX) = NULL
 AS
