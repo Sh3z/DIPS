@@ -58,29 +58,29 @@ namespace DIPS.Database
             dicom.sliceThickness = dff.Dataset.GetValueString(DicomTags.SliceThickness);
         }
 
-        private void nullCheck(DicomInfo dicom)
+        public void nullCheck(DicomInfo dicom)
         {
-            if (pName == null) dicom.patientName = String.Empty;
+            if (String.IsNullOrEmpty(dicom.patientName)) dicom.patientName = String.Empty;
             else
             {
                 try
                 {
-                    var splitName = new StringBuilder(pName);
+                    var splitName = new StringBuilder(dicom.patientName);
                     splitName.Replace('^', ' ');
                     dicom.patientName = splitName.ToString();
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    dicom.patientName = pName;
+                    dicom.patientName = dicom.patientName;
                 }
             }
 
             if (dicom.studyUID == null) dicom.studyUID = String.Empty;
             if (dicom.seriesUID == null) dicom.seriesUID = String.Empty;
             if (dicom.imageUID == null) dicom.imageUID = String.Empty;
-            if (dicom.sex == null || (dicom.sex[0] != 'M' && dicom.sex[0] != 'F')) dicom.sex = String.Empty;
-            else dicom.sex = dicom.sex.Substring(0, 1);
+            if (String.IsNullOrEmpty(dicom.sex)) dicom.sex = String.Empty;
+            else if (dicom.sex[0] == 'M' || dicom.sex[0] == 'F') dicom.sex = dicom.sex.Substring(0, 1);
             if (!String.IsNullOrEmpty(dicom.imgNumber)) dicom.imgNumber = dicom.imgNumber.PadLeft(2, '0');
             if (dicom.pBday == null) dicom.pBday = String.Empty;
             if (dicom.age == null) dicom.age = String.Empty;

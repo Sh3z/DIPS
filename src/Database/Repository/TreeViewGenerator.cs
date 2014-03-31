@@ -88,20 +88,6 @@ namespace Database.Repository
                 imageCollection.Add(image);
             }
             data.Close();
-            /*
-            SqlCommand cmd2 = new SqlCommand("spr_RetreiveTechniqueUsed_v001", conn);
-            cmd2.CommandType = CommandType.StoredProcedure;
-            cmd2.Parameters.Add("@seriesID", SqlDbType.Int).Value = dataSet.seriesID;
-            SqlDataReader data2 = cmd2.ExecuteReader();
-
-            List<String> algoList = new List<String>();
-            while (data2.Read()) algoList.Add(data2.GetString(data2.GetOrdinal("Algorithm")));
-            data2.Close();
-
-            foreach(String technique in algoList)
-            {
-                techniqueCollection.Add(ProcessedCollection(technique));
-            }*/
         }
     }
 }

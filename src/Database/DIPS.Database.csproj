@@ -109,9 +109,6 @@
     </Compile>
     <Compile Include="Connection\DAOGeneral.cs" />
     <Compile Include="Objects\Filter.cs" />
-    <Compile Include="Repository\BackupRepository.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Repository\ImageProcessingRepository.cs" />
     <Compile Include="Repository\ImageRepository.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
