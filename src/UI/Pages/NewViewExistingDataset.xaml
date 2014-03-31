@@ -150,7 +150,7 @@
                 </GroupBox>
             </Grid>
             <DockPanel Grid.Row="3" LastChildFill="True">
-                <TextBox Text="{Binding ImageInfo, Mode=TwoWay}"  HorizontalAlignment="Center" Height="Auto" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"/>
+                <TextBox Text="{Binding ImageInfo, Mode=TwoWay}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" TextAlignment="Center" TextWrapping="Wrap" IsEnabled="False"/>
             </DockPanel>
         </Grid>
 
