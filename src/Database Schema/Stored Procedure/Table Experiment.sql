@@ -33,7 +33,7 @@ imageBlob varbinary(MAX),
 create table processedImages(
 fileID int identity PRIMARY KEY,
 imageUID varchar(70) FOREIGN KEY REFERENCES images(imageUID),
-processMethod varchar(100),
+processMethod int,
 imageBlob varbinary(MAX)
 );
 create table timeLog(
