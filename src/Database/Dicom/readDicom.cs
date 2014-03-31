@@ -43,7 +43,7 @@ namespace DIPS.Database
             DicomFileFormat dff = new DicomFileFormat();
 
             dff.Load(fs, DicomReadOptions.Default);
-            pName = dff.Dataset.GetValueString(DicomTags.PatientsName);
+            dicom.patientName = dff.Dataset.GetValueString(DicomTags.PatientsName);
             dicom.studyUID = dff.Dataset.GetValueString(DicomTags.StudyInstanceUID);
             dicom.seriesUID = dff.Dataset.GetValueString(DicomTags.SeriesInstanceUID);
             dicom.imageUID = dff.Dataset.GetValueString(DicomTags.SOPInstanceUID);
