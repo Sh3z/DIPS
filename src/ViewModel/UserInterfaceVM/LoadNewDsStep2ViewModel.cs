@@ -12,6 +12,7 @@ using DIPS.Util.Extensions;
 using Microsoft.Practices.Unity;
 using System.Diagnostics;
 using DIPS.Util.Commanding;
+using Database.Objects;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -53,6 +54,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set
             {
                 _chosenTechnique = value;
+                Log.ProcessName = value.Name;
                 _updateAlgorithmsInTechnique(value);
                 OnPropertyChanged();
             }
