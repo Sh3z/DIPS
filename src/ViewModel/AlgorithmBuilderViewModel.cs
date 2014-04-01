@@ -14,6 +14,10 @@ using DIPS.Util.Commanding;
 using System.Collections.Specialized;
 using GongSolutions.Wpf.DragDrop;
 using System.Windows;
+using System.IO;
+using DIPS.Database.Objects;
+using DIPS.Util.Extensions;
+using DIPS.Unity;
 
 namespace DIPS.ViewModel
 {
@@ -34,15 +38,48 @@ namespace DIPS.ViewModel
             SavePipeline = new PersistPipelineCommand( this );
             LoadPipeline = new LoadPipelineCommand( this );
             SavePipelineDatabase = new PersistPipelineDatabaseCommand( this );
+            MoveDirectToStep3 = new RelayCommand(new Action<object>(_progressToStep3));
 
             FinishButtonCommand = new RelayCommand( new Action<object>( ProgressToMainOrStep2 ) );
             _clearSelectedAlgorithms = new RelayCommand( new Action<object>( ClearSelectedCommand ), _canClearSelectedAlgorithms );
 
             SelectedProcesses.CollectionChanged += _chosenProcessesCollectionChanged;
+
+            ListofTechniques = new ObservableCollection<Technique>();
+            ImageProcessingRepository imgProRep = new ImageProcessingRepository();
+
+            ListofTechniques = imgProRep.getAllTechnique();
+
+            TechniqueAlgorithms = new ObservableCollection<AlgorithmViewModel>();
+
         }
 
-        
+        public Technique ChosenTechnique
+        {
+            get
+            {
+                return _chosenTechnique;
+            }
+            set
+            {
+                _chosenTechnique = value;
+                OnPropertyChanged();
+            }
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Technique _chosenTechnique;
 
+        private ObservableCollection<Technique> _listOfTechniques;
+
+        public ObservableCollection<Technique> ListofTechniques
+        {
+            get { return _listOfTechniques; }
+            set
+            {
+                _listOfTechniques = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="IUnityContainer"/> used in the current
@@ -73,6 +110,30 @@ namespace DIPS.ViewModel
         {
             get;
             set;
+        }
+
+        private ObservableCollection<FileInfo> _listOfFiles;
+
+        public ObservableCollection<FileInfo> ListOfFiles
+        {
+            get { return _listOfFiles; }
+            set
+            {
+                _listOfFiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<AlgorithmViewModel> _techniqueAlgorithms;
+
+        public ObservableCollection<AlgorithmViewModel> TechniqueAlgorithms
+        {
+            get { return _techniqueAlgorithms; }
+            set
+            {
+                _techniqueAlgorithms = value;
+                OnPropertyChanged();
+            }
         }
 
         /// <summary>
@@ -151,6 +212,8 @@ namespace DIPS.ViewModel
             get;
             private set;
         }
+
+        public ICommand MoveDirectToStep3 { get; set; }
 
         public UnityCommand SavePipelineDatabase
         {
@@ -276,6 +339,47 @@ namespace DIPS.ViewModel
                 SelectedProcesses.Remove( vm );
             }
         }
+
+        private void _progressToStep3(object obj)
+        {
+            OverallFrame.Content = BaseViewModel._PostProcessingViewModel;
+
+            BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Clear();
+            this.ListOfFiles.ForEach(BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Add);
+            BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Clear();
+
+            _updateAlgorithmsInTechnique();
+
+            TechniqueAlgorithms.ForEach(_addAlgorithmToStep3);
+
+            if (ChosenTechnique != null)
+            {
+                BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = ChosenTechnique.Name;
+            }
+            else { BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = "Quick Build"; }
+        }
+
+        private void _addAlgorithmToStep3(AlgorithmViewModel viewModel)
+        {
+            viewModel.IsRemovable = false;
+            BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Add(viewModel);
+        }
+
+        private void _updateAlgorithmsInTechnique()
+        {
+                TechniqueAlgorithms.Clear();
+            
+                IUnityContainer c = GlobalContainer.Instance.Container;
+                IPipelineManager manager = c.Resolve<IPipelineManager>();
+
+                if (SelectedProcesses != null)
+                {
+                     foreach (var process in SelectedProcesses)
+                             {
+                                TechniqueAlgorithms.Add(process);
+                             }
+                }
+        } 
     }
 
 }
