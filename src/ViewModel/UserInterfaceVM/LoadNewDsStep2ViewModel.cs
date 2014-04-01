@@ -180,6 +180,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             _AlgorithmBuilderViewModel.FromLoadStep2 = true;
             _AlgorithmBuilderViewModel.FromViewAlgorithms = false;
             _AlgorithmBuilderViewModel.GoBackButtonState = System.Windows.Visibility.Visible;
+            _AlgorithmBuilderViewModel.ListOfFiles = ListOfFiles;
 
             IPipelineManager manager = GlobalContainer.Instance.Container.Resolve<IPipelineManager>();
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();

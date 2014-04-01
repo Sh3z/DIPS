@@ -80,9 +80,13 @@
                                SelectedObject="{Binding Path=SelectedAlgorithm.ParameterObject}" />
         </Grid>
         <DockPanel Grid.Row="3" LastChildFill="False">
-            <Button DockPanel.Dock="Right" Content="Go Back"
+            <Button DockPanel.Dock="Left" Content="Go Back"
                     Visibility="{Binding GoBackButtonState}"
                     Command="{Binding FinishButtonCommand}" />
+
+            <Button DockPanel.Dock="Right" Content="Process Images With This Algorithm"
+                    Visibility="{Binding GoBackButtonState}"
+                    Command="{Binding MoveDirectToStep3}" />
         </DockPanel>
     </Grid>
 </UserControl>
