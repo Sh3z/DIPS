@@ -19,7 +19,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
     /// Represents the <see cref="ViewModel"/> used for the post-processing
     /// UI.
     /// </summary>
-    public class PostProcessingViewModel : ViewModel
+    public class PostProcessingViewModel : BaseViewModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PostProcessingViewModel"/>
@@ -61,6 +61,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
 
             _updateAvailableHandlers();
+
+            GoBackCommand = new RelayCommand(new Action<object>(_goBack));
         }
 
 
@@ -72,6 +74,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             get;
             set;
         }
+
+        public ICommand GoBackCommand { get; set; }
 
         /// <summary>
         /// Gets the collection of available post-processing option types.
@@ -213,6 +217,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void _continue( object parameter )
         {
             this.OverallFrame.Content = BaseViewModel._LoadNewDsStep3ViewModel;
+            BaseViewModel._LoadNewDsStep3ViewModel.Identifier = String.Empty;
             BaseViewModel._LoadNewDsStep3ViewModel.Handler = CreatePostProcessor();
         }
 
@@ -241,5 +246,10 @@ namespace DIPS.ViewModel.UserInterfaceVM
         /// Retains the options store.
         /// </summary>
         private PostProcessingStore _store;
+
+        private void _goBack(object obj)
+        {
+            OverallFrame.Content = _LoadNewDsStep2ViewModel;
+        }
     }
 }

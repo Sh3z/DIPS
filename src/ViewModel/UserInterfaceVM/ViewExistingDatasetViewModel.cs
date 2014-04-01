@@ -15,14 +15,59 @@ using DIPS.Processor.Client;
 using System.Windows.Controls;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using Database.Connection;
+using Database.Objects;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
-    public class ViewExistingDatasetViewModel :BaseViewModel
+    public class ViewExistingDatasetViewModel :BaseViewModel, IPipelineInfo
     {
 
         #region Properties
+
+        private Technique _listViewItemAlgorithm;
+
+        public Technique ListViewItemAlgorithm
+        {
+            get { return _listViewItemAlgorithm; }
+            set { 
+                _listViewItemAlgorithm = value;
+                OnPropertyChanged();
+                
+                if (_listViewItemAlgorithm != null)
+                {
+                    SelectedImage.AlgorithmSelected = _listViewItemAlgorithm.ID;
+                }
+                
+                setImage();
+                _updateAlgorithmsInTechnique(value);
+                }
+        }
+
         private ObservableCollection<Patient> _PatientsList;
+
+        private ObservableCollection<Technique> _listOfAlgorithms;
+
+        public ObservableCollection<Technique> ListOfAlgorithms
+        {
+            get { return _listOfAlgorithms; }
+            set 
+                { 
+                  _listOfAlgorithms = value;
+                  OnPropertyChanged();
+                }
+        }
+
+        private ObservableCollection<AlgorithmViewModel> _techniqueAlgorithms;
+
+        public ObservableCollection<AlgorithmViewModel> TechniqueAlgorithms
+        {
+            get { return _techniqueAlgorithms; }
+            set
+            {
+                _techniqueAlgorithms = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<Patient> PatientsList
         {
@@ -193,6 +238,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 }
             }
         }
+
+        ObservableCollection<AlgorithmViewModel> IPipelineInfo.SelectedProcesses
+        {
+            get { return TechniqueAlgorithms; }
+        }
         #endregion
 
         #region Constructor
@@ -207,6 +257,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             
             SetupCommands();
             GetPatientsForTreeview(null);
+
+            ImageInfo = "Please Select An Image To View Image Information Here.";
         } 
         #endregion
 
@@ -239,7 +291,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             ImgUnprocessed = null;
             ImgProcessed = null;
-            ImageInfo = string.Empty;
+            ImageInfo = "Please Select An Image To View Image Information Here.";
             
             TopLevelViewModel = tvpv;
         }
@@ -252,9 +304,94 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             TopLevelViewModel = tvpv;
         }
+
+        public void setImage()
+        {
+            
+            byte[] processed = SelectedImage.updateProcessedImage();
+            if (processed != null)
+            {
+                BitmapImage processedBmp = ToImage(processed);
+                BaseProcessedImage = processedBmp;
+            }
+
+        }
+
+        public BitmapImage ToImage(byte[] array)
+        {
+            using (var ms = new System.IO.MemoryStream(array))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad; // here
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+        }
+
+        private void _updateAlgorithmsInTechnique(Technique value)
+        {
+            if (TechniqueAlgorithms != null)
+            {
+                TechniqueAlgorithms.Clear();
+            }
+            else
+            {
+                TechniqueAlgorithms = new ObservableCollection<AlgorithmViewModel>();
+            }
+            
+            if (value != null)
+            {
+                IUnityContainer c = GlobalContainer.Instance.Container;
+                IPipelineManager manager = c.Resolve<IPipelineManager>();
+
+                var restoredPipeline = manager.RestorePipeline(value.xml);
+
+                if (TechniqueAlgorithms != null)
+                {
+                    TechniqueAlgorithms.Clear();
+                }
+
+                foreach (var process in restoredPipeline)
+                {
+                    if (process != null)
+                    {
+                             AlgorithmViewModel algVM = new AlgorithmViewModel(process);
+                             algVM.IsRemovable = false;
+                             TechniqueAlgorithms.Add(algVM);
+                    }
+                   
+                }
+            }
+        } 
         
         #endregion
 
 
+
+        public string PipelineName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string PipelineID
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

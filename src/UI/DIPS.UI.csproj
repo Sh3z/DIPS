@@ -133,11 +133,17 @@
     <Compile Include="Pages\LoadNewDataset\LoadNewDSStep3.xaml.cs">
       <DependentUpon>LoadNewDSStep3.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\LoadNewDataset\NewLoadNewDSStep2.xaml.cs">
+      <DependentUpon>NewLoadNewDSStep2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MultiPostProcessorControl.xaml.cs">
       <DependentUpon>MultiPostProcessorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NewViewExistingDataset.xaml.cs">
+      <DependentUpon>NewViewExistingDataset.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PostProcessingControl.xaml.cs">
       <DependentUpon>PostProcessingControl.xaml</DependentUpon>
@@ -213,11 +219,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\LoadNewDataset\NewLoadNewDSStep2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MultiPostProcessorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NewViewExistingDataset.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

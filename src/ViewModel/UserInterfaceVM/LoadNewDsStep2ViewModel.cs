@@ -12,6 +12,7 @@ using DIPS.Util.Extensions;
 using Microsoft.Practices.Unity;
 using System.Diagnostics;
 using DIPS.Util.Commanding;
+using Database.Objects;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -53,6 +54,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set
             {
                 _chosenTechnique = value;
+                Log.ProcessID = value.ID;
                 _updateAlgorithmsInTechnique(value);
                 OnPropertyChanged();
             }
@@ -101,6 +103,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         
         public RelayCommand ProgressToStep3Command { get; set; }
         public ICommand BuildAlgorithmCommand { get; set; }
+        public ICommand GoBackCommand { get; set; }
         public UnityCommand LoadFromFile
         {
             get;
@@ -152,7 +155,11 @@ namespace DIPS.ViewModel.UserInterfaceVM
             this.ListOfFiles.ForEach( BaseViewModel._LoadNewDsStep3ViewModel.ListOfFiles.Add );
             BaseViewModel._LoadNewDsStep3ViewModel.PipelineAlgorithms.Clear();
             TechniqueAlgorithms.ForEach( _addAlgorithmToStep3 );
-            BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = ( this as IPipelineInfo ).PipelineName;
+
+            if (ChosenTechnique != null)
+            {
+                BaseViewModel._LoadNewDsStep3ViewModel.PipelineName = ChosenTechnique.Name;
+            }
         }
 
         private void _addAlgorithmToStep3( AlgorithmViewModel viewModel )
@@ -173,10 +180,14 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
             _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
             _AlgorithmBuilderViewModel.FromLoadStep2 = true;
+            _AlgorithmBuilderViewModel.FromViewAlgorithms = false;
             _AlgorithmBuilderViewModel.GoBackButtonState = System.Windows.Visibility.Visible;
+            _AlgorithmBuilderViewModel.UseAlgorithmButtonState = System.Windows.Visibility.Visible;
+            _AlgorithmBuilderViewModel.ListOfFiles = ListOfFiles;
 
             IPipelineManager manager = GlobalContainer.Instance.Container.Resolve<IPipelineManager>();
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
+            _AlgorithmBuilderViewModel.SelectedProcesses.Clear();
             _AlgorithmBuilderViewModel.PipelineID = string.Empty;
 
             foreach (var algorithm in manager.AvailableProcesses)
@@ -191,10 +202,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             ProgressToStep3Command = new RelayCommand(new Action<object>(ProgressToStep3), _canProgressToStep3);
             BuildAlgorithmCommand = new RelayCommand(new Action<object>(BuildAlgorithm), _canBuildAlgorithm);
+            GoBackCommand = new RelayCommand(new Action<object>(_goBack));
             LoadFromFile = new LoadPipelineCommand(this);
             LoadFromFile.Container = GlobalContainer.Instance.Container;
 
             TechniqueAlgorithms.CollectionChanged += (s, e) => ProgressToStep3Command.ExecutableStateChanged();
+        }
+
+        private void _goBack(object obj)
+        {
+            OverallFrame.Content = _LoadNewDsStep1ViewModel;
         }
 
         private void _updateAlgorithmsInTechnique(Technique value)

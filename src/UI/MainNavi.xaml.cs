@@ -27,6 +27,8 @@ namespace DIPS.UI
         {
             InitializeComponent();
             BaseViewModel.OverallFrame = this.MainNaviControl;
+
+            this.MainNaviControl.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
             //this.MainNaviControl.Content = _main;
         }
 

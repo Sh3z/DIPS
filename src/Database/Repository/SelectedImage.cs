@@ -1,4 +1,5 @@
 ﻿using Database.Objects;
+using DIPS.Database.Objects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,12 +11,12 @@ namespace Database.Repository
 {
     public static class SelectedImage
     {
-        private static ObservableCollection<Algorithm> _algoCollection;
+        private static ObservableCollection<Technique> _algoCollection;
 
-        public static ObservableCollection<Algorithm> AlgorithmCollection
+        public static ObservableCollection<Technique> AlgorithmCollection
         {
             get { return _algoCollection; }
-            set { _algoCollection = value; }
+            set { _algoCollection = value;}
         }
 
         private static String _selectedImageUID;
@@ -35,9 +36,9 @@ namespace Database.Repository
             set { _imageNumberSelected = value; }
         }
 
-        private static String _algorithmSelected = "Gamma 0.0";
-
-        public static String AlgorithmSelected
+        private static int _algorithmSelected = 0;
+        
+        public static int AlgorithmSelected
         {
             get { return _algorithmSelected; }
             set { _algorithmSelected = value; }

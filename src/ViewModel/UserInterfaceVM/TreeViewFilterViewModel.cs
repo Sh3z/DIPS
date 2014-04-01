@@ -13,6 +13,7 @@ using DIPS.Unity;
 using DIPS.ViewModel.Commands;
 using Microsoft.Practices.Unity;
 using DIPS.Util.Commanding;
+using Database.Repository;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -60,7 +61,16 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public Boolean ShowName
         {
             get { return _showName; }
-            set { _showName = value; }
+            set {
+                if (value == true)
+                {
+                    Boolean verified = false;
+                    AdminRepository admin = new AdminRepository();
+                    verified = admin.verified();
+                    if (verified == true) _showName = value; 
+                }
+                else _showName = value;
+            }
         }
 
         private object _hideWindow;

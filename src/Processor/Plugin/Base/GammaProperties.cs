@@ -46,9 +46,20 @@ namespace DIPS.Processor.Plugin.Base
         [Description( "Represents the target Gamma of the image" )]
         public double Gamma
         {
-            get;
-            set;
+            get
+            {
+                return _gamma;
+            }
+            set
+            {
+                if( value > 0 )
+                {
+                    _gamma = value;
+                }
+            }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private double _gamma;
 
 
         /// <summary>

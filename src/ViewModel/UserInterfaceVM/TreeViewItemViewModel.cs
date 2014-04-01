@@ -87,7 +87,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
                     {
                         TreeViewImageViewModel tivm = (TreeViewImageViewModel) ImageViewModel;
                         setImage(tivm.ImageName.ToString());
-                        _ViewExistingDatasetViewModel.ImageInfo = string.Empty;
+                        _ViewExistingDatasetViewModel.ListOfAlgorithms = SelectedImage.AlgorithmCollection;
+                        _ViewExistingDatasetViewModel.ImageInfo = "Please Select An Image To View Image Information Here.";
                         GetImageInfo(tivm.ImageName.ToString());
                     }
                     
@@ -123,13 +124,17 @@ namespace DIPS.ViewModel.UserInterfaceVM
             BaseUnProcessedImage = theBmp;
             SelectedImage.ImageNumberSelected = fileID;
 
-            byte[] processed = SelectedImage.updateProcessedImage();
-            if (processed != null)
+            try
             {
-                BitmapImage processedBmp = ToImage(processed);
-                BaseProcessedImage = processedBmp;
+                byte[] processed = SelectedImage.updateProcessedImage();
+                if (processed != null)
+                {
+                    BitmapImage processedBmp = ToImage(processed);
+                    BaseProcessedImage = processedBmp;
+                }
             }
-
+            catch {
+            }
         }
 
         public BitmapImage ToImage(byte[] array)

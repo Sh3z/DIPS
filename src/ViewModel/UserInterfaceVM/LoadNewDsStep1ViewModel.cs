@@ -11,6 +11,8 @@ using DIPS.Util.Commanding;
 using System.Diagnostics;
 using DIPS.Unity;
 using Microsoft.Practices.Unity;
+using DIPS.Database;
+using Database.Repository;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -155,6 +157,9 @@ namespace DIPS.ViewModel.UserInterfaceVM
             if (ValidateFields())
             {
                 _LoadNewDsStep2ViewModel.ListOfFiles = ListOfFiles;
+                _LoadNewDsStep2ViewModel.ListofTechniques.Clear();
+                ImageProcessingRepository imgProRep = new ImageProcessingRepository();
+                _LoadNewDsStep2ViewModel.ListofTechniques = imgProRep.getAllTechnique();
                 OverallFrame.Content = _LoadNewDsStep2ViewModel;
             }
 
@@ -241,8 +246,9 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void _addFileToCurrentSet( string file )
         {
+            verifyDicom dicom = new verifyDicom();
             // Make sure the file is legal
-            if( string.IsNullOrEmpty( Path.GetExtension( file ) ) )
+            if( dicom.verify( file )  )
             {
                 FileInfo fileInfo = new FileInfo( file );
                 ListOfFiles.Add( fileInfo );

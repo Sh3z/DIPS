@@ -25,8 +25,8 @@ namespace Database {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source = Carly-PC; Initial Catalog = medicalImaging; Integrated Security = T" +
-            "rue")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source =CARLY-PC; Initial Catalog = medicalImaging; Integrated Security = Tr" +
+            "ue;")]
         public string Connection {
             get {
                 return ((string)(this["Connection"]));
@@ -38,7 +38,7 @@ namespace Database {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source = Carly-PC; Initial Catalog = master; Integrated Security = True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source =CARLY-PC; Initial Catalog = master; Integrated Security = True;")]
         public string MasterConnection {
             get {
                 return ((string)(this["MasterConnection"]));
@@ -50,7 +50,7 @@ namespace Database {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Carly-PC")]
+        [global::System.Configuration.DefaultSettingValueAttribute("CARLY-PC")]
         public string DataSource {
             get {
                 return ((string)(this["DataSource"]));

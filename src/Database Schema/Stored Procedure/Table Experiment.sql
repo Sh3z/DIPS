@@ -33,7 +33,7 @@ imageBlob varbinary(MAX),
 create table processedImages(
 fileID int identity PRIMARY KEY,
 imageUID varchar(70) FOREIGN KEY REFERENCES images(imageUID),
-processMethod varchar(100),
+processMethod int,
 imageBlob varbinary(MAX)
 );
 create table timeLog(
@@ -62,12 +62,6 @@ drop table patient;
 
 select * from imageProcessing;
 drop table imageProcessing;
-
-SELECT @@SERVERNAME AS 'Server Name';
-SELECT count(name) FROM master.dbo.sysdatabases where name = 'medicalImaging';
-
-select backup_size from msdb..backupset;
-select compressed_backup_size from msdb..backupset;
 
 BACKUP DATABASE medicalImaging
 TO DISK = 'C:\Users\Joseph\Documents\Backup\Test2.BAK'

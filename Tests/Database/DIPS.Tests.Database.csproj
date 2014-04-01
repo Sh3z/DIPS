@@ -50,9 +50,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ImageRepositoryTest.cs" />
+    <Compile Include="CodecTest.cs" />
+    <Compile Include="DicomTest.cs" />
+    <Compile Include="EncryptionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ImageReadingTest.cs" />
+    <Compile Include="ConnectionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Database\DIPS.Database.csproj">

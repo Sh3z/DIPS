@@ -78,13 +78,6 @@ namespace Database
             set { _masterConnection = value; }
         }
 
-        public static void buidUnitTestConnection()
-        {
-            _connection = "Data Source = " + DIPSConnection.Default.DataSource + 
-                "; Initial Catalog = UnitTestDB; Integrated Security = " +
-                DIPSConnection.Default.Security;
-        }
-
         private static void rebuildConnection()
         {
             DIPSConnection.Default.Connection = "Data Source = " + DIPSConnection.Default.DataSource + "; Initial Catalog = " +

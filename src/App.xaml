@@ -18,7 +18,7 @@
             <vd:LoadNewDSStep1 />
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:LoadNewDsStep2ViewModel}">
-            <vd:LoadNewDSStep2/>
+            <vd:NewLoadNewDSStep2/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:LoadNewDsStep3ViewModel}">
             <vd:LoadNewDSStep3/>
@@ -33,7 +33,7 @@
             <v:ViewAlgorithms/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:ViewExistingDatasetViewModel}">
-            <v:ViewExistingDataSet/>
+            <v:NewViewExistingDataset/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:TreeViewGroupPatientsViewModel}">
             

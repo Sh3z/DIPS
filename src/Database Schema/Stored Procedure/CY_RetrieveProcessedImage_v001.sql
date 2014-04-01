@@ -15,12 +15,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <12/02/2013>
--- Description:	<Create a database backup>
+-- Create date: <26/02/2013>
+-- Description:	<Retrieve processed image by File ID and Process Algorithm>
 -- =============================================
-CREATE PROCEDURE spr_CreateBackup_v001
+CREATE PROCEDURE spr_RetrieveProcessedImage_v001
 	-- Add the parameters for the stored procedure here
-	@filePath varchar(150) = NULL
+	@fileID int,
+	@processMethod int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -28,9 +29,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-
-	IF @filePath IS NOT NULL
-		BACKUP DATABASE medicalImaging
-		TO DISK = @filePath
+	select PImg.imageBlob from processedImages Pimg
+	JOIN images Img on Pimg.imageUID = Img.imageUID
+	where Img.fileID = @fileID and PImg.processMethod = @processMethod
 END
 GO

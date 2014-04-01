@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Height="96.462" Width="417.224" BorderThickness="1" BorderBrush="#FFC8B1F0">
-    <Grid Background="#FFDCD1F5">
+             mc:Ignorable="d" Height="96.462" Width="417.224" BorderThickness="1">
+    <Grid Background="#FFDEDEDE">
         <Button Command="{Binding ViewExistingDataSetCommand}" HorizontalAlignment="left" VerticalAlignment="Top" Margin="0,50,0,0" Height="33" Width="60" ToolTip="View Existing Dataset">
             <Button.Template>
                 <ControlTemplate>

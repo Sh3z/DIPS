@@ -84,8 +84,14 @@ namespace DIPS.ViewModel.UserInterfaceVM
             OverallFrame.Content = _AlgorithmBuilderViewModel;
 
             _AlgorithmBuilderViewModel.PipelineName = string.Empty;
+            _AlgorithmBuilderViewModel.PipelineID = string.Empty;
             _AlgorithmBuilderViewModel.SelectedProcesses.Clear();
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
+            _AlgorithmBuilderViewModel.FromViewAlgorithms = true;
+            _AlgorithmBuilderViewModel.FromLoadStep2 = false;
+
+            _AlgorithmBuilderViewModel.GoBackButtonState = System.Windows.Visibility.Visible;
+            _AlgorithmBuilderViewModel.UseAlgorithmButtonState = System.Windows.Visibility.Hidden;
 
             PopulateAvailableAlgorithms();
         }
@@ -138,8 +144,13 @@ namespace DIPS.ViewModel.UserInterfaceVM
                         _info.SelectedProcesses.Add(new AlgorithmViewModel(process));
                     }
 
+                    _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
+                    _AlgorithmBuilderViewModel.GoBackButtonState = System.Windows.Visibility.Visible;
+                    _AlgorithmBuilderViewModel.UseAlgorithmButtonState = System.Windows.Visibility.Hidden;
                     PopulateAvailableAlgorithms();
 
+                    _AlgorithmBuilderViewModel.FromViewAlgorithms = true;
+                    _AlgorithmBuilderViewModel.FromLoadStep2 = false;
                     OverallFrame.Content = _AlgorithmBuilderViewModel;
                 }
             }

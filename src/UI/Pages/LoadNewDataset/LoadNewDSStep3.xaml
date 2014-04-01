@@ -9,59 +9,65 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/DIPS.UI.CustomControls;component/Resources/Resources.xaml" />
+                <ResourceDictionary Source="../../Resources/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <DockPanel  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                 LastChildFill="True" Margin="3">
-        <TextBlock  DockPanel.Dock="Top" TextWrapping="Wrap"
-                    Text="Click to confirm that you want to forward with processing the following files and techniques:" FontSize="16" />
-        <Button DockPanel.Dock="Bottom" MaxWidth="100"
-                Command="{Binding ProcessFilesCommand}" Content="Process" FontSize="16"/>
         <Grid Margin="3">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <UniformGrid Grid.Row="0" Rows="1" Columns="2">
+
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" DockPanel.Dock="Top" TextWrapping="Wrap" FontSize="14"
+                    Text="Please confirm your choices to process selected images">
+            </TextBlock>
+
+            <UniformGrid Grid.Row="1" Rows="1" Columns="2">
                 <DockPanel Margin="3">
-                    <TextBlock DockPanel.Dock="Top" Text="Selected Files" FontSize="16" />
-                    <ListBox DockPanel.Dock="Bottom"
+                    <GroupBox Header="Selected Files">
+                        <ListBox DockPanel.Dock="Bottom"
                              ItemsSource="{Binding ListOfFiles}" FontSize="14">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </GroupBox>
                 </DockPanel>
                 <DockPanel Margin="3">
-                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                        <TextBlock DockPanel.Dock="Top" Text="Processing Plan: " FontSize="16" />
+                    <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Orientation="Horizontal">
                         <TextBlock Text="{Binding Path=PipelineName}" />
                     </StackPanel>
-
-                    <ListView DockPanel.Dock="Bottom"
+                    <GroupBox Header="Algorithm Plan">
+                        <ListView DockPanel.Dock="Bottom"
                               ItemsSource="{Binding Path=PipelineAlgorithms}"
                               ItemContainerStyle="{StaticResource AlgorithmItemStyle}" FontSize="14"/>
+                    </GroupBox>
                 </DockPanel>
             </UniformGrid>
-
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="Save the output of the process to: " />
-                <ComboBox VerticalAlignment="Center" Margin="3,0,0,0" />
-            </StackPanel>
 
             <StackPanel Grid.Row="2" Margin="0,3" Orientation="Horizontal" HorizontalAlignment="Center"/>
             <DockPanel Grid.Row="3" Margin="0,3">
                 <TextBlock DockPanel.Dock="Left" Text="Identifier: " Margin="5,0" />
                 <TextBox Text="{Binding Path=Identifier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="100" />
             </DockPanel>
+
+            <DockPanel Grid.Row="4">
+                <Button Width="{Binding ElementName=LargestButton, Path=ActualWidth}" HorizontalAlignment="Left" Command="{Binding Path=GoBackCommand}" Content="Go Back" />
+                <Button Width="{Binding ElementName=LargestButton, Path=ActualWidth}" HorizontalAlignment="Right"  MaxWidth="100" Command="{Binding ProcessFilesCommand}" Content="Process" />
+            </DockPanel>
+            
         </Grid>
     </DockPanel>
 </UserControl>

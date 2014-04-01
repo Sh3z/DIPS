@@ -14,7 +14,6 @@ namespace Database.Connection
         {
             DAOInsertPatient dao = new DAOInsertPatient();
             DAOLog log = new DAOLog();
-            if (Log.NeedUpdate == true) log.update(dicom.seriesID);
 
             if (dicom.patientExist == false)
             {
@@ -35,6 +34,8 @@ namespace Database.Connection
                 if (Log.Created == false) log.create();
                 dao.insertImageFile(dicom,filePath);
             }
+
+            if (Log.NeedUpdate == true) log.update(dicom.seriesID);
         }
     }
 }

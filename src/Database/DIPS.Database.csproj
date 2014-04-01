@@ -98,7 +98,6 @@
     <Compile Include="Dicom\InsertToDatabase.cs" />
     <Compile Include="DicomHelper\PatientID.cs" />
     <Compile Include="Dicom\Process.cs" />
-    <Compile Include="Objects\Algorithm.cs" />
     <Compile Include="Objects\Log.cs" />
     <Compile Include="Repository\AdminRepository.cs" />
     <Compile Include="Repository\ConnectionRepository.cs" />
@@ -109,9 +108,6 @@
     </Compile>
     <Compile Include="Connection\DAOGeneral.cs" />
     <Compile Include="Objects\Filter.cs" />
-    <Compile Include="Repository\BackupRepository.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Repository\ImageProcessingRepository.cs" />
     <Compile Include="Repository\ImageRepository.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

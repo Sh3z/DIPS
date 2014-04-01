@@ -15,29 +15,21 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		<Chuo Yeh Poo>
--- Create date: <26/02/2013>
--- Description:	<Insert Image File>
+-- Create date: <13/03/2013>
+-- Description:	<Retrieve All Process Technique For The Series>
 -- =============================================
-CREATE PROCEDURE spr_InsertProcessedImages_v001
+CREATE PROCEDURE spr_RetreiveTechniqueUsed_v001
 	-- Add the parameters for the stored procedure here
-	@processMethod varchar(100) = NULL,
-	@imageUID varchar(70) = NULL,
-	@imageBlob varbinary(MAX) = NULL
+	@imageUID varchar(70)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	IF @imageUID = ''
-		SET @imageUID = NULL
-
-	DECLARE @series int
-	SET @series = (SELECT seriesID FROM images WHERE imageUID = @imageUID)
-
     -- Insert statements for procedure here
-	INSERT INTO processedImages (processMethod, imageUID,imageBlob)
-	OUTPUT @series 
-	VALUES (@processMethod, @imageUID,@imageBlob)
+	SELECT imgP.name AS 'Algorithm', imgP.technique AS 'XML', imgP.ID AS 'ID'
+	FROM processedImages pImg join imageProcessing imgP on pImg.processMethod = imgP.ID
+	WHERE imageUID = @imageUID
 END
 GO

@@ -1,12 +1,15 @@
 ﻿using Database.Objects;
+using DIPS.Database.Objects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Database.Repository
 {
@@ -33,7 +36,7 @@ namespace Database.Repository
             return image;
         }
 
-        public byte[] getProcessedImage(String fileID,String algorithm)
+        public byte[] getProcessedImage(String fileID,int algorithm)
         {
             byte[] processed = null;
             using (SqlConnection conn = new SqlConnection(ConnectionManager.getConnection))
@@ -42,7 +45,7 @@ namespace Database.Repository
                 SqlCommand cmd2 = new SqlCommand("spr_RetrieveProcessedImage_v001", conn);
                 cmd2.CommandType = CommandType.StoredProcedure;
                 cmd2.Parameters.Add("@fileID", SqlDbType.Int).Value = Int32.Parse(fileID);
-                cmd2.Parameters.Add("@processMethod", SqlDbType.VarChar).Value = algorithm;
+                cmd2.Parameters.Add("@processMethod", SqlDbType.Int).Value = algorithm;
                 processed = (byte[]) cmd2.ExecuteScalar();
             }
             return processed;
@@ -58,13 +61,16 @@ namespace Database.Repository
                 cmd2.Parameters.Add("@imageUID", SqlDbType.VarChar).Value = imageUID;
                 SqlDataReader data2 = cmd2.ExecuteReader();
 
-                if (data2.HasRows) SelectedImage.AlgorithmCollection = new ObservableCollection<Algorithm>();
+                if (data2.HasRows) SelectedImage.AlgorithmCollection = new ObservableCollection<Technique>();
                 else SelectedImage.AlgorithmCollection = null;
 
                 while (data2.Read())
                 {
-                    Algorithm algo = new Algorithm();
-                    algo.AlgorithmName = data2.GetString(data2.GetOrdinal("Algorithm"));
+                    Technique algo = new Technique();
+                    algo.ID = data2.GetInt32(data2.GetOrdinal("ID"));
+                    algo.Name = data2.GetString(data2.GetOrdinal("Algorithm"));
+                    SqlXml xmltech = data2.GetSqlXml(data2.GetOrdinal("XML"));
+                    algo.xml = XDocument.Load(xmltech.CreateReader());
                     SelectedImage.AlgorithmCollection.Add(algo);
                 }
                 data2.Close();

@@ -14,6 +14,7 @@ using System.Collections.Specialized;
 using DIPS.Unity;
 using DIPS.ViewModel.UserInterfaceVM.JobTracking;
 using System.Windows.Data;
+using DIPS.Util.Commanding;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -65,6 +66,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         public ComboBoxItem PostProcessAction { get; set; }
 
         public UnityCommand ProcessFilesCommand { get; private set; }
+        public ICommand GoBackCommand { get; set; }
 
         public LoadNewDsStep3ViewModel()
         {
@@ -115,6 +117,12 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             ProcessFilesCommand = new EnqueueJobCommand( this );
             ProcessFilesCommand.Container = GlobalContainer.Instance.Container;
+            GoBackCommand = new RelayCommand(new Action<object>(_goBack));
+        }
+
+        private void _goBack(object obj)
+        {
+            OverallFrame.Content = _PostProcessingViewModel;
         }
 
         private void _jobDetailsChanged( object sender, NotifyCollectionChangedEventArgs e )
