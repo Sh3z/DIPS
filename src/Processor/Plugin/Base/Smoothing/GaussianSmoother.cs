@@ -3,6 +3,7 @@ using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,9 +33,20 @@ namespace DIPS.Processor.Plugin.Base.Smoothing
         [DisplayName( "Kernel Size" )]
         public int Size
         {
-            get;
-            set;
+            get
+            {
+                return _size;
+            }
+            set
+            {
+                if( _size > 2 )
+                {
+                    _size = value;
+                }
+            }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private int _size;
 
 
         /// <summary>

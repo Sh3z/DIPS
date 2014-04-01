@@ -3,6 +3,7 @@ using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,9 +35,20 @@ namespace DIPS.Processor.Plugin.Base.Smoothing
         [DisplayName( "Kernel Size" )]
         public int Size
         {
-            get;
-            set;
+            get
+            {
+                return _size;
+            }
+            set
+            {
+                if( value > 0 )
+                {
+                    _size = value;
+                }
+            }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private int _size;
 
         /// <summary>
         /// Gets or sets the colour sigma.
@@ -44,9 +56,21 @@ namespace DIPS.Processor.Plugin.Base.Smoothing
         [Description( "The colour sigma" )]
         public int Colour
         {
-            get;
-            set;
+            get
+            {
+                return _colour;
+            }
+            set
+            {
+                if( value > 0 )
+                {
+                    _colour = value;
+                }
+            }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private int _colour;
+
 
         /// <summary>
         /// Gets or sets the space sigma.
@@ -54,9 +78,20 @@ namespace DIPS.Processor.Plugin.Base.Smoothing
         [Description( "The space sigma" )]
         public int Space
         {
-            get;
-            set;
+            get
+            {
+                return _space;
+            }
+            set
+            {
+                if( value > 0 )
+                {
+                    _space = value;
+                }
+            }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private int _space;
 
         /// <summary>
         /// Smoothes an inbound image using the properties set against

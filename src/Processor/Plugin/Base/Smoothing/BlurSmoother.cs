@@ -3,6 +3,7 @@ using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,9 +34,20 @@ namespace DIPS.Processor.Plugin.Base.Smoothing
         [DisplayName( "Kernel Width" )]
         public int Width
         {
-            get;
-            set;
+            get
+            {
+                return _width;
+            }
+            set
+            {
+                if( value > 0 )
+                {
+                    _width = value;
+                }
+            }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private int _width;
 
         /// <summary>
         /// Gets or sets the smoothing kernel height.
@@ -44,9 +56,20 @@ namespace DIPS.Processor.Plugin.Base.Smoothing
         [DisplayName( "Kernel Width" )]
         public int Height
         {
-            get;
-            set;
+            get
+            {
+                return _height;
+            }
+            set
+            {
+                if( value > 0 )
+                {
+                    _height = value;
+                }
+            }
         }
+        [DebuggerBrowsable( DebuggerBrowsableState.Never )]
+        private int _height;
 
 
         /// <summary>
