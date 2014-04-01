@@ -30,6 +30,6 @@ BEGIN
     -- Insert statements for procedure here
 	SELECT imgP.name AS 'Algorithm', imgP.technique AS 'XML', imgP.ID AS 'ID'
 	FROM processedImages pImg join imageProcessing imgP on pImg.processMethod = imgP.ID
-	WHERE imageUID = @imageUID
+	WHERE pImg.imageUID = @imageUID
 END
 GO

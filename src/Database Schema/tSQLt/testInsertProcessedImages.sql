@@ -4,14 +4,14 @@ GO
 CREATE PROCEDURE testInsertProcessedImages
 AS
 BEGIN
-	DECLARE @processMethod varchar(100) = 'Gamma Enchancement',
+	DECLARE @processMethod int = 4,
 	@imageUID varchar(70) = '183.18.2.1',
 	@imageBlob varbinary(MAX) = 0xFFD8FFE000104A464946000;
 
 	EXEC tSQLt.FakeTable 'processedImages';
 	EXEC [dbo].[spr_InsertProcessedImages_v001] @processMethod,@imageUID,@imageBlob;
 
-	DECLARE @method VARCHAR(100), @uid varchar(70), @blob VARBINARY(MAX)
+	DECLARE @method int, @uid varchar(70), @blob VARBINARY(MAX)
 	SET @method = (SELECT processMethod FROM processedImages);
 	EXEC tSQLt.AssertEquals @processMethod,@method;
 	SET @uid = (SELECT imageUID FROM processedImages);
