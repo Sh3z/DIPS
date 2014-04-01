@@ -143,6 +143,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private void ShowViewExistingAlgorithms(object obj)
         {
+            _ViewAlgorithmViewModel.AllTechniques.Clear();
+            _ViewAlgorithmViewModel.GetAllAlgorithmPlans();
             OverallFrame.Content = _ViewAlgorithmViewModel;
         }
     }
