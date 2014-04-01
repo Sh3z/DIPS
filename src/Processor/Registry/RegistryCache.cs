@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -71,8 +72,17 @@ namespace DIPS.Processor.Registry
         {
             try
             {
-                RegistryKey dips = Microsoft.Win32.Registry.LocalMachine.OpenSubKey( _regLoc );
-                _loadAssemblies( dips.OpenSubKey( "Plugins" ) );
+                //_loadAssemblies( dips.OpenSubKey( "Plugins" ) );
+                string currentDir = Directory.GetCurrentDirectory();
+                var files = from file in Directory.GetFiles( currentDir )
+                            let fileNoPath = Path.GetFileName( file )
+                            where fileNoPath.StartsWith( "DIPS.Processor.Plugin", StringComparison.OrdinalIgnoreCase )
+                                && fileNoPath.EndsWith( ".dll", StringComparison.OrdinalIgnoreCase )
+                            select fileNoPath;
+                foreach( string fileName in files )
+                {
+                    _tryLoadAssembly( fileName );
+                }
             }
             catch( Exception e )
             {
