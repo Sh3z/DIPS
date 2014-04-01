@@ -15,7 +15,7 @@
 	-- =============================================
 	-- Author:		<Chuo Yeh Poo>
 	-- Create date: <22/01/2014>
-	-- Description:	<Retrieve Image Number by specific patient>
+	-- Description:	<Retrieve Image Number by specific patient (Check if the image exist)>
 	-- =============================================
 	CREATE PROCEDURE spr_RetrieveImageNumber_v001
 		-- Add the parameters for the stored procedure here

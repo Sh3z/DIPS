@@ -17,6 +17,7 @@ EXEC tSQLt.Run 'dbo.testInsertTechnique';
 EXEC tSQLt.Run 'dbo.testRetreiveTechniqueUsed';
 EXEC tSQLt.Run 'dbo.testRetrieveAllTechnique';
 EXEC tSQLt.Run 'dbo.testRetrieveImage';
+EXEC tSQLt.Run 'dbo.testRetrieveImageNumber';
 EXEC tSQLt.Run 'dbo.testRetrieveNextPatientID';
 EXEC tSQLt.Run 'dbo.testRetrieveProcessedImage';
 EXEC tSQLt.Run 'dbo.testRetrieveSelectedTechnique';
