@@ -91,17 +91,31 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         private static void ShowExistingDataSet(object obj)
         {
-            ImageRepository repo = new ImageRepository();
-            _ViewExistingDatasetViewModel.PatientsList = repo.generateTreeView(false);
-            TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(_ViewExistingDatasetViewModel.PatientsList);
+            if (_ViewExistingDatasetViewModel != null)
+            {
+                ImageRepository repo = new ImageRepository();
+                _ViewExistingDatasetViewModel.PatientsList = repo.generateTreeView(false);
+                TreeViewGroupPatientsViewModel tvpv = new TreeViewGroupPatientsViewModel(_ViewExistingDatasetViewModel.PatientsList);
 
-            _ViewExistingDatasetViewModel.TopLevelViewModel = tvpv;
+                _ViewExistingDatasetViewModel.TopLevelViewModel = tvpv;
 
-            _ViewExistingDatasetViewModel.ImgUnprocessed = null;
-            _ViewExistingDatasetViewModel.ImgProcessed = null;
-            _ViewExistingDatasetViewModel.ImageInfo = "Please Select An Image To View Image Information Here.";
+                if (_ViewExistingDatasetViewModel.ListOfAlgorithms != null)
+                {
+                    _ViewExistingDatasetViewModel.ListOfAlgorithms.Clear();
+                }
+           
+                if (_ViewExistingDatasetViewModel.TechniqueAlgorithms != null)
+                {
+                    _ViewExistingDatasetViewModel.TechniqueAlgorithms.Clear();
+                }
             
-            OverallFrame.Content = _ViewExistingDatasetViewModel;
+                _ViewExistingDatasetViewModel.ImgUnprocessed = null;
+                _ViewExistingDatasetViewModel.ImgProcessed = null;
+                _ViewExistingDatasetViewModel.ImageInfo = "Please Select An Image To View Image Information Here.";
+            
+                OverallFrame.Content = _ViewExistingDatasetViewModel;
+            }
+            
         }
 
         private static void ShowProcessDataSet(object obj)
@@ -121,7 +135,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
             _AlgorithmBuilderViewModel.Container = GlobalContainer.Instance.Container;
             _AlgorithmBuilderViewModel.FromLoadStep2 = false;
             _AlgorithmBuilderViewModel.GoBackButtonState = Visibility.Hidden;
-
+            _AlgorithmBuilderViewModel.UseAlgorithmButtonState = Visibility.Hidden;
+            _AlgorithmBuilderViewModel.SelectedProcesses.Clear();
             _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
             _AlgorithmBuilderViewModel.PipelineName = string.Empty;
 

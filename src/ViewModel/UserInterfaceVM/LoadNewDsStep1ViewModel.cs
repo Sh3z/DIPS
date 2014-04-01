@@ -12,6 +12,7 @@ using System.Diagnostics;
 using DIPS.Unity;
 using Microsoft.Practices.Unity;
 using DIPS.Database;
+using Database.Repository;
 
 namespace DIPS.ViewModel.UserInterfaceVM
 {
@@ -156,6 +157,9 @@ namespace DIPS.ViewModel.UserInterfaceVM
             if (ValidateFields())
             {
                 _LoadNewDsStep2ViewModel.ListOfFiles = ListOfFiles;
+                _LoadNewDsStep2ViewModel.ListofTechniques.Clear();
+                ImageProcessingRepository imgProRep = new ImageProcessingRepository();
+                _LoadNewDsStep2ViewModel.ListofTechniques = imgProRep.getAllTechnique();
                 OverallFrame.Content = _LoadNewDsStep2ViewModel;
             }
 

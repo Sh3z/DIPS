@@ -91,6 +91,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
             _AlgorithmBuilderViewModel.FromLoadStep2 = false;
 
             _AlgorithmBuilderViewModel.GoBackButtonState = System.Windows.Visibility.Visible;
+            _AlgorithmBuilderViewModel.UseAlgorithmButtonState = System.Windows.Visibility.Hidden;
 
             PopulateAvailableAlgorithms();
         }
@@ -145,6 +146,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
                     _AlgorithmBuilderViewModel.AvailableAlgorithms.Clear();
                     _AlgorithmBuilderViewModel.GoBackButtonState = System.Windows.Visibility.Visible;
+                    _AlgorithmBuilderViewModel.UseAlgorithmButtonState = System.Windows.Visibility.Hidden;
                     PopulateAvailableAlgorithms();
 
                     _AlgorithmBuilderViewModel.FromViewAlgorithms = true;

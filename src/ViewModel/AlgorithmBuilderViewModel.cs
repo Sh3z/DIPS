@@ -263,7 +263,18 @@ namespace DIPS.ViewModel
                   OnPropertyChanged();
                 }
         }
-        
+
+        private Visibility _useAlgorithmButtonState;
+
+        public Visibility UseAlgorithmButtonState
+        {
+            get { return _useAlgorithmButtonState; }
+            set
+            {
+                _useAlgorithmButtonState = value;
+                OnPropertyChanged();
+            }
+        }
 
         private void ProgressToMainOrStep2(object obj)
         {

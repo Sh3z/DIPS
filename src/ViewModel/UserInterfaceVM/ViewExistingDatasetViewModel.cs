@@ -32,7 +32,12 @@ namespace DIPS.ViewModel.UserInterfaceVM
             set { 
                 _listViewItemAlgorithm = value;
                 OnPropertyChanged();
-                SelectedImage.AlgorithmSelected = _listViewItemAlgorithm.ID;
+                
+                if (_listViewItemAlgorithm != null)
+                {
+                    SelectedImage.AlgorithmSelected = _listViewItemAlgorithm.ID;
+                }
+                
                 setImage();
                 _updateAlgorithmsInTechnique(value);
                 }

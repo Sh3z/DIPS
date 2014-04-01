@@ -85,7 +85,7 @@
                     Command="{Binding FinishButtonCommand}" />
 
             <Button DockPanel.Dock="Right" Content="Process Images With This Algorithm"
-                    Visibility="{Binding GoBackButtonState}"
+                    Visibility="{Binding UseAlgorithmButtonState}"
                     Command="{Binding MoveDirectToStep3}" />
         </DockPanel>
     </Grid>
