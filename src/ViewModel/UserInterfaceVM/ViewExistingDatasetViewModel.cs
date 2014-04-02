@@ -301,9 +301,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 Container = GlobalContainer.Instance.Container;
                 ImageView = Container.Resolve<IImageView>();
             }
-            BaseViewModel._ImageViewerViewModel.Container = Container;
-            BaseViewModel._ImageViewerViewModel.SelectedImage = ImgProcessed;
-            //ImageView.SelectedImage = ImgProcessed;
+            
             ImageView.OpenDialog(ImgProcessed);
         }
 
@@ -314,10 +312,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
                 Container = GlobalContainer.Instance.Container;
                 ImageView = Container.Resolve<IImageView>();
             }
-
-            BaseViewModel._ImageViewerViewModel.Container = Container;
-            BaseViewModel._ImageViewerViewModel.SelectedImage = ImgUnprocessed;
-            //ImageView.SelectedImage = ImgUnprocessed;
+            
             ImageView.OpenDialog(ImgUnprocessed);
         }
 

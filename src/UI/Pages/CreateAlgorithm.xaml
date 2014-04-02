@@ -41,7 +41,7 @@
             <Button Content="Save to XML..." Command="{Binding Path=SavePipeline}" />
             <Button Content="Save to Database..." Command="{Binding Path=SavePipelineDatabase}" />
         </StackPanel>
-        <Button Grid.Row="0" HorizontalAlignment="Left" Content="Load..."
+        <Button Grid.Row="0" HorizontalAlignment="Left" Content="Load from XML..."
                 Command="{Binding Path=LoadPipeline}" />
         <DockPanel Grid.Row="1" HorizontalAlignment="Center" LastChildFill="False">
             <TextBlock Text="Algorithm Name" VerticalAlignment="Center" Margin="3" />
