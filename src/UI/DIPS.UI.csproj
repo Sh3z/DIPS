@@ -124,6 +124,9 @@
     <Compile Include="Pages\CreateAlgorithm.xaml.cs">
       <DependentUpon>CreateAlgorithm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ImageView.xaml.cs">
+      <DependentUpon>ImageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LoadNewDataset\LoadNewDSStep1.xaml.cs">
       <DependentUpon>LoadNewDSStep1.xaml</DependentUpon>
     </Compile>
@@ -177,6 +180,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Unity\Implementations\FilterTreeView.cs" />
+    <Compile Include="Unity\Implementations\ImageViewer.cs" />
     <Compile Include="Unity\Implementations\QueueDialog.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -204,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\CreateAlgorithm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ImageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -281,6 +289,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Desktop\PannableContentControl\PannableContentControl\PannableContentControl.csproj">
+      <Project>{2652c7e3-ae33-425a-9b73-4877d3b3cfd5}</Project>
+      <Name>PannableContentControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Database\DIPS.Database.csproj">
       <Project>{a200fc0f-f24e-4f28-b34e-88b1ebd4773c}</Project>
       <Name>DIPS.Database</Name>

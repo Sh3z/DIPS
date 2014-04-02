@@ -61,5 +61,9 @@
         <DataTemplate DataType="{x:Type vm:MultiHandlerOptions}">
             <v:MultiPostProcessorControl />
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:ImageViewerViewModel}">
+            <v:ImageView />
+        </DataTemplate>
     </Application.Resources>
 </Application>

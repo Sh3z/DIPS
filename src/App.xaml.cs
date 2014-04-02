@@ -49,12 +49,14 @@ namespace DIPS
             QueueDialog qd = new QueueDialog();
             UIContext context = new UIContext();
             HandlerFactory f = new HandlerFactory();
+            ImageViewer iv = new ImageViewer();
             f.Load( Assembly.GetAssembly( typeof( HandlerFactory ) ) );
 
             c.RegisterInstance<IHandlerFactory>( f );
             c.RegisterInstance<IUIContext>( context );
             c.RegisterInstance<IFilterTreeView>(ftv);
             c.RegisterInstance<IQueueDialog>(qd);
+            c.RegisterInstance<IImageView>(iv);
 
             MainNavi navWindow = new MainNavi();
             try

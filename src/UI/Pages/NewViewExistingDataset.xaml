@@ -134,14 +134,20 @@
                         </ListView.View>
                     </ListView>
                 </GroupBox>
-                
-                <GroupBox Grid.Column="1" Header="Unprocessed Image">
-                    <Image Source="{Binding ImgUnprocessed, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="128"  Width="128"/>
+                <StackPanel Grid.Column="1">
+                    <GroupBox  Header="Unprocessed Image">
+                    <Image Source="{Binding ImgUnprocessed, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="225" Width="225"/>
                 </GroupBox>
+                    <Button Command="{Binding ViewLargerImageUnProcessedCommand}" Content="View Larger Image" />
+                </StackPanel>
 
-                <GroupBox Grid.Column="2" Header="Processed Image">
-                    <Image Source="{Binding ImgProcessed, Mode=TwoWay}" HorizontalAlignment="Center" Height="128" VerticalAlignment="Center" Width="128"/>
-                </GroupBox>
+                <StackPanel Grid.Column="2">
+                     <GroupBox Header="Processed Image">
+                        <Image Source="{Binding ImgProcessed, Mode=TwoWay}" HorizontalAlignment="Center" Height="225" Width="225" VerticalAlignment="Center"/>
+                    </GroupBox>
+                    <Button Command="{Binding ViewLargerImageProcessedCommand}" Content="View Larger Image" />
+                </StackPanel>
+               
 
                 <GroupBox Grid.Column="3" Header="Algorithm Plan Used">
                     <ListView

@@ -148,6 +148,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
 
         public ICommand OpenFilterDialogCommand { get; set; }
         public ICommand RefreshTreeviewCommand { get; set; }
+        public ICommand ViewLargerImageProcessedCommand { get; set; }
+        public ICommand ViewLargerImageUnProcessedCommand { get; set; }
         public UnityCommand OpenQueueCommand { get; set; }
 
         public IUnityContainer Container
@@ -204,6 +206,13 @@ namespace DIPS.ViewModel.UserInterfaceVM
         {
             get { return _filterImageView; }
             set { _filterImageView = value; }
+        }
+
+        private IImageView _imageView;
+        public IImageView ImageView
+        {
+            get { return _imageView; }
+            set { _imageView = value; }
         }
 
         private IQueueDialog _queueDialog;
@@ -266,6 +275,8 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void SetupCommands()
         {
             OpenFilterDialogCommand = new RelayCommand(new Action<object>(OpenFilterDialog));
+            ViewLargerImageProcessedCommand = new RelayCommand(new Action<object>(OpenLargerImageDialogProcessed));
+            ViewLargerImageUnProcessedCommand = new RelayCommand(new Action<object>(OpenLargerImageDialogUnProcessed));
             RefreshTreeviewCommand = new RelayCommand(new Action<object>(GetPatientsForTreeview));
             OpenQueueCommand = new PresentQueueCommand();
             OpenQueueCommand.Container = GlobalContainer.Instance.Container;
@@ -281,6 +292,33 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
            
             FilterTreeView.OpenDialog();
+        }
+
+        private void OpenLargerImageDialogProcessed(object obj)
+        {
+            if (ImageView == null)
+            {
+                Container = GlobalContainer.Instance.Container;
+                ImageView = Container.Resolve<IImageView>();
+            }
+            BaseViewModel._ImageViewerViewModel.Container = Container;
+            BaseViewModel._ImageViewerViewModel.SelectedImage = ImgProcessed;
+            //ImageView.SelectedImage = ImgProcessed;
+            ImageView.OpenDialog(ImgProcessed);
+        }
+
+        private void OpenLargerImageDialogUnProcessed(object obj)
+        {
+            if (ImageView == null)
+            {
+                Container = GlobalContainer.Instance.Container;
+                ImageView = Container.Resolve<IImageView>();
+            }
+
+            BaseViewModel._ImageViewerViewModel.Container = Container;
+            BaseViewModel._ImageViewerViewModel.SelectedImage = ImgUnprocessed;
+            //ImageView.SelectedImage = ImgUnprocessed;
+            ImageView.OpenDialog(ImgUnprocessed);
         }
 
         private void GetPatientsForTreeview(object obj)

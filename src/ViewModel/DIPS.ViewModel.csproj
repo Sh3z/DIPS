@@ -122,9 +122,11 @@
     <Compile Include="Converters\SingleItemToEnumerableConverter.cs" />
     <Compile Include="IPipelineInfo.cs" />
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Unity\IImageView.cs" />
     <Compile Include="Unity\IQueueDialog.cs" />
     <Compile Include="Objects\ImageHandler.cs" />
     <Compile Include="UserInterfaceVM\CreateAlgorithmViewModel.cs" />
+    <Compile Include="UserInterfaceVM\ImageViewerViewModel.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\InputTimeEstimator.cs" />
     <Compile Include="UserInterfaceVM\JobTracking\TimeRemainingFormatter.cs" />
     <Compile Include="UserInterfaceVM\PostProcessingStore.cs" />
