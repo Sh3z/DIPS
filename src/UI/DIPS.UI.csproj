@@ -289,10 +289,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Desktop\PannableContentControl\PannableContentControl\PannableContentControl.csproj">
-      <Project>{2652c7e3-ae33-425a-9b73-4877d3b3cfd5}</Project>
-      <Name>PannableContentControl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Database\DIPS.Database.csproj">
       <Project>{a200fc0f-f24e-4f28-b34e-88b1ebd4773c}</Project>
       <Name>DIPS.Database</Name>
