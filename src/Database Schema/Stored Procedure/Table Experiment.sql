@@ -64,9 +64,10 @@ select * from imageProcessing;
 drop table imageProcessing;
 
 BACKUP DATABASE medicalImaging
-TO DISK = 'C:\Users\Joseph\Documents\Backup\Test2.BAK'
+TO DISK = 'C:\Users\Joseph\Documents\Backup\Test.BAK'
 
 DROP DATABASE medicalImaging;
+CREATE DATABASE medicalImaging;
 
 RESTORE DATABASE medicalImaging
 FROM DISK = 'C:\Users\Joseph\Documents\Backup\Test2.BAK'

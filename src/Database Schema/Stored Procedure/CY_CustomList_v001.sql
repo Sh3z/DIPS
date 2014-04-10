@@ -18,7 +18,7 @@ GO
 -- Create date: <28/01/2013>
 -- Description:	<Retrieve patients with custom requirement to produce treeview (Patient ID/Name and Series Description)>
 -- =============================================
-ALTER PROCEDURE spr_CustomList_v001
+CREATE PROCEDURE spr_CustomList_v001
 	-- Add the parameters for the stored procedure here
 	@Sex varchar(1) = NULL,
 	@IDContains varchar(20) = NULL,
@@ -31,6 +31,7 @@ AS
 BEGIN
 	
 	DECLARE @BatchTime datetime = cast('1753-1-1' as datetime)
+	DECLARE @currentTime datetime = DATEADD(DAY,1,current_timestamp)
 
 	SET NOCOUNT ON;
 	IF @Batch IS NOT NULL
@@ -51,14 +52,14 @@ BEGIN
 
 
 	SELECT P.patientID as 'Patient ID', N.patientName as 'Patient Name', 
-		N.patientID as 'Table ID', IP.seriesDescription as 'Series', IP.seriesID as 'Series ID'
+		N.patientID as 'Table ID', ISNULL(IP.seriesDescription,'Unknown') as 'Series', IP.seriesID as 'Series ID'
 	FROM patient P join name N on P.tableID = N.patientID join
 		imageProperties IP on P.tableID = IP.patientID
 	WHERE (sex = @Sex OR @Sex IS NULL)
 		and (@IDContains IS NULL OR P.patientID like CONCAT('%',@IDContains,'%'))
 		and (modality = @modality OR @modality IS NULL)
 		and creationDate between @AcquireBetweenFrom and @AcquireBetweenTo
-		and creationDate between @BatchTime and current_timestamp
+		and creationDate between @BatchTime and @currentTime
 	ORDER BY IP.lastModifiedDate DESC
 
 END

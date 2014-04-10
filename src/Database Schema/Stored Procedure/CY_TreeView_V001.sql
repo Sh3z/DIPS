@@ -29,7 +29,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	select p.patientID as 'Patient ID', n.patientName as 'Patient Name', 
-	n.patientID as 'Table ID', iv.seriesDescription as 'Series', iv.seriesID as 'Series ID'
+	n.patientID as 'Table ID', ISNULL(iv.seriesDescription,'Unknown') as 'Series', iv.seriesID as 'Series ID'
 	from patient p join name n on p.tableID = n.patientID
 	join imageProperties iv on p.tableID = iv.patientID 
 	order by iv.lastModifiedDate desc

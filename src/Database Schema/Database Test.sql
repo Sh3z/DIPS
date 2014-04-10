@@ -1,6 +1,8 @@
 USE [medicalImaging]
 GO
-
+EXEC sp_configure 'clr enabled', 1;
+RECONFIGURE;
+GO
 EXEC tSQLt.Run 'dbo.testCheckPatientExist';
 EXEC tSQLt.Run 'dbo.testCheckSeriesUID';
 EXEC tSQLt.Run 'dbo.testCheckSOPUID';
