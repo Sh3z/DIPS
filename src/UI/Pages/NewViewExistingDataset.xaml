@@ -34,7 +34,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             
                 <DockPanel Grid.Row="0">
                     <Button DockPanel.Dock="Left" Content="Filter Options" HorizontalAlignment="Center" Command="{Binding OpenFilterDialogCommand}" />
@@ -94,7 +95,8 @@
             
             <Button Grid.Row="2" Content="Refresh Treeview"
                 Command="{Binding Path=LoadPipeline}" />
-            
+            <Button Grid.Row="3" Content="Connection Setting"
+                Command="{Binding OpenConnectionDialogCommand}" />
         </Grid>
 
         <Grid Grid.Column="1">

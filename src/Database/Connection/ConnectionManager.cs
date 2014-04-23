@@ -61,6 +61,7 @@ namespace Database
             get { return DIPSConnection.Default.Extra; }
             set
             {
+                if (value.Length != 0) value = value + ";";
                 DIPSConnection.Default.Extra = value;
                 rebuildConnection();
             }

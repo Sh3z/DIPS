@@ -42,6 +42,7 @@ namespace DIPS.ViewModel
         readonly public static LoadNewDsStep3ViewModel _LoadNewDsStep3ViewModel = new LoadNewDsStep3ViewModel();
         readonly public static MainViewModel _MainViewModel = new MainViewModel(OverallFrame);
         readonly public static TreeViewFilterViewModel _FilterViewModel = new TreeViewFilterViewModel();
+        readonly public static ConnectionSettingViewModel _ConnectionViewModel = new ConnectionSettingViewModel();
         readonly public static ViewAlgorithmViewModel _ViewAlgorithmViewModel = new ViewAlgorithmViewModel();
         readonly public static ImageViewerViewModel _ImageViewerViewModel = new ImageViewerViewModel();
         public static PostProcessingViewModel _PostProcessingViewModel;

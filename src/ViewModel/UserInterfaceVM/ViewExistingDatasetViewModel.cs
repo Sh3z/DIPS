@@ -147,6 +147,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         }
 
         public ICommand OpenFilterDialogCommand { get; set; }
+        public ICommand OpenConnectionDialogCommand { get; set; }
         public ICommand RefreshTreeviewCommand { get; set; }
         public ICommand ViewLargerImageProcessedCommand { get; set; }
         public ICommand ViewLargerImageUnProcessedCommand { get; set; }
@@ -207,6 +208,15 @@ namespace DIPS.ViewModel.UserInterfaceVM
             get { return _filterImageView; }
             set { _filterImageView = value; }
         }
+
+        private IConnectionView _connectionView;
+
+        public IConnectionView ConnectionView
+        {
+            get { return _connectionView; }
+            set { _connectionView = value; }
+        }
+        
 
         private IImageView _imageView;
         public IImageView ImageView
@@ -275,6 +285,7 @@ namespace DIPS.ViewModel.UserInterfaceVM
         private void SetupCommands()
         {
             OpenFilterDialogCommand = new RelayCommand(new Action<object>(OpenFilterDialog));
+            OpenConnectionDialogCommand = new RelayCommand(new Action<object>(OpenConnectionDialog));
             ViewLargerImageProcessedCommand = new RelayCommand(new Action<object>(OpenLargerImageDialogProcessed));
             ViewLargerImageUnProcessedCommand = new RelayCommand(new Action<object>(OpenLargerImageDialogUnProcessed));
             RefreshTreeviewCommand = new RelayCommand(new Action<object>(GetPatientsForTreeview));
@@ -292,6 +303,17 @@ namespace DIPS.ViewModel.UserInterfaceVM
             }
            
             FilterTreeView.OpenDialog();
+        }
+
+        private void OpenConnectionDialog(object obj)
+        {
+            if (ConnectionView == null)
+            {
+                Container = GlobalContainer.Instance.Container;
+                ConnectionView = Container.Resolve<IConnectionView>();
+            }
+
+            ConnectionView.OpenDialog();
         }
 
         private void OpenLargerImageDialogProcessed(object obj)

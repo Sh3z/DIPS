@@ -29,6 +29,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO imageProcessing (name,technique) VALUES (@name,@technique)
+	INSERT INTO imageProcessing (name,technique) 
+	OUTPUT inserted.ID 
+	VALUES (@name,@technique)
 END
 GO

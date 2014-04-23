@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="Connection" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Data Source =CARLY-PC; Initial Catalog = medicalImaging; Integrated Security = True;</Value>
+      <Value Profile="(Default)">Data Source =.\YEH; Initial Catalog = medicalImaging; Integrated Security = True;</Value>
     </Setting>
     <Setting Name="MasterConnection" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Data Source =CARLY-PC; Initial Catalog = master; Integrated Security = True;</Value>
+      <Value Profile="(Default)">Data Source =.\YEH; Initial Catalog = master; Integrated Security = True;</Value>
     </Setting>
     <Setting Name="DataSource" Type="System.String" Scope="User">
-      <Value Profile="(Default)">CARLY-PC</Value>
+      <Value Profile="(Default)">.\YEH</Value>
     </Setting>
     <Setting Name="Catalog" Type="System.String" Scope="User">
       <Value Profile="(Default)">medicalImaging</Value>

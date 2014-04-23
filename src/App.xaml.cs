@@ -46,6 +46,7 @@ namespace DIPS
             c.RegisterInstance<IPipelineManager>( s.PipelineManager );
 
             FilterTreeView ftv = new FilterTreeView();
+            ConnectionView cv = new ConnectionView();
             QueueDialog qd = new QueueDialog();
             UIContext context = new UIContext();
             HandlerFactory f = new HandlerFactory();
@@ -55,6 +56,7 @@ namespace DIPS
             c.RegisterInstance<IHandlerFactory>( f );
             c.RegisterInstance<IUIContext>( context );
             c.RegisterInstance<IFilterTreeView>(ftv);
+            c.RegisterInstance<IConnectionView>(cv);
             c.RegisterInstance<IQueueDialog>(qd);
             c.RegisterInstance<IImageView>(iv);
 

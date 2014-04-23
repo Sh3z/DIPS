@@ -121,6 +121,9 @@
     <Compile Include="MainNavi.xaml.cs">
       <DependentUpon>MainNavi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ConnectionSetting.xaml.cs">
+      <DependentUpon>ConnectionSetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CreateAlgorithm.xaml.cs">
       <DependentUpon>CreateAlgorithm.xaml</DependentUpon>
     </Compile>
@@ -179,6 +182,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Unity\Implementations\ConnectionView.cs" />
     <Compile Include="Unity\Implementations\FilterTreeView.cs" />
     <Compile Include="Unity\Implementations\ImageViewer.cs" />
     <Compile Include="Unity\Implementations\QueueDialog.cs" />
@@ -204,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainNavi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ConnectionSetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
-﻿using DIPS.Database.Objects;
+﻿using Database.Objects;
+using DIPS.Database.Objects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +26,8 @@ namespace Database.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
                     cmd.Parameters.Add("@technique", SqlDbType.Xml).Value = doc.ToString();
-                    cmd.ExecuteNonQuery();
+                    int id = (Int32)cmd.ExecuteScalar();
+                    Log.ProcessID = id;
                 }
             }
         }

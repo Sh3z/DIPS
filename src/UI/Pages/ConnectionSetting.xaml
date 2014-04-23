@@ -1,0 +1,31 @@
+﻿<Window x:Name="windowConnection" x:Class="DIPS.UI.Pages.ConnectionSetting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:DIPS.ViewModel.UserInterfaceVM;assembly=DIPS.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        Title="Database Connection" Height="318.767" Width="695.427">
+    <Window.DataContext>
+        <vm:ConnectionSettingViewModel/>
+    </Window.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CancelSettingSelection}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Margin="0,0,-28,0">
+        <TextBox Text="{Binding Catalog}" HorizontalAlignment="Left" Height="26" Margin="136,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="511"/>
+        <Label Content="Current Connection :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Data Source : " HorizontalAlignment="Left" Margin="35,59,0,0" VerticalAlignment="Top" Height="27" Width="86"/>
+        <Label Content="Catalog :" HorizontalAlignment="Left" Margin="46,107,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.537,1.577"/>
+        <Button Command="{Binding ApplySettingCommand}" Content="Apply" HorizontalAlignment="Left" Margin="282,245,0,0" VerticalAlignment="Top" Width="74" />
+        <Button Command="{Binding CancelSettingSelection}" Content="Close" HorizontalAlignment="Left" Margin="384,245,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBox Text="{Binding Security}" HorizontalAlignment="Left" Height="26" Margin="136,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="511"/>
+        <Label Content="Security :" HorizontalAlignment="Left" Margin="45,151,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding DataSource}" HorizontalAlignment="Left" Height="27" Margin="136,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="511"/>
+        <Label Content="{Binding DefaultConnection, Mode=TwoWay}" HorizontalAlignment="Left" Margin="136,10,0,0" VerticalAlignment="Top" Width="511" Height="26"/>
+        <TextBox Text="{Binding Extra}" HorizontalAlignment="Left" Height="26" Margin="136,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="511"/>
+        <Label Content="Extra :" HorizontalAlignment="Left" Margin="57,196,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
